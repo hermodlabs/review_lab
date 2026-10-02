@@ -1,12 +1,12 @@
 {
-  "version": "0887da0dc385e058b6a9",
+  "version": "db5224d303c46d381574",
   "appVersion": "0.2.0",
-  "totalBytes": 10045964,
+  "totalBytes": 9406951,
   "assets": [
     {
-      "url": "assets/analyze-DjVF-HKk.js",
-      "sha256": "975e67597d5b840b83464da9a7e17e9a5977648db36fa5c113689f5a1f112b2b",
-      "bytes": 2619597
+      "url": "assets/analyze-BEOgVmX7.js",
+      "sha256": "d544254c8af305dc2e1a0067c6901ec25153e25864a5f633d68d00ca47c7c0c9",
+      "bytes": 2659227
     },
     {
       "url": "assets/clingo-Bbt-XjUT.js",
@@ -34,14 +34,14 @@
       "bytes": 50792
     },
     {
-      "url": "assets/index-BDZ_49jB.css",
-      "sha256": "9a516d71ba2de941b116ca4153f4e986b8de435466fe0fef577a0bb1a4b65c8f",
-      "bytes": 88854
+      "url": "assets/index-BVl5Ngam.js",
+      "sha256": "f98cbf2903352d199752d6835dd1061ba1926b078313bb9cef7a75ad70f5bdbc",
+      "bytes": 1124883
     },
     {
-      "url": "assets/index-Hz5COkx5.js",
-      "sha256": "1f9a472288814f997a796bd17eb0a13709bc629efe7874a0b1cc692913a1dcea",
-      "bytes": 1828619
+      "url": "assets/index-CezFcsOR.css",
+      "sha256": "2a73ae59dacd32f682788b50c616724709be447f74c0833c1e5d089c1c024e61",
+      "bytes": 113712
     },
     {
       "url": "assets/run.worker-Dcf80R0t.js",
@@ -80,13 +80,13 @@
     },
     {
       "url": "index.html",
-      "sha256": "c6c88deb69a5006a4f7eebcc95aa777a62ce2fcc27135306e863364710607c63",
-      "bytes": 791
+      "sha256": "9e1fc000b5c9c5171279f137582ee5dab1339a9e433df42b4fd1089bf2398c22",
+      "bytes": 1023
     },
     {
       "url": "manifest.webmanifest",
-      "sha256": "bb66b7cebb3992c7b329f1af410f0da36ce0c48a957e01d978536c7acbec2321",
-      "bytes": 757
+      "sha256": "1de01995f29eab75e2606b8fdb549bd90a1a5e673a397c59619207cb9e30aba8",
+      "bytes": 760
     }
   ]
 }

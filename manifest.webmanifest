@@ -1,7 +1,7 @@
 {
-  "name": "Hermod Change Review Lab",
-  "short_name": "Hermod Review",
-  "description": "Explore software changes, compare arrangements, and trace the checks they require.",
+  "name": "Decision Lab",
+  "short_name": "Decision Lab",
+  "description": "Describe decisions, compare complete arrangements, and trace their evidence. Built by Hermod Labs.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
