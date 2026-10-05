@@ -1,11 +1,11 @@
 {
-  "version": "69a94bb34196347dbe67",
+  "version": "0541f5d40b23adc387d9",
   "appVersion": "0.2.0",
-  "totalBytes": 9614394,
+  "totalBytes": 9620408,
   "assets": [
     {
-      "url": "assets/analyze-WJsMJRTh.js",
-      "sha256": "205260abbfdc7273ae5c2ebd496a91ba6aad8ae231b96c5ad7b8721a386f7c3a",
+      "url": "assets/analyze-_pGeq2x5.js",
+      "sha256": "6c4227915aedff93ef4d5174446360721af54b855e250a797e632f0b81055347",
       "bytes": 2659227
     },
     {
@@ -34,14 +34,14 @@
       "bytes": 50792
     },
     {
-      "url": "assets/index-0HokIwPG.css",
-      "sha256": "5be64be2a6bdb6c16e4713c0e27bd017339cd9e1bc7ffe3b28db89ed0f78c900",
-      "bytes": 115160
+      "url": "assets/index-MZ2s3jAW.js",
+      "sha256": "32439fc05eba73719e87c4233e21cb2664a394996281cbd1065d500b54b1edcb",
+      "bytes": 1334051
     },
     {
-      "url": "assets/index-DqcyiVho.js",
-      "sha256": "9f3c658afda897b243c76d454a47dcf82892c1760504af718387a70c0284ff0c",
-      "bytes": 1330878
+      "url": "assets/index-a_0I-2zE.css",
+      "sha256": "2cbd33dca7e528c5303f99ebe99c4d3abf6224cebb89c04f6262909659b49157",
+      "bytes": 118001
     },
     {
       "url": "assets/run.worker-Dcf80R0t.js",
@@ -80,7 +80,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "1b1a957d24a5452eb216a5570a2ddd2d369f731b5ad5884ae5443ec5babfc20e",
+      "sha256": "b896944263ef63d5f3cb35c2b987ec80c633494c9ff7c18515e530f106646e2e",
       "bytes": 1023
     },
     {
