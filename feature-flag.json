@@ -1,6 +1,6 @@
 {
   "version": 1,
   "flags": {
-    "modelAndProvenance": false
+    "modelAndProvenance": true
   }
 }

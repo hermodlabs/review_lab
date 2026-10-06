@@ -1,12 +1,12 @@
 {
-  "version": "0541f5d40b23adc387d9",
+  "version": "413f390dbb2f0e0e1554",
   "appVersion": "0.2.0",
-  "totalBytes": 9620408,
+  "totalBytes": 9762225,
   "assets": [
     {
-      "url": "assets/analyze-_pGeq2x5.js",
-      "sha256": "6c4227915aedff93ef4d5174446360721af54b855e250a797e632f0b81055347",
-      "bytes": 2659227
+      "url": "assets/analyze-B2hk9K5h.js",
+      "sha256": "bffd57f3539c3e7e7b8cffaf20fb9bcb535490ca9194e75391380aa9b89b2831",
+      "bytes": 2681663
     },
     {
       "url": "assets/clingo-Bbt-XjUT.js",
@@ -34,24 +34,24 @@
       "bytes": 50792
     },
     {
-      "url": "assets/index-MZ2s3jAW.js",
-      "sha256": "32439fc05eba73719e87c4233e21cb2664a394996281cbd1065d500b54b1edcb",
-      "bytes": 1334051
+      "url": "assets/descriptionInterface-D0zNc3Yx.js",
+      "sha256": "f2ed142ae1746e349768edab67d4cd75bc38fb8cb3b885afa7dd680bd2fd0655",
+      "bytes": 8559
     },
     {
-      "url": "assets/index-a_0I-2zE.css",
-      "sha256": "2cbd33dca7e528c5303f99ebe99c4d3abf6224cebb89c04f6262909659b49157",
-      "bytes": 118001
+      "url": "assets/index-DPK_7-JK.js",
+      "sha256": "3b6d5aa85061de3bd30c9e9d0ab95d70b4c59f763ea684fcb2b76ba24c96fb99",
+      "bytes": 1442900
+    },
+    {
+      "url": "assets/index-DaDyNtcX.css",
+      "sha256": "eed09231e93efdf890300b71becee3434931b1d9817a9c4daab312e6d93ba556",
+      "bytes": 124718
     },
     {
       "url": "assets/run.worker-Dcf80R0t.js",
       "sha256": "dd9fdddeabd56d071071bc5c66328b7fd587f8db619e5b01b7c2a1104c1c6cd4",
       "bytes": 2360
-    },
-    {
-      "url": "assets/solver-DYEyJ8wB.js",
-      "sha256": "e1fe1d917bdb81632e9ebd9bedf37e27b54f39dfc5209128f870255c48209afa",
-      "bytes": 4744
     },
     {
       "url": "icons/apple-touch-icon.png",
@@ -80,7 +80,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "b896944263ef63d5f3cb35c2b987ec80c633494c9ff7c18515e530f106646e2e",
+      "sha256": "37cb6cdd8f8efdb1bba9db9decb38f12122c571239a4eee57d767b6a3cde8a9d",
       "bytes": 1023
     },
     {
