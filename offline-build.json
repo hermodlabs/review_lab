@@ -1,11 +1,11 @@
 {
-  "version": "413f390dbb2f0e0e1554",
+  "version": "397a721b9833903bef2b",
   "appVersion": "0.2.0",
-  "totalBytes": 9762225,
+  "totalBytes": 9934134,
   "assets": [
     {
-      "url": "assets/analyze-B2hk9K5h.js",
-      "sha256": "bffd57f3539c3e7e7b8cffaf20fb9bcb535490ca9194e75391380aa9b89b2831",
+      "url": "assets/analyze-BXXxPO_a.js",
+      "sha256": "93c1a0379484d6c5f901b40866fc0a1ce1260e7c3040bfd99d3a71aa43110f3b",
       "bytes": 2681663
     },
     {
@@ -34,19 +34,19 @@
       "bytes": 50792
     },
     {
-      "url": "assets/descriptionInterface-D0zNc3Yx.js",
-      "sha256": "f2ed142ae1746e349768edab67d4cd75bc38fb8cb3b885afa7dd680bd2fd0655",
+      "url": "assets/descriptionInterface-BKo83dKe.js",
+      "sha256": "da4444dc1de1871571458b21d53b830f254ef363f308f0a2cd348000d0752ae8",
       "bytes": 8559
     },
     {
-      "url": "assets/index-DPK_7-JK.js",
-      "sha256": "3b6d5aa85061de3bd30c9e9d0ab95d70b4c59f763ea684fcb2b76ba24c96fb99",
-      "bytes": 1442900
+      "url": "assets/index-BM0wftxV.js",
+      "sha256": "4cac35db3badb256692bc7bfbaa9dd54576753d87bd5b06ea4d13dcfbb46e5ad",
+      "bytes": 1592891
     },
     {
-      "url": "assets/index-DaDyNtcX.css",
-      "sha256": "eed09231e93efdf890300b71becee3434931b1d9817a9c4daab312e6d93ba556",
-      "bytes": 124718
+      "url": "assets/index-Bkner3H0.css",
+      "sha256": "7acfbdb5f30beb2c9b640132eacd9ecfff961717a34bd1c2a1f60f2ca3ddae49",
+      "bytes": 146636
     },
     {
       "url": "assets/run.worker-Dcf80R0t.js",
@@ -80,7 +80,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "37cb6cdd8f8efdb1bba9db9decb38f12122c571239a4eee57d767b6a3cde8a9d",
+      "sha256": "d8247585610dd71647aa25767580115f4eaa45b2e8cf8b5acb367568b1ebf706",
       "bytes": 1023
     },
     {
