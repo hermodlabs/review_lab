@@ -1,11 +1,11 @@
 {
-  "version": "e5393ba89e6109e888b7",
+  "version": "1aa6e2c033daaf716ace",
   "appVersion": "0.2.0",
-  "totalBytes": 105371134,
+  "totalBytes": 105469859,
   "assets": [
     {
-      "url": "assets/analyze-rRFVyi_6.js",
-      "sha256": "14ef1b8933b56a5cf08bb9ee157cd506ced4c84e7688575ea48aacb9bd6c2b17",
+      "url": "assets/analyze-uNXMQ74w.js",
+      "sha256": "c0fe9ab3d049b1a29f06c7146fe1cd226bd70e84ff4881fa8644c0c16532a07d",
       "bytes": 2686423
     },
     {
@@ -34,24 +34,24 @@
       "bytes": 50792
     },
     {
-      "url": "assets/descriptionInterface-BogwngWA.js",
-      "sha256": "a3fe19604cc68279c48f3a07ac0b182cfeadba86ac093d0392e8be5f1747d066",
+      "url": "assets/descriptionInterface-CoAdXyDt.js",
+      "sha256": "706a031134048bc088b991086c9174a7f688a90bfa909752b8fa2faa14a248a7",
       "bytes": 39199
     },
     {
-      "url": "assets/financeReport-DeUHUkl_.js",
-      "sha256": "03bbd710b1908ef6d09ecba91d201a979fd1aee5fa526a1c1a783d21d492fcb7",
+      "url": "assets/financeReport-Bl6q9gfO.js",
+      "sha256": "291647a9b432b4adc9ee4db8812daa5adffd5f328e243f8e38b1418fa1ddb3e6",
       "bytes": 3182
     },
     {
-      "url": "assets/index-CByJZhlA.js",
-      "sha256": "ebddabc939c160f5d77b638856d78782d4ea21f6c0ee5b1fe1fac4d2af6c4a5e",
-      "bytes": 5171175
+      "url": "assets/index-DJYbiURj.js",
+      "sha256": "0a8b38c832d7c585862bf026e46341796798ca6c25bef4b53acb93d65840dae8",
+      "bytes": 5264850
     },
     {
-      "url": "assets/index-RVS1s89W.css",
-      "sha256": "8030dad90637adda2c8faf7eff5395cc1148dd431cf67c7effc947924f1d3439",
-      "bytes": 493408
+      "url": "assets/index-DUYHL9X7.css",
+      "sha256": "aeca998cbd5e3064747d59862f3d2444d8d806ab0c6a5de1393b7f82e78700c7",
+      "bytes": 498458
     },
     {
       "url": "assets/lib-d6bElRJs.js",
@@ -69,8 +69,8 @@
       "bytes": 3719687
     },
     {
-      "url": "assets/pdf-ae8N8bqS.js",
-      "sha256": "48e39cf026664af10c5b1b0b030409053264e08f71cdec6374ea7c0f435aad98",
+      "url": "assets/pdf-yV0a-Mog.js",
+      "sha256": "7b6a715161587b2a8b0599cd5a6c21e73d958a7426c535f7ed75f744ab6196fe",
       "bytes": 444979
     },
     {
@@ -89,8 +89,8 @@
       "bytes": 19813
     },
     {
-      "url": "assets/reviewScenarios-57XUSeoJ.js",
-      "sha256": "badb3e4a6483f6b2ffb26df09360db6602fdc2014302d23c9808e8c30ff383ec",
+      "url": "assets/reviewScenarios-C1M9kUQ2.js",
+      "sha256": "9d3a053a0239102ac7ff5289013f8866ca150095a75777a9233f522c47a61203",
       "bytes": 8263
     },
     {
@@ -330,7 +330,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "1b2104f18ebecdf72efb0528cf0dd9396c37954bbf52518641217afa250dbfd5",
+      "sha256": "a7a2d1a6d3e8af13b2dbcb50af946942af4a7ad26b775dadb063168faae7ffef",
       "bytes": 1368
     },
     {
