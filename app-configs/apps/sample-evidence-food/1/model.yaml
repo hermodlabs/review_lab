@@ -1,0 +1,1523 @@
+# Canonical evidence-review/1 model. Rules and presentation are data.
+format: evidence-review/1
+module:
+  id: food-traceability-evidence
+  version: "1.3.0"
+  title: Review food-traceability evidence
+  metadata:
+    catalog:
+      domain:
+        id: food-supply-chains
+        label: Food supply chains
+        description: Food production and distribution networks and their tracing relationships.
+      useCase:
+        id: traceability-inquiry
+        label: Identify firms for a tracing inquiry
+        description: Determine which firms belong on an inquiry list across permitted product and business-role explanations.
+  description: "Review which firms belong on a tracing inquiry list before deciding whom to investigate. Compare the product and business-role explanations permitted by the case, derive possible supply connections, and follow each product through the network. Explicitly supplied recall starting points can also be traced and compared. Catalog compatibility supports a modeled inquiry; it does not establish contamination, actual shipments or an issued recall."
+  question: "Which firms belong on this tracing inquiry list, and whose inclusion is still uncertain?"
+  boundary: "The conclusions cover the submitted firm directory, catalogs, business roles, product transformations, permitted incident explanations and tracing assumptions. A potential supply connection is not an observed shipment or contamination finding. Seed geography limits inquiry starting points; report geography filters the completed trace. Unlisted firms, products, lots, intermediaries and catalog errors are outside the declared model. Inquiry findings do not issue a recall or authorize other action."
+  assumptions: [Each possible incident explanation uses an active set of product and business-role hypotheses permitted by the case. The reviewer does not choose which explanation is true., The minimum and maximum numbers of active hypotheses are analytical premises supplied by the case., Potential supply connections preserve product identity between distinct firms with compatible roles and matching catalogs., A declared ingredient transformation changes products only within a processor handling both products., "Tracing retains firm–product identity and each stipulated recall origin. Reporting geography is applied after tracing and does not remove intermediate firms.", The derived inquiry list includes starting firms. Upstream and downstream reports exclude their own starting firms and count each firm or state once., Counts and catalog overlap supply no probability of contamination or permission to act.]
+  parameters:
+    - id: seedMode
+      type: string
+      enum: [hypothesis, stipulated]
+      default: hypothesis
+      label: How inquiry starting points are supplied
+    - id: minActiveHypotheses
+      type: integer
+      min: 0
+      max: 2
+      default: 1
+      label: Minimum simultaneous incident explanations
+    - id: maxActiveHypotheses
+      type: integer
+      min: 0
+      max: 2
+      default: 1
+      label: Maximum simultaneous incident explanations
+    - id: targetFirm
+      type: string
+      default: F11
+      label: Firm to review
+    - id: reportRegion
+      type: string
+      default: Northeast
+      label: Reporting region
+  relations:
+    - id: state
+      source: basis
+      columns:
+        - id: id
+          type: string
+        - id: region
+          type: string
+      key: [id]
+    - id: region
+      source: basis
+      columns:
+        - id: id
+          type: string
+      key: [id]
+    - id: firm
+      source: basis
+      columns:
+        - id: id
+          type: string
+        - id: label
+          type: string
+        - id: state
+          type: string
+          references:
+            relation: state
+            column: id
+      key: [id]
+    - id: product
+      source: basis
+      columns:
+        - id: id
+          type: string
+        - id: label
+          type: string
+      key: [id]
+    - id: role
+      source: basis
+      columns:
+        - id: id
+          type: string
+      key: [id]
+    - id: firmRole
+      source: basis
+      columns:
+        - id: firm
+          type: string
+          references:
+            relation: firm
+            column: id
+        - id: role
+          type: string
+          references:
+            relation: role
+            column: id
+      key: [firm, role]
+    - id: catalog
+      source: basis
+      columns:
+        - id: firm
+          type: string
+          references:
+            relation: firm
+            column: id
+        - id: product
+          type: string
+          references:
+            relation: product
+            column: id
+      key: [firm, product]
+    - id: roleFlow
+      source: basis
+      columns:
+        - id: from
+          type: string
+          references:
+            relation: role
+            column: id
+        - id: to
+          type: string
+          references:
+            relation: role
+            column: id
+      key: [from, to]
+    - id: ingredient
+      source: basis
+      columns:
+        - id: from
+          type: string
+          references:
+            relation: product
+            column: id
+        - id: to
+          type: string
+          references:
+            relation: product
+            column: id
+      key: [from, to]
+    - id: seedRegion
+      source: basis
+      columns:
+        - id: region
+          type: string
+          references:
+            relation: region
+            column: id
+      key: [region]
+    - id: stipulatedSeed
+      source: basis
+      columns:
+        - id: id
+          type: string
+        - id: firm
+          type: string
+          references:
+            relation: firm
+            column: id
+        - id: product
+          type: string
+          references:
+            relation: product
+            column: id
+      key: [id]
+    - id: catalogComparison
+      source: basis
+      columns:
+        - id: id
+          type: string
+        - id: firstProduct
+          type: string
+          references:
+            relation: product
+            column: id
+        - id: secondProduct
+          type: string
+          references:
+            relation: product
+            column: id
+      key: [id]
+    - id: traceComparison
+      source: basis
+      columns:
+        - id: id
+          type: string
+        - id: firstSeed
+          type: string
+          references:
+            relation: stipulatedSeed
+            column: id
+        - id: secondSeed
+          type: string
+          references:
+            relation: stipulatedSeed
+            column: id
+      key: [id]
+    - id: hypothesis
+      source: basis
+      columns:
+        - id: id
+          type: string
+        - id: product
+          type: string
+          references:
+            relation: product
+            column: id
+        - id: role
+          type: string
+          references:
+            relation: role
+            column: id
+      key: [id]
+    - id: requireHypothesis
+      source: evidence
+      columns:
+        - id: id
+          type: string
+        - id: hypothesis
+          type: string
+          references:
+            relation: hypothesis
+            column: id
+      key: [id]
+    - id: forbidHypothesis
+      source: evidence
+      columns:
+        - id: id
+          type: string
+        - id: hypothesis
+          type: string
+          references:
+            relation: hypothesis
+            column: id
+      key: [id]
+    - id: active
+      source: assignment
+      columns:
+        - id: hypothesis
+          type: string
+          references:
+            relation: hypothesis
+            column: id
+      key: [hypothesis]
+      label: Product and role explanations
+    - id: recallForward
+      source: derived
+      columns:
+        - id: source
+          type: string
+        - id: firm
+          type: string
+        - id: product
+          type: string
+      key: [source, firm, product]
+      label: Downstream tracing from each recall
+    - id: recallSeedFirm
+      source: derived
+      columns:
+        - id: source
+          type: string
+        - id: firm
+          type: string
+      key: [source, firm]
+    - id: recallDownstreamFirm
+      source: derived
+      columns:
+        - id: source
+          type: string
+        - id: firm
+          type: string
+      key: [source, firm]
+      label: Downstream firms for each recall
+    - id: catalogIntersection
+      source: derived
+      columns:
+        - id: comparison
+          type: string
+        - id: firm
+          type: string
+      key: [comparison, firm]
+      label: Firms handling both compared products
+    - id: traceIntersection
+      source: derived
+      columns:
+        - id: comparison
+          type: string
+        - id: firm
+          type: string
+      key: [comparison, firm]
+      label: Firms downstream of both compared recalls
+    - id: seed
+      source: derived
+      columns:
+        - id: firm
+          type: string
+        - id: product
+          type: string
+      key: [firm, product]
+      label: Inquiry starting points
+    - id: flow
+      source: derived
+      columns:
+        - id: fromFirm
+          type: string
+        - id: fromProduct
+          type: string
+        - id: toFirm
+          type: string
+        - id: toProduct
+          type: string
+      key: [fromFirm, fromProduct, toFirm, toProduct]
+    - id: forward
+      source: derived
+      columns:
+        - id: firm
+          type: string
+        - id: product
+          type: string
+      key: [firm, product]
+      label: Downstream product tracing
+    - id: backward
+      source: derived
+      columns:
+        - id: firm
+          type: string
+        - id: product
+          type: string
+      key: [firm, product]
+      label: Upstream product tracing
+    - id: seedFirm
+      source: derived
+      columns:
+        - id: firm
+          type: string
+      key: [firm]
+    - id: inquiryFirm
+      source: derived
+      columns:
+        - id: firm
+          type: string
+      key: [firm]
+      label: Firms on the tracing inquiry list
+    - id: downstreamFirm
+      source: derived
+      columns:
+        - id: firm
+          type: string
+      key: [firm]
+    - id: upstreamFirm
+      source: derived
+      columns:
+        - id: firm
+          type: string
+      key: [firm]
+    - id: directDownstreamFirm
+      source: derived
+      columns:
+        - id: firm
+          type: string
+      key: [firm]
+    - id: traceUnionFirm
+      source: derived
+      columns:
+        - id: firm
+          type: string
+      key: [firm]
+    - id: traceUnionState
+      source: derived
+      columns:
+        - id: state
+          type: string
+      key: [state]
+    - id: regionalTraceFirm
+      source: derived
+      columns:
+        - id: firm
+          type: string
+      key: [firm]
+    - id: inquiryState
+      source: derived
+      columns:
+        - id: state
+          type: string
+      key: [state]
+    - id: summaryCounts
+      source: derived
+      columns:
+        - id: inquiryFirms
+          type: number
+        - id: inquiryStates
+          type: number
+        - id: traceUnionFirms
+          type: number
+        - id: traceUnionStates
+          type: number
+      key: [inquiryFirms, inquiryStates, traceUnionFirms, traceUnionStates]
+  generation:
+    - id: GENERATE.HYPOTHESES
+      relation: active
+      from:
+        relation: hypothesis
+        column: id
+      min:
+        parameter: minActiveHypotheses
+      max:
+        parameter: maxActiveHypotheses
+  rules:
+    - id: RECALL.SOURCE.FORWARD
+      head:
+        relation: recallForward
+        args: ["?source", "?firm", "?product"]
+      body:
+        - op: eq
+          args:
+            - parameter: seedMode
+            - stipulated
+        - relation: stipulatedSeed
+          args: ["?source", "?firm", "?product"]
+    - id: RECALL.SOURCE.CLOSURE
+      head:
+        relation: recallForward
+        args: ["?source", "?b", "?q"]
+      body:
+        - relation: recallForward
+          args: ["?source", "?a", "?p"]
+        - relation: flow
+          args: ["?a", "?p", "?b", "?q"]
+    - id: RECALL.SOURCE.SEED
+      head:
+        relation: recallSeedFirm
+        args: ["?source", "?firm"]
+      body:
+        - relation: stipulatedSeed
+          args: ["?source", "?firm", "?product"]
+    - id: RECALL.SOURCE.DOWNSTREAM
+      head:
+        relation: recallDownstreamFirm
+        args: ["?source", "?firm"]
+      body:
+        - relation: recallForward
+          args: ["?source", "?firm", "?product"]
+        - not:
+            relation: recallSeedFirm
+            args: ["?source", "?firm"]
+    - id: INTERSECT.CATALOGS
+      head:
+        relation: catalogIntersection
+        args: ["?comparison", "?firm"]
+      body:
+        - relation: catalogComparison
+          args: ["?comparison", "?first", "?second"]
+        - relation: catalog
+          args: ["?firm", "?first"]
+        - relation: catalog
+          args: ["?firm", "?second"]
+    - id: INTERSECT.SOURCE.TRACES
+      head:
+        relation: traceIntersection
+        args: ["?comparison", "?firm"]
+      body:
+        - relation: traceComparison
+          args: ["?comparison", "?first", "?second"]
+        - relation: recallDownstreamFirm
+          args: ["?first", "?firm"]
+        - relation: recallDownstreamFirm
+          args: ["?second", "?firm"]
+    - id: SEED.STIPULATED
+      head:
+        relation: seed
+        args: ["?firm", "?product"]
+      body:
+        - op: eq
+          args:
+            - parameter: seedMode
+            - stipulated
+        - relation: stipulatedSeed
+          args: ["?seed", "?firm", "?product"]
+    - id: SEED.ACTIVE
+      head:
+        relation: seed
+        args: ["?firm", "?product"]
+      body:
+        - op: eq
+          args:
+            - parameter: seedMode
+            - hypothesis
+        - relation: active
+          args: ["?hypothesis"]
+        - relation: hypothesis
+          args: ["?hypothesis", "?product", "?role"]
+        - relation: firmRole
+          args: ["?firm", "?role"]
+        - relation: catalog
+          args: ["?firm", "?product"]
+        - relation: firm
+          args: ["?firm", "?label", "?state"]
+        - relation: state
+          args: ["?state", "?region"]
+        - relation: seedRegion
+          args: ["?region"]
+    - id: FLOW.COMPATIBLE
+      head:
+        relation: flow
+        args: ["?a", "?product", "?b", "?product"]
+      body:
+        - relation: firmRole
+          args: ["?a", "?fromRole"]
+        - relation: firmRole
+          args: ["?b", "?toRole"]
+        - relation: roleFlow
+          args: ["?fromRole", "?toRole"]
+        - relation: catalog
+          args: ["?a", "?product"]
+        - relation: catalog
+          args: ["?b", "?product"]
+        - op: ne
+          args: ["?a", "?b"]
+    - id: FLOW.INGREDIENT
+      head:
+        relation: flow
+        args: ["?firm", "?fromProduct", "?firm", "?toProduct"]
+      body:
+        - relation: firmRole
+          args: ["?firm", processor]
+        - relation: catalog
+          args: ["?firm", "?fromProduct"]
+        - relation: catalog
+          args: ["?firm", "?toProduct"]
+        - relation: ingredient
+          args: ["?fromProduct", "?toProduct"]
+    - id: FORWARD.SEED
+      head:
+        relation: forward
+        args: ["?firm", "?product"]
+      body:
+        - relation: seed
+          args: ["?firm", "?product"]
+    - id: FORWARD.CLOSURE
+      head:
+        relation: forward
+        args: ["?b", "?q"]
+      body:
+        - relation: forward
+          args: ["?a", "?p"]
+        - relation: flow
+          args: ["?a", "?p", "?b", "?q"]
+    - id: BACKWARD.SEED
+      head:
+        relation: backward
+        args: ["?firm", "?product"]
+      body:
+        - relation: seed
+          args: ["?firm", "?product"]
+    - id: BACKWARD.CLOSURE
+      head:
+        relation: backward
+        args: ["?a", "?p"]
+      body:
+        - relation: backward
+          args: ["?b", "?q"]
+        - relation: flow
+          args: ["?a", "?p", "?b", "?q"]
+    - id: PROJECT.SEEDS
+      head:
+        relation: seedFirm
+        args: ["?firm"]
+      body:
+        - relation: seed
+          args: ["?firm", "?product"]
+    - id: PROJECT.INQUIRY
+      head:
+        relation: inquiryFirm
+        args: ["?firm"]
+      body:
+        - relation: forward
+          args: ["?firm", "?product"]
+    - id: PROJECT.DOWNSTREAM
+      head:
+        relation: downstreamFirm
+        args: ["?firm"]
+      body:
+        - relation: forward
+          args: ["?firm", "?product"]
+        - not:
+            relation: seedFirm
+            args: ["?firm"]
+    - id: PROJECT.UPSTREAM
+      head:
+        relation: upstreamFirm
+        args: ["?firm"]
+      body:
+        - relation: backward
+          args: ["?firm", "?product"]
+        - not:
+            relation: seedFirm
+            args: ["?firm"]
+    - id: PROJECT.DIRECT
+      head:
+        relation: directDownstreamFirm
+        args: ["?firm"]
+      body:
+        - relation: seed
+          args: ["?seed", "?product"]
+        - relation: flow
+          args: ["?seed", "?product", "?firm", "?product"]
+        - op: ne
+          args: ["?seed", "?firm"]
+        - not:
+            relation: seedFirm
+            args: ["?firm"]
+    - id: UNION.DOWNSTREAM
+      head:
+        relation: traceUnionFirm
+        args: ["?firm"]
+      body:
+        - relation: downstreamFirm
+          args: ["?firm"]
+    - id: UNION.UPSTREAM
+      head:
+        relation: traceUnionFirm
+        args: ["?firm"]
+      body:
+        - relation: upstreamFirm
+          args: ["?firm"]
+    - id: GEOGRAPHY.TRACE.STATE
+      head:
+        relation: traceUnionState
+        args: ["?state"]
+      body:
+        - relation: traceUnionFirm
+          args: ["?firm"]
+        - relation: firm
+          args: ["?firm", "?label", "?state"]
+    - id: GEOGRAPHY.REPORT.AFTER.TRACE
+      head:
+        relation: regionalTraceFirm
+        args: ["?firm"]
+      body:
+        - relation: traceUnionFirm
+          args: ["?firm"]
+        - relation: firm
+          args: ["?firm", "?label", "?state"]
+        - relation: state
+          args:
+            - "?state"
+            - parameter: reportRegion
+    - id: GEOGRAPHY.INQUIRY.STATE
+      head:
+        relation: inquiryState
+        args: ["?state"]
+      body:
+        - relation: inquiryFirm
+          args: ["?firm"]
+        - relation: firm
+          args: ["?firm", "?label", "?state"]
+    - id: COUNTS.DISTINCT
+      head:
+        relation: summaryCounts
+        args: ["?firms", "?states", "?unionFirms", "?unionStates"]
+      body:
+        - count:
+            relation: inquiryFirm
+            args: ["?firm"]
+          as: "?firms"
+        - count:
+            relation: inquiryState
+            args: ["?state"]
+          as: "?states"
+        - count:
+            relation: traceUnionFirm
+            args: ["?uFirm"]
+          as: "?unionFirms"
+        - count:
+            relation: traceUnionState
+            args: ["?uState"]
+          as: "?unionStates"
+  admission:
+    - id: TRACE.COMPARISON.MODE
+      label: Concurrent recall comparisons require stipulated-seed mode
+      when:
+        - relation: traceComparison
+          args: ["?comparison", "?first", "?second"]
+      assert:
+        op: eq
+        args:
+          - parameter: seedMode
+          - stipulated
+    - id: HYPOTHESIS.NONEMPTY
+      label: Hypothesis mode requires nonempty active assignments
+      when:
+        - op: eq
+          args:
+            - parameter: seedMode
+            - hypothesis
+      assert:
+        op: gte
+        args:
+          - parameter: minActiveHypotheses
+          - 1
+    - id: STIPULATED.NO.HYPOTHESES
+      label: Stipulated seed mode does not generate incident hypotheses
+      when:
+        - op: eq
+          args:
+            - parameter: seedMode
+            - stipulated
+      assert:
+        op: eq
+        args:
+          - parameter: maxActiveHypotheses
+          - 0
+    - id: QUERY.TARGET
+      label: The requested firm is in the declared domain
+      when:
+        - count:
+            relation: firm
+            args:
+              - parameter: targetFirm
+              - "?label"
+              - "?state"
+          as: "?matches"
+      assert:
+        op: gt
+        args: ["?matches", 0]
+    - id: REPORT.REGION
+      label: The requested reporting region is declared
+      when: []
+      assert:
+        op: exists
+        atom:
+          relation: region
+          args:
+            - parameter: reportRegion
+  constraints:
+    - id: EVIDENCE.REQUIRED
+      label: Every stipulated required hypothesis is active
+      when:
+        - relation: requireHypothesis
+          args: ["?id", "?hypothesis"]
+      assert:
+        op: exists
+        atom:
+          relation: active
+          args: ["?hypothesis"]
+    - id: EVIDENCE.FORBIDDEN
+      label: Every stipulated forbidden hypothesis is absent
+      when:
+        - relation: forbidHypothesis
+          args: ["?id", "?hypothesis"]
+      assert:
+        op: notExists
+        atom:
+          relation: active
+          args: ["?hypothesis"]
+  queries:
+    - id: concurrent-catalog-intersections
+      label: Firms handling both compared products
+      kind: set
+      body:
+        - relation: catalogIntersection
+          args: ["?comparison", "?firm"]
+      select: ["?comparison", "?firm"]
+    - id: concurrent-trace-intersections
+      label: Firms reached by both compared recalls
+      kind: set
+      body:
+        - relation: traceIntersection
+          args: ["?comparison", "?firm"]
+      select: ["?comparison", "?firm"]
+    - id: target-in-inquiry
+      label: Inquiry membership for the selected firm
+      kind: boolean
+      body:
+        - relation: inquiryFirm
+          args:
+            - parameter: targetFirm
+    - id: active-hypotheses
+      label: Product and role explanation
+      kind: set
+      body:
+        - relation: active
+          args: ["?hypothesis"]
+      select: ["?hypothesis"]
+    - id: inquiry-F11
+      label: Inquiry membership for reference firm F11
+      kind: boolean
+      body:
+        - relation: inquiryFirm
+          args: [F11]
+    - id: inquiry-F09
+      label: Inquiry membership for reference firm F09
+      kind: boolean
+      body:
+        - relation: inquiryFirm
+          args: [F09]
+    - id: inquiry-F01
+      label: Inquiry membership for reference firm F01
+      kind: boolean
+      body:
+        - relation: inquiryFirm
+          args: [F01]
+    - id: inquiry-F12
+      label: Inquiry membership for reference firm F12
+      kind: boolean
+      body:
+        - relation: inquiryFirm
+          args: [F12]
+  reports:
+    tables:
+      - id: recall-forward
+        label: Products traced from each recall starting point
+        relation: recallForward
+        columns: [source, firm, product]
+      - id: recall-downstream
+        label: Downstream firms for each recall
+        relation: recallDownstreamFirm
+        columns: [source, firm]
+      - id: catalog-intersections
+        label: Firms handling both compared products
+        relation: catalogIntersection
+        columns: [comparison, firm]
+      - id: trace-intersections
+        label: Firms downstream of both compared recalls
+        relation: traceIntersection
+        columns: [comparison, firm]
+      - id: active
+        label: Product and business-role explanation
+        relation: active
+        columns: [hypothesis]
+      - id: seeds
+        label: Where this inquiry starts
+        relation: seed
+        columns: [firm, product]
+      - id: forward
+        label: All downstream firm and product steps
+        relation: forward
+        columns: [firm, product]
+      - id: inquiry
+        label: Firms on this tracing inquiry list
+        relation: inquiryFirm
+        columns: [firm]
+      - id: backward
+        label: All upstream firm and product steps
+        relation: backward
+        columns: [firm, product]
+      - id: direct
+        label: Firms one supply step downstream
+        relation: directDownstreamFirm
+        columns: [firm]
+      - id: downstream
+        label: All downstream firms
+        relation: downstreamFirm
+        columns: [firm]
+      - id: upstream
+        label: All upstream firms
+        relation: upstreamFirm
+        columns: [firm]
+      - id: union
+        label: Distinct upstream and downstream firms
+        relation: traceUnionFirm
+        columns: [firm]
+      - id: states
+        label: States in the combined trace
+        relation: traceUnionState
+        columns: [state]
+      - id: regional
+        label: Traced firms in the selected reporting region
+        relation: regionalTraceFirm
+        columns: [firm]
+      - id: counts
+        label: Distinct firm and state totals
+        relation: summaryCounts
+        columns: [inquiryFirms, inquiryStates, traceUnionFirms, traceUnionStates]
+  presentation:
+    description: "Review {{parameter.targetFirm}} for inclusion in the tracing inquiry. Compare the explanations consistent with the supplied evidence and catalog, inspect where each explanation leads, and see which firms’ inclusion remains uncertain."
+    question: "Is {{parameter.targetFirm}} included in this tracing inquiry?"
+    labels:
+      scenario: Possible incident explanation
+      scenarios: Possible incident explanations
+      assignment: Product and business-role explanation
+      answer: Inquiry finding
+      examples: Explanations behind these answers
+    entities:
+      - id: firm
+        relation: firm
+        key: id
+        label: label
+      - id: product
+        relation: product
+        key: id
+        label: label
+      - id: role
+        relation: role
+        key: id
+        template: "{{row.id}}"
+      - id: hypothesis
+        relation: hypothesis
+        key: id
+        template: "{{row.product}} / {{row.role}}"
+      - id: recall
+        relation: stipulatedSeed
+        key: id
+        template: "{{row.firm}} / {{row.product}}"
+      - id: catalog-comparison
+        relation: catalogComparison
+        key: id
+        template: "{{row.firstProduct}} and {{row.secondProduct}}"
+      - id: trace-comparison
+        relation: traceComparison
+        key: id
+        template: "{{row.firstSeed}} and {{row.secondSeed}}"
+    columns:
+      - relation: firmRole
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: firmRole
+        column: role
+        label: Business role
+        entity: role
+      - relation: catalog
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: catalog
+        column: product
+        label: Product
+        entity: product
+      - relation: stipulatedSeed
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: stipulatedSeed
+        column: product
+        label: Product
+        entity: product
+      - relation: catalogComparison
+        column: firstProduct
+        label: First product
+        entity: product
+      - relation: catalogComparison
+        column: secondProduct
+        label: Second product
+        entity: product
+      - relation: traceComparison
+        column: firstSeed
+        label: First recall
+        entity: recall
+      - relation: traceComparison
+        column: secondSeed
+        label: Second recall
+        entity: recall
+      - relation: hypothesis
+        column: product
+        label: Product
+        entity: product
+      - relation: hypothesis
+        column: role
+        label: Business role
+        entity: role
+      - relation: requireHypothesis
+        column: hypothesis
+        label: Product and business role
+        entity: hypothesis
+      - relation: forbidHypothesis
+        column: hypothesis
+        label: Product and business role
+        entity: hypothesis
+      - relation: active
+        column: hypothesis
+        label: Product and business role
+        entity: hypothesis
+      - relation: recallForward
+        column: source
+        label: Recall starting point
+        entity: recall
+      - relation: recallForward
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: recallForward
+        column: product
+        label: Product
+        entity: product
+      - relation: recallSeedFirm
+        column: source
+        label: Recall starting point
+        entity: recall
+      - relation: recallSeedFirm
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: recallDownstreamFirm
+        column: source
+        label: Recall starting point
+        entity: recall
+      - relation: recallDownstreamFirm
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: catalogIntersection
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: traceIntersection
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: seed
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: seed
+        column: product
+        label: Product
+        entity: product
+      - relation: flow
+        column: fromFirm
+        label: Potential supplier
+        entity: firm
+      - relation: flow
+        column: fromProduct
+        label: Incoming product
+        entity: product
+      - relation: flow
+        column: toFirm
+        label: Potential receiver
+        entity: firm
+      - relation: flow
+        column: toProduct
+        label: Outgoing product
+        entity: product
+      - relation: forward
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: forward
+        column: product
+        label: Product
+        entity: product
+      - relation: backward
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: backward
+        column: product
+        label: Product
+        entity: product
+      - relation: seedFirm
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: inquiryFirm
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: downstreamFirm
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: upstreamFirm
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: directDownstreamFirm
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: traceUnionFirm
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: regionalTraceFirm
+        column: firm
+        label: Firm
+        entity: firm
+      - relation: catalogIntersection
+        column: comparison
+        label: Compared products
+        entity: catalog-comparison
+      - relation: traceIntersection
+        column: comparison
+        label: Compared recalls
+        entity: trace-comparison
+      - relation: summaryCounts
+        column: inquiryFirms
+        label: Firms on this inquiry list
+      - relation: summaryCounts
+        column: inquiryStates
+        label: States on this inquiry list
+      - relation: summaryCounts
+        column: traceUnionFirms
+        label: Distinct upstream or downstream firms
+      - relation: summaryCounts
+        column: traceUnionStates
+        label: States in the combined trace
+    parameters:
+      - id: targetFirm
+        entity: firm
+    queries:
+      - id: target-in-inquiry
+        question: "Is {{parameter.targetFirm}} included in this tracing inquiry?"
+        valueLabels:
+          "true": On the tracing inquiry list
+          "false": Off the tracing inquiry list
+        answers:
+          establishedTrue: "{{parameter.targetFirm}} belongs on the tracing inquiry list."
+          establishedFalse: "{{parameter.targetFirm}} is absent from the tracing inquiry list under this model."
+          underdetermined: "Whether {{parameter.targetFirm}} belongs on the inquiry list remains open."
+          inconsistent: The submitted record and assumptions have no compatible explanation.
+          incomplete: The current check has not established this answer.
+          invalid: These inputs cannot be assessed under this model.
+          not-assessed: This question needs an additional assessment contract.
+        explanations:
+          establishedTrue: "Every compatible explanation includes {{parameter.targetFirm}} in this tracing inquiry."
+          establishedFalse: "No compatible explanation includes {{parameter.targetFirm}}. This covers the submitted directory, catalog and tracing assumptions; it does not establish that the firm is uninvolved in an actual incident."
+          underdetermined: "The opposing explanations below give different inquiry membership answers for {{parameter.targetFirm}}. The submitted information does not settle this modeled inclusion question."
+          inconsistent: Review the submitted required and forbidden hypotheses against the permitted number of active hypotheses. The record and these assumptions cannot all hold together.
+          incomplete: The declared alternatives have not all been checked. Agreement among the explanations found so far is not enough to establish membership.
+          invalid: Correct the input findings before relying on a membership assessment.
+      - id: inquiry-F11
+        question: "Is {{entity.firm.F11}} included in this tracing inquiry?"
+        valueLabels:
+          "true": On the tracing inquiry list
+          "false": Off the tracing inquiry list
+        answers:
+          establishedTrue: "{{entity.firm.F11}} belongs on the tracing inquiry list."
+          establishedFalse: "{{entity.firm.F11}} is absent from the tracing inquiry list under this model."
+          underdetermined: "Whether {{entity.firm.F11}} belongs on the inquiry list remains open."
+          inconsistent: The submitted record and assumptions have no compatible explanation.
+          incomplete: The current check has not established this answer.
+          invalid: These inputs cannot be assessed under this model.
+          not-assessed: This question needs an additional assessment contract.
+        explanations:
+          establishedTrue: "Every compatible explanation includes {{entity.firm.F11}} in this tracing inquiry."
+          establishedFalse: "No compatible explanation includes {{entity.firm.F11}}. This covers the submitted directory, catalog and tracing assumptions; it does not establish that the firm is uninvolved in an actual incident."
+          underdetermined: "The opposing explanations below give different inquiry membership answers for {{entity.firm.F11}}. The submitted information does not settle this modeled inclusion question."
+          inconsistent: Review the submitted required and forbidden hypotheses against the permitted number of active hypotheses. The record and these assumptions cannot all hold together.
+          incomplete: The declared alternatives have not all been checked. Agreement among the explanations found so far is not enough to establish membership.
+          invalid: Correct the input findings before relying on a membership assessment.
+      - id: inquiry-F09
+        question: "Is {{entity.firm.F09}} included in this tracing inquiry?"
+        valueLabels:
+          "true": On the tracing inquiry list
+          "false": Off the tracing inquiry list
+        answers:
+          establishedTrue: "{{entity.firm.F09}} belongs on the tracing inquiry list."
+          establishedFalse: "{{entity.firm.F09}} is absent from the tracing inquiry list under this model."
+          underdetermined: "Whether {{entity.firm.F09}} belongs on the inquiry list remains open."
+          inconsistent: The submitted record and assumptions have no compatible explanation.
+          incomplete: The current check has not established this answer.
+          invalid: These inputs cannot be assessed under this model.
+          not-assessed: This question needs an additional assessment contract.
+        explanations:
+          establishedTrue: "Every compatible explanation includes {{entity.firm.F09}} in this tracing inquiry."
+          establishedFalse: "No compatible explanation includes {{entity.firm.F09}}. This covers the submitted directory, catalog and tracing assumptions; it does not establish that the firm is uninvolved in an actual incident."
+          underdetermined: "The opposing explanations below give different inquiry membership answers for {{entity.firm.F09}}. The submitted information does not settle this modeled inclusion question."
+          inconsistent: Review the submitted required and forbidden hypotheses against the permitted number of active hypotheses. The record and these assumptions cannot all hold together.
+          incomplete: The declared alternatives have not all been checked. Agreement among the explanations found so far is not enough to establish membership.
+          invalid: Correct the input findings before relying on a membership assessment.
+      - id: inquiry-F01
+        question: "Is {{entity.firm.F01}} included in this tracing inquiry?"
+        valueLabels:
+          "true": On the tracing inquiry list
+          "false": Off the tracing inquiry list
+        answers:
+          establishedTrue: "{{entity.firm.F01}} belongs on the tracing inquiry list."
+          establishedFalse: "{{entity.firm.F01}} is absent from the tracing inquiry list under this model."
+          underdetermined: "Whether {{entity.firm.F01}} belongs on the inquiry list remains open."
+          inconsistent: The submitted record and assumptions have no compatible explanation.
+          incomplete: The current check has not established this answer.
+          invalid: These inputs cannot be assessed under this model.
+          not-assessed: This question needs an additional assessment contract.
+        explanations:
+          establishedTrue: "Every compatible explanation includes {{entity.firm.F01}} in this tracing inquiry."
+          establishedFalse: "No compatible explanation includes {{entity.firm.F01}}. This covers the submitted directory, catalog and tracing assumptions; it does not establish that the firm is uninvolved in an actual incident."
+          underdetermined: "The opposing explanations below give different inquiry membership answers for {{entity.firm.F01}}. The submitted information does not settle this modeled inclusion question."
+          inconsistent: Review the submitted required and forbidden hypotheses against the permitted number of active hypotheses. The record and these assumptions cannot all hold together.
+          incomplete: The declared alternatives have not all been checked. Agreement among the explanations found so far is not enough to establish membership.
+          invalid: Correct the input findings before relying on a membership assessment.
+      - id: inquiry-F12
+        question: "Is {{entity.firm.F12}} included in this tracing inquiry?"
+        valueLabels:
+          "true": On the tracing inquiry list
+          "false": Off the tracing inquiry list
+        answers:
+          establishedTrue: "{{entity.firm.F12}} belongs on the tracing inquiry list."
+          establishedFalse: "{{entity.firm.F12}} is absent from the tracing inquiry list under this model."
+          underdetermined: "Whether {{entity.firm.F12}} belongs on the inquiry list remains open."
+          inconsistent: The submitted record and assumptions have no compatible explanation.
+          incomplete: The current check has not established this answer.
+          invalid: These inputs cannot be assessed under this model.
+          not-assessed: This question needs an additional assessment contract.
+        explanations:
+          establishedTrue: "Every compatible explanation includes {{entity.firm.F12}} in this tracing inquiry."
+          establishedFalse: "No compatible explanation includes {{entity.firm.F12}}. This covers the submitted directory, catalog and tracing assumptions; it does not establish that the firm is uninvolved in an actual incident."
+          underdetermined: "The opposing explanations below give different inquiry membership answers for {{entity.firm.F12}}. The submitted information does not settle this modeled inclusion question."
+          inconsistent: Review the submitted required and forbidden hypotheses against the permitted number of active hypotheses. The record and these assumptions cannot all hold together.
+          incomplete: The declared alternatives have not all been checked. Agreement among the explanations found so far is not enough to establish membership.
+          invalid: Correct the input findings before relying on a membership assessment.
+      - id: active-hypotheses
+        question: "Which products and business roles were involved in the incident?"
+        entity: hypothesis
+        answers:
+          established: "Active product and role explanation: {{answer}}."
+          underdetermined: The product and role explanation remains open.
+          inconsistent: No product and role explanation fits the submitted record.
+          incomplete: The product and role explanation has not been established.
+        explanations:
+          underdetermined: A firm can belong on the inquiry list under every compatible explanation even when the implicated product and business role remain unsettled.
+      - id: concurrent-catalog-intersections
+        question: "Which firms handle both products in each declared comparison?"
+        answers:
+          established: "Firms with the declared catalog overlap: {{answer}}."
+        explanations:
+          established: A shared catalog is a compatibility finding. It does not establish that a firm is downstream of both recalls or received a contaminated shipment.
+        tupleEntities: [null, firm]
+      - id: concurrent-trace-intersections
+        question: "Which firms are downstream of both recall starting points in each declared comparison?"
+        answers:
+          established: "Firms reached by both compared recalls: {{answer}}."
+        explanations:
+          established: Each recall keeps its own product and starting firm during traversal. A recall starting firm is excluded from its own downstream set.
+        tupleEntities: [null, firm]
+    reports:
+      answer:
+        title: Inquiry finding
+        question: "Which firms belong on this traceability inquiry list, and whose inclusion is still uncertain?"
+        description: See which firms are included under every remaining explanation and whose inclusion still depends on the incident explanation.
+      interpretations:
+        title: Possible incident explanations
+        question: "Which explanations fit, and which firms does each explanation reach?"
+        description: Compare the permitted explanations and inspect the tracing inquiry list derived from each one.
+      stability:
+        title: Why the finding holds
+        question: "Would the firm still be included under a different compatible incident explanation?"
+        description: Inspect agreeing or opposing explanations under the same submitted record.
+      findings:
+        title: Conflicts and input checks
+        question: "Which explanations were ruled out, and does the submitted information need attention?"
+        description: "Review invalid references, incompatible evidence and excluded explanations."
+      basis:
+        title: Scope and assumptions
+        question: "Which catalog, tracing assumptions and alternatives support this finding?"
+        description: Inspect the exact case and the limits of the model before applying the result.
+      changes:
+        title: Effect of case changes
+        question: "How did a catalog, evidence or question change affect the inquiry finding?"
+        description: Compare recomputed findings while preserving each earlier input basis.
+    tableGroups:
+      - id: incident-explanation
+        title: Product and role explanation
+        description: "These are possible incident explanations, rather than choices the reviewer can make true."
+        tableIds: [active]
+        when:
+          parameter: seedMode
+          equals: hypothesis
+      - id: candidate-inquiry
+        title: Firms to consider under this explanation
+        description: The inquiry list includes its starting firms. Firm and state totals count distinct identities.
+        tableIds: [seeds, inquiry, counts]
+      - id: recall-comparisons
+        title: Each recall and their overlap
+        description: Keep each stipulated recall origin and its product-specific downstream trace separate before comparing the results.
+        tableIds: [recall-forward, recall-downstream, trace-intersections]
+        when:
+          parameter: seedMode
+          equals: stipulated
+      - id: catalog-overlap
+        title: Catalog overlap
+        description: Handling both products is a different question from being downstream of both recall starting points.
+        tableIds: [catalog-intersections]
+        collapsed: true
+      - id: downstream-tracing
+        title: Downstream tracing
+        description: Follow outgoing product-specific potential connections. Downstream firm lists exclude the inquiry starting firms.
+        tableIds: [forward, direct, downstream]
+        collapsed: true
+      - id: upstream-tracing
+        title: Upstream tracing
+        description: Follow the same potential connections backward. Upstream firm lists exclude the inquiry starting firms.
+        tableIds: [backward, upstream]
+        collapsed: true
+      - id: regional-summary
+        title: Combined trace and regional summary
+        description: Combine distinct upstream and downstream firms before counting states or filtering the reporting region.
+        tableIds: [union, states, regional]
+        collapsed: true
+    findingGroups:
+      - id: firm-inclusion
+        title: Firm inclusion
+        question: "Which firms belong on this traceability inquiry list, and whose inclusion is still uncertain?"
+        description: Review the selected firm and comparison firms without treating an open inclusion question as settled.
+        queryIds: [target-in-inquiry, inquiry-F11, inquiry-F09, inquiry-F01, inquiry-F12]
+      - id: product-role-identification
+        title: Product and role identification
+        question: "Which product and business role may explain this incident?"
+        description: A firm can belong on the inquiry list even while the product and business-role explanation remains open.
+        queryIds: [active-hypotheses]
+      - id: recall-comparison-findings
+        title: Recall comparisons
+        question: "Which firms handle both products, and which are downstream of both recalls?"
+        description: Keep catalog overlap separate from the intersection of two product-specific recall traces.
+        queryIds: [concurrent-catalog-intersections, concurrent-trace-intersections]
+        when:
+          parameter: seedMode
+          equals: stipulated
+case:
+  id: C0
+  scope: FOOD-MINI-1 / synthetic catalog revision 1 / forward inquiry
+  parameters:
+    seedMode: hypothesis
+    minActiveHypotheses: 1
+    maxActiveHypotheses: 1
+    targetFirm: F11
+    reportRegion: Northeast
+  basis:
+    region:
+      - id: West
+      - id: South
+      - id: Midwest
+      - id: Northeast
+    state:
+      - id: CA
+        region: West
+      - id: AZ
+        region: West
+      - id: TX
+        region: South
+      - id: FL
+        region: South
+      - id: IL
+        region: Midwest
+      - id: OH
+        region: Midwest
+      - id: NY
+        region: Northeast
+      - id: MA
+        region: Northeast
+    firm:
+      - id: F01
+        label: Valley Growers
+        state: CA
+      - id: F02
+        label: Mesa Produce
+        state: AZ
+      - id: F03
+        label: Crossroads Foods
+        state: TX
+      - id: F04
+        label: Coast Processing
+        state: CA
+      - id: F05
+        label: Desert Processing
+        state: AZ
+      - id: F06
+        label: Atlantic Wholesale
+        state: NY
+      - id: F07
+        label: Heartland Wholesale
+        state: IL
+      - id: F08
+        label: Bay Market
+        state: MA
+      - id: F09
+        label: Lake Market
+        state: OH
+      - id: F10
+        label: Gulf Market
+        state: FL
+      - id: F11
+        label: Pacific Market
+        state: CA
+      - id: F12
+        label: Orchard Greens
+        state: CA
+    product:
+      - id: tf
+        label: Fresh tomatoes
+      - id: ts
+        label: Tomato sauce
+      - id: pf
+        label: Fresh peppers
+      - id: ps
+        label: Pepper sauce
+      - id: cu
+        label: Cucumbers
+    role:
+      - id: grower
+      - id: processor
+      - id: wholesaler
+      - id: retailer
+    firmRole:
+      - firm: F01
+        role: grower
+      - firm: F02
+        role: grower
+      - firm: F03
+        role: grower
+      - firm: F03
+        role: processor
+      - firm: F04
+        role: processor
+      - firm: F05
+        role: processor
+      - firm: F06
+        role: wholesaler
+      - firm: F07
+        role: wholesaler
+      - firm: F08
+        role: retailer
+      - firm: F09
+        role: retailer
+      - firm: F10
+        role: retailer
+      - firm: F11
+        role: retailer
+      - firm: F12
+        role: grower
+    catalog:
+      - firm: F01
+        product: tf
+      - firm: F02
+        product: pf
+      - firm: F03
+        product: tf
+      - firm: F03
+        product: ts
+      - firm: F03
+        product: pf
+      - firm: F03
+        product: ps
+      - firm: F04
+        product: tf
+      - firm: F04
+        product: ts
+      - firm: F05
+        product: pf
+      - firm: F05
+        product: ps
+      - firm: F06
+        product: tf
+      - firm: F06
+        product: ts
+      - firm: F06
+        product: pf
+      - firm: F06
+        product: ps
+      - firm: F07
+        product: tf
+      - firm: F07
+        product: ts
+      - firm: F08
+        product: tf
+      - firm: F08
+        product: ts
+      - firm: F08
+        product: pf
+      - firm: F08
+        product: ps
+      - firm: F09
+        product: tf
+      - firm: F09
+        product: ts
+      - firm: F10
+        product: pf
+      - firm: F10
+        product: ps
+      - firm: F11
+        product: tf
+      - firm: F11
+        product: ts
+      - firm: F11
+        product: pf
+      - firm: F11
+        product: ps
+      - firm: F12
+        product: cu
+    roleFlow:
+      - from: grower
+        to: processor
+      - from: grower
+        to: wholesaler
+      - from: processor
+        to: wholesaler
+      - from: wholesaler
+        to: retailer
+    ingredient:
+      - from: tf
+        to: ts
+      - from: pf
+        to: ps
+    seedRegion:
+      - region: West
+      - region: South
+      - region: Midwest
+      - region: Northeast
+    stipulatedSeed: []
+    catalogComparison:
+      - id: FRESH-PRODUCTS
+        firstProduct: tf
+        secondProduct: pf
+    traceComparison: []
+    hypothesis:
+      - id: T
+        product: tf
+        role: processor
+      - id: P
+        product: pf
+        role: grower
+  evidence:
+    requireHypothesis: []
+    forbidHypothesis: []
+  queryIds: [target-in-inquiry, inquiry-F09, inquiry-F01, inquiry-F12, active-hypotheses]
+  evaluation:
+    maxCandidates: 10000
+    maxRuleRounds: 100
+    maxFacts: 50000

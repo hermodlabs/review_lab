@@ -1,0 +1,412 @@
+# Canonical evidence-review/1 model. Rules and presentation are data.
+format: evidence-review/1
+module:
+  id: marble-evidence
+  version: "1.2.0"
+  title: Review marble evidence
+  metadata:
+    catalog:
+      domain:
+        id: canonical-examples
+        label: Canonical examples
+        description: Reference problems for understanding and testing reusable evidence patterns.
+      useCase:
+        id: locate-heavy-marble
+        label: Locate a heavy marble
+        description: Determine whether a weighing record identifies the containing bag or the exact heavy marble.
+  description: "Does a fixed weighing record establish the bag containing the heavy marble? Exactly one of nine identified marbles is heavier. Generate each possible heavy identity, derive each weighing outcome from its pan membership, and retain assignments within the declared global report-error limit, initially one. The required bag question and optional exact-identity question are assessed independently from the generated interpretations. These are hypothetical observations, not a record of physical inspection or permission to act."
+  question: "Does this record establish which bag contains the heavy marble?"
+  boundary: "Nine listed marbles in inventory N1; stable bag membership and masses; one known-heavier marble; equal normal masses; equal-size disjoint pans; containers ignored; at most the declared number of incorrect reports across the complete record. Unlisted marbles, changed layouts, transient masses and probabilistic report errors are outside this model."
+  assumptions: ["Exactly one listed marble is heavier; all others have equal mass.", "Physical outcomes are determined from the heavy marble’s side in an equal-size weighing.", "The error limit applies globally to the submitted record, not separately to each setup.", "Logical compatibility supplies no probabilities, entropy or information gain."]
+  parameters:
+    - id: maxIncorrectReports
+      type: integer
+      min: 0
+      max: 20
+      default: 1
+  relations:
+    - id: inventory
+      source: basis
+      columns:
+        - id: id
+          type: string
+      key: [id]
+    - id: bag
+      source: basis
+      columns:
+        - id: id
+          type: string
+        - id: label
+          type: string
+      key: [id]
+    - id: marble
+      source: basis
+      columns:
+        - id: id
+          type: string
+        - id: bag
+          type: string
+          references:
+            relation: bag
+            column: id
+        - id: inventory
+          type: string
+          references:
+            relation: inventory
+            column: id
+      key: [id]
+    - id: outcome
+      source: basis
+      columns:
+        - id: id
+          type: string
+      key: [id]
+    - id: setup
+      source: basis
+      columns:
+        - id: id
+          type: string
+        - id: inventory
+          type: string
+          references:
+            relation: inventory
+            column: id
+      key: [id]
+    - id: pan
+      source: basis
+      columns:
+        - id: setup
+          type: string
+          references:
+            relation: setup
+            column: id
+        - id: marble
+          type: string
+          references:
+            relation: marble
+            column: id
+        - id: side
+          type: string
+      key: [setup, marble]
+    - id: observation
+      source: evidence
+      columns:
+        - id: id
+          type: string
+        - id: setup
+          type: string
+          references:
+            relation: setup
+            column: id
+        - id: inventory
+          type: string
+          references:
+            relation: inventory
+            column: id
+        - id: reported
+          type: string
+          references:
+            relation: outcome
+            column: id
+      key: [id]
+    - id: heavy
+      source: assignment
+      columns:
+        - id: marble
+          type: string
+          references:
+            relation: marble
+            column: id
+      key: [marble]
+    - id: prediction
+      source: derived
+      columns:
+        - id: setup
+          type: string
+        - id: outcome
+          type: string
+      key: [setup]
+    - id: mismatch
+      source: derived
+      columns:
+        - id: observation
+          type: string
+        - id: expected
+          type: string
+        - id: reported
+          type: string
+      key: [observation]
+  generation:
+    - id: GENERATE.HEAVY
+      relation: heavy
+      from:
+        relation: marble
+        column: id
+      min: 1
+      max: 1
+  rules:
+    - id: PREDICT.LEFT
+      head:
+        relation: prediction
+        args: ["?setup", left]
+      body:
+        - relation: heavy
+          args: ["?marble"]
+        - relation: pan
+          args: ["?setup", "?marble", left]
+    - id: PREDICT.RIGHT
+      head:
+        relation: prediction
+        args: ["?setup", right]
+      body:
+        - relation: heavy
+          args: ["?marble"]
+        - relation: pan
+          args: ["?setup", "?marble", right]
+    - id: PREDICT.BALANCED
+      head:
+        relation: prediction
+        args: ["?setup", balanced]
+      body:
+        - relation: setup
+          args: ["?setup", "?inventory"]
+        - relation: heavy
+          args: ["?marble"]
+        - not:
+            relation: pan
+            args: ["?setup", "?marble", left]
+        - not:
+            relation: pan
+            args: ["?setup", "?marble", right]
+    - id: REPORT.MISMATCH
+      head:
+        relation: mismatch
+        args: ["?id", "?predicted", "?reported"]
+      body:
+        - relation: observation
+          args: ["?id", "?setup", "?inventory", "?reported"]
+        - relation: prediction
+          args: ["?setup", "?predicted"]
+        - op: ne
+          args: ["?predicted", "?reported"]
+  admission:
+    - id: PAN.SIDES
+      label: Every pan entry names left or right
+      when:
+        - relation: pan
+          args: ["?setup", "?marble", "?side"]
+      assert:
+        op: ne
+        args: ["?side", balanced]
+    - id: PAN.KNOWN_SIDE
+      label: Every pan entry uses a supported side
+      when:
+        - relation: pan
+          args: ["?setup", "?marble", "?side"]
+      assert:
+        op: exists
+        atom:
+          relation: outcome
+          args: ["?side"]
+    - id: PAN.EQUAL
+      label: Each setup compares equally many marbles
+      when:
+        - relation: setup
+          args: ["?setup", "?inventory"]
+        - count:
+            relation: pan
+            args: ["?setup", "?m", left]
+          as: "?left"
+        - count:
+            relation: pan
+            args: ["?setup", "?n", right]
+          as: "?right"
+      assert:
+        op: eq
+        args: ["?left", "?right"]
+    - id: PAN.NONEMPTY
+      label: Each setup compares nonempty groups
+      when:
+        - relation: setup
+          args: ["?setup", "?inventory"]
+        - count:
+            relation: pan
+            args: ["?setup", "?m", left]
+          as: "?left"
+      assert:
+        op: gt
+        args: ["?left", 0]
+    - id: PAN.INVENTORY
+      label: The pan contents belong to the setup inventory
+      when:
+        - relation: pan
+          args: ["?setup", "?marble", "?side"]
+        - relation: setup
+          args: ["?setup", "?setupInventory"]
+        - relation: marble
+          args: ["?marble", "?bag", "?marbleInventory"]
+      assert:
+        op: eq
+        args: ["?setupInventory", "?marbleInventory"]
+    - id: RECORD.INVENTORY
+      label: "Each observation uses its setup’s inventory"
+      when:
+        - relation: observation
+          args: ["?id", "?setup", "?inventory", "?reported"]
+        - relation: setup
+          args: ["?setup", "?setupInventory"]
+      assert:
+        op: eq
+        args: ["?inventory", "?setupInventory"]
+  constraints:
+    - id: GLOBAL.REPORT.LIMIT
+      label: Predicted and reported outcomes differ within the global error limit
+      when:
+        - count:
+            relation: mismatch
+            args: ["?id", "?expected", "?reported"]
+          as: "?errors"
+      assert:
+        op: lte
+        args:
+          - "?errors"
+          - parameter: maxIncorrectReports
+  queries:
+    - id: containing-bag
+      label: Containing bag
+      kind: value
+      body:
+        - relation: heavy
+          args: ["?marble"]
+        - relation: marble
+          args: ["?marble", "?bag", "?inventory"]
+      select: ["?bag"]
+    - id: heavy-marble
+      label: Exact heavy marble
+      kind: value
+      body:
+        - relation: heavy
+          args: ["?marble"]
+      select: ["?marble"]
+  reports:
+    tables:
+      - id: heavy
+        label: Heavy identity
+        relation: heavy
+        columns: [marble]
+      - id: predictions
+        label: Predicted setup outcomes
+        relation: prediction
+        columns: [setup, outcome]
+      - id: mismatches
+        label: Reports using the error allowance
+        relation: mismatch
+        columns: [observation, expected, reported]
+  presentation:
+    findingGroups:
+      - id: bag-identification
+        title: Bag identification
+        question: "Which bag contains the heavy marble?"
+        description: Assess the bag-selection question without requiring the exact heavy marble to be identified.
+        queryIds: [containing-bag]
+      - id: marble-identification
+        title: Marble identification
+        question: "Which individual marble is heavy?"
+        description: Assess the finer identity question separately from the containing-bag answer.
+        queryIds: [heavy-marble]
+case:
+  id: E3
+  scope: "Inventory N1 / stable weighing record O1–O3"
+  parameters:
+    maxIncorrectReports: 1
+  basis:
+    inventory:
+      - id: N1
+    bag:
+      - id: red
+        label: Red
+      - id: blue
+        label: Blue
+      - id: gold
+        label: Gold
+    marble:
+      - id: r1
+        bag: red
+        inventory: N1
+      - id: r2
+        bag: red
+        inventory: N1
+      - id: r3
+        bag: red
+        inventory: N1
+      - id: b1
+        bag: blue
+        inventory: N1
+      - id: b2
+        bag: blue
+        inventory: N1
+      - id: b3
+        bag: blue
+        inventory: N1
+      - id: g1
+        bag: gold
+        inventory: N1
+      - id: g2
+        bag: gold
+        inventory: N1
+      - id: g3
+        bag: gold
+        inventory: N1
+    outcome:
+      - id: left
+      - id: right
+      - id: balanced
+    setup:
+      - id: W0
+        inventory: N1
+      - id: W1
+        inventory: N1
+    pan:
+      - setup: W0
+        marble: r1
+        side: left
+      - setup: W0
+        marble: r2
+        side: left
+      - setup: W0
+        marble: r3
+        side: left
+      - setup: W0
+        marble: b1
+        side: right
+      - setup: W0
+        marble: b2
+        side: right
+      - setup: W0
+        marble: b3
+        side: right
+      - setup: W1
+        marble: r1
+        side: left
+      - setup: W1
+        marble: r2
+        side: right
+  evidence:
+    observation:
+      - id: O1
+        setup: W0
+        inventory: N1
+        reported: left
+      - id: O2
+        setup: W0
+        inventory: N1
+        reported: right
+      - id: O3
+        setup: W0
+        inventory: N1
+        reported: left
+  queryIds: [containing-bag, heavy-marble]
+  evaluation:
+    maxCandidates: 10000
+    maxRuleRounds: 100
+    maxFacts: 50000

@@ -1,1 +1,0 @@
-var e=new URL(`pdf.worker.min-CKukk4ye.js`,import.meta.url).href;export{e as default};

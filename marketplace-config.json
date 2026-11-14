@@ -1,0 +1,6 @@
+{
+  "enabled": true,
+  "source": "local",
+  "localBaseUrl": "./app-configs/",
+  "remoteFeedUrl": ""
+}

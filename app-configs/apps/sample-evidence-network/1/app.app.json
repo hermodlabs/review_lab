@@ -1,0 +1,2211 @@
+{
+  "schemaVersion": 1,
+  "kind": "hermod-published-app-package",
+  "app": {
+    "schemaVersion": 5,
+    "kind": "hermod-published-app",
+    "runtime": "diagnostic-evidence",
+    "id": "sample-evidence-network",
+    "version": 1,
+    "name": "Localize network faults",
+    "description": "Determine which equipment group or individual node the submitted path reports actually implicate. Compare every permitted failure combination under the declared fault bound, assessed snapshot and reliable path predictor. Separate a stable zone-level finding from individual node failures that remain uncertain before making further diagnostic or repair decisions. The result describes what the record establishes; it does not authorize a repair.",
+    "source": "# Canonical evidence-review/1 model. Rules and presentation are data.\nformat: evidence-review/1\nmodule:\n  id: network-fault-evidence\n  version: \"1.3.0\"\n  title: Localize network faults\n  metadata:\n    catalog:\n      domain:\n        id: network-operations\n        label: Network operations\n        description: Network monitoring and diagnosis from declared topology and test records.\n      useCase:\n        id: fault-localization\n        label: Locate network faults\n        description: Determine which fault zones and individual node failures are established by path-test results.\n  description: \"Determine which equipment group or individual node the submitted path reports actually implicate. Compare every permitted failure combination under the declared fault bound, assessed snapshot and reliable path predictor. Separate a stable zone-level finding from individual node failures that remain uncertain before making further diagnostic or repair decisions. The result describes what the record establishes; it does not authorize a repair.\"\n  question: \"Where do the path-test results locate a fault, and which nodes have failed?\"\n  boundary: \"The conclusions cover the submitted node inventory, topology, fixed routes, available probing configuration and assessed snapshot. Monitors are assumed healthy and listed nonmonitor failures persist within that snapshot. A path fails exactly when it contains a failed nonmonitor. Link faults, monitor faults, routing uncertainty, report errors and temporal changes require a different model. Probability measures, global identifiability over every possible record and repair authorization are not established.\"\n  assumptions: [All submitted monitors are healthy throughout the assessed snapshot., \"Only listed nonmonitor nodes may fail, persistently within the assessed snapshot.\", A path fails exactly when at least one of its listed nonmonitors fails., \"The declared maximum number of simultaneous failures is a premise, not a conclusion established by the observations.\", Every submitted reliable path report is preserved and must match its predicted state., \"Zone membership identifies an equipment grouping; it is not additional evidence that a node failed.\", The smallest compatible failure combination is not automatically the established explanation or a repair instruction.]\n  parameters:\n    - id: maxFaults\n      type: integer\n      min: 0\n      max: 4\n      default: 2\n      label: Maximum simultaneous node failures\n    - id: configuration\n      type: string\n      default: UP\n      label: Available probing configuration\n    - id: snapshot\n      type: string\n      default: S1\n      label: Assessed snapshot\n    - id: targetZone\n      type: string\n      default: A\n      label: Zone to review\n    - id: targetNode\n      type: string\n      default: v2\n      label: Node to review\n  relations:\n    - id: node\n      source: basis\n      columns:\n        - id: id\n          type: string\n      key: [id]\n    - id: monitor\n      source: basis\n      columns:\n        - id: node\n          type: string\n          references:\n            relation: node\n            column: id\n      key: [node]\n    - id: zone\n      source: basis\n      columns:\n        - id: id\n          type: string\n      key: [id]\n    - id: nonmonitor\n      source: basis\n      columns:\n        - id: id\n          type: string\n          references:\n            relation: node\n            column: id\n        - id: zone\n          type: string\n          references:\n            relation: zone\n            column: id\n      key: [id]\n    - id: link\n      source: basis\n      columns:\n        - id: from\n          type: string\n          references:\n            relation: node\n            column: id\n        - id: to\n          type: string\n          references:\n            relation: node\n            column: id\n      key: [from, to]\n    - id: configuration\n      source: basis\n      columns:\n        - id: id\n          type: string\n      key: [id]\n    - id: path\n      source: basis\n      columns:\n        - id: id\n          type: string\n      key: [id]\n    - id: simplePathConfiguration\n      source: basis\n      columns:\n        - id: configuration\n          type: string\n          references:\n            relation: configuration\n            column: id\n      key: [configuration]\n    - id: distinctEndpointConfiguration\n      source: basis\n      columns:\n        - id: configuration\n          type: string\n          references:\n            relation: configuration\n            column: id\n      key: [configuration]\n    - id: pathAvailable\n      source: basis\n      columns:\n        - id: configuration\n          type: string\n          references:\n            relation: configuration\n            column: id\n        - id: path\n          type: string\n          references:\n            relation: path\n            column: id\n      key: [configuration, path]\n    - id: routeStep\n      source: basis\n      columns:\n        - id: path\n          type: string\n          references:\n            relation: path\n            column: id\n        - id: index\n          type: integer\n        - id: from\n          type: string\n          references:\n            relation: node\n            column: id\n        - id: to\n          type: string\n          references:\n            relation: node\n            column: id\n      key: [path, index]\n    - id: snapshot\n      source: basis\n      columns:\n        - id: id\n          type: string\n      key: [id]\n    - id: report\n      source: evidence\n      columns:\n        - id: id\n          type: string\n        - id: path\n          type: string\n          references:\n            relation: path\n            column: id\n        - id: snapshot\n          type: string\n          references:\n            relation: snapshot\n            column: id\n        - id: failed\n          type: boolean\n      key: [id]\n      label: Recorded path results\n    - id: failed\n      source: assignment\n      columns:\n        - id: node\n          type: string\n          references:\n            relation: nonmonitor\n            column: id\n      key: [node]\n      label: Nodes failed in this possible combination\n    - id: pathNonmonitor\n      source: derived\n      columns:\n        - id: path\n          type: string\n        - id: node\n          type: string\n      key: [path, node]\n      label: Nodes tested by each path\n    - id: failedPath\n      source: derived\n      columns:\n        - id: path\n          type: string\n      key: [path]\n    - id: prediction\n      source: derived\n      columns:\n        - id: path\n          type: string\n        - id: failed\n          type: boolean\n      key: [path]\n      label: Predicted path states\n    - id: faultZone\n      source: derived\n      columns:\n        - id: zone\n          type: string\n      key: [zone]\n      label: Zones containing a fault\n    - id: mismatch\n      source: derived\n      columns:\n        - id: report\n          type: string\n        - id: path\n          type: string\n        - id: predicted\n          type: boolean\n        - id: reported\n          type: boolean\n      key: [report]\n  generation:\n    - id: GENERATE.FAULTS\n      relation: failed\n      from:\n        relation: nonmonitor\n        column: id\n      min: 0\n      max:\n        parameter: maxFaults\n  rules:\n    - id: PATH.MEMBER.FROM\n      head:\n        relation: pathNonmonitor\n        args: [\"?path\", \"?node\"]\n      body:\n        - relation: routeStep\n          args: [\"?path\", \"?index\", \"?node\", \"?next\"]\n        - relation: nonmonitor\n          args: [\"?node\", \"?zone\"]\n    - id: PATH.MEMBER.TO\n      head:\n        relation: pathNonmonitor\n        args: [\"?path\", \"?node\"]\n      body:\n        - relation: routeStep\n          args: [\"?path\", \"?index\", \"?previous\", \"?node\"]\n        - relation: nonmonitor\n          args: [\"?node\", \"?zone\"]\n    - id: PREDICT.FAILURE\n      head:\n        relation: failedPath\n        args: [\"?path\"]\n      body:\n        - relation: pathNonmonitor\n          args: [\"?path\", \"?node\"]\n        - relation: failed\n          args: [\"?node\"]\n    - id: PREDICT.TRUE\n      head:\n        relation: prediction\n        args: [\"?path\", true]\n      body:\n        - relation: path\n          args: [\"?path\"]\n        - relation: failedPath\n          args: [\"?path\"]\n    - id: PREDICT.FALSE\n      head:\n        relation: prediction\n        args: [\"?path\", false]\n      body:\n        - relation: path\n          args: [\"?path\"]\n        - not:\n            relation: failedPath\n            args: [\"?path\"]\n    - id: PROJECT.ZONE\n      head:\n        relation: faultZone\n        args: [\"?zone\"]\n      body:\n        - relation: failed\n          args: [\"?node\"]\n        - relation: nonmonitor\n          args: [\"?node\", \"?zone\"]\n    - id: REPORT.MISMATCH\n      head:\n        relation: mismatch\n        args: [\"?id\", \"?path\", \"?predicted\", \"?reported\"]\n      body:\n        - relation: report\n          args: [\"?id\", \"?path\", \"?snapshot\", \"?reported\"]\n        - relation: prediction\n          args: [\"?path\", \"?predicted\"]\n        - op: ne\n          args: [\"?predicted\", \"?reported\"]\n  admission:\n    - id: CONFIG.KNOWN\n      label: The probing configuration is declared\n      when: []\n      assert:\n        op: exists\n        atom:\n          relation: configuration\n          args:\n            - parameter: configuration\n    - id: SNAPSHOT.KNOWN\n      label: The target snapshot is declared\n      when: []\n      assert:\n        op: exists\n        atom:\n          relation: snapshot\n          args:\n            - parameter: snapshot\n    - id: ZONE.KNOWN\n      label: The target zone is declared\n      when: []\n      assert:\n        op: exists\n        atom:\n          relation: zone\n          args:\n            - parameter: targetZone\n    - id: NODE.KNOWN\n      label: The target node is a nonmonitor\n      when:\n        - count:\n            relation: nonmonitor\n            args:\n              - parameter: targetNode\n              - \"?zone\"\n          as: \"?matches\"\n      assert:\n        op: gt\n        args: [\"?matches\", 0]\n    - id: REPORT.SNAPSHOT\n      label: Every report belongs to the assessed snapshot\n      when:\n        - relation: report\n          args: [\"?id\", \"?path\", \"?snapshot\", \"?reported\"]\n      assert:\n        op: eq\n        args:\n          - \"?snapshot\"\n          - parameter: snapshot\n    - id: REPORT.AVAILABLE\n      label: Every observed path is available in the declared configuration\n      when:\n        - relation: report\n          args: [\"?id\", \"?path\", \"?snapshot\", \"?reported\"]\n      assert:\n        op: exists\n        atom:\n          relation: pathAvailable\n          args:\n            - parameter: configuration\n            - \"?path\"\n    - id: MONITORS.HEALTHY\n      label: A node is not both a monitor and a possible fault\n      when:\n        - relation: nonmonitor\n          args: [\"?node\", \"?zone\"]\n      assert:\n        op: notExists\n        atom:\n          relation: monitor\n          args: [\"?node\"]\n    - id: ROUTE.LINK\n      label: Each route step uses a declared undirected link\n      when:\n        - relation: routeStep\n          args: [\"?path\", \"?index\", \"?from\", \"?to\"]\n        - not:\n            relation: link\n            args: [\"?from\", \"?to\"]\n        - not:\n            relation: link\n            args: [\"?to\", \"?from\"]\n      assert:\n        op: eq\n        args: [true, false]\n    - id: PATH.START\n      label: Every path has an initial step\n      when:\n        - relation: path\n          args: [\"?path\"]\n      assert:\n        op: exists\n        atom:\n          relation: routeStep\n          args: [\"?path\", 0, \"?from\", \"?to\"]\n    - id: ROUTE.INDEX\n      label: Step indexes are nonnegative\n      when:\n        - relation: routeStep\n          args: [\"?path\", \"?index\", \"?from\", \"?to\"]\n      assert:\n        op: gte\n        args: [\"?index\", 0]\n    - id: ROUTE.CONTIGUOUS\n      label: Every later step continues its immediate predecessor\n      when:\n        - relation: routeStep\n          args: [\"?path\", \"?index\", \"?from\", \"?to\"]\n        - op: gt\n          args: [\"?index\", 0]\n      assert:\n        op: exists\n        atom:\n          relation: routeStep\n          args:\n            - \"?path\"\n            - subtract: [\"?index\", 1]\n            - \"?previousFrom\"\n            - \"?from\"\n    - id: ROUTE.START.MONITOR\n      label: The initial source is a healthy monitor\n      when:\n        - relation: routeStep\n          args: [\"?path\", 0, \"?from\", \"?to\"]\n      assert:\n        op: exists\n        atom:\n          relation: monitor\n          args: [\"?from\"]\n    - id: ROUTE.END.MONITOR\n      label: The terminal target is a healthy monitor\n      when:\n        - relation: routeStep\n          args: [\"?path\", \"?index\", \"?from\", \"?to\"]\n        - op: notExists\n          atom:\n            relation: routeStep\n            args:\n              - \"?path\"\n              - add: [\"?index\", 1]\n              - \"?nextFrom\"\n              - \"?nextTo\"\n      assert:\n        op: exists\n        atom:\n          relation: monitor\n          args: [\"?to\"]\n    - id: ROUTE.INTERIOR.NONMONITOR\n      label: Interior nodes are possible-fault nonmonitors\n      when:\n        - relation: routeStep\n          args: [\"?path\", \"?index\", \"?from\", \"?to\"]\n        - op: gt\n          args: [\"?index\", 0]\n      assert:\n        op: exists\n        atom:\n          relation: nonmonitor\n          args: [\"?from\", \"?zone\"]\n    - id: ROUTE.SIMPLE.INTERIOR\n      label: Simple-path configurations do not repeat route source nodes\n      when:\n        - relation: simplePathConfiguration\n          args: [\"?configuration\"]\n        - relation: pathAvailable\n          args: [\"?configuration\", \"?path\"]\n        - relation: routeStep\n          args: [\"?path\", \"?first\", \"?node\", \"?firstTo\"]\n        - relation: routeStep\n          args: [\"?path\", \"?second\", \"?node\", \"?secondTo\"]\n        - op: lt\n          args: [\"?first\", \"?second\"]\n      assert:\n        op: eq\n        args: [true, false]\n    - id: ROUTE.SIMPLE.TERMINAL\n      label: Simple-path configurations do not repeat the terminal node\n      when:\n        - relation: simplePathConfiguration\n          args: [\"?configuration\"]\n        - relation: pathAvailable\n          args: [\"?configuration\", \"?path\"]\n        - relation: routeStep\n          args: [\"?path\", \"?index\", \"?from\", \"?terminal\"]\n        - op: notExists\n          atom:\n            relation: routeStep\n            args:\n              - \"?path\"\n              - add: [\"?index\", 1]\n              - \"?nextFrom\"\n              - \"?nextTo\"\n        - relation: routeStep\n          args: [\"?path\", \"?earlier\", \"?terminal\", \"?earlierTo\"]\n      assert:\n        op: eq\n        args: [true, false]\n    - id: ROUTE.DISTINCT.ENDPOINTS\n      label: Configured paths use distinct endpoints\n      when:\n        - relation: distinctEndpointConfiguration\n          args: [\"?configuration\"]\n        - relation: pathAvailable\n          args: [\"?configuration\", \"?path\"]\n        - relation: routeStep\n          args: [\"?path\", 0, \"?source\", \"?firstTo\"]\n        - relation: routeStep\n          args: [\"?path\", \"?index\", \"?lastFrom\", \"?target\"]\n        - op: notExists\n          atom:\n            relation: routeStep\n            args:\n              - \"?path\"\n              - add: [\"?index\", 1]\n              - \"?nextFrom\"\n              - \"?nextTo\"\n      assert:\n        op: ne\n        args: [\"?source\", \"?target\"]\n    - id: NODE.PARTITION\n      label: Every node is a monitor or a possible-fault nonmonitor\n      when:\n        - relation: node\n          args: [\"?node\"]\n        - not:\n            relation: monitor\n            args: [\"?node\"]\n      assert:\n        op: exists\n        atom:\n          relation: nonmonitor\n          args: [\"?node\", \"?zone\"]\n  constraints:\n    - id: RELIABLE.REPORTS\n      label: Every reliable submitted report agrees with its predicted state\n      when:\n        - relation: report\n          args: [\"?id\", \"?path\", \"?snapshot\", \"?reported\"]\n        - relation: prediction\n          args: [\"?path\", \"?predicted\"]\n      assert:\n        op: eq\n        args: [\"?predicted\", \"?reported\"]\n  queries:\n    - id: target-zone-has-fault\n      label: Fault involvement of the selected zone\n      kind: boolean\n      body:\n        - relation: faultZone\n          args:\n            - parameter: targetZone\n    - id: target-node-failed\n      label: Failure state of the selected node\n      kind: boolean\n      body:\n        - relation: failed\n          args:\n            - parameter: targetNode\n    - id: exact-failed-set\n      label: Complete failed-node combination\n      kind: set\n      body:\n        - relation: failed\n          args: [\"?node\"]\n      select: [\"?node\"]\n    - id: v3-failed\n      label: Failure state of reference node v3\n      kind: boolean\n      body:\n        - relation: failed\n          args: [v3]\n    - id: zone-B-has-fault\n      label: Fault involvement of reference Zone B\n      kind: boolean\n      body:\n        - relation: faultZone\n          args: [B]\n  reports:\n    tables:\n      - id: failed\n        label: Nodes that could be failed together\n        relation: failed\n        columns: [node]\n      - id: paths\n        label: What this failure combination predicts for each listed path\n        relation: prediction\n        columns: [path, failed]\n      - id: zones\n        label: Zones implicated by this failure combination\n        relation: faultZone\n        columns: [zone]\n      - id: members\n        label: Nodes tested by each fixed path\n        relation: pathNonmonitor\n        columns: [path, node]\n      - id: mismatch\n        label: Reports that disagree with this prediction\n        relation: mismatch\n        columns: [report, path, predicted, reported]\n  presentation:\n    description: \"Determine whether {{parameter.targetZone}} is implicated by the recorded path results and whether the record also settles the state of {{parameter.targetNode}}. Compare every permitted failure combination before deciding what additional diagnosis is needed.\"\n    question: \"Do the test results locate a fault in {{parameter.targetZone}}, and do they identify which nodes failed?\"\n    labels:\n      scenario: Possible failure combination\n      scenarios: Possible failure combinations\n      assignment: Failed nodes\n      answer: Fault finding\n      examples: Failure combinations behind these answers\n    entities:\n      - id: node\n        relation: node\n        key: id\n        template: \"node {{row.id}}\"\n      - id: zone\n        relation: zone\n        key: id\n        template: \"Zone {{row.id}}\"\n      - id: path\n        relation: path\n        key: id\n        template: \"path {{row.id}}\"\n      - id: snapshot\n        relation: snapshot\n        key: id\n        template: \"snapshot {{row.id}}\"\n      - id: configuration\n        relation: configuration\n        key: id\n        template: \"{{row.id}} probing configuration\"\n    columns:\n      - relation: monitor\n        column: node\n        label: Node\n        entity: node\n      - relation: nonmonitor\n        column: zone\n        label: Equipment zone\n        entity: zone\n      - relation: link\n        column: from\n        label: From node\n        entity: node\n      - relation: link\n        column: to\n        label: To node\n        entity: node\n      - relation: simplePathConfiguration\n        column: configuration\n        label: Probing configuration\n        entity: configuration\n      - relation: distinctEndpointConfiguration\n        column: configuration\n        label: Probing configuration\n        entity: configuration\n      - relation: pathAvailable\n        column: configuration\n        label: Probing configuration\n        entity: configuration\n      - relation: pathAvailable\n        column: path\n        label: Measurement path\n        entity: path\n      - relation: routeStep\n        column: path\n        label: Measurement path\n        entity: path\n      - relation: routeStep\n        column: from\n        label: From node\n        entity: node\n      - relation: routeStep\n        column: to\n        label: To node\n        entity: node\n      - relation: report\n        column: path\n        label: Measurement path\n        entity: path\n      - relation: report\n        column: snapshot\n        label: Snapshot\n        entity: snapshot\n      - relation: report\n        column: failed\n        label: Recorded result\n        values:\n          \"true\": Failed\n          \"false\": Normal\n      - relation: failed\n        column: node\n        label: Node\n        entity: node\n      - relation: pathNonmonitor\n        column: path\n        label: Measurement path\n        entity: path\n      - relation: pathNonmonitor\n        column: node\n        label: Node\n        entity: node\n      - relation: failedPath\n        column: path\n        label: Measurement path\n        entity: path\n      - relation: prediction\n        column: path\n        label: Measurement path\n        entity: path\n      - relation: prediction\n        column: failed\n        label: Predicted result\n        values:\n          \"true\": Failed\n          \"false\": Normal\n      - relation: faultZone\n        column: zone\n        label: Equipment zone\n        entity: zone\n      - relation: mismatch\n        column: path\n        label: Measurement path\n        entity: path\n      - relation: mismatch\n        column: predicted\n        label: Predicted result\n        values:\n          \"true\": Failed\n          \"false\": Normal\n      - relation: mismatch\n        column: reported\n        label: Recorded result\n        values:\n          \"true\": Failed\n          \"false\": Normal\n    parameters:\n      - id: targetZone\n        entity: zone\n      - id: targetNode\n        entity: node\n      - id: snapshot\n        entity: snapshot\n      - id: configuration\n        entity: configuration\n    queries:\n      - id: target-zone-has-fault\n        question: \"Is there a failed node in {{parameter.targetZone}}?\"\n        valueLabels:\n          \"true\": Contains a fault\n          \"false\": Contains no fault\n        answers:\n          establishedTrue: \"{{parameter.targetZone}} contains at least one failed node.\"\n          establishedFalse: \"{{parameter.targetZone}} contains no failed node under this model.\"\n          underdetermined: \"Whether {{parameter.targetZone}} contains a fault remains open.\"\n          inconsistent: The submitted record and assumptions have no compatible explanation.\n          incomplete: The current check has not established this answer.\n          invalid: These inputs cannot be assessed under this model.\n          not-assessed: This question needs an additional assessment contract.\n        explanations:\n          establishedTrue: \"Every failure combination that matches the reports includes a failed node in {{parameter.targetZone}}. Individual node failures may still differ between compatible combinations.\"\n          establishedFalse: \"No compatible failure combination includes a failed node in {{parameter.targetZone}}. This finding depends on the submitted routes, reliable-report assumption and fault bound.\"\n          underdetermined: \"Some compatible failure combinations implicate {{parameter.targetZone}} and others do not. The current record does not settle zone involvement.\"\n          inconsistent: \"No allowed failure combination predicts every submitted report. Review the record and its assumptions together; the conflict does not identify which report or premise is wrong.\"\n          incomplete: The declared combinations have not all been checked. Agreement among discovered combinations is not enough to establish zone involvement.\n      - id: target-node-failed\n        question: \"Has {{parameter.targetNode}} failed?\"\n        valueLabels:\n          \"true\": Failed\n          \"false\": Normal\n        answers:\n          establishedTrue: \"{{parameter.targetNode}} is failed under the submitted model.\"\n          establishedFalse: \"{{parameter.targetNode}} is normal under the submitted model.\"\n          underdetermined: \"Whether {{parameter.targetNode}} failed remains open.\"\n          inconsistent: The submitted record and assumptions have no compatible explanation.\n          incomplete: The current check has not established this answer.\n          invalid: These inputs cannot be assessed under this model.\n          not-assessed: This question needs an additional assessment contract.\n        explanations:\n          establishedTrue: \"Every compatible failure combination includes {{parameter.targetNode}}. This conclusion describes the record under the declared assumptions; it is not a repair authorization.\"\n          establishedFalse: \"No compatible failure combination includes {{parameter.targetNode}}. This finding covers the assessed snapshot and declared failure model.\"\n          underdetermined: \"The opposing combinations below disagree about {{parameter.targetNode}}. Selecting the smaller combination would add a preference, not establish that the selected explanation is true.\"\n          inconsistent: The submitted reports and failure assumptions admit no compatible combination.\n          incomplete: The current check has not ruled out every permitted different node answer.\n      - id: exact-failed-set\n        question: \"Which nodes have failed?\"\n        entity: node\n        answers:\n          established: \"Established failed-node combination: {{answer}}.\"\n          underdetermined: The exact failed-node combination remains open.\n          inconsistent: No permitted failure combination matches the record.\n          incomplete: The complete failed-node combination has not been established.\n        explanations:\n          underdetermined: Several different combinations predict the same submitted reports. A zone finding can hold across all of them without settling the individual failures.\n      - id: v3-failed\n        question: \"Has node v3 failed?\"\n        valueLabels:\n          \"true\": Failed\n          \"false\": Normal\n        answers:\n          establishedTrue: node v3 is failed under the submitted model.\n          establishedFalse: node v3 is normal under the submitted model.\n          underdetermined: Whether node v3 failed remains open.\n          inconsistent: The submitted record and assumptions have no compatible explanation.\n          incomplete: The current check has not established this answer.\n          invalid: These inputs cannot be assessed under this model.\n          not-assessed: This question needs an additional assessment contract.\n        explanations:\n          establishedTrue: \"Every compatible failure combination includes node v3. This conclusion describes the record under the declared assumptions; it is not a repair authorization.\"\n          establishedFalse: No compatible failure combination includes node v3. This finding covers the assessed snapshot and declared failure model.\n          underdetermined: \"The opposing combinations below disagree about node v3. Selecting the smaller combination would add a preference, not establish that the selected explanation is true.\"\n          inconsistent: The submitted reports and failure assumptions admit no compatible combination.\n          incomplete: The current check has not ruled out every permitted different node answer.\n      - id: zone-B-has-fault\n        question: \"Is there a failed node in Zone B?\"\n        valueLabels:\n          \"true\": Contains a fault\n          \"false\": Contains no fault\n        answers:\n          establishedTrue: Zone B contains at least one failed node.\n          establishedFalse: Zone B contains no failed node under this model.\n          underdetermined: Whether Zone B contains a fault remains open.\n          inconsistent: The submitted record and assumptions have no compatible explanation.\n          incomplete: The current check has not established this answer.\n          invalid: These inputs cannot be assessed under this model.\n          not-assessed: This question needs an additional assessment contract.\n        explanations:\n          establishedTrue: Every failure combination that matches the reports includes a failed node in Zone B. Individual node failures may still differ between compatible combinations.\n          establishedFalse: \"No compatible failure combination includes a failed node in Zone B. This finding depends on the submitted routes, reliable-report assumption and fault bound.\"\n          underdetermined: Some compatible failure combinations implicate Zone B and others do not. The current record does not settle zone involvement.\n          inconsistent: \"No allowed failure combination predicts every submitted report. Review the record and its assumptions together; the conflict does not identify which report or premise is wrong.\"\n          incomplete: The declared combinations have not all been checked. Agreement among discovered combinations is not enough to establish zone involvement.\n    reports:\n      answer:\n        title: Fault finding\n        question: \"Do the results locate a fault in {{parameter.targetZone}}, and has {{parameter.targetNode}} failed?\"\n        description: Separate a stable equipment-group finding from node states that remain uncertain.\n      interpretations:\n        title: Possible failure combinations\n        question: \"Which failure combinations fit all recorded path results?\"\n        description: Inspect every compatible combination. A smaller combination is not automatically the true explanation.\n      stability:\n        title: Why the finding holds\n        question: \"Could another compatible failure combination change the answer?\"\n        description: Compare concrete combinations supporting or challenging each zone or node finding.\n      findings:\n        title: Conflicts and input checks\n        question: \"Which failure combinations were ruled out, and does the submitted information need attention?\"\n        description: Review input applicability and the constraints that exclude proposed combinations.\n      basis:\n        title: Scope and assumptions\n        question: \"Which topology, paths, snapshot and failure assumptions support this finding?\"\n        description: Inspect the evaluated case and its limits before using the result for further diagnostic work.\n      changes:\n        title: Effect of case changes\n        question: \"How did new reports, a different fault bound or a changed target affect the finding?\"\n        description: Compare recomputed findings while preserving the exact basis of earlier calculations.\n    tableGroups:\n      - id: possible-faults\n        title: Faults in this possible combination\n        description: These failed nodes and equipment zones belong to one compatible explanation of the record.\n        tableIds: [failed, zones]\n      - id: predicted-paths\n        title: What this combination predicts\n        description: \"Unobserved paths are predictions under this combination, not additional measurements or newly available probes.\"\n        tableIds: [paths]\n      - id: path-details\n        title: Path and report-check details\n        description: Inspect the fixed route membership and any disagreements with submitted reports.\n        tableIds: [members, mismatch]\n        collapsed: true\n    findingGroups:\n      - id: fault-zones\n        title: Fault zones\n        question: \"Which equipment zones contain a fault?\"\n        description: A zone-level finding can hold across several different combinations of individual node failures.\n        queryIds: [target-zone-has-fault, zone-B-has-fault]\n      - id: node-failures\n        title: Node failures\n        question: \"Which individual nodes have failed, and which complete combinations remain possible?\"\n        description: Keep established node states separate from unresolved individual failures and the complete failed-node combination.\n        queryIds: [target-node-failed, v3-failed, exact-failed-set]\ncase:\n  id: N1\n  scope: Listed topology / snapshot S1 / UP path reports\n  parameters:\n    maxFaults: 2\n    configuration: UP\n    snapshot: S1\n    targetZone: A\n    targetNode: v2\n  basis:\n    node:\n      - id: m1\n      - id: m2\n      - id: m3\n      - id: v1\n      - id: v2\n      - id: v3\n      - id: v4\n    monitor:\n      - node: m1\n      - node: m2\n      - node: m3\n    zone:\n      - id: A\n      - id: B\n    nonmonitor:\n      - id: v1\n        zone: A\n      - id: v2\n        zone: A\n      - id: v3\n        zone: B\n      - id: v4\n        zone: B\n    link:\n      - from: m1\n        to: v1\n      - from: m1\n        to: v2\n      - from: v1\n        to: v2\n      - from: v1\n        to: v3\n      - from: v2\n        to: v3\n      - from: v2\n        to: v4\n      - from: v3\n        to: v4\n      - from: v1\n        to: m2\n      - from: v3\n        to: m2\n      - from: v4\n        to: m2\n      - from: v3\n        to: m3\n      - from: v4\n        to: m3\n    configuration:\n      - id: UP\n      - id: CSP\n      - id: CAP\n    simplePathConfiguration:\n      - configuration: UP\n      - configuration: CSP\n    distinctEndpointConfiguration:\n      - configuration: UP\n      - configuration: CSP\n    path:\n      - id: P1\n      - id: P2\n      - id: P3\n      - id: P4\n      - id: P5\n      - id: P6\n      - id: P7\n    pathAvailable:\n      - configuration: UP\n        path: P1\n      - configuration: UP\n        path: P2\n      - configuration: UP\n        path: P3\n      - configuration: CSP\n        path: P1\n      - configuration: CSP\n        path: P2\n      - configuration: CSP\n        path: P3\n      - configuration: CSP\n        path: P4\n      - configuration: CSP\n        path: P5\n      - configuration: CSP\n        path: P6\n      - configuration: CAP\n        path: P5\n      - configuration: CAP\n        path: P7\n      - configuration: CAP\n        path: P3\n      - configuration: CAP\n        path: P6\n    routeStep:\n      - path: P1\n        index: 0\n        from: m1\n        to: v2\n      - path: P1\n        index: 1\n        from: v2\n        to: v1\n      - path: P1\n        index: 2\n        from: v1\n        to: m2\n      - path: P2\n        index: 0\n        from: m1\n        to: v2\n      - path: P2\n        index: 1\n        from: v2\n        to: v4\n      - path: P2\n        index: 2\n        from: v4\n        to: m3\n      - path: P3\n        index: 0\n        from: m2\n        to: v3\n      - path: P3\n        index: 1\n        from: v3\n        to: m3\n      - path: P4\n        index: 0\n        from: m1\n        to: v2\n      - path: P4\n        index: 1\n        from: v2\n        to: v3\n      - path: P4\n        index: 2\n        from: v3\n        to: m2\n      - path: P5\n        index: 0\n        from: m1\n        to: v1\n      - path: P5\n        index: 1\n        from: v1\n        to: m2\n      - path: P6\n        index: 0\n        from: m2\n        to: v4\n      - path: P6\n        index: 1\n        from: v4\n        to: m3\n      - path: P7\n        index: 0\n        from: m1\n        to: v2\n      - path: P7\n        index: 1\n        from: v2\n        to: m1\n    snapshot:\n      - id: S1\n  evidence:\n    report:\n      - id: O1\n        path: P1\n        snapshot: S1\n        failed: true\n      - id: O2\n        path: P2\n        snapshot: S1\n        failed: true\n      - id: O3\n        path: P3\n        snapshot: S1\n        failed: false\n  queryIds: [target-zone-has-fault, target-node-failed, exact-failed-set, v3-failed, zone-B-has-fault]\n  evaluation:\n    maxCandidates: 10000\n    maxRuleRounds: 100\n    maxFacts: 50000\n",
+    "sourceHash": "477bac5151ad77dc8f496ebb80c7463a8d5635684cb01fa13f95a4cf61fdd617",
+    "definitionHash": "44de3e6fe3d76c81a5d58b5e80532d0673413653618fc9934a0526e9f66bf90e",
+    "definitionContract": {
+      "id": "evidence-review",
+      "version": "1.0.0",
+      "evaluator": "finite-relational-evidence/1",
+      "title": "Establish the required answer",
+      "responsibility": "Generate interpretations from declared finite rules, retain evidence-compatible alternatives, and test stability of the required answer.",
+      "invariants": [
+        "Establishment requires a nonempty admissible basis and a completed counterexample check.",
+        "Different admissible answers demonstrate underdetermination even before enumeration completes.",
+        "An empty interrupted search does not establish inconsistency.",
+        "A Boolean false answer can be established. Counts do not imply probabilities.",
+        "Results are relative to the authored finite model, submitted evidence and exact query."
+      ]
+    },
+    "model": {
+      "format": "evidence-review/1",
+      "module": {
+        "id": "network-fault-evidence",
+        "version": "1.3.0",
+        "title": "Localize network faults",
+        "metadata": {
+          "catalog": {
+            "domain": {
+              "id": "network-operations",
+              "label": "Network operations",
+              "description": "Network monitoring and diagnosis from declared topology and test records."
+            },
+            "useCase": {
+              "id": "fault-localization",
+              "label": "Locate network faults",
+              "description": "Determine which fault zones and individual node failures are established by path-test results."
+            }
+          }
+        },
+        "description": "Determine which equipment group or individual node the submitted path reports actually implicate. Compare every permitted failure combination under the declared fault bound, assessed snapshot and reliable path predictor. Separate a stable zone-level finding from individual node failures that remain uncertain before making further diagnostic or repair decisions. The result describes what the record establishes; it does not authorize a repair.",
+        "question": "Where do the path-test results locate a fault, and which nodes have failed?",
+        "boundary": "The conclusions cover the submitted node inventory, topology, fixed routes, available probing configuration and assessed snapshot. Monitors are assumed healthy and listed nonmonitor failures persist within that snapshot. A path fails exactly when it contains a failed nonmonitor. Link faults, monitor faults, routing uncertainty, report errors and temporal changes require a different model. Probability measures, global identifiability over every possible record and repair authorization are not established.",
+        "assumptions": [
+          "All submitted monitors are healthy throughout the assessed snapshot.",
+          "Only listed nonmonitor nodes may fail, persistently within the assessed snapshot.",
+          "A path fails exactly when at least one of its listed nonmonitors fails.",
+          "The declared maximum number of simultaneous failures is a premise, not a conclusion established by the observations.",
+          "Every submitted reliable path report is preserved and must match its predicted state.",
+          "Zone membership identifies an equipment grouping; it is not additional evidence that a node failed.",
+          "The smallest compatible failure combination is not automatically the established explanation or a repair instruction."
+        ],
+        "parameters": [
+          {
+            "id": "maxFaults",
+            "type": "integer",
+            "min": 0,
+            "max": 4,
+            "default": 2,
+            "label": "Maximum simultaneous node failures"
+          },
+          {
+            "id": "configuration",
+            "type": "string",
+            "default": "UP",
+            "label": "Available probing configuration"
+          },
+          {
+            "id": "snapshot",
+            "type": "string",
+            "default": "S1",
+            "label": "Assessed snapshot"
+          },
+          {
+            "id": "targetZone",
+            "type": "string",
+            "default": "A",
+            "label": "Zone to review"
+          },
+          {
+            "id": "targetNode",
+            "type": "string",
+            "default": "v2",
+            "label": "Node to review"
+          }
+        ],
+        "relations": [
+          {
+            "id": "node",
+            "source": "basis",
+            "columns": [
+              {
+                "id": "id",
+                "type": "string"
+              }
+            ],
+            "key": [
+              "id"
+            ]
+          },
+          {
+            "id": "monitor",
+            "source": "basis",
+            "columns": [
+              {
+                "id": "node",
+                "type": "string",
+                "references": {
+                  "relation": "node",
+                  "column": "id"
+                }
+              }
+            ],
+            "key": [
+              "node"
+            ]
+          },
+          {
+            "id": "zone",
+            "source": "basis",
+            "columns": [
+              {
+                "id": "id",
+                "type": "string"
+              }
+            ],
+            "key": [
+              "id"
+            ]
+          },
+          {
+            "id": "nonmonitor",
+            "source": "basis",
+            "columns": [
+              {
+                "id": "id",
+                "type": "string",
+                "references": {
+                  "relation": "node",
+                  "column": "id"
+                }
+              },
+              {
+                "id": "zone",
+                "type": "string",
+                "references": {
+                  "relation": "zone",
+                  "column": "id"
+                }
+              }
+            ],
+            "key": [
+              "id"
+            ]
+          },
+          {
+            "id": "link",
+            "source": "basis",
+            "columns": [
+              {
+                "id": "from",
+                "type": "string",
+                "references": {
+                  "relation": "node",
+                  "column": "id"
+                }
+              },
+              {
+                "id": "to",
+                "type": "string",
+                "references": {
+                  "relation": "node",
+                  "column": "id"
+                }
+              }
+            ],
+            "key": [
+              "from",
+              "to"
+            ]
+          },
+          {
+            "id": "configuration",
+            "source": "basis",
+            "columns": [
+              {
+                "id": "id",
+                "type": "string"
+              }
+            ],
+            "key": [
+              "id"
+            ]
+          },
+          {
+            "id": "path",
+            "source": "basis",
+            "columns": [
+              {
+                "id": "id",
+                "type": "string"
+              }
+            ],
+            "key": [
+              "id"
+            ]
+          },
+          {
+            "id": "simplePathConfiguration",
+            "source": "basis",
+            "columns": [
+              {
+                "id": "configuration",
+                "type": "string",
+                "references": {
+                  "relation": "configuration",
+                  "column": "id"
+                }
+              }
+            ],
+            "key": [
+              "configuration"
+            ]
+          },
+          {
+            "id": "distinctEndpointConfiguration",
+            "source": "basis",
+            "columns": [
+              {
+                "id": "configuration",
+                "type": "string",
+                "references": {
+                  "relation": "configuration",
+                  "column": "id"
+                }
+              }
+            ],
+            "key": [
+              "configuration"
+            ]
+          },
+          {
+            "id": "pathAvailable",
+            "source": "basis",
+            "columns": [
+              {
+                "id": "configuration",
+                "type": "string",
+                "references": {
+                  "relation": "configuration",
+                  "column": "id"
+                }
+              },
+              {
+                "id": "path",
+                "type": "string",
+                "references": {
+                  "relation": "path",
+                  "column": "id"
+                }
+              }
+            ],
+            "key": [
+              "configuration",
+              "path"
+            ]
+          },
+          {
+            "id": "routeStep",
+            "source": "basis",
+            "columns": [
+              {
+                "id": "path",
+                "type": "string",
+                "references": {
+                  "relation": "path",
+                  "column": "id"
+                }
+              },
+              {
+                "id": "index",
+                "type": "integer"
+              },
+              {
+                "id": "from",
+                "type": "string",
+                "references": {
+                  "relation": "node",
+                  "column": "id"
+                }
+              },
+              {
+                "id": "to",
+                "type": "string",
+                "references": {
+                  "relation": "node",
+                  "column": "id"
+                }
+              }
+            ],
+            "key": [
+              "path",
+              "index"
+            ]
+          },
+          {
+            "id": "snapshot",
+            "source": "basis",
+            "columns": [
+              {
+                "id": "id",
+                "type": "string"
+              }
+            ],
+            "key": [
+              "id"
+            ]
+          },
+          {
+            "id": "report",
+            "source": "evidence",
+            "columns": [
+              {
+                "id": "id",
+                "type": "string"
+              },
+              {
+                "id": "path",
+                "type": "string",
+                "references": {
+                  "relation": "path",
+                  "column": "id"
+                }
+              },
+              {
+                "id": "snapshot",
+                "type": "string",
+                "references": {
+                  "relation": "snapshot",
+                  "column": "id"
+                }
+              },
+              {
+                "id": "failed",
+                "type": "boolean"
+              }
+            ],
+            "key": [
+              "id"
+            ],
+            "label": "Recorded path results"
+          },
+          {
+            "id": "failed",
+            "source": "assignment",
+            "columns": [
+              {
+                "id": "node",
+                "type": "string",
+                "references": {
+                  "relation": "nonmonitor",
+                  "column": "id"
+                }
+              }
+            ],
+            "key": [
+              "node"
+            ],
+            "label": "Nodes failed in this possible combination"
+          },
+          {
+            "id": "pathNonmonitor",
+            "source": "derived",
+            "columns": [
+              {
+                "id": "path",
+                "type": "string"
+              },
+              {
+                "id": "node",
+                "type": "string"
+              }
+            ],
+            "key": [
+              "path",
+              "node"
+            ],
+            "label": "Nodes tested by each path"
+          },
+          {
+            "id": "failedPath",
+            "source": "derived",
+            "columns": [
+              {
+                "id": "path",
+                "type": "string"
+              }
+            ],
+            "key": [
+              "path"
+            ]
+          },
+          {
+            "id": "prediction",
+            "source": "derived",
+            "columns": [
+              {
+                "id": "path",
+                "type": "string"
+              },
+              {
+                "id": "failed",
+                "type": "boolean"
+              }
+            ],
+            "key": [
+              "path"
+            ],
+            "label": "Predicted path states"
+          },
+          {
+            "id": "faultZone",
+            "source": "derived",
+            "columns": [
+              {
+                "id": "zone",
+                "type": "string"
+              }
+            ],
+            "key": [
+              "zone"
+            ],
+            "label": "Zones containing a fault"
+          },
+          {
+            "id": "mismatch",
+            "source": "derived",
+            "columns": [
+              {
+                "id": "report",
+                "type": "string"
+              },
+              {
+                "id": "path",
+                "type": "string"
+              },
+              {
+                "id": "predicted",
+                "type": "boolean"
+              },
+              {
+                "id": "reported",
+                "type": "boolean"
+              }
+            ],
+            "key": [
+              "report"
+            ]
+          }
+        ],
+        "generation": [
+          {
+            "id": "GENERATE.FAULTS",
+            "relation": "failed",
+            "from": {
+              "relation": "nonmonitor",
+              "column": "id"
+            },
+            "min": 0,
+            "max": {
+              "parameter": "maxFaults"
+            }
+          }
+        ],
+        "rules": [
+          {
+            "id": "PATH.MEMBER.FROM",
+            "head": {
+              "relation": "pathNonmonitor",
+              "args": [
+                "?path",
+                "?node"
+              ]
+            },
+            "body": [
+              {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  "?index",
+                  "?node",
+                  "?next"
+                ]
+              },
+              {
+                "relation": "nonmonitor",
+                "args": [
+                  "?node",
+                  "?zone"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "PATH.MEMBER.TO",
+            "head": {
+              "relation": "pathNonmonitor",
+              "args": [
+                "?path",
+                "?node"
+              ]
+            },
+            "body": [
+              {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  "?index",
+                  "?previous",
+                  "?node"
+                ]
+              },
+              {
+                "relation": "nonmonitor",
+                "args": [
+                  "?node",
+                  "?zone"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "PREDICT.FAILURE",
+            "head": {
+              "relation": "failedPath",
+              "args": [
+                "?path"
+              ]
+            },
+            "body": [
+              {
+                "relation": "pathNonmonitor",
+                "args": [
+                  "?path",
+                  "?node"
+                ]
+              },
+              {
+                "relation": "failed",
+                "args": [
+                  "?node"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "PREDICT.TRUE",
+            "head": {
+              "relation": "prediction",
+              "args": [
+                "?path",
+                true
+              ]
+            },
+            "body": [
+              {
+                "relation": "path",
+                "args": [
+                  "?path"
+                ]
+              },
+              {
+                "relation": "failedPath",
+                "args": [
+                  "?path"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "PREDICT.FALSE",
+            "head": {
+              "relation": "prediction",
+              "args": [
+                "?path",
+                false
+              ]
+            },
+            "body": [
+              {
+                "relation": "path",
+                "args": [
+                  "?path"
+                ]
+              },
+              {
+                "not": {
+                  "relation": "failedPath",
+                  "args": [
+                    "?path"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": "PROJECT.ZONE",
+            "head": {
+              "relation": "faultZone",
+              "args": [
+                "?zone"
+              ]
+            },
+            "body": [
+              {
+                "relation": "failed",
+                "args": [
+                  "?node"
+                ]
+              },
+              {
+                "relation": "nonmonitor",
+                "args": [
+                  "?node",
+                  "?zone"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "REPORT.MISMATCH",
+            "head": {
+              "relation": "mismatch",
+              "args": [
+                "?id",
+                "?path",
+                "?predicted",
+                "?reported"
+              ]
+            },
+            "body": [
+              {
+                "relation": "report",
+                "args": [
+                  "?id",
+                  "?path",
+                  "?snapshot",
+                  "?reported"
+                ]
+              },
+              {
+                "relation": "prediction",
+                "args": [
+                  "?path",
+                  "?predicted"
+                ]
+              },
+              {
+                "op": "ne",
+                "args": [
+                  "?predicted",
+                  "?reported"
+                ]
+              }
+            ]
+          }
+        ],
+        "admission": [
+          {
+            "id": "CONFIG.KNOWN",
+            "label": "The probing configuration is declared",
+            "when": [],
+            "assert": {
+              "op": "exists",
+              "atom": {
+                "relation": "configuration",
+                "args": [
+                  {
+                    "parameter": "configuration"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "SNAPSHOT.KNOWN",
+            "label": "The target snapshot is declared",
+            "when": [],
+            "assert": {
+              "op": "exists",
+              "atom": {
+                "relation": "snapshot",
+                "args": [
+                  {
+                    "parameter": "snapshot"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "ZONE.KNOWN",
+            "label": "The target zone is declared",
+            "when": [],
+            "assert": {
+              "op": "exists",
+              "atom": {
+                "relation": "zone",
+                "args": [
+                  {
+                    "parameter": "targetZone"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "NODE.KNOWN",
+            "label": "The target node is a nonmonitor",
+            "when": [
+              {
+                "count": {
+                  "relation": "nonmonitor",
+                  "args": [
+                    {
+                      "parameter": "targetNode"
+                    },
+                    "?zone"
+                  ]
+                },
+                "as": "?matches"
+              }
+            ],
+            "assert": {
+              "op": "gt",
+              "args": [
+                "?matches",
+                0
+              ]
+            }
+          },
+          {
+            "id": "REPORT.SNAPSHOT",
+            "label": "Every report belongs to the assessed snapshot",
+            "when": [
+              {
+                "relation": "report",
+                "args": [
+                  "?id",
+                  "?path",
+                  "?snapshot",
+                  "?reported"
+                ]
+              }
+            ],
+            "assert": {
+              "op": "eq",
+              "args": [
+                "?snapshot",
+                {
+                  "parameter": "snapshot"
+                }
+              ]
+            }
+          },
+          {
+            "id": "REPORT.AVAILABLE",
+            "label": "Every observed path is available in the declared configuration",
+            "when": [
+              {
+                "relation": "report",
+                "args": [
+                  "?id",
+                  "?path",
+                  "?snapshot",
+                  "?reported"
+                ]
+              }
+            ],
+            "assert": {
+              "op": "exists",
+              "atom": {
+                "relation": "pathAvailable",
+                "args": [
+                  {
+                    "parameter": "configuration"
+                  },
+                  "?path"
+                ]
+              }
+            }
+          },
+          {
+            "id": "MONITORS.HEALTHY",
+            "label": "A node is not both a monitor and a possible fault",
+            "when": [
+              {
+                "relation": "nonmonitor",
+                "args": [
+                  "?node",
+                  "?zone"
+                ]
+              }
+            ],
+            "assert": {
+              "op": "notExists",
+              "atom": {
+                "relation": "monitor",
+                "args": [
+                  "?node"
+                ]
+              }
+            }
+          },
+          {
+            "id": "ROUTE.LINK",
+            "label": "Each route step uses a declared undirected link",
+            "when": [
+              {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  "?index",
+                  "?from",
+                  "?to"
+                ]
+              },
+              {
+                "not": {
+                  "relation": "link",
+                  "args": [
+                    "?from",
+                    "?to"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "relation": "link",
+                  "args": [
+                    "?to",
+                    "?from"
+                  ]
+                }
+              }
+            ],
+            "assert": {
+              "op": "eq",
+              "args": [
+                true,
+                false
+              ]
+            }
+          },
+          {
+            "id": "PATH.START",
+            "label": "Every path has an initial step",
+            "when": [
+              {
+                "relation": "path",
+                "args": [
+                  "?path"
+                ]
+              }
+            ],
+            "assert": {
+              "op": "exists",
+              "atom": {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  0,
+                  "?from",
+                  "?to"
+                ]
+              }
+            }
+          },
+          {
+            "id": "ROUTE.INDEX",
+            "label": "Step indexes are nonnegative",
+            "when": [
+              {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  "?index",
+                  "?from",
+                  "?to"
+                ]
+              }
+            ],
+            "assert": {
+              "op": "gte",
+              "args": [
+                "?index",
+                0
+              ]
+            }
+          },
+          {
+            "id": "ROUTE.CONTIGUOUS",
+            "label": "Every later step continues its immediate predecessor",
+            "when": [
+              {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  "?index",
+                  "?from",
+                  "?to"
+                ]
+              },
+              {
+                "op": "gt",
+                "args": [
+                  "?index",
+                  0
+                ]
+              }
+            ],
+            "assert": {
+              "op": "exists",
+              "atom": {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  {
+                    "subtract": [
+                      "?index",
+                      1
+                    ]
+                  },
+                  "?previousFrom",
+                  "?from"
+                ]
+              }
+            }
+          },
+          {
+            "id": "ROUTE.START.MONITOR",
+            "label": "The initial source is a healthy monitor",
+            "when": [
+              {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  0,
+                  "?from",
+                  "?to"
+                ]
+              }
+            ],
+            "assert": {
+              "op": "exists",
+              "atom": {
+                "relation": "monitor",
+                "args": [
+                  "?from"
+                ]
+              }
+            }
+          },
+          {
+            "id": "ROUTE.END.MONITOR",
+            "label": "The terminal target is a healthy monitor",
+            "when": [
+              {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  "?index",
+                  "?from",
+                  "?to"
+                ]
+              },
+              {
+                "op": "notExists",
+                "atom": {
+                  "relation": "routeStep",
+                  "args": [
+                    "?path",
+                    {
+                      "add": [
+                        "?index",
+                        1
+                      ]
+                    },
+                    "?nextFrom",
+                    "?nextTo"
+                  ]
+                }
+              }
+            ],
+            "assert": {
+              "op": "exists",
+              "atom": {
+                "relation": "monitor",
+                "args": [
+                  "?to"
+                ]
+              }
+            }
+          },
+          {
+            "id": "ROUTE.INTERIOR.NONMONITOR",
+            "label": "Interior nodes are possible-fault nonmonitors",
+            "when": [
+              {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  "?index",
+                  "?from",
+                  "?to"
+                ]
+              },
+              {
+                "op": "gt",
+                "args": [
+                  "?index",
+                  0
+                ]
+              }
+            ],
+            "assert": {
+              "op": "exists",
+              "atom": {
+                "relation": "nonmonitor",
+                "args": [
+                  "?from",
+                  "?zone"
+                ]
+              }
+            }
+          },
+          {
+            "id": "ROUTE.SIMPLE.INTERIOR",
+            "label": "Simple-path configurations do not repeat route source nodes",
+            "when": [
+              {
+                "relation": "simplePathConfiguration",
+                "args": [
+                  "?configuration"
+                ]
+              },
+              {
+                "relation": "pathAvailable",
+                "args": [
+                  "?configuration",
+                  "?path"
+                ]
+              },
+              {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  "?first",
+                  "?node",
+                  "?firstTo"
+                ]
+              },
+              {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  "?second",
+                  "?node",
+                  "?secondTo"
+                ]
+              },
+              {
+                "op": "lt",
+                "args": [
+                  "?first",
+                  "?second"
+                ]
+              }
+            ],
+            "assert": {
+              "op": "eq",
+              "args": [
+                true,
+                false
+              ]
+            }
+          },
+          {
+            "id": "ROUTE.SIMPLE.TERMINAL",
+            "label": "Simple-path configurations do not repeat the terminal node",
+            "when": [
+              {
+                "relation": "simplePathConfiguration",
+                "args": [
+                  "?configuration"
+                ]
+              },
+              {
+                "relation": "pathAvailable",
+                "args": [
+                  "?configuration",
+                  "?path"
+                ]
+              },
+              {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  "?index",
+                  "?from",
+                  "?terminal"
+                ]
+              },
+              {
+                "op": "notExists",
+                "atom": {
+                  "relation": "routeStep",
+                  "args": [
+                    "?path",
+                    {
+                      "add": [
+                        "?index",
+                        1
+                      ]
+                    },
+                    "?nextFrom",
+                    "?nextTo"
+                  ]
+                }
+              },
+              {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  "?earlier",
+                  "?terminal",
+                  "?earlierTo"
+                ]
+              }
+            ],
+            "assert": {
+              "op": "eq",
+              "args": [
+                true,
+                false
+              ]
+            }
+          },
+          {
+            "id": "ROUTE.DISTINCT.ENDPOINTS",
+            "label": "Configured paths use distinct endpoints",
+            "when": [
+              {
+                "relation": "distinctEndpointConfiguration",
+                "args": [
+                  "?configuration"
+                ]
+              },
+              {
+                "relation": "pathAvailable",
+                "args": [
+                  "?configuration",
+                  "?path"
+                ]
+              },
+              {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  0,
+                  "?source",
+                  "?firstTo"
+                ]
+              },
+              {
+                "relation": "routeStep",
+                "args": [
+                  "?path",
+                  "?index",
+                  "?lastFrom",
+                  "?target"
+                ]
+              },
+              {
+                "op": "notExists",
+                "atom": {
+                  "relation": "routeStep",
+                  "args": [
+                    "?path",
+                    {
+                      "add": [
+                        "?index",
+                        1
+                      ]
+                    },
+                    "?nextFrom",
+                    "?nextTo"
+                  ]
+                }
+              }
+            ],
+            "assert": {
+              "op": "ne",
+              "args": [
+                "?source",
+                "?target"
+              ]
+            }
+          },
+          {
+            "id": "NODE.PARTITION",
+            "label": "Every node is a monitor or a possible-fault nonmonitor",
+            "when": [
+              {
+                "relation": "node",
+                "args": [
+                  "?node"
+                ]
+              },
+              {
+                "not": {
+                  "relation": "monitor",
+                  "args": [
+                    "?node"
+                  ]
+                }
+              }
+            ],
+            "assert": {
+              "op": "exists",
+              "atom": {
+                "relation": "nonmonitor",
+                "args": [
+                  "?node",
+                  "?zone"
+                ]
+              }
+            }
+          }
+        ],
+        "constraints": [
+          {
+            "id": "RELIABLE.REPORTS",
+            "label": "Every reliable submitted report agrees with its predicted state",
+            "when": [
+              {
+                "relation": "report",
+                "args": [
+                  "?id",
+                  "?path",
+                  "?snapshot",
+                  "?reported"
+                ]
+              },
+              {
+                "relation": "prediction",
+                "args": [
+                  "?path",
+                  "?predicted"
+                ]
+              }
+            ],
+            "assert": {
+              "op": "eq",
+              "args": [
+                "?predicted",
+                "?reported"
+              ]
+            }
+          }
+        ],
+        "queries": [
+          {
+            "id": "target-zone-has-fault",
+            "label": "Fault involvement of the selected zone",
+            "kind": "boolean",
+            "body": [
+              {
+                "relation": "faultZone",
+                "args": [
+                  {
+                    "parameter": "targetZone"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "target-node-failed",
+            "label": "Failure state of the selected node",
+            "kind": "boolean",
+            "body": [
+              {
+                "relation": "failed",
+                "args": [
+                  {
+                    "parameter": "targetNode"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "exact-failed-set",
+            "label": "Complete failed-node combination",
+            "kind": "set",
+            "body": [
+              {
+                "relation": "failed",
+                "args": [
+                  "?node"
+                ]
+              }
+            ],
+            "select": [
+              "?node"
+            ]
+          },
+          {
+            "id": "v3-failed",
+            "label": "Failure state of reference node v3",
+            "kind": "boolean",
+            "body": [
+              {
+                "relation": "failed",
+                "args": [
+                  "v3"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "zone-B-has-fault",
+            "label": "Fault involvement of reference Zone B",
+            "kind": "boolean",
+            "body": [
+              {
+                "relation": "faultZone",
+                "args": [
+                  "B"
+                ]
+              }
+            ]
+          }
+        ],
+        "reports": {
+          "tables": [
+            {
+              "id": "failed",
+              "label": "Nodes that could be failed together",
+              "relation": "failed",
+              "columns": [
+                "node"
+              ]
+            },
+            {
+              "id": "paths",
+              "label": "What this failure combination predicts for each listed path",
+              "relation": "prediction",
+              "columns": [
+                "path",
+                "failed"
+              ]
+            },
+            {
+              "id": "zones",
+              "label": "Zones implicated by this failure combination",
+              "relation": "faultZone",
+              "columns": [
+                "zone"
+              ]
+            },
+            {
+              "id": "members",
+              "label": "Nodes tested by each fixed path",
+              "relation": "pathNonmonitor",
+              "columns": [
+                "path",
+                "node"
+              ]
+            },
+            {
+              "id": "mismatch",
+              "label": "Reports that disagree with this prediction",
+              "relation": "mismatch",
+              "columns": [
+                "report",
+                "path",
+                "predicted",
+                "reported"
+              ]
+            }
+          ]
+        },
+        "presentation": {
+          "description": "Determine whether {{parameter.targetZone}} is implicated by the recorded path results and whether the record also settles the state of {{parameter.targetNode}}. Compare every permitted failure combination before deciding what additional diagnosis is needed.",
+          "question": "Do the test results locate a fault in {{parameter.targetZone}}, and do they identify which nodes failed?",
+          "labels": {
+            "scenario": "Possible failure combination",
+            "scenarios": "Possible failure combinations",
+            "assignment": "Failed nodes",
+            "answer": "Fault finding",
+            "examples": "Failure combinations behind these answers"
+          },
+          "entities": [
+            {
+              "id": "node",
+              "relation": "node",
+              "key": "id",
+              "template": "node {{row.id}}"
+            },
+            {
+              "id": "zone",
+              "relation": "zone",
+              "key": "id",
+              "template": "Zone {{row.id}}"
+            },
+            {
+              "id": "path",
+              "relation": "path",
+              "key": "id",
+              "template": "path {{row.id}}"
+            },
+            {
+              "id": "snapshot",
+              "relation": "snapshot",
+              "key": "id",
+              "template": "snapshot {{row.id}}"
+            },
+            {
+              "id": "configuration",
+              "relation": "configuration",
+              "key": "id",
+              "template": "{{row.id}} probing configuration"
+            }
+          ],
+          "columns": [
+            {
+              "relation": "monitor",
+              "column": "node",
+              "label": "Node",
+              "entity": "node"
+            },
+            {
+              "relation": "nonmonitor",
+              "column": "zone",
+              "label": "Equipment zone",
+              "entity": "zone"
+            },
+            {
+              "relation": "link",
+              "column": "from",
+              "label": "From node",
+              "entity": "node"
+            },
+            {
+              "relation": "link",
+              "column": "to",
+              "label": "To node",
+              "entity": "node"
+            },
+            {
+              "relation": "simplePathConfiguration",
+              "column": "configuration",
+              "label": "Probing configuration",
+              "entity": "configuration"
+            },
+            {
+              "relation": "distinctEndpointConfiguration",
+              "column": "configuration",
+              "label": "Probing configuration",
+              "entity": "configuration"
+            },
+            {
+              "relation": "pathAvailable",
+              "column": "configuration",
+              "label": "Probing configuration",
+              "entity": "configuration"
+            },
+            {
+              "relation": "pathAvailable",
+              "column": "path",
+              "label": "Measurement path",
+              "entity": "path"
+            },
+            {
+              "relation": "routeStep",
+              "column": "path",
+              "label": "Measurement path",
+              "entity": "path"
+            },
+            {
+              "relation": "routeStep",
+              "column": "from",
+              "label": "From node",
+              "entity": "node"
+            },
+            {
+              "relation": "routeStep",
+              "column": "to",
+              "label": "To node",
+              "entity": "node"
+            },
+            {
+              "relation": "report",
+              "column": "path",
+              "label": "Measurement path",
+              "entity": "path"
+            },
+            {
+              "relation": "report",
+              "column": "snapshot",
+              "label": "Snapshot",
+              "entity": "snapshot"
+            },
+            {
+              "relation": "report",
+              "column": "failed",
+              "label": "Recorded result",
+              "values": {
+                "true": "Failed",
+                "false": "Normal"
+              }
+            },
+            {
+              "relation": "failed",
+              "column": "node",
+              "label": "Node",
+              "entity": "node"
+            },
+            {
+              "relation": "pathNonmonitor",
+              "column": "path",
+              "label": "Measurement path",
+              "entity": "path"
+            },
+            {
+              "relation": "pathNonmonitor",
+              "column": "node",
+              "label": "Node",
+              "entity": "node"
+            },
+            {
+              "relation": "failedPath",
+              "column": "path",
+              "label": "Measurement path",
+              "entity": "path"
+            },
+            {
+              "relation": "prediction",
+              "column": "path",
+              "label": "Measurement path",
+              "entity": "path"
+            },
+            {
+              "relation": "prediction",
+              "column": "failed",
+              "label": "Predicted result",
+              "values": {
+                "true": "Failed",
+                "false": "Normal"
+              }
+            },
+            {
+              "relation": "faultZone",
+              "column": "zone",
+              "label": "Equipment zone",
+              "entity": "zone"
+            },
+            {
+              "relation": "mismatch",
+              "column": "path",
+              "label": "Measurement path",
+              "entity": "path"
+            },
+            {
+              "relation": "mismatch",
+              "column": "predicted",
+              "label": "Predicted result",
+              "values": {
+                "true": "Failed",
+                "false": "Normal"
+              }
+            },
+            {
+              "relation": "mismatch",
+              "column": "reported",
+              "label": "Recorded result",
+              "values": {
+                "true": "Failed",
+                "false": "Normal"
+              }
+            }
+          ],
+          "parameters": [
+            {
+              "id": "targetZone",
+              "entity": "zone"
+            },
+            {
+              "id": "targetNode",
+              "entity": "node"
+            },
+            {
+              "id": "snapshot",
+              "entity": "snapshot"
+            },
+            {
+              "id": "configuration",
+              "entity": "configuration"
+            }
+          ],
+          "queries": [
+            {
+              "id": "target-zone-has-fault",
+              "question": "Is there a failed node in {{parameter.targetZone}}?",
+              "valueLabels": {
+                "true": "Contains a fault",
+                "false": "Contains no fault"
+              },
+              "answers": {
+                "establishedTrue": "{{parameter.targetZone}} contains at least one failed node.",
+                "establishedFalse": "{{parameter.targetZone}} contains no failed node under this model.",
+                "underdetermined": "Whether {{parameter.targetZone}} contains a fault remains open.",
+                "inconsistent": "The submitted record and assumptions have no compatible explanation.",
+                "incomplete": "The current check has not established this answer.",
+                "invalid": "These inputs cannot be assessed under this model.",
+                "not-assessed": "This question needs an additional assessment contract."
+              },
+              "explanations": {
+                "establishedTrue": "Every failure combination that matches the reports includes a failed node in {{parameter.targetZone}}. Individual node failures may still differ between compatible combinations.",
+                "establishedFalse": "No compatible failure combination includes a failed node in {{parameter.targetZone}}. This finding depends on the submitted routes, reliable-report assumption and fault bound.",
+                "underdetermined": "Some compatible failure combinations implicate {{parameter.targetZone}} and others do not. The current record does not settle zone involvement.",
+                "inconsistent": "No allowed failure combination predicts every submitted report. Review the record and its assumptions together; the conflict does not identify which report or premise is wrong.",
+                "incomplete": "The declared combinations have not all been checked. Agreement among discovered combinations is not enough to establish zone involvement."
+              }
+            },
+            {
+              "id": "target-node-failed",
+              "question": "Has {{parameter.targetNode}} failed?",
+              "valueLabels": {
+                "true": "Failed",
+                "false": "Normal"
+              },
+              "answers": {
+                "establishedTrue": "{{parameter.targetNode}} is failed under the submitted model.",
+                "establishedFalse": "{{parameter.targetNode}} is normal under the submitted model.",
+                "underdetermined": "Whether {{parameter.targetNode}} failed remains open.",
+                "inconsistent": "The submitted record and assumptions have no compatible explanation.",
+                "incomplete": "The current check has not established this answer.",
+                "invalid": "These inputs cannot be assessed under this model.",
+                "not-assessed": "This question needs an additional assessment contract."
+              },
+              "explanations": {
+                "establishedTrue": "Every compatible failure combination includes {{parameter.targetNode}}. This conclusion describes the record under the declared assumptions; it is not a repair authorization.",
+                "establishedFalse": "No compatible failure combination includes {{parameter.targetNode}}. This finding covers the assessed snapshot and declared failure model.",
+                "underdetermined": "The opposing combinations below disagree about {{parameter.targetNode}}. Selecting the smaller combination would add a preference, not establish that the selected explanation is true.",
+                "inconsistent": "The submitted reports and failure assumptions admit no compatible combination.",
+                "incomplete": "The current check has not ruled out every permitted different node answer."
+              }
+            },
+            {
+              "id": "exact-failed-set",
+              "question": "Which nodes have failed?",
+              "entity": "node",
+              "answers": {
+                "established": "Established failed-node combination: {{answer}}.",
+                "underdetermined": "The exact failed-node combination remains open.",
+                "inconsistent": "No permitted failure combination matches the record.",
+                "incomplete": "The complete failed-node combination has not been established."
+              },
+              "explanations": {
+                "underdetermined": "Several different combinations predict the same submitted reports. A zone finding can hold across all of them without settling the individual failures."
+              }
+            },
+            {
+              "id": "v3-failed",
+              "question": "Has node v3 failed?",
+              "valueLabels": {
+                "true": "Failed",
+                "false": "Normal"
+              },
+              "answers": {
+                "establishedTrue": "node v3 is failed under the submitted model.",
+                "establishedFalse": "node v3 is normal under the submitted model.",
+                "underdetermined": "Whether node v3 failed remains open.",
+                "inconsistent": "The submitted record and assumptions have no compatible explanation.",
+                "incomplete": "The current check has not established this answer.",
+                "invalid": "These inputs cannot be assessed under this model.",
+                "not-assessed": "This question needs an additional assessment contract."
+              },
+              "explanations": {
+                "establishedTrue": "Every compatible failure combination includes node v3. This conclusion describes the record under the declared assumptions; it is not a repair authorization.",
+                "establishedFalse": "No compatible failure combination includes node v3. This finding covers the assessed snapshot and declared failure model.",
+                "underdetermined": "The opposing combinations below disagree about node v3. Selecting the smaller combination would add a preference, not establish that the selected explanation is true.",
+                "inconsistent": "The submitted reports and failure assumptions admit no compatible combination.",
+                "incomplete": "The current check has not ruled out every permitted different node answer."
+              }
+            },
+            {
+              "id": "zone-B-has-fault",
+              "question": "Is there a failed node in Zone B?",
+              "valueLabels": {
+                "true": "Contains a fault",
+                "false": "Contains no fault"
+              },
+              "answers": {
+                "establishedTrue": "Zone B contains at least one failed node.",
+                "establishedFalse": "Zone B contains no failed node under this model.",
+                "underdetermined": "Whether Zone B contains a fault remains open.",
+                "inconsistent": "The submitted record and assumptions have no compatible explanation.",
+                "incomplete": "The current check has not established this answer.",
+                "invalid": "These inputs cannot be assessed under this model.",
+                "not-assessed": "This question needs an additional assessment contract."
+              },
+              "explanations": {
+                "establishedTrue": "Every failure combination that matches the reports includes a failed node in Zone B. Individual node failures may still differ between compatible combinations.",
+                "establishedFalse": "No compatible failure combination includes a failed node in Zone B. This finding depends on the submitted routes, reliable-report assumption and fault bound.",
+                "underdetermined": "Some compatible failure combinations implicate Zone B and others do not. The current record does not settle zone involvement.",
+                "inconsistent": "No allowed failure combination predicts every submitted report. Review the record and its assumptions together; the conflict does not identify which report or premise is wrong.",
+                "incomplete": "The declared combinations have not all been checked. Agreement among discovered combinations is not enough to establish zone involvement."
+              }
+            }
+          ],
+          "reports": {
+            "answer": {
+              "title": "Fault finding",
+              "question": "Do the results locate a fault in {{parameter.targetZone}}, and has {{parameter.targetNode}} failed?",
+              "description": "Separate a stable equipment-group finding from node states that remain uncertain."
+            },
+            "interpretations": {
+              "title": "Possible failure combinations",
+              "question": "Which failure combinations fit all recorded path results?",
+              "description": "Inspect every compatible combination. A smaller combination is not automatically the true explanation."
+            },
+            "stability": {
+              "title": "Why the finding holds",
+              "question": "Could another compatible failure combination change the answer?",
+              "description": "Compare concrete combinations supporting or challenging each zone or node finding."
+            },
+            "findings": {
+              "title": "Conflicts and input checks",
+              "question": "Which failure combinations were ruled out, and does the submitted information need attention?",
+              "description": "Review input applicability and the constraints that exclude proposed combinations."
+            },
+            "basis": {
+              "title": "Scope and assumptions",
+              "question": "Which topology, paths, snapshot and failure assumptions support this finding?",
+              "description": "Inspect the evaluated case and its limits before using the result for further diagnostic work."
+            },
+            "changes": {
+              "title": "Effect of case changes",
+              "question": "How did new reports, a different fault bound or a changed target affect the finding?",
+              "description": "Compare recomputed findings while preserving the exact basis of earlier calculations."
+            }
+          },
+          "tableGroups": [
+            {
+              "id": "possible-faults",
+              "title": "Faults in this possible combination",
+              "description": "These failed nodes and equipment zones belong to one compatible explanation of the record.",
+              "tableIds": [
+                "failed",
+                "zones"
+              ]
+            },
+            {
+              "id": "predicted-paths",
+              "title": "What this combination predicts",
+              "description": "Unobserved paths are predictions under this combination, not additional measurements or newly available probes.",
+              "tableIds": [
+                "paths"
+              ]
+            },
+            {
+              "id": "path-details",
+              "title": "Path and report-check details",
+              "description": "Inspect the fixed route membership and any disagreements with submitted reports.",
+              "tableIds": [
+                "members",
+                "mismatch"
+              ],
+              "collapsed": true
+            }
+          ],
+          "findingGroups": [
+            {
+              "id": "fault-zones",
+              "title": "Fault zones",
+              "question": "Which equipment zones contain a fault?",
+              "description": "A zone-level finding can hold across several different combinations of individual node failures.",
+              "queryIds": [
+                "target-zone-has-fault",
+                "zone-B-has-fault"
+              ]
+            },
+            {
+              "id": "node-failures",
+              "title": "Node failures",
+              "question": "Which individual nodes have failed, and which complete combinations remain possible?",
+              "description": "Keep established node states separate from unresolved individual failures and the complete failed-node combination.",
+              "queryIds": [
+                "target-node-failed",
+                "v3-failed",
+                "exact-failed-set"
+              ]
+            }
+          ]
+        }
+      },
+      "case": {
+        "id": "N1",
+        "scope": "Listed topology / snapshot S1 / UP path reports",
+        "parameters": {
+          "maxFaults": 2,
+          "configuration": "UP",
+          "snapshot": "S1",
+          "targetZone": "A",
+          "targetNode": "v2"
+        },
+        "basis": {
+          "node": [
+            {
+              "id": "m1"
+            },
+            {
+              "id": "m2"
+            },
+            {
+              "id": "m3"
+            },
+            {
+              "id": "v1"
+            },
+            {
+              "id": "v2"
+            },
+            {
+              "id": "v3"
+            },
+            {
+              "id": "v4"
+            }
+          ],
+          "monitor": [
+            {
+              "node": "m1"
+            },
+            {
+              "node": "m2"
+            },
+            {
+              "node": "m3"
+            }
+          ],
+          "zone": [
+            {
+              "id": "A"
+            },
+            {
+              "id": "B"
+            }
+          ],
+          "nonmonitor": [
+            {
+              "id": "v1",
+              "zone": "A"
+            },
+            {
+              "id": "v2",
+              "zone": "A"
+            },
+            {
+              "id": "v3",
+              "zone": "B"
+            },
+            {
+              "id": "v4",
+              "zone": "B"
+            }
+          ],
+          "link": [
+            {
+              "from": "m1",
+              "to": "v1"
+            },
+            {
+              "from": "m1",
+              "to": "v2"
+            },
+            {
+              "from": "v1",
+              "to": "v2"
+            },
+            {
+              "from": "v1",
+              "to": "v3"
+            },
+            {
+              "from": "v2",
+              "to": "v3"
+            },
+            {
+              "from": "v2",
+              "to": "v4"
+            },
+            {
+              "from": "v3",
+              "to": "v4"
+            },
+            {
+              "from": "v1",
+              "to": "m2"
+            },
+            {
+              "from": "v3",
+              "to": "m2"
+            },
+            {
+              "from": "v4",
+              "to": "m2"
+            },
+            {
+              "from": "v3",
+              "to": "m3"
+            },
+            {
+              "from": "v4",
+              "to": "m3"
+            }
+          ],
+          "configuration": [
+            {
+              "id": "UP"
+            },
+            {
+              "id": "CSP"
+            },
+            {
+              "id": "CAP"
+            }
+          ],
+          "simplePathConfiguration": [
+            {
+              "configuration": "UP"
+            },
+            {
+              "configuration": "CSP"
+            }
+          ],
+          "distinctEndpointConfiguration": [
+            {
+              "configuration": "UP"
+            },
+            {
+              "configuration": "CSP"
+            }
+          ],
+          "path": [
+            {
+              "id": "P1"
+            },
+            {
+              "id": "P2"
+            },
+            {
+              "id": "P3"
+            },
+            {
+              "id": "P4"
+            },
+            {
+              "id": "P5"
+            },
+            {
+              "id": "P6"
+            },
+            {
+              "id": "P7"
+            }
+          ],
+          "pathAvailable": [
+            {
+              "configuration": "UP",
+              "path": "P1"
+            },
+            {
+              "configuration": "UP",
+              "path": "P2"
+            },
+            {
+              "configuration": "UP",
+              "path": "P3"
+            },
+            {
+              "configuration": "CSP",
+              "path": "P1"
+            },
+            {
+              "configuration": "CSP",
+              "path": "P2"
+            },
+            {
+              "configuration": "CSP",
+              "path": "P3"
+            },
+            {
+              "configuration": "CSP",
+              "path": "P4"
+            },
+            {
+              "configuration": "CSP",
+              "path": "P5"
+            },
+            {
+              "configuration": "CSP",
+              "path": "P6"
+            },
+            {
+              "configuration": "CAP",
+              "path": "P5"
+            },
+            {
+              "configuration": "CAP",
+              "path": "P7"
+            },
+            {
+              "configuration": "CAP",
+              "path": "P3"
+            },
+            {
+              "configuration": "CAP",
+              "path": "P6"
+            }
+          ],
+          "routeStep": [
+            {
+              "path": "P1",
+              "index": 0,
+              "from": "m1",
+              "to": "v2"
+            },
+            {
+              "path": "P1",
+              "index": 1,
+              "from": "v2",
+              "to": "v1"
+            },
+            {
+              "path": "P1",
+              "index": 2,
+              "from": "v1",
+              "to": "m2"
+            },
+            {
+              "path": "P2",
+              "index": 0,
+              "from": "m1",
+              "to": "v2"
+            },
+            {
+              "path": "P2",
+              "index": 1,
+              "from": "v2",
+              "to": "v4"
+            },
+            {
+              "path": "P2",
+              "index": 2,
+              "from": "v4",
+              "to": "m3"
+            },
+            {
+              "path": "P3",
+              "index": 0,
+              "from": "m2",
+              "to": "v3"
+            },
+            {
+              "path": "P3",
+              "index": 1,
+              "from": "v3",
+              "to": "m3"
+            },
+            {
+              "path": "P4",
+              "index": 0,
+              "from": "m1",
+              "to": "v2"
+            },
+            {
+              "path": "P4",
+              "index": 1,
+              "from": "v2",
+              "to": "v3"
+            },
+            {
+              "path": "P4",
+              "index": 2,
+              "from": "v3",
+              "to": "m2"
+            },
+            {
+              "path": "P5",
+              "index": 0,
+              "from": "m1",
+              "to": "v1"
+            },
+            {
+              "path": "P5",
+              "index": 1,
+              "from": "v1",
+              "to": "m2"
+            },
+            {
+              "path": "P6",
+              "index": 0,
+              "from": "m2",
+              "to": "v4"
+            },
+            {
+              "path": "P6",
+              "index": 1,
+              "from": "v4",
+              "to": "m3"
+            },
+            {
+              "path": "P7",
+              "index": 0,
+              "from": "m1",
+              "to": "v2"
+            },
+            {
+              "path": "P7",
+              "index": 1,
+              "from": "v2",
+              "to": "m1"
+            }
+          ],
+          "snapshot": [
+            {
+              "id": "S1"
+            }
+          ]
+        },
+        "evidence": {
+          "report": [
+            {
+              "id": "O1",
+              "path": "P1",
+              "snapshot": "S1",
+              "failed": true
+            },
+            {
+              "id": "O2",
+              "path": "P2",
+              "snapshot": "S1",
+              "failed": true
+            },
+            {
+              "id": "O3",
+              "path": "P3",
+              "snapshot": "S1",
+              "failed": false
+            }
+          ]
+        },
+        "queryIds": [
+          "target-zone-has-fault",
+          "target-node-failed",
+          "exact-failed-set",
+          "v3-failed",
+          "zone-B-has-fault"
+        ],
+        "evaluation": {
+          "maxCandidates": 10000,
+          "maxRuleRounds": 100,
+          "maxFacts": 50000
+        }
+      }
+    },
+    "presentation": {
+      "schemaVersion": 1,
+      "provider": "native-evidence-review",
+      "contract": "evidence-assessment/1",
+      "views": []
+    },
+    "viewContracts": [],
+    "fields": [],
+    "reports": [
+      "answer",
+      "interpretations",
+      "stability",
+      "findings",
+      "basis",
+      "changes"
+    ],
+    "defaultReport": "answer",
+    "originWorkspaceId": null,
+    "createdAt": "2026-11-14T00:00:00.000Z",
+    "contentHash": "fbc55dc8085219631f9e575feeb12b5f64fe335f10d85f29efee997386d514a0"
+  }
+}

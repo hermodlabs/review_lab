@@ -1,8 +1,58 @@
 {
-  "version": "9a19a4e6bd3147690c5d",
+  "version": "c3ff9446eb8682646fd7",
   "appVersion": "0.2.0",
-  "totalBytes": 22345891,
+  "totalBytes": 12134955,
   "assets": [
+    {
+      "url": "app-configs/.nojekyll",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "url": "app-configs/README.txt",
+      "sha256": "9919d63a6ec03bcb2f70c95738d1f58cd76d2e1773790acfdc59da633f31c937",
+      "bytes": 4681
+    },
+    {
+      "url": "app-configs/apps/sample-evidence-food/1/app.app.json",
+      "sha256": "a1e7581f884dcf2de20d27a553c0d9a49ad638d592534d678eff76449ec5babc",
+      "bytes": 145623
+    },
+    {
+      "url": "app-configs/apps/sample-evidence-food/1/model.yaml",
+      "sha256": "9239d02acdb9866fb3a07ae439ddef6e244dcfdfaa5ca7848b92eb8f035f853c",
+      "bytes": 50940
+    },
+    {
+      "url": "app-configs/apps/sample-evidence-marbles/1/app.app.json",
+      "sha256": "619cc770321f9a52becf3de6b0c9f5160d488b959f302f282c97b3330f30d24e",
+      "bytes": 36913
+    },
+    {
+      "url": "app-configs/apps/sample-evidence-marbles/1/model.yaml",
+      "sha256": "1aa484f7f656a16829b02499acf425bc2335bf7eb7f4ae1c3bb4be541d4f20c9",
+      "bytes": 11264
+    },
+    {
+      "url": "app-configs/apps/sample-evidence-network/1/app.app.json",
+      "sha256": "838181878ce139fe96ae84636c96988b2c8c7b26af7873e3bcd6275e8224c519",
+      "bytes": 101734
+    },
+    {
+      "url": "app-configs/apps/sample-evidence-network/1/model.yaml",
+      "sha256": "477bac5151ad77dc8f496ebb80c7463a8d5635684cb01fa13f95a4cf61fdd617",
+      "bytes": 35095
+    },
+    {
+      "url": "app-configs/catalog.json",
+      "sha256": "60ef23d167aaa412db1bd53849c694ee4a9ef925d815ac9b470165e62446df14",
+      "bytes": 6596
+    },
+    {
+      "url": "app-configs/generate-feed.mjs",
+      "sha256": "64c5ab9bc6a4e6ff936bc143be60ee680d93aada8247379f709f5f37f8356859",
+      "bytes": 4904
+    },
     {
       "url": "assets/clingo-Bbt-XjUT.js",
       "sha256": "72b43fcd93ac10271a9ca08d30ea2b1f0f6f0f79ac6afd98cc442ae5fe1010ba",
@@ -29,49 +79,24 @@
       "bytes": 50792
     },
     {
-      "url": "assets/index-DV4hFSrA.css",
-      "sha256": "1fec22a18d9e0bc2aab940d8f36332f6a9823e0e327085a36c4350e43f455bd8",
-      "bytes": 205328
+      "url": "assets/index-9k3CALHb.css",
+      "sha256": "b65fb536c3f885c3f4218d5b0cf47e910369d53cb3c6d0eb50bb8cb501801333",
+      "bytes": 186275
     },
     {
-      "url": "assets/index-Dcs2KR43.js",
-      "sha256": "76bae7cbfa7a7c718e6a1d6b666ce25d1b5620cac9f506aa8520d501d2227321",
-      "bytes": 5929285
+      "url": "assets/index-Drh-sZEu.js",
+      "sha256": "2fdc4b967253eb86dfe7e2bc8d3df635872bade632bb2f918fe67085ee70419d",
+      "bytes": 6007758
     },
     {
-      "url": "assets/lib-d6bElRJs.js",
-      "sha256": "20aaa98c1c714e5c3c6c4df70e522de6ca21236cf3711f8a7789cce37efeb7fb",
-      "bytes": 6115340
-    },
-    {
-      "url": "assets/mammoth.browser-DdXS3Ul8.js",
-      "sha256": "a7cd8f22cedc7afd20fc17ee062afbf03181ab2cb39f849c952fec293149da2f",
-      "bytes": 298602
-    },
-    {
-      "url": "assets/pdf-8ZV14wDg.js",
-      "sha256": "2b65d53fa8ab8b72839fd8eb449c0ebfc7bf83dd70a86738111e2bfad875109d",
-      "bytes": 444979
-    },
-    {
-      "url": "assets/pdf.worker.min-BroKtp1e.js",
-      "sha256": "89a16be362187569309b1d862f20592db26f8ab728709d752d341ad01012fa3f",
-      "bytes": 86
-    },
-    {
-      "url": "assets/pdf.worker.min-CKukk4ye.js",
-      "sha256": "b841605e5678db1f90ed29e684c0aed7ba9f69589bd4f29eb5b1a1ec4407069f",
-      "bytes": 1179715
+      "url": "assets/review.worker-j2zWSzos.js",
+      "sha256": "4c64abbba6645b291479163266a2244bbfdf6f0652d69a7a9092c121ae70415c",
+      "bytes": 38787
     },
     {
       "url": "assets/run.worker-Dcf80R0t.js",
       "sha256": "dd9fdddeabd56d071071bc5c66328b7fd587f8db619e5b01b7c2a1104c1c6cd4",
       "bytes": 2360
-    },
-    {
-      "url": "assets/webllm.worker-CnuuuAu-.js",
-      "sha256": "1eec30685513e0ab8018baae64db7137e4444cd0ed6d7a1bcea374c7b3da795f",
-      "bytes": 2668171
     },
     {
       "url": "icons/apple-touch-icon.png",
@@ -100,7 +125,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "9c334c044bf90f3733f7fd12703d48f6cbf3ea1cf8ecde5cc569463333843fb0",
+      "sha256": "4a28aa3898a71a0aa2f3aad3d77ede93dc21c710803b844ef96b703c9c998d79",
       "bytes": 1023
     },
     {

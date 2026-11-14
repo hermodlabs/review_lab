@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "kind": "decision-lab-app-catalog",
+  "title": "Decision Lab app marketplace",
+  "description": "Installable evidence-review apps, organized into collections by use case.",
+  "exportedAt": "2026-11-14T09:28:16.282Z",
+  "scope": "bundled-clean-install-releases",
+  "apps": [
+    {
+      "id": "sample-evidence-marbles",
+      "version": 1,
+      "name": "Review marble evidence",
+      "description": "Does a fixed weighing record establish the bag containing the heavy marble? Exactly one of nine identified marbles is heavier. Generate each possible heavy identity, derive each weighing outcome from its pan membership, and retain assignments within the declared global report-error limit, initially one. The required bag question and optional exact-identity question are assessed independently from the generated interpretations. These are hypothetical observations, not a record of physical inspection or permission to act.",
+      "publishedAt": "2026-11-14T00:00:00.000Z",
+      "contentHash": "e1246367e94f046fcfe1227808ef8c82dd3c517d46eabfcabc87699331e67b14",
+      "module": {
+        "id": "marble-evidence",
+        "version": "1.2.0"
+      },
+      "domain": {
+        "id": "canonical-examples",
+        "label": "Canonical examples",
+        "description": "Reference problems for understanding and testing reusable evidence patterns."
+      },
+      "useCase": {
+        "id": "locate-heavy-marble",
+        "label": "Locate a heavy marble",
+        "description": "Determine whether a weighing record identifies the containing bag or the exact heavy marble."
+      },
+      "pattern": {
+        "id": "evidence-review/1",
+        "label": "Evidence review"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "evidence-review/1",
+        "definition": {
+          "id": "evidence-review",
+          "version": "1.0.0",
+          "evaluator": "finite-relational-evidence/1"
+        },
+        "presentationContract": "evidence-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-evidence-marbles/1/app.app.json",
+        "bytes": 36913,
+        "sha256": "619cc770321f9a52becf3de6b0c9f5160d488b959f302f282c97b3330f30d24e"
+      },
+      "source": {
+        "path": "apps/sample-evidence-marbles/1/model.yaml",
+        "bytes": 11264,
+        "sha256": "1aa484f7f656a16829b02499acf425bc2335bf7eb7f4ae1c3bb4be541d4f20c9"
+      }
+    },
+    {
+      "id": "sample-evidence-food",
+      "version": 1,
+      "name": "Review food-traceability evidence",
+      "description": "Review which firms belong on a tracing inquiry list before deciding whom to investigate. Compare the product and business-role explanations permitted by the case, derive possible supply connections, and follow each product through the network. Explicitly supplied recall starting points can also be traced and compared. Catalog compatibility supports a modeled inquiry; it does not establish contamination, actual shipments or an issued recall.",
+      "publishedAt": "2026-11-14T00:00:00.000Z",
+      "contentHash": "7fd0ff80a8fe264182dd3024e49cb68de9779f58ee8307c489bf2fa097404de2",
+      "module": {
+        "id": "food-traceability-evidence",
+        "version": "1.3.0"
+      },
+      "domain": {
+        "id": "food-supply-chains",
+        "label": "Food supply chains",
+        "description": "Food production and distribution networks and their tracing relationships."
+      },
+      "useCase": {
+        "id": "traceability-inquiry",
+        "label": "Identify firms for a tracing inquiry",
+        "description": "Determine which firms belong on an inquiry list across permitted product and business-role explanations."
+      },
+      "pattern": {
+        "id": "evidence-review/1",
+        "label": "Evidence review"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "evidence-review/1",
+        "definition": {
+          "id": "evidence-review",
+          "version": "1.0.0",
+          "evaluator": "finite-relational-evidence/1"
+        },
+        "presentationContract": "evidence-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-evidence-food/1/app.app.json",
+        "bytes": 145623,
+        "sha256": "a1e7581f884dcf2de20d27a553c0d9a49ad638d592534d678eff76449ec5babc"
+      },
+      "source": {
+        "path": "apps/sample-evidence-food/1/model.yaml",
+        "bytes": 50940,
+        "sha256": "9239d02acdb9866fb3a07ae439ddef6e244dcfdfaa5ca7848b92eb8f035f853c"
+      }
+    },
+    {
+      "id": "sample-evidence-network",
+      "version": 1,
+      "name": "Localize network faults",
+      "description": "Determine which equipment group or individual node the submitted path reports actually implicate. Compare every permitted failure combination under the declared fault bound, assessed snapshot and reliable path predictor. Separate a stable zone-level finding from individual node failures that remain uncertain before making further diagnostic or repair decisions. The result describes what the record establishes; it does not authorize a repair.",
+      "publishedAt": "2026-11-14T00:00:00.000Z",
+      "contentHash": "fbc55dc8085219631f9e575feeb12b5f64fe335f10d85f29efee997386d514a0",
+      "module": {
+        "id": "network-fault-evidence",
+        "version": "1.3.0"
+      },
+      "domain": {
+        "id": "network-operations",
+        "label": "Network operations",
+        "description": "Network monitoring and diagnosis from declared topology and test records."
+      },
+      "useCase": {
+        "id": "fault-localization",
+        "label": "Locate network faults",
+        "description": "Determine which fault zones and individual node failures are established by path-test results."
+      },
+      "pattern": {
+        "id": "evidence-review/1",
+        "label": "Evidence review"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "evidence-review/1",
+        "definition": {
+          "id": "evidence-review",
+          "version": "1.0.0",
+          "evaluator": "finite-relational-evidence/1"
+        },
+        "presentationContract": "evidence-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-evidence-network/1/app.app.json",
+        "bytes": 101734,
+        "sha256": "838181878ce139fe96ae84636c96988b2c8c7b26af7873e3bcd6275e8224c519"
+      },
+      "source": {
+        "path": "apps/sample-evidence-network/1/model.yaml",
+        "bytes": 35095,
+        "sha256": "477bac5151ad77dc8f496ebb80c7463a8d5635684cb01fa13f95a4cf61fdd617"
+      }
+    }
+  ]
+}
