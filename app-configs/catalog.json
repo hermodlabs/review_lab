@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "kind": "decision-lab-app-catalog",
   "title": "Decision Lab app marketplace",
-  "description": "Installable evidence-review apps, organized into collections by use case.",
-  "exportedAt": "2026-11-14T09:28:16.282Z",
+  "description": "Installable evidence-review and learning-value apps, organized into collections by use case.",
+  "exportedAt": "2026-11-14T22:00:07.843Z",
   "scope": "bundled-clean-install-releases",
   "apps": [
     {
@@ -142,6 +142,696 @@
         "path": "apps/sample-evidence-network/1/model.yaml",
         "bytes": 35095,
         "sha256": "477bac5151ad77dc8f496ebb80c7463a8d5635684cb01fa13f95a4cf61fdd617"
+      }
+    },
+    {
+      "id": "sample-learning-marbles",
+      "version": 1,
+      "name": "Assess marble learning value",
+      "description": "Decide whether to buy another comparison before choosing a marble. Compare every permitted complete response policy with the best choice now, using an explicitly reviewed three-state E3 basis, assessed probabilities, payoffs, service likelihoods, fees and completion times. The same choices can be assessed under exact-identity or bag-only payoffs. The source record is retained for review; this app does not rerun the separate historical weighing-evidence calculation.",
+      "publishedAt": "2026-11-14T00:00:00.000Z",
+      "contentHash": "239588d3784b0949028af3d7e81900ffb3abac92c4628fb1865c1be86bb3805d",
+      "module": {
+        "id": "marble-learning-value",
+        "version": "1.0.0"
+      },
+      "domain": {
+        "id": "canonical-examples",
+        "label": "Canonical examples",
+        "description": "Reference problems for understanding and testing reusable evidence patterns."
+      },
+      "useCase": {
+        "id": "choose-marble-investigation",
+        "label": "Choose a marble investigation",
+        "description": "Compare the modeled value of another comparison with choosing now under exact-identity or containing-bag consequences."
+      },
+      "pattern": {
+        "id": "assess-value-of-learning/1",
+        "label": "Assess the value of learning"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "assess-value-of-learning/1",
+        "definition": {
+          "id": "assess-value-of-learning",
+          "version": "1.0.0",
+          "evaluator": "finite-learning-value/1"
+        },
+        "presentationContract": "learning-value-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-learning-marbles/1/app.app.json",
+        "bytes": 49674,
+        "sha256": "41d588338a5efe23a1afab7936b6dc67890d36f93588fde486e8c07e925f7e7c"
+      },
+      "source": {
+        "path": "apps/sample-learning-marbles/1/model.yaml",
+        "bytes": 17579,
+        "sha256": "623e2b6d68e05789f39f770e7d868beef40cb6cb4115a560e34bac9aeb21471b"
+      }
+    },
+    {
+      "id": "sample-learning-launch",
+      "version": 1,
+      "name": "Assess launch review value",
+      "description": "Choose whether to commission an early launch-readiness review before reserving a complete operating policy. Compare targeted, full, noisy, missing-result and late reviews against the best no-review policy, using explicit joint readiness probabilities, complete operating consequences, cash requirements and deadlines. A review can improve a reservation choice while a later mandatory gate still controls dispatch.",
+      "publishedAt": "2026-11-14T00:00:00.000Z",
+      "contentHash": "0932de4040255e55d4a06400335d16e8b0002e4c764491a1d044a802161cc1e6",
+      "module": {
+        "id": "launch-review-value",
+        "version": "1.0.0"
+      },
+      "domain": {
+        "id": "product-launches",
+        "label": "Product launches",
+        "description": "Decisions about preparing, reviewing and committing a scoped product launch."
+      },
+      "useCase": {
+        "id": "choose-readiness-review",
+        "label": "Choose a launch-readiness review",
+        "description": "Compare early review and response policies before a launch reservation deadline."
+      },
+      "pattern": {
+        "id": "assess-value-of-learning/1",
+        "label": "Assess the value of learning"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "assess-value-of-learning/1",
+        "definition": {
+          "id": "assess-value-of-learning",
+          "version": "1.0.0",
+          "evaluator": "finite-learning-value/1"
+        },
+        "presentationContract": "learning-value-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-learning-launch/1/app.app.json",
+        "bytes": 98035,
+        "sha256": "e432f3b9db003a87f63f8a6d19d13ba8ebc626af0813b945198f698ce8b09e5a"
+      },
+      "source": {
+        "path": "apps/sample-learning-launch/1/model.yaml",
+        "bytes": 36897,
+        "sha256": "6fa210a55f5203195a79eb391349b20950bc839bae0c9d96692dcfe6b9d075f3"
+      }
+    },
+    {
+      "id": "sample-learning-marbles",
+      "version": 2,
+      "name": "Assess marble learning value",
+      "description": "Decide whether to buy another comparison before choosing a marble. Compare every permitted complete response policy with the best choice now, using an explicitly reviewed three-state E3 basis, assessed probabilities, payoffs, service likelihoods, fees and completion times. The same choices can be assessed under exact-identity or bag-only payoffs. The source record is retained for review; this app does not rerun the separate historical weighing-evidence calculation.",
+      "publishedAt": "2026-11-14T18:54:28.000Z",
+      "contentHash": "0ab646f394a80ffc46559a03cbaecb2f337df5e935f8e6ae45d7d33b2cdf92bf",
+      "module": {
+        "id": "marble-learning-value",
+        "version": "1.1.0"
+      },
+      "domain": {
+        "id": "canonical-examples",
+        "label": "Canonical examples",
+        "description": "Reference problems for understanding and testing reusable evidence patterns."
+      },
+      "useCase": {
+        "id": "choose-marble-investigation",
+        "label": "Choose a marble investigation",
+        "description": "Compare the modeled value of another comparison with choosing now under exact-identity or containing-bag consequences."
+      },
+      "pattern": {
+        "id": "assess-value-of-learning/1",
+        "label": "Assess the value of learning"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "assess-value-of-learning/1",
+        "definition": {
+          "id": "assess-value-of-learning",
+          "version": "1.0.0",
+          "evaluator": "finite-learning-value/1"
+        },
+        "presentationContract": "learning-value-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-learning-marbles/2/app.app.json",
+        "bytes": 54835,
+        "sha256": "a5fe75a0908c64a7c41848d1615d6479219bb34b7ec21467308ba120f8ab1da2"
+      },
+      "source": {
+        "path": "apps/sample-learning-marbles/2/model.yaml",
+        "bytes": 19689,
+        "sha256": "752bf7eaf7613bd111ebc0609e534d28077eddf3c63b48009e5549ea1dac8e7b"
+      }
+    },
+    {
+      "id": "sample-learning-launch",
+      "version": 2,
+      "name": "Assess launch review value",
+      "description": "Choose whether to commission an early launch-readiness review before reserving a complete operating policy. Compare targeted, full, noisy, missing-result and late reviews against the best no-review policy, using explicit joint readiness probabilities, complete operating consequences, cash requirements and deadlines. A review can improve a reservation choice while a later mandatory gate still controls dispatch.",
+      "publishedAt": "2026-11-14T18:54:28.000Z",
+      "contentHash": "cd1bac00c4286dedea6a62ff01cc31bb2d97e8fa9f213cdb968d1bbd183430ae",
+      "module": {
+        "id": "launch-review-value",
+        "version": "1.1.0"
+      },
+      "domain": {
+        "id": "product-launches",
+        "label": "Product launches",
+        "description": "Decisions about preparing, reviewing and committing a scoped product launch."
+      },
+      "useCase": {
+        "id": "choose-readiness-review",
+        "label": "Choose a launch-readiness review",
+        "description": "Compare early review and response policies before a launch reservation deadline."
+      },
+      "pattern": {
+        "id": "assess-value-of-learning/1",
+        "label": "Assess the value of learning"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "assess-value-of-learning/1",
+        "definition": {
+          "id": "assess-value-of-learning",
+          "version": "1.0.0",
+          "evaluator": "finite-learning-value/1"
+        },
+        "presentationContract": "learning-value-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-learning-launch/2/app.app.json",
+        "bytes": 103878,
+        "sha256": "e33947a895ab6ebe1a69843555ab48516bfc2b1820cec4b88484c8e460c20a5e"
+      },
+      "source": {
+        "path": "apps/sample-learning-launch/2/model.yaml",
+        "bytes": 39286,
+        "sha256": "98b5f722a35ebf2bb2c5a62f04b8708657acd5f37dab07359549bc48719f7c84"
+      }
+    },
+    {
+      "id": "sample-learning-marbles",
+      "version": 3,
+      "name": "Assess marble learning value",
+      "description": "Decide whether to buy another comparison before choosing a marble. Compare every permitted complete response policy with the best choice now, using an explicitly reviewed three-state E3 basis, assessed probabilities, payoffs, service likelihoods, fees and completion times. The same choices can be assessed under exact-identity or bag-only payoffs. The source record is retained for review; this app does not rerun the separate historical weighing-evidence calculation.",
+      "publishedAt": "2026-11-14T20:02:00.000Z",
+      "contentHash": "c31e6fd90c69261b9afc9345c56f151d2b8083f01ed49bee1939f213ccce7386",
+      "module": {
+        "id": "marble-learning-value",
+        "version": "1.2.0"
+      },
+      "domain": {
+        "id": "canonical-examples",
+        "label": "Canonical examples",
+        "description": "Reference problems for understanding and testing reusable evidence patterns."
+      },
+      "useCase": {
+        "id": "choose-marble-investigation",
+        "label": "Choose a marble investigation",
+        "description": "Compare the modeled value of another comparison with choosing now under exact-identity or containing-bag consequences."
+      },
+      "pattern": {
+        "id": "assess-value-of-learning/1",
+        "label": "Assess the value of learning"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "assess-value-of-learning/1",
+        "definition": {
+          "id": "assess-value-of-learning",
+          "version": "1.0.0",
+          "evaluator": "finite-learning-value/1"
+        },
+        "presentationContract": "learning-value-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-learning-marbles/3/app.app.json",
+        "bytes": 58932,
+        "sha256": "63f47574452b642f449640edcba27a1143361fd0fc63112f847781f796250be3"
+      },
+      "source": {
+        "path": "apps/sample-learning-marbles/3/model.yaml",
+        "bytes": 21413,
+        "sha256": "324ddf1b5d95a31772045e04f0c4c66e163a87c218eedf7611ec3ed7d5d5aa31"
+      }
+    },
+    {
+      "id": "sample-learning-launch",
+      "version": 3,
+      "name": "Assess launch review value",
+      "description": "Choose whether to commission an early launch-readiness review before reserving a complete operating policy. Compare targeted, full, noisy, missing-result and late reviews against the best no-review policy, using explicit joint readiness probabilities, complete operating consequences, cash requirements and deadlines. A review can improve a reservation choice while a later mandatory gate still controls dispatch.",
+      "publishedAt": "2026-11-14T20:02:00.000Z",
+      "contentHash": "04a78cb0ed9086a71e03cfaceeb8ae03d8e8f334fe50b5165c48a535d87bc795",
+      "module": {
+        "id": "launch-review-value",
+        "version": "1.2.0"
+      },
+      "domain": {
+        "id": "product-launches",
+        "label": "Product launches",
+        "description": "Decisions about preparing, reviewing and committing a scoped product launch."
+      },
+      "useCase": {
+        "id": "choose-readiness-review",
+        "label": "Choose a launch-readiness review",
+        "description": "Compare early review and response policies before a launch reservation deadline."
+      },
+      "pattern": {
+        "id": "assess-value-of-learning/1",
+        "label": "Assess the value of learning"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "assess-value-of-learning/1",
+        "definition": {
+          "id": "assess-value-of-learning",
+          "version": "1.0.0",
+          "evaluator": "finite-learning-value/1"
+        },
+        "presentationContract": "learning-value-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-learning-launch/3/app.app.json",
+        "bytes": 114080,
+        "sha256": "376c4e3ea100284398d2aaa620b87033d870e13d6a74e96438afc2b1c50a17d5"
+      },
+      "source": {
+        "path": "apps/sample-learning-launch/3/model.yaml",
+        "bytes": 43523,
+        "sha256": "3969938c1f1b53e327bb6758ec77158b1f2319f7acbdcd6aeb997d5aaba8cb65"
+      }
+    },
+    {
+      "id": "sample-evidence-food",
+      "version": 2,
+      "name": "Review food-traceability evidence",
+      "description": "Review which firms belong on a tracing inquiry list before deciding whom to investigate. Compare the product and business-role explanations permitted by the case, derive possible supply connections, and follow each product through the network. Explicitly supplied recall starting points can also be traced and compared. Catalog compatibility supports a modeled inquiry; it does not establish contamination, actual shipments or an issued recall.",
+      "publishedAt": "2026-11-14T20:56:25.540Z",
+      "contentHash": "985b03c3209df654290765e4ee6dd3573912584178aaf8cba5067d15e458947b",
+      "module": {
+        "id": "food-traceability-evidence",
+        "version": "1.4.0"
+      },
+      "domain": {
+        "id": "food-supply-chains",
+        "label": "Food supply chains",
+        "description": "Food production and distribution networks and their tracing relationships."
+      },
+      "useCase": {
+        "id": "traceability-inquiry",
+        "label": "Identify firms for a tracing inquiry",
+        "description": "Determine which firms belong on an inquiry list across permitted product and business-role explanations."
+      },
+      "pattern": {
+        "id": "evidence-review/1",
+        "label": "Evidence review"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "evidence-review/1",
+        "definition": {
+          "id": "evidence-review",
+          "version": "1.0.0",
+          "evaluator": "finite-relational-evidence/1"
+        },
+        "presentationContract": "evidence-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-evidence-food/2/app.app.json",
+        "bytes": 161532,
+        "sha256": "e90092f1e459f940aee098f64dec0cad0e7733934aa1b007ed2c1798aa8d4710"
+      },
+      "source": {
+        "path": "apps/sample-evidence-food/2/model.yaml",
+        "bytes": 56598,
+        "sha256": "8264638c3b9082acd584a8047d1a4df64e919c04b7328477a837510121e8e58c"
+      }
+    },
+    {
+      "id": "sample-evidence-network",
+      "version": 2,
+      "name": "Localize network faults",
+      "description": "Determine which equipment group or individual node the submitted path reports actually implicate. Compare every permitted failure combination under the declared fault bound, assessed snapshot and reliable path predictor. Separate a stable zone-level finding from individual node failures that remain uncertain before making further diagnostic or repair decisions. The result describes what the record establishes; it does not authorize a repair.",
+      "publishedAt": "2026-11-14T20:56:25.841Z",
+      "contentHash": "11dcbac0ee1fdf91627393a78784e85e6b7d993cd206268a3e28ef747f96ba8e",
+      "module": {
+        "id": "network-fault-evidence",
+        "version": "1.4.0"
+      },
+      "domain": {
+        "id": "network-operations",
+        "label": "Network operations",
+        "description": "Network monitoring and diagnosis from declared topology and test records."
+      },
+      "useCase": {
+        "id": "fault-localization",
+        "label": "Locate network faults",
+        "description": "Determine which fault zones and individual node failures are established by path-test results."
+      },
+      "pattern": {
+        "id": "evidence-review/1",
+        "label": "Evidence review"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "evidence-review/1",
+        "definition": {
+          "id": "evidence-review",
+          "version": "1.0.0",
+          "evaluator": "finite-relational-evidence/1"
+        },
+        "presentationContract": "evidence-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-evidence-network/2/app.app.json",
+        "bytes": 132678,
+        "sha256": "bfece9974cef5b0ca62c24b2e4f413b33dc216d2d81c7e5f8e420ce5afc91cec"
+      },
+      "source": {
+        "path": "apps/sample-evidence-network/2/model.yaml",
+        "bytes": 46113,
+        "sha256": "7c94cca5a32f0bddc773ffd29fd5533199b051f777fd9c935d653ab127685b39"
+      }
+    },
+    {
+      "id": "sample-evidence-marbles",
+      "version": 2,
+      "name": "Review marble evidence",
+      "description": "Does a fixed weighing record establish the bag containing the heavy marble? Exactly one of nine identified marbles is heavier. Generate each possible heavy identity, derive each weighing outcome from its pan membership, and retain assignments within the declared global report-error limit, initially one. The required bag question and optional exact-identity question are assessed independently from the generated interpretations. These are hypothetical observations, not a record of physical inspection or permission to act.",
+      "publishedAt": "2026-11-14T21:42:24.256Z",
+      "contentHash": "cbd55089aa8d64a5189654a6e3c19d9f3fdfb555733b542065cb448995deb2bc",
+      "module": {
+        "id": "marble-evidence",
+        "version": "1.3.0"
+      },
+      "domain": {
+        "id": "canonical-examples",
+        "label": "Canonical examples",
+        "description": "Reference problems for understanding and testing reusable evidence patterns."
+      },
+      "useCase": {
+        "id": "locate-heavy-marble",
+        "label": "Locate a heavy marble",
+        "description": "Determine whether a weighing record identifies the containing bag or the exact heavy marble."
+      },
+      "pattern": {
+        "id": "evidence-review/1",
+        "label": "Evidence review"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "evidence-review/1",
+        "definition": {
+          "id": "evidence-review",
+          "version": "1.0.0",
+          "evaluator": "finite-relational-evidence/1"
+        },
+        "presentationContract": "evidence-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-evidence-marbles/2/app.app.json",
+        "bytes": 39080,
+        "sha256": "02ba6ad0c3a22f67114b1a58b803b26de5b4da172e215b469abfb2229e5e32f5"
+      },
+      "source": {
+        "path": "apps/sample-evidence-marbles/2/model.yaml",
+        "bytes": 12143,
+        "sha256": "f6b320d563acdf2e8d5df9c30a2ee6d13ac46c1b3309c729b7f03f6ab09e6429"
+      }
+    },
+    {
+      "id": "sample-evidence-food",
+      "version": 3,
+      "name": "Review food-traceability evidence",
+      "description": "Review which firms belong on a tracing inquiry list before deciding whom to investigate. Compare the product and business-role explanations permitted by the case, derive possible supply connections, and follow each product through the network. Explicitly supplied recall starting points can also be traced and compared. Catalog compatibility supports a modeled inquiry; it does not establish contamination, actual shipments or an issued recall.",
+      "publishedAt": "2026-11-14T21:42:24.256Z",
+      "contentHash": "5468fa97b21a7e7106aa3414d2f61bb15c8befb1986f5a13029bb2a85af29890",
+      "module": {
+        "id": "food-traceability-evidence",
+        "version": "1.5.0"
+      },
+      "domain": {
+        "id": "food-supply-chains",
+        "label": "Food supply chains",
+        "description": "Food production and distribution networks and their tracing relationships."
+      },
+      "useCase": {
+        "id": "traceability-inquiry",
+        "label": "Identify firms for a tracing inquiry",
+        "description": "Determine which firms belong on an inquiry list across permitted product and business-role explanations."
+      },
+      "pattern": {
+        "id": "evidence-review/1",
+        "label": "Evidence review"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "evidence-review/1",
+        "definition": {
+          "id": "evidence-review",
+          "version": "1.0.0",
+          "evaluator": "finite-relational-evidence/1"
+        },
+        "presentationContract": "evidence-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-evidence-food/3/app.app.json",
+        "bytes": 162208,
+        "sha256": "eb50a2dda1ffc818dc2dd01e4aec8063478eb11475484fb437e092052173be3e"
+      },
+      "source": {
+        "path": "apps/sample-evidence-food/3/model.yaml",
+        "bytes": 56858,
+        "sha256": "7e73da25a4c8a214c71380e06bc5d1dbfc73bf2ed20ece407e1fe7d31fc46811"
+      }
+    },
+    {
+      "id": "sample-evidence-network",
+      "version": 3,
+      "name": "Localize network faults",
+      "description": "Determine which equipment group or individual node the submitted path reports actually implicate. Compare every permitted failure combination under the declared fault bound, assessed snapshot and reliable path predictor. Separate a stable zone-level finding from individual node failures that remain uncertain before making further diagnostic or repair decisions. The result describes what the record establishes; it does not authorize a repair.",
+      "publishedAt": "2026-11-14T21:42:24.256Z",
+      "contentHash": "8b159da5ad989090369fdd574f191ed309c5debeb0ccfb629da0d2cd973c5ecc",
+      "module": {
+        "id": "network-fault-evidence",
+        "version": "1.5.0"
+      },
+      "domain": {
+        "id": "network-operations",
+        "label": "Network operations",
+        "description": "Network monitoring and diagnosis from declared topology and test records."
+      },
+      "useCase": {
+        "id": "fault-localization",
+        "label": "Locate network faults",
+        "description": "Determine which fault zones and individual node failures are established by path-test results."
+      },
+      "pattern": {
+        "id": "evidence-review/1",
+        "label": "Evidence review"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "evidence-review/1",
+        "definition": {
+          "id": "evidence-review",
+          "version": "1.0.0",
+          "evaluator": "finite-relational-evidence/1"
+        },
+        "presentationContract": "evidence-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-evidence-network/3/app.app.json",
+        "bytes": 133944,
+        "sha256": "9f4a1bb7ee38e7614290ab72421412072a1d430a6e4b6ce2b722c7cfb8565d8d"
+      },
+      "source": {
+        "path": "apps/sample-evidence-network/3/model.yaml",
+        "bytes": 46654,
+        "sha256": "1c7227653608d29b235d2051658894f27f9c00c9d26b57db9f240225521b37e6"
+      }
+    },
+    {
+      "id": "sample-evidence-food",
+      "version": 4,
+      "name": "Review food-traceability evidence",
+      "description": "Review which firms belong on a tracing inquiry list before deciding whom to investigate. Compare the product and business-role explanations permitted by the case, derive possible supply connections, and follow each product through the network. Explicitly supplied recall starting points can also be traced and compared. Catalog compatibility supports a modeled inquiry; it does not establish contamination, actual shipments or an issued recall.",
+      "publishedAt": "2026-11-14T21:59:43.594Z",
+      "contentHash": "0404006315e65e43da40a777d1e2205dffc23271607e68d5c56b5ba9b763c8b3",
+      "module": {
+        "id": "food-traceability-evidence",
+        "version": "1.6.0"
+      },
+      "domain": {
+        "id": "food-supply-chains",
+        "label": "Food supply chains",
+        "description": "Food production and distribution networks and their tracing relationships."
+      },
+      "useCase": {
+        "id": "traceability-inquiry",
+        "label": "Identify firms for a tracing inquiry",
+        "description": "Determine which firms belong on an inquiry list across permitted product and business-role explanations."
+      },
+      "pattern": {
+        "id": "evidence-review/1",
+        "label": "Evidence review"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "evidence-review/1",
+        "definition": {
+          "id": "evidence-review",
+          "version": "1.0.0",
+          "evaluator": "finite-relational-evidence/1"
+        },
+        "presentationContract": "evidence-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-evidence-food/4/app.app.json",
+        "bytes": 162212,
+        "sha256": "2b3de764d67d92631fcd2cfd49cbab626b3e7a5b197d1cba69e6b864e70af389"
+      },
+      "source": {
+        "path": "apps/sample-evidence-food/4/model.yaml",
+        "bytes": 56860,
+        "sha256": "00e639bfc1dbfdde477600eb3a3f2970a496377f298d0f718f75226abe80ac46"
+      }
+    },
+    {
+      "id": "sample-evidence-network",
+      "version": 4,
+      "name": "Localize network faults",
+      "description": "Determine which equipment group or individual node the submitted path reports actually implicate. Compare every permitted failure combination under the declared fault bound, assessed snapshot and reliable path predictor. Separate a stable zone-level finding from individual node failures that remain uncertain before making further diagnostic or repair decisions. The result describes what the record establishes; it does not authorize a repair.",
+      "publishedAt": "2026-11-14T21:59:43.594Z",
+      "contentHash": "670194b709993989f5f698711ff0c551115e65fb9bb293740791419ce4482f6e",
+      "module": {
+        "id": "network-fault-evidence",
+        "version": "1.6.0"
+      },
+      "domain": {
+        "id": "network-operations",
+        "label": "Network operations",
+        "description": "Network monitoring and diagnosis from declared topology and test records."
+      },
+      "useCase": {
+        "id": "fault-localization",
+        "label": "Locate network faults",
+        "description": "Determine which fault zones and individual node failures are established by path-test results."
+      },
+      "pattern": {
+        "id": "evidence-review/1",
+        "label": "Evidence review"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "evidence-review/1",
+        "definition": {
+          "id": "evidence-review",
+          "version": "1.0.0",
+          "evaluator": "finite-relational-evidence/1"
+        },
+        "presentationContract": "evidence-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-evidence-network/4/app.app.json",
+        "bytes": 133952,
+        "sha256": "cd415edbdbadd914881944487a5aa9f6846b7ad7ce53be4e45f1b42ea8c2ef25"
+      },
+      "source": {
+        "path": "apps/sample-evidence-network/4/model.yaml",
+        "bytes": 46658,
+        "sha256": "f4b2b250d6de7935b4a18fa3ed33374224232c6bcff98baddc3a96a8f904a3bd"
+      }
+    },
+    {
+      "id": "sample-learning-marbles",
+      "version": 4,
+      "name": "Assess marble learning value",
+      "description": "Decide whether to buy another comparison before choosing a marble. Compare every permitted complete response policy with the best choice now, using an explicitly reviewed three-state E3 basis, assessed probabilities, payoffs, service likelihoods, fees and completion times. The same choices can be assessed under exact-identity or bag-only payoffs. The source record is retained for review; this app does not rerun the separate historical weighing-evidence calculation.",
+      "publishedAt": "2026-11-14T22:00:07.843Z",
+      "contentHash": "aaa9aded6447ade7f5d2e45b94106c324886da6a9bce3fdecac5758846aef16e",
+      "module": {
+        "id": "marble-learning-value",
+        "version": "1.3.0"
+      },
+      "domain": {
+        "id": "canonical-examples",
+        "label": "Canonical examples",
+        "description": "Reference problems for understanding and testing reusable evidence patterns."
+      },
+      "useCase": {
+        "id": "choose-marble-investigation",
+        "label": "Choose a marble investigation",
+        "description": "Compare the modeled value of another comparison with choosing now under exact-identity or containing-bag consequences."
+      },
+      "pattern": {
+        "id": "assess-value-of-learning/1",
+        "label": "Assess the value of learning"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "assess-value-of-learning/1",
+        "definition": {
+          "id": "assess-value-of-learning",
+          "version": "1.0.0",
+          "evaluator": "finite-learning-value/1"
+        },
+        "presentationContract": "learning-value-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-learning-marbles/4/app.app.json",
+        "bytes": 58928,
+        "sha256": "8fe02ac3d3a9c8fcca020e27cb20cbc124d42573c2fc3a8a9c8d4838e377abfb"
+      },
+      "source": {
+        "path": "apps/sample-learning-marbles/4/model.yaml",
+        "bytes": 21411,
+        "sha256": "b9f4e2cf9e7d3628dfd3c7efb22f79e8bf4710e84cce9f8c78aabac356f9e7f8"
+      }
+    },
+    {
+      "id": "sample-learning-launch",
+      "version": 4,
+      "name": "Assess launch review value",
+      "description": "Choose whether to commission an early launch-readiness review before reserving a complete operating policy. Compare targeted, full, noisy, missing-result and late reviews against the best no-review policy, using explicit joint readiness probabilities, complete operating consequences, cash requirements and deadlines. A review can improve a reservation choice while a later mandatory gate still controls dispatch.",
+      "publishedAt": "2026-11-14T22:00:07.843Z",
+      "contentHash": "4fb62b9440c6e97856ecb2495f84a432a601da40d3bad661633176b5cfc6c669",
+      "module": {
+        "id": "launch-review-value",
+        "version": "1.3.0"
+      },
+      "domain": {
+        "id": "product-launches",
+        "label": "Product launches",
+        "description": "Decisions about preparing, reviewing and committing a scoped product launch."
+      },
+      "useCase": {
+        "id": "choose-readiness-review",
+        "label": "Choose a launch-readiness review",
+        "description": "Compare early review and response policies before a launch reservation deadline."
+      },
+      "pattern": {
+        "id": "assess-value-of-learning/1",
+        "label": "Assess the value of learning"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "assess-value-of-learning/1",
+        "definition": {
+          "id": "assess-value-of-learning",
+          "version": "1.0.0",
+          "evaluator": "finite-learning-value/1"
+        },
+        "presentationContract": "learning-value-assessment/1"
+      },
+      "package": {
+        "path": "apps/sample-learning-launch/4/app.app.json",
+        "bytes": 114076,
+        "sha256": "1b2430723592f73eb0fe88072ffceac4989ba6a2bb56f7bde72fa1cc62b1df72"
+      },
+      "source": {
+        "path": "apps/sample-learning-launch/4/model.yaml",
+        "bytes": 43521,
+        "sha256": "6631d017d17ef9bc1f7d7d1aecdd28fe2dfc7381ecd09f1ade8342944bda768f"
       }
     }
   ]

@@ -1,7 +1,7 @@
 DECISION LAB MARKETPLACE CONFIGURATIONS
 
-This folder contains the three bundled evidence-review apps as clean-install
-release packages and their canonical YAML sources. It is not a snapshot of your
+This folder contains five bundled evidence-review and learning-value apps,
+including eighteen immutable releases and their canonical YAML sources. It is not a snapshot of your
 browser store and contains no saved cases, local edits or calculation history.
 
 INCLUDED COLLECTIONS AND APPS
@@ -11,22 +11,67 @@ and module metadata retain the field name "domain" for a collection.
 
 Canonical examples / Locate a heavy marble / Evidence review
   App: Review marble evidence
-  Directory: apps/sample-evidence-marbles/1/
-  Module version: 1.2.0
+  Latest directory: apps/sample-evidence-marbles/2/
+  Module version: 1.3.0
+
+Canonical examples / Choose a marble investigation / Assess the value of learning
+  App: Assess marble learning value
+  Latest directory: apps/sample-learning-marbles/4/
+  Module version: 1.3.0
 
 Food supply chains / Identify firms for a tracing inquiry / Evidence review
   App: Review food-traceability evidence
-  Directory: apps/sample-evidence-food/1/
-  Module version: 1.3.0
+  Latest directory: apps/sample-evidence-food/4/
+  Module version: 1.6.0
 
 Network operations / Locate network faults / Evidence review
   App: Localize network faults
-  Directory: apps/sample-evidence-network/1/
+  Latest directory: apps/sample-evidence-network/4/
+  Module version: 1.6.0
+
+Product launches / Choose a launch-readiness review / Assess the value of learning
+  App: Assess launch review value
+  Latest directory: apps/sample-learning-launch/4/
   Module version: 1.3.0
 
-Each directory contains app.app.json and model.yaml. All three app packages use
-integer publication release 1. Publication release numbers and the module's
-semantic version are separate: the /1/ directory does not mean module 1.0.0.
+These five apps form four collections and use two installed reasoning patterns.
+Evidence review assesses stable factual answers. Learning value compares complete
+study-and-response policies under explicit economic and probability assumptions.
+Learning examples consume reviewed finite state alternatives and supplied actions;
+their source records do not automatically derive facts, priors or operating plans.
+
+Each directory contains app.app.json and model.yaml. Food and network release 2
+add authored connection tables/diagrams using one selected possible explanation,
+while retaining their original release-1 packages. Their case inputs and existing
+findings are unchanged. Food and network release 3 and marble evidence release 2
+add business-purpose explanation groups, separating comparison of all remaining
+possibilities from inspection of one explanation. Food separates incident and
+inquiry, product tracing, reporting reach and conditional recall comparisons.
+Network separates possible faults, test results and routes. Marble separates the
+heavy-marble possibility from weighing results. Tables and connection views share
+the same authored groups, with disjoint inquiry/reporting count columns and fewer
+duplicated supporting tables. These successors preserve all earlier package and
+source files, case inputs, inference rules, answers and calculated report rows.
+Learning release 2 adds six purpose-based basis
+subtabs; release 3 adds authored table, value-bar and timing representations.
+Neither successor changes the valuation inputs or calculations. Both learning
+apps retain their original release-1 and release-2 packages and sources unchanged. Existing
+cases remain pinned to their original release; installing a successor does not
+rewrite their frozen module.
+
+Food and network release 4 (module 1.6.0) opens each relationship view as a
+diagram. Learning release 4 (module 1.3.0) opens payoff comparisons as bars with
+the evaluated acting-now benchmark. Timing views still start as tables. Table
+representations remain available everywhere, and a saved representation choice
+takes precedence over these initial defaults. These releases change no case
+inputs, inference rules, probabilities, payoffs or calculated findings. Earlier
+learning releases without authored view metadata receive a display-only bar
+default; authored defaults in older releases remain part of their frozen module.
+
+The catalog lists all eighteen releases. Marketplace selects the latest release of
+each identity, displaying five apps in four collections; RSS lists the separate
+release entries. Publication release numbers and the module's semantic version
+are separate: a /1/ directory does not imply module version 1.0.0.
 
 COPY AND CREATE THE RSS FEED
 

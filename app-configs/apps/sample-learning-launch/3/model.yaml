@@ -1,0 +1,1225 @@
+# Canonical assess-value-of-learning/1 model. No domain code or computed recommendation tables.
+format: assess-value-of-learning/1
+module:
+  id: launch-review-value
+  version: "1.2.0"
+  title: Assess launch review value
+  description: "Choose whether to commission an early launch-readiness review before reserving a complete operating policy. Compare targeted, full, noisy, missing-result and late reviews against the best no-review policy, using explicit joint readiness probabilities, complete operating consequences, cash requirements and deadlines. A review can improve a reservation choice while a later mandatory gate still controls dispatch."
+  question: "Which early review and complete response policy provides the best modeled launch payoff before reservation closes?"
+  boundary: "Synthetic launch L1; order PO1.v2; supplier S1; sites SP17,H1,DC1; snapshot precommit-0; two initial unresolved relations; one optional early review; one risk-neutral supplier; Days 0–9. Operating policies, authority, remedy capacity and deterministic timing are supplied reviewed premises. This app does not authenticate records, generate shipping plans, import UBL/EPCIS documents, establish actual permissions, or authorize dispatch."
+  objective:
+    criterion: risk-neutral-expected-money
+    unit: hypothetical USD
+    timeUnit: day
+    beneficiary: "Fictional supplier S1, represented by launch owner Maya"
+    horizon: "One launch L1 from Day 0 through Day 9; no later launch revenue or strategic shelf-presence benefit"
+  attributes:
+    - id: transportRegistered
+      label: SP17 registered for transportation at precommit-0
+      type: boolean
+    - id: itemsAligned
+      label: PO1.v2 items aligned with the declared route at precommit-0
+      type: boolean
+    - id: directReady
+      label: Initial direct-route prerequisites satisfied
+      type: boolean
+    - id: supplierPortalListed
+      label: SP17 listed in supplier portal at precommit-0
+      type: boolean
+    - id: ediAccepted
+      label: Accepted EDI test premise
+      type: boolean
+    - id: freightPrepaid
+      label: Agreed prepaid freight premise
+      type: boolean
+    - id: authorityConfirmed
+      label: Authority for the scoped candidate policies
+      type: boolean
+    - id: backupRemedyConfirmed
+      label: Backup capacity and remedy premise
+      type: boolean
+  states:
+    - id: ready
+      label: Both initial prerequisites satisfied
+      attributes:
+        transportRegistered: true
+        itemsAligned: true
+        directReady: true
+        supplierPortalListed: true
+        ediAccepted: true
+        freightPrepaid: true
+        authorityConfirmed: true
+        backupRemedyConfirmed: true
+    - id: transport-gap
+      label: Transportation registration gap
+      attributes:
+        transportRegistered: false
+        itemsAligned: true
+        directReady: false
+        supplierPortalListed: true
+        ediAccepted: true
+        freightPrepaid: true
+        authorityConfirmed: true
+        backupRemedyConfirmed: true
+    - id: alignment-gap
+      label: Item and route alignment gap
+      attributes:
+        transportRegistered: true
+        itemsAligned: false
+        directReady: false
+        supplierPortalListed: true
+        ediAccepted: true
+        freightPrepaid: true
+        authorityConfirmed: true
+        backupRemedyConfirmed: true
+    - id: both-gaps
+      label: Both initial gaps
+      attributes:
+        transportRegistered: false
+        itemsAligned: false
+        directReady: false
+        supplierPortalListed: true
+        ediAccepted: true
+        freightPrepaid: true
+        authorityConfirmed: true
+        backupRemedyConfirmed: true
+  actions:
+    - id: standard
+      label: Reserve STANDARD
+      description: "Reserve the scoped direct route; ship only if the Day-4 mandatory gate passes. Any initial gap means no shipment and the declared cancellation loss."
+    - id: backup
+      label: Reserve BACKUP
+      description: Reserve the scoped authorized hub/remedy policy. The teaching fixture assumes capacity and remedy completion by the mandatory gate in every modeled initial state.
+    - id: defer
+      label: Hold and DEFER
+      description: "Make no launch shipment in Days 0–9; preserve records and follow the agreed hold policy."
+  studies:
+    - id: transport-fast
+      label: "Transportation-only exact review, fast"
+      reports:
+        - id: transport-clear
+          label: Transportation registration clear
+          kind: report
+        - id: transport-gap
+          label: Transportation registration gap
+          kind: report
+    - id: full-fast
+      label: "Full exact review, fast"
+      reports:
+        - id: clear
+          label: Both prerequisites clear
+          kind: report
+        - id: transport-gap
+          label: Transportation gap
+          kind: report
+        - id: alignment-gap
+          label: Alignment gap
+          kind: report
+        - id: both-gaps
+          label: Both gaps
+          kind: report
+    - id: screen-fast
+      label: "Joint screening review, fast"
+      description: Clear/flag screen has 0.9 sensitivity and specificity for any gap. A clear screen does not establish either initial prerequisite.
+      reports:
+        - id: clear
+          label: Clear screen
+          kind: report
+        - id: flag
+          label: Flagged screen
+          kind: report
+    - id: dropout-fast
+      label: Full exact review with possible no report
+      reports:
+        - id: clear
+          label: Both prerequisites clear
+          kind: report
+        - id: transport-gap
+          label: Transportation gap
+          kind: report
+        - id: alignment-gap
+          label: Alignment gap
+          kind: report
+        - id: both-gaps
+          label: Both gaps
+          kind: report
+        - id: no-report
+          label: No report
+          kind: no-report
+    - id: full-slow
+      label: "Full exact review, slow"
+      description: The exact result arrives after the reservation deadline. No early reservation or reopened reservation window is offered.
+      reports:
+        - id: clear
+          label: Both prerequisites clear
+          kind: report
+        - id: transport-gap
+          label: Transportation gap
+          kind: report
+        - id: alignment-gap
+          label: Alignment gap
+          kind: report
+        - id: both-gaps
+          label: Both gaps
+          kind: report
+  assumptions: [The declared four-state basis exhausts only the two modeled initial unknowns. Supplier-portal listing is a different predicate from transportation registration., "The transportation and alignment extracts are partial. Missing rows do not assert false; accepted facts must be supplied explicitly to remove incompatible states.", An early review observes the initial snapshot and does not itself repair registration or alignment. Prospective report branches are not actual evidence rows., "STANDARD and BACKUP are supplied complete operating policies with reviewed authority, quantities, terms, timing, release gates and fallback. They are not generated or proven executable here.", No shipment occurs if the Day-4 mandatory gate fails. BACKUP deterministically remedies all modeled gaps by that gate under a strong supplied premise., "Review fee plus the action cash requirement must fit the available cash. The action payoff already includes operating and cancellation costs; cash requirements are not deducted again.", "The joint current distribution and all review likelihoods are synthetic assessments, not empirical estimates or consequences of GS1/UBL vocabulary.", "Reference records retain identity mappings, systems, snapshots, locators and review status. They do not become accepted facts or economic assumptions automatically."]
+  metadata:
+    catalog:
+      domain:
+        id: product-launches
+        label: Product launches
+        description: "Decisions about preparing, reviewing and committing a scoped product launch."
+      useCase:
+        id: choose-readiness-review
+        label: Choose a launch-readiness review
+        description: Compare early review and response policies before a launch reservation deadline.
+    vocabularyReferences:
+      - standard: OASIS UBL 2.4
+        url: "https://docs.oasis-open.org/ubl/os-UBL-2.4/UBL-2.4.html"
+        use: "Selected Party, Item, Order and Despatch/Delivery concepts; no XML import or conformance claim."
+      - standard: GS1 GLN allocation rules
+        url: "https://ref.gs1.org/standards/gln-allocation/"
+        use: "Distinguish party identity and location identity; local synthetic IDs are not licensed GLNs."
+      - standard: GS1 GTIN management
+        url: "https://ref.gs1.org/standards/gtin-management/"
+        use: "Trade-item identification vocabulary; SKU-A and SKU-B are local synthetic IDs, not assigned GTINs."
+  presentation:
+    labels:
+      baseline: No additional early review
+      study: Early review
+      action: Operating policy
+      state: Initial readiness state
+      report: Review finding
+    reports:
+      comparison:
+        title: Review investment
+        question: "Which early review is worth commissioning before reservation?"
+      responses:
+        title: Reservation after each finding
+        question: "Which complete operating policy follows every possible review result?"
+      sensitivity:
+        title: "What changes the investment?"
+        question: "How do cash, fee and state assessments change the preferred review?"
+      inputs:
+        title: Launch basis and assumptions
+        question: "Which scoped records, operating policies and model assumptions support this comparison?"
+      history:
+        title: Changed launch assumptions
+        question: "What changed and which decision calculations must be revisited?"
+    views:
+      - id: option-value
+        component: economic-comparison
+        version: 1
+        dataset: economic-comparison
+        representations: [table, bar]
+        defaultRepresentation: table
+        title: Value of the early review options
+        question: "Which early review improves the reservation choice enough to justify its fee?"
+        description: "Compare the complete review-and-reservation options with the best operating policy available without another review."
+        measure: netValue
+        labels:
+          label: Early review option
+          fee: Review fee
+          grossValue: Expected operating payoff before review fee
+          netValue: Expected net payoff
+          incrementalValue: Gain over no additional early review
+          available: Availability
+          axis: Expected net payoff
+      - id: report-timing
+        component: temporal-comparison
+        version: 1
+        dataset: study-timing
+        representations: [table, timeline]
+        defaultRepresentation: table
+        title: Early reviews and reservation deadlines
+        question: "Will an early review return while STANDARD or BACKUP can still be reserved?"
+        description: "Each row is an alternative review of the same initial snapshot. A timely finding can inform reservation; it does not pass the later mandatory release gate."
+        labels:
+          label: Early review
+          start: Assumed start day
+          end: Finding ready at
+          duration: Review duration
+          available: Any response available
+          remainingActions: Operating policies still available
+          unavailableActions: Unavailable policies and reasons
+          deadline: Reservation closes
+          axis: Launch day
+      - id: timing-if-late
+        component: temporal-comparison
+        version: 1
+        dataset: timing-sensitivity
+        representations: [table, timeline]
+        defaultRepresentation: table
+        title: Reservation choices when review timing changes
+        question: "Which reservation opportunities disappear when review results arrive late?"
+        description: "Compare the current review timings with each declared sensitivity case on the same launch-day scale. Cases changing only fees or probabilities keep their supplied timing; they are alternative assumptions, rather than a sequence of events."
+        labels:
+          label: Early review
+          scenarioLabel: Assessed situation
+          start: Assumed start day
+          end: Finding ready at
+          duration: Review duration
+          available: Any response available
+          remainingActions: Operating policies still available
+          unavailableActions: Unavailable policies and reasons
+          deadline: Reservation closes
+          axis: Launch day
+      - id: launch-policy-dates
+        component: temporal-comparison
+        version: 1
+        dataset: declared-milestones
+        representations: [table, timeline]
+        defaultRepresentation: table
+        title: Declared launch policy dates
+        question: "When are reservation, the mandatory gate, departure, delivery and the feature planned for each supplied operating policy?"
+        description: "These are supplied policy dates for reference, not validated dependencies, completed activities or permission to dispatch. Review availability uses the case action deadlines; a different reservation date in these records does not replace that deadline."
+        labels:
+          label: Operating policy and declared event
+          time: Supplied launch day
+          axis: Launch day
+        source:
+          recordType: operatingPolicy
+          fields:
+            id: id
+            label: id
+          events:
+            - id: reservation
+              label: Reservation deadline
+              field: reservationDay
+            - id: mandatory-gate
+              label: Mandatory release gate
+              field: gateDay
+            - id: departure
+              label: Planned departure
+              field: departureDay
+            - id: delivery
+              label: Planned delivery
+              field: deliveryDay
+            - id: feature
+              label: Planned feature
+              field: featureDay
+    basisGroups:
+      - id: scope
+        title: Launch scope
+        question: "What launch, owner, order revision, systems and decision horizon does this comparison cover?"
+        description: Identified entities and the assessed snapshot keep every declaration attached to the same launch scope.
+        sections: [scope]
+        recordTypeIds: [entity, system, snapshot]
+      - id: uncertainty
+        title: Readiness & evidence
+        question: "Which readiness states remain possible under the accepted assertions, with what assessed probabilities?"
+        description: "Accepted assertions constrain the initial states; partial-source absence leaves the declared unknowns unresolved."
+        sections: [uncertainty]
+        recordTypeIds: [assertion, unknownRelation]
+      - id: actions
+        title: Operating choices
+        question: "What complete operating policies can we reserve, under which deadlines and cash limits, and what are their modeled consequences?"
+        description: "The supplied policies include their release gates and fallbacks; an early review does not authorize dispatch."
+        sections: [actions]
+        recordTypeIds: [operatingPolicy]
+      - id: reviews
+        title: Review methods
+        question: "What can each early review report, how reliable is it in each state, and when and at what fee can it finish?"
+        description: "Prospective review models include noisy, missing and late findings without promoting them to actual evidence."
+        sections: [reviews]
+        recordTypeIds: []
+      - id: sources
+        title: Sources & mappings
+        question: "Where do the launch records and entity meanings come from, and which source and identity mappings were reviewed?"
+        description: Inspect source coverage and locators alongside reviewed mappings and selected standard vocabulary correspondences.
+        sections: []
+        recordTypeIds: [source, mapping, identityMapping, standardMapping]
+      - id: limits
+        title: Assumptions & limits
+        question: "Which operating and valuation premises, calculation limits and conclusion boundaries qualify this recommendation?"
+        description: "Economic and operating assumptions remain explicit declarations, separate from source assertions and actual permission."
+        sections: [assumptions, coverage]
+        recordTypeIds: [decisionAssumption]
+  recordTypes:
+    - id: entity
+      label: Launch entities and identifiers
+      columns:
+        - id: id
+          label: Entity ID
+          type: string
+        - id: kind
+          label: Entity type
+          type: string
+        - id: label
+          label: Entity
+          type: string
+        - id: identifierScheme
+          label: Identifier scheme
+          type: string
+        - id: identifierValue
+          label: Identifier value
+          type: string
+    - id: system
+      label: Systems and purposes
+      columns:
+        - id: id
+          label: System ID
+          type: string
+        - id: label
+          label: System
+          type: string
+        - id: purpose
+          label: Relevant purpose
+          type: string
+    - id: snapshot
+      label: Assessed snapshots
+      columns:
+        - id: id
+          label: Snapshot ID
+          type: string
+        - id: label
+          label: Snapshot
+          type: string
+        - id: day
+          label: Decision day
+          type: number
+    - id: source
+      label: Source records
+      columns:
+        - id: id
+          label: Source ID
+          type: string
+        - id: label
+          label: Source
+          type: string
+        - id: file
+          label: File
+          type: string
+        - id: coverage
+          label: Coverage
+          type: string
+        - id: snapshot
+          label: Snapshot
+          type: string
+    - id: decisionAssumption
+      label: Decision-model assumptions
+      columns:
+        - id: id
+          label: Assumption ID
+          type: string
+        - id: label
+          label: Assumption
+          type: string
+        - id: source
+          label: Basis source
+          type: string
+        - id: meaning
+          label: Declared meaning
+          type: string
+    - id: mapping
+      label: Reviewed source mappings
+      columns:
+        - id: id
+          label: Mapping ID
+          type: string
+        - id: source
+          label: Source ID
+          type: string
+        - id: column
+          label: Source field
+          type: string
+        - id: subject
+          label: Canonical subject
+          type: string
+        - id: predicate
+          label: Meaning
+          type: string
+        - id: system
+          label: System
+          type: string
+        - id: snapshot
+          label: Snapshot
+          type: string
+        - id: reviewStatus
+          label: Review status
+          type: string
+        - id: reviewBasis
+          label: Review basis
+          type: string
+    - id: identityMapping
+      label: Reviewed identity mappings
+      columns:
+        - id: id
+          label: Mapping ID
+          type: string
+        - id: source
+          label: Source ID
+          type: string
+        - id: externalId
+          label: Source identifier
+          type: string
+        - id: entity
+          label: Canonical entity
+          type: string
+        - id: reviewStatus
+          label: Review status
+          type: string
+        - id: reviewBasis
+          label: Review basis
+          type: string
+    - id: assertion
+      label: Accepted source assertions
+      columns:
+        - id: id
+          label: Assertion ID
+          type: string
+        - id: subject
+          label: Subject
+          type: string
+        - id: predicate
+          label: Predicate
+          type: string
+        - id: object
+          label: Object
+          type: string
+        - id: value
+          label: Asserted value
+          type: boolean
+        - id: system
+          label: System
+          type: string
+        - id: snapshot
+          label: Snapshot
+          type: string
+        - id: source
+          label: Source ID
+          type: string
+        - id: line
+          label: Source line
+          type: number
+        - id: mapping
+          label: Reviewed mapping ID
+          type: string
+    - id: unknownRelation
+      label: Unresolved scoped relations
+      columns:
+        - id: id
+          label: Relation ID
+          type: string
+        - id: subject
+          label: Subject
+          type: string
+        - id: predicate
+          label: Predicate
+          type: string
+        - id: system
+          label: System
+          type: string
+        - id: snapshot
+          label: Snapshot
+          type: string
+        - id: domain
+          label: Admissible values
+          type: string
+        - id: basis
+          label: Reason unresolved
+          type: string
+    - id: operatingPolicy
+      label: Supplied complete operating policies
+      columns:
+        - id: id
+          label: Policy ID
+          type: string
+        - id: origin
+          label: Origin
+          type: string
+        - id: destination
+          label: Destination
+          type: string
+        - id: skuACases
+          label: SKU-A cases
+          type: number
+        - id: skuBCases
+          label: SKU-B cases
+          type: number
+        - id: orderRevision
+          label: Order revision
+          type: string
+        - id: freightTerms
+          label: Freight terms
+          type: string
+        - id: reservationDay
+          label: Reservation deadline
+          type: number
+        - id: gateDay
+          label: Mandatory gate
+          type: number
+        - id: departureDay
+          label: Departure day
+          type: number
+        - id: deliveryDay
+          label: Delivery day
+          type: number
+        - id: featureDay
+          label: Feature day
+          type: number
+        - id: gateRule
+          label: Gate and fallback
+          type: string
+        - id: remedy
+          label: Readiness treatment
+          type: string
+        - id: authoritySource
+          label: Authority source
+          type: string
+    - id: standardMapping
+      label: Selected standard vocabulary mappings
+      columns:
+        - id: localConcept
+          label: Local concept
+          type: string
+        - id: standard
+          label: Reference
+          type: string
+        - id: concept
+          label: Standard concept
+          type: string
+        - id: url
+          label: Official reference
+          type: string
+        - id: boundary
+          label: Mapping boundary
+          type: string
+case:
+  id: LAUNCH-REVIEW-BASE
+  scope: "Launch L1; supplier S1; order PO1.v2; sites SP17,H1,DC1; initial snapshot precommit-0; 500 cases each of SKU-A and SKU-B."
+  currentTime: 0
+  cashBudget: 120000
+  probabilityBasis:
+    source: "Stipulated joint current distribution for teaching; not estimated from portal extracts or a real retailer launch."
+    scope: "L1:PO1.v2:precommit-0"
+  priors:
+    - state: ready
+      probability: "1/2"
+    - state: transport-gap
+      probability: "1/5"
+    - state: alignment-gap
+      probability: "1/5"
+    - state: both-gaps
+      probability: "1/10"
+  actions:
+    - action: standard
+      deadline: 2
+      cash: 30000
+    - action: backup
+      deadline: 2
+      cash: 90000
+    - action: defer
+      deadline: null
+      cash: 0
+  payoffs:
+    - action: standard
+      state: ready
+      value: 120000
+    - action: standard
+      state: transport-gap
+      value: -20000
+    - action: standard
+      state: alignment-gap
+      value: -20000
+    - action: standard
+      state: both-gaps
+      value: -20000
+    - action: backup
+      state: ready
+      value: 60000
+    - action: backup
+      state: transport-gap
+      value: 60000
+    - action: backup
+      state: alignment-gap
+      value: 60000
+    - action: backup
+      state: both-gaps
+      value: 60000
+    - action: defer
+      state: ready
+      value: 0
+    - action: defer
+      state: transport-gap
+      value: 0
+    - action: defer
+      state: alignment-gap
+      value: 0
+    - action: defer
+      state: both-gaps
+      value: 0
+  studies:
+    - study: transport-fast
+      fee: 2000
+      duration: 1
+      likelihoods:
+        - state: ready
+          report: transport-clear
+          probability: 1
+        - state: ready
+          report: transport-gap
+          probability: 0
+        - state: transport-gap
+          report: transport-clear
+          probability: 0
+        - state: transport-gap
+          report: transport-gap
+          probability: 1
+        - state: alignment-gap
+          report: transport-clear
+          probability: 1
+        - state: alignment-gap
+          report: transport-gap
+          probability: 0
+        - state: both-gaps
+          report: transport-clear
+          probability: 0
+        - state: both-gaps
+          report: transport-gap
+          probability: 1
+    - study: full-fast
+      fee: 8000
+      duration: 1
+      likelihoods:
+        - state: ready
+          report: clear
+          probability: 1
+        - state: ready
+          report: transport-gap
+          probability: 0
+        - state: ready
+          report: alignment-gap
+          probability: 0
+        - state: ready
+          report: both-gaps
+          probability: 0
+        - state: transport-gap
+          report: clear
+          probability: 0
+        - state: transport-gap
+          report: transport-gap
+          probability: 1
+        - state: transport-gap
+          report: alignment-gap
+          probability: 0
+        - state: transport-gap
+          report: both-gaps
+          probability: 0
+        - state: alignment-gap
+          report: clear
+          probability: 0
+        - state: alignment-gap
+          report: transport-gap
+          probability: 0
+        - state: alignment-gap
+          report: alignment-gap
+          probability: 1
+        - state: alignment-gap
+          report: both-gaps
+          probability: 0
+        - state: both-gaps
+          report: clear
+          probability: 0
+        - state: both-gaps
+          report: transport-gap
+          probability: 0
+        - state: both-gaps
+          report: alignment-gap
+          probability: 0
+        - state: both-gaps
+          report: both-gaps
+          probability: 1
+    - study: screen-fast
+      fee: 4000
+      duration: 1
+      likelihoods:
+        - state: ready
+          report: clear
+          probability: "9/10"
+        - state: ready
+          report: flag
+          probability: "1/10"
+        - state: transport-gap
+          report: clear
+          probability: "1/10"
+        - state: transport-gap
+          report: flag
+          probability: "9/10"
+        - state: alignment-gap
+          report: clear
+          probability: "1/10"
+        - state: alignment-gap
+          report: flag
+          probability: "9/10"
+        - state: both-gaps
+          report: clear
+          probability: "1/10"
+        - state: both-gaps
+          report: flag
+          probability: "9/10"
+    - study: dropout-fast
+      fee: 8000
+      duration: 1
+      likelihoods:
+        - state: ready
+          report: clear
+          probability: "9/10"
+        - state: ready
+          report: transport-gap
+          probability: 0
+        - state: ready
+          report: alignment-gap
+          probability: 0
+        - state: ready
+          report: both-gaps
+          probability: 0
+        - state: ready
+          report: no-report
+          probability: "1/10"
+        - state: transport-gap
+          report: clear
+          probability: 0
+        - state: transport-gap
+          report: transport-gap
+          probability: "9/10"
+        - state: transport-gap
+          report: alignment-gap
+          probability: 0
+        - state: transport-gap
+          report: both-gaps
+          probability: 0
+        - state: transport-gap
+          report: no-report
+          probability: "1/10"
+        - state: alignment-gap
+          report: clear
+          probability: 0
+        - state: alignment-gap
+          report: transport-gap
+          probability: 0
+        - state: alignment-gap
+          report: alignment-gap
+          probability: "9/10"
+        - state: alignment-gap
+          report: both-gaps
+          probability: 0
+        - state: alignment-gap
+          report: no-report
+          probability: "1/10"
+        - state: both-gaps
+          report: clear
+          probability: 0
+        - state: both-gaps
+          report: transport-gap
+          probability: 0
+        - state: both-gaps
+          report: alignment-gap
+          probability: 0
+        - state: both-gaps
+          report: both-gaps
+          probability: "9/10"
+        - state: both-gaps
+          report: no-report
+          probability: "1/10"
+    - study: full-slow
+      fee: 1000
+      duration: 3
+      likelihoods:
+        - state: ready
+          report: clear
+          probability: 1
+        - state: ready
+          report: transport-gap
+          probability: 0
+        - state: ready
+          report: alignment-gap
+          probability: 0
+        - state: ready
+          report: both-gaps
+          probability: 0
+        - state: transport-gap
+          report: clear
+          probability: 0
+        - state: transport-gap
+          report: transport-gap
+          probability: 1
+        - state: transport-gap
+          report: alignment-gap
+          probability: 0
+        - state: transport-gap
+          report: both-gaps
+          probability: 0
+        - state: alignment-gap
+          report: clear
+          probability: 0
+        - state: alignment-gap
+          report: transport-gap
+          probability: 0
+        - state: alignment-gap
+          report: alignment-gap
+          probability: 1
+        - state: alignment-gap
+          report: both-gaps
+          probability: 0
+        - state: both-gaps
+          report: clear
+          probability: 0
+        - state: both-gaps
+          report: transport-gap
+          probability: 0
+        - state: both-gaps
+          report: alignment-gap
+          probability: 0
+        - state: both-gaps
+          report: both-gaps
+          probability: 1
+  acceptedFacts:
+    - id: A-SUP
+      attribute: supplierPortalListed
+      value: true
+      source: "assertion A-SUP; S-SUP line 2; map-S-SUP-1; supplier_portal at precommit-0 only"
+    - id: A-EDI
+      attribute: ediAccepted
+      value: true
+      source: "assertion A-EDI; S-EDI line 2; reviewed EDI premise"
+    - id: A-TERMS
+      attribute: freightPrepaid
+      value: true
+      source: "assertion A-TERMS; S-TERMS line 2; PO1.v2 prepaid terms"
+    - id: A-AUTH
+      attribute: authorityConfirmed
+      value: true
+      source: "assertion A-AUTH; S-AUTH line 2; authority for L1 candidate policies only"
+    - id: A-BACKUP
+      attribute: backupRemedyConfirmed
+      value: true
+      source: "assertion A-BACKUP; S-BACKUP line 2; stipulated capacity/remedy before gate"
+  sensitivity:
+    - id: cash-limited
+      label: "Reduce available cash to 97,000"
+      cashBudget: 97000
+    - id: full-review-price-tie
+      label: "Raise full fast review fee to 11,000"
+      fees:
+        - study: full-fast
+          fee: 11000
+    - id: almost-ready
+      label: Assess initial readiness at 99 percent
+      priors:
+        - state: ready
+          probability: "99/100"
+        - state: transport-gap
+          probability: "1/250"
+        - state: alignment-gap
+          probability: "1/250"
+        - state: both-gaps
+          probability: "1/500"
+    - id: all-reviews-late
+      label: All early review results arrive after reservation closes
+      durations:
+        - study: transport-fast
+          duration: 3
+        - study: full-fast
+          duration: 3
+        - study: screen-fast
+          duration: 3
+        - study: dropout-fast
+          duration: 3
+        - study: full-slow
+          duration: 3
+  records:
+    entity:
+      - id: S1
+        kind: party
+        label: Fictional supplier S1
+        identifierScheme: "local synthetic fixture; not an assigned GS1 key"
+        identifierValue: S1
+      - id: L1
+        kind: launch
+        label: Synthetic launch L1
+        identifierScheme: "local synthetic fixture; not an assigned GS1 key"
+        identifierValue: L1
+      - id: SKU-A
+        kind: item
+        label: Synthetic SKU-A
+        identifierScheme: "local synthetic fixture; not an assigned GS1 key"
+        identifierValue: SKU-A
+      - id: SKU-B
+        kind: item
+        label: Synthetic SKU-B
+        identifierScheme: "local synthetic fixture; not an assigned GS1 key"
+        identifierValue: SKU-B
+      - id: PO1.v2
+        kind: order-revision
+        label: Purchase order PO1 revision 2
+        identifierScheme: "local synthetic fixture; not an assigned GS1 key"
+        identifierValue: PO1.v2
+      - id: SP17
+        kind: physical-location
+        label: Supplier ship point SP17
+        identifierScheme: "local synthetic fixture; not an assigned GS1 key"
+        identifierValue: SP17
+      - id: H1
+        kind: physical-location
+        label: Authorized backup hub H1
+        identifierScheme: "local synthetic fixture; not an assigned GS1 key"
+        identifierValue: H1
+      - id: DC1
+        kind: physical-location
+        label: Destination distribution center DC1
+        identifierScheme: "local synthetic fixture; not an assigned GS1 key"
+        identifierValue: DC1
+    system:
+      - id: supplier_portal
+        label: Supplier portal
+        purpose: "Supplier ship-point listing; does not establish transportation eligibility"
+      - id: transportation_portal
+        label: Transportation portal
+        purpose: Registration for the L1 transportation purpose
+      - id: item_routing
+        label: Order and routing system
+        purpose: PO1.v2 item compatibility with the declared route
+      - id: reviewed_contract
+        label: Reviewed contract records
+        purpose: "Accepted EDI, terms, authority and backup-service premises for the synthetic scope"
+    snapshot:
+      - id: precommit-0
+        label: Initial pre-reservation snapshot
+        day: 0
+    source:
+      - id: S-SUP
+        label: Synthetic supplier portal export
+        file: supplier_portal.csv
+        coverage: partial
+        snapshot: precommit-0
+      - id: S-TRANSPORT
+        label: Synthetic transportation portal extract
+        file: transport_registration.csv
+        coverage: "partial; header only; no relevant rows"
+        snapshot: precommit-0
+      - id: S-ITEM
+        label: Synthetic order and route alignment extract
+        file: item_route.csv
+        coverage: "partial; header only; no relevant rows"
+        snapshot: precommit-0
+      - id: S-EDI
+        label: Synthetic accepted EDI test record
+        file: edi_test.csv
+        coverage: one accepted test result
+        snapshot: precommit-0
+      - id: S-TERMS
+        label: Synthetic agreed freight and order terms
+        file: order_terms.csv
+        coverage: PO1.v2 only
+        snapshot: precommit-0
+      - id: S-AUTH
+        label: Synthetic reviewed authority declaration
+        file: authority.csv
+        coverage: STANDARD and BACKUP within L1 only
+        snapshot: precommit-0
+      - id: S-BACKUP
+        label: Synthetic backup remedy and capacity declaration
+        file: backup_capacity.csv
+        coverage: "L1; idealized remedy completed by Day 4"
+        snapshot: precommit-0
+    mapping:
+      - id: map-S-SUP-1
+        source: S-SUP
+        column: "ship_point_id,listing_status,snapshot"
+        subject: SP17
+        predicate: registered_in
+        system: supplier_portal
+        snapshot: precommit-0
+        reviewStatus: reviewed synthetic fixture mapping
+        reviewBasis: "listed maps to true only for supplier_portal listing; no transportation inference"
+      - id: map-S-EDI-1
+        source: S-EDI
+        column: accepted_value
+        subject: EDI_TEST
+        predicate: accepted
+        system: reviewed_contract
+        snapshot: precommit-0
+        reviewStatus: reviewed synthetic fixture mapping
+        reviewBasis: "Explicit positive source row retained as an accepted teaching premise; not independently authenticated."
+      - id: map-S-TERMS-1
+        source: S-TERMS
+        column: accepted_value
+        subject: PO1.v2
+        predicate: freight_prepaid
+        system: reviewed_contract
+        snapshot: precommit-0
+        reviewStatus: reviewed synthetic fixture mapping
+        reviewBasis: "Explicit positive source row retained as an accepted teaching premise; not independently authenticated."
+      - id: map-S-AUTH-1
+        source: S-AUTH
+        column: accepted_value
+        subject: L1
+        predicate: policy_authority_confirmed
+        system: reviewed_contract
+        snapshot: precommit-0
+        reviewStatus: reviewed synthetic fixture mapping
+        reviewBasis: "Explicit positive source row retained as an accepted teaching premise; not independently authenticated."
+      - id: map-S-BACKUP-1
+        source: S-BACKUP
+        column: accepted_value
+        subject: H1
+        predicate: backup_remedy_confirmed
+        system: reviewed_contract
+        snapshot: precommit-0
+        reviewStatus: reviewed synthetic fixture mapping
+        reviewBasis: "Explicit positive source row retained as an accepted teaching premise; not independently authenticated."
+    identityMapping:
+      - id: ID-SP17-SUP
+        source: S-SUP
+        externalId: SP17
+        entity: SP17
+        reviewStatus: reviewed
+        reviewBasis: "Explicit fixture identity; supplier-portal listing only"
+      - id: ID-SP17-TRANS
+        source: S-TRANSPORT
+        externalId: SHIP-017
+        entity: SP17
+        reviewStatus: reviewed
+        reviewBasis: "Explicit cross-system fixture mapping; no fuzzy matching or registration assertion"
+      - id: ID-PO1
+        source: S-ITEM
+        externalId: PO1/REV2
+        entity: PO1.v2
+        reviewStatus: reviewed
+        reviewBasis: "Explicit order-revision mapping; does not establish item alignment"
+    assertion:
+      - id: A-SUP
+        subject: SP17
+        predicate: registered_in
+        object: supplier_portal
+        value: true
+        system: supplier_portal
+        snapshot: precommit-0
+        source: S-SUP
+        line: 2
+        mapping: map-S-SUP-1
+      - id: A-EDI
+        subject: EDI_TEST
+        predicate: accepted
+        object: L1
+        value: true
+        system: reviewed_contract
+        snapshot: precommit-0
+        source: S-EDI
+        line: 2
+        mapping: map-S-EDI-1
+      - id: A-TERMS
+        subject: PO1.v2
+        predicate: freight_prepaid
+        object: L1
+        value: true
+        system: reviewed_contract
+        snapshot: precommit-0
+        source: S-TERMS
+        line: 2
+        mapping: map-S-TERMS-1
+      - id: A-AUTH
+        subject: L1
+        predicate: policy_authority_confirmed
+        object: "STANDARD,BACKUP"
+        value: true
+        system: reviewed_contract
+        snapshot: precommit-0
+        source: S-AUTH
+        line: 2
+        mapping: map-S-AUTH-1
+      - id: A-BACKUP
+        subject: H1
+        predicate: backup_remedy_confirmed
+        object: "L1:gate-day-4"
+        value: true
+        system: reviewed_contract
+        snapshot: precommit-0
+        source: S-BACKUP
+        line: 2
+        mapping: map-S-BACKUP-1
+    unknownRelation:
+      - id: transportRegistered
+        subject: SP17
+        predicate: registered_for_L1_transport
+        system: transportation_portal
+        snapshot: precommit-0
+        domain: true or false
+        basis: "Partial header-only source has no relevant assertion; supplier-portal listing is a distinct relation."
+      - id: itemsAligned
+        subject: PO1.v2
+        predicate: items_aligned_with_route
+        system: item_routing
+        snapshot: precommit-0
+        domain: true or false
+        basis: "Partial header-only source has no relevant assertion; order identity does not establish alignment."
+    operatingPolicy:
+      - id: standard
+        origin: SP17
+        destination: DC1
+        skuACases: 500
+        skuBCases: 500
+        orderRevision: PO1.v2
+        freightTerms: prepaid
+        reservationDay: 2
+        gateDay: 4
+        departureDay: 5
+        deliveryDay: 7
+        featureDay: 9
+        gateRule: "Verify all mandatory gates; any failure means hold/defer, no shipment and declared cancellation cost."
+        remedy: "Initial direct-route prerequisites must hold; no assumed repair."
+        authoritySource: S-AUTH
+      - id: backup
+        origin: H1
+        destination: DC1
+        skuACases: 500
+        skuBCases: 500
+        orderRevision: PO1.v2
+        freightTerms: prepaid
+        reservationDay: 2
+        gateDay: 4
+        departureDay: 5
+        deliveryDay: 7
+        featureDay: 9
+        gateRule: "Verify all mandatory gates; any failure means hold/defer and no shipment."
+        remedy: "Authorized registration/routing remedy and capacity finish by gate in every modeled initial state; strong supplied premise."
+        authoritySource: "S-AUTH,S-BACKUP"
+    decisionAssumption:
+      - id: P-LAUNCH
+        label: Assessed joint initial distribution
+        source: Launch-readiness teaching paper
+        meaning: "1/2 ready,1/5 transport gap,1/5 alignment gap,1/10 both; not inferred from counts and not an independence assumption."
+      - id: L-LAUNCH
+        label: Prospective review performance
+        source: Synthetic likelihood declaration
+        meaning: "Exact channels, 0.9 screen sensitivity/specificity and 0.1 independent dropout; no observed review performance is claimed."
+      - id: V-LAUNCH
+        label: Payoff and cash model
+        source: Synthetic operating-policy declaration
+        meaning: "Launch contribution150000; STANDARD operating30000 or cancellation20000; BACKUP operating90000; DEFER0. Cash is a feasibility bound, not a second payoff deduction."
+      - id: T-LAUNCH
+        label: Timing and gate premises
+        source: Synthetic operating-policy declaration
+        meaning: "Reserve byDay2; mandatory gateDay4; departure5/delivery7/feature9; deterministic remedy and travel; no reopening of missed reservations."
+    standardMapping:
+      - localConcept: supplier and trading parties
+        standard: OASIS UBL2.4
+        concept: Party and party roles
+        url: "https://docs.oasis-open.org/ubl/os-UBL-2.4/UBL-2.4.html"
+        boundary: "Vocabulary correspondence only; no UBL XML ingestion or schema-conformance claim."
+      - localConcept: "SKU-A,SKU-B and PO1.v2"
+        standard: OASIS UBL2.4
+        concept: "Item identification, Order and OrderLine references"
+        url: "https://docs.oasis-open.org/ubl/os-UBL-2.4/UBL-2.4.html"
+        boundary: "Local synthetic records preserve item and order-revision identity; no retailer-format assertion."
+      - localConcept: "SP17,H1,DC1"
+        standard: GS1 GLN
+        concept: Distinct party and location identity
+        url: "https://ref.gs1.org/standards/gln-allocation/"
+        boundary: Local fixture IDs are not allocated GLNs. A matching identity does not establish registration for a system or purpose.
+      - localConcept: "SKU-A,SKU-B"
+        standard: GS1 GTIN
+        concept: Distinct trade-item identity
+        url: "https://ref.gs1.org/standards/gtin-management/"
+        boundary: "Local SKU IDs are not assigned GTINs; no external registry lookup is performed."
