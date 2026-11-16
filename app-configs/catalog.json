@@ -926,5 +926,60 @@
         "sha256": "3b03f9d45f8836432eee8ad4410fde18cddad3068466efe6fa09f0cd7c97a777"
       }
     }
+  ],
+  "workflows": [
+    {
+      "id": "review-first-shipment",
+      "version": "1.0.0",
+      "name": "Review a first shipment",
+      "description": "Review one delivery commitment, the actual transportation records and complete alternative arrangements. If a timely verification could change the choice, compare its feasible responses with reserving now. Finish with a reviewable proposal and its unresolved conditions.",
+      "publishedAt": "2026-11-16T18:00:00.000Z",
+      "contentHash": "a26b11ba366c7493cfc1c4901fc8f80d23e1d31315cc8354636b1ffe16b617c5",
+      "definitionHash": "15e1b4f5b266253280f8eca828fa1e38dd69eecfaabd0c6ef7682e1e53000fdb",
+      "domain": {
+        "id": "order-fulfillment",
+        "label": "Order fulfillment",
+        "description": "Plan complete deliveries against accepted readiness, resource, permission, timing and financial constraints."
+      },
+      "useCase": {
+        "id": "review-first-shipment",
+        "label": "Review a first shipment",
+        "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review ship-point registration",
+          "appId": "shipment-review-evidence",
+          "version": 1,
+          "appContentHash": "719cebdc2595450d8d0b6cd961ad32b443576bcb630cf11912d678679a305bbe",
+          "packageHash": "4ad35aeb54988d9028723f9cb846cee9e71d253160706345b0c46b47886e3010"
+        },
+        {
+          "id": "planning",
+          "name": "Plan this shipment before reservation",
+          "appId": "shipment-review-planning",
+          "version": 1,
+          "appContentHash": "754ab18d5e8d34070b4a288bc5a37ade4b2610c4d97979bd82ef358c3f5f26b1",
+          "packageHash": "3a577546ebb9aabff8ebc0c77ff56c1c1a0db57232e33808c1daaf8c4b33f22a"
+        },
+        {
+          "id": "learning",
+          "name": "Choose verification before reserving this shipment",
+          "appId": "shipment-review-learning",
+          "version": 1,
+          "appContentHash": "073b250ac87b16326210c29fdf937f9dd51511efd542c623cca4d729b2b2d08f",
+          "packageHash": "cfcf967bf16ad3c18d38d1167c8131c8957fce0c037ebaace2ca5232a0a0d681"
+        }
+      ],
+      "package": {
+        "path": "workflows/review-first-shipment/1.0.0/workflow.workflow.json",
+        "bytes": 926168,
+        "sha256": "57edec2aea6e721f284a8ca77abdd5b044071a2a5431d7c41df62fa841fa31da"
+      }
+    }
   ]
 }

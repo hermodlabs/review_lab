@@ -1,8 +1,9 @@
 DECISION LAB MARKETPLACE CONFIGURATIONS
 
-This folder contains seven bundled evidence-review, learning-value and
+This folder contains seven standalone evidence-review, learning-value and
 commitment-planning apps, including twenty immutable releases and their
-canonical YAML sources. It is not a snapshot of your
+canonical YAML sources, plus the self-contained Review a first shipment
+guided workflow (version 1.0.0). It is not a snapshot of your
 browser store and contains no saved cases, local edits or calculation history.
 
 INCLUDED COLLECTIONS AND APPS
@@ -45,7 +46,18 @@ Order fulfillment / Complete the first shipment / Complete a commitment
   Latest directory: apps/complete-first-shipment/2/
   Module version: 1.0.0
 
-These seven apps form five collections and use three installed reasoning patterns.
+Order fulfillment / Review a first shipment / Guided workflow
+  Workflow: Review a first shipment
+  Directory: workflows/review-first-shipment/1.0.0/
+  Package: workflow.workflow.json
+  Includes exact evidence-review, commitment-planning and learning-value app
+  packages, reviewed handoff mappings, questions, form presentation, transition
+  conditions and decision-brief configuration. These embedded dependencies do
+  not become independent published apps and cannot be replaced with a newer
+  standalone app. No saved run, accepted answer or reviewed finding is included.
+
+These seven standalone apps and one workflow form five collections and use
+three installed reasoning patterns.
 Evidence review assesses stable factual answers. Learning value compares complete
 study-and-response policies under explicit economic and probability assumptions.
 Learning examples consume reviewed finite state alternatives and supplied actions;
@@ -86,15 +98,17 @@ inputs, inference rules, probabilities, payoffs or calculated findings. Earlier
 learning releases without authored view metadata receive a display-only bar
 default; authored defaults in older releases remain part of their frozen module.
 
-The catalog lists all twenty distributed releases. Marketplace selects the latest release of
-each identity, displaying seven apps in five collections; RSS lists the separate
-release entries. Publication release numbers and the module's semantic version
+The catalog lists all twenty standalone app releases plus one workflow release.
+Marketplace selects the latest release of each product identity, displaying
+seven standalone apps and one guided workflow in five collections; RSS lists
+the separate release entries with their app/workflow classifications. Publication release numbers and the module's semantic version
 are separate: a /1/ directory does not imply module version 1.0.0.
 
 COPY AND CREATE THE RSS FEED
 
 1. Copy this folder's entire contents into the repository directory you intend
-   to publish, preserving catalog.json, generate-feed.mjs and the apps tree.
+   to publish, preserving catalog.json, generate-feed.mjs, the apps tree and the workflows
+   tree.
    catalog.json uses relative package and source paths.
 
 2. From that directory, run the generator with Node.js 24 and the actual public
@@ -113,7 +127,10 @@ COPY AND CREATE THE RSS FEED
 
 The feed declares the Decision Lab marketplace namespace and points to
 catalog.json. Relative paths keep the same directory layout usable locally or
-on a remote host. Feed generation checks all listed package and YAML hashes.
+on a remote host. Feed generation checks all listed package and YAML hashes, workflow envelope
+and definition hashes, exact embedded app/template package hashes, dependency
+pins and the matching workflow listing metadata. It needs no Decision Lab
+source code or npm dependencies.
 
 CONNECT DECISION LAB
 
@@ -137,8 +154,13 @@ browsing unavailable without removing installed apps or saved cases.
 
 IMPORT OR AUTHOR AN APP
 
-Open Marketplace and install a collection to add releases to Published
-apps. Choose Use app there to create an independent case.
+Open Marketplace and install a collection to add its standalone apps and guided
+workflows to the local published inventory atomically. Workflow cards start a
+guided review; app cards create an independent app case. Starting a workflow
+does not accept any seed answers or review any findings on the user's behalf.
+Existing runs remain pinned to their original complete workflow definition.
+Removing a collection hides its installed entries; retained runs keep their
+frozen definitions and supporting reports.
 
 In Decision Lab, open Published apps, choose Import app or case, and select an
 app.app.json file. Choose Use app to create an independent case. A feed reader
@@ -164,3 +186,25 @@ that same identity is a collision, not an update. Preserve existing packages;
 publish changed apps with a new integer release and directory, update the
 module version when its authored meaning changes, and add the new release to
 catalog.json before regenerating feed.xml.
+
+WORKFLOW RELEASES
+
+Workflow releases use stable major.minor.patch versions and the portable
+format decision-lab-workflow-package/1. catalog.json retains its app catalog
+schemaVersion 1 and adds an optional workflows array; app-only catalogs remain
+supported. Each workflow entry describes its collection, use case, required
+workflow runtime format, exact embedded app dependencies, and package bytes and
+SHA-256 checksum. The package contains the complete SDK workflow definition.
+
+From the development repository, run:
+
+  npm run build:shipment:marketplace
+  npm run check:shipment:marketplace
+
+The production build verifies or creates this immutable release before copying
+the same published-app-configs tree into dist/app-configs/. Local and RSS
+installation resolve identical relative paths; only the base location changes.
+The check command never repairs modified or missing files. The builder refuses
+to overwrite changed workflow bytes or changed catalog metadata for the same
+ID and version. Publish a new version and directory for any changed definition,
+embedded dependency, authored presentation or collection classification.

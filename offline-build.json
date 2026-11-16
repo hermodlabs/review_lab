@@ -1,7 +1,7 @@
 {
-  "version": "dd5c720ee0eb0e2bb321",
+  "version": "a8fba784e841cd664da5",
   "appVersion": "0.2.0",
-  "totalBytes": 15411868,
+  "totalBytes": 16586065,
   "assets": [
     {
       "url": "app-configs/.nojekyll",
@@ -10,8 +10,8 @@
     },
     {
       "url": "app-configs/README.txt",
-      "sha256": "688572802be6f8789414243c72a8539d89bcc256787c0aa495f6e208d7e01bf8",
-      "bytes": 9090
+      "sha256": "03f1e0a8795e6bf4d934b890363ffc3f88bfe7009da021d12f2315da05264f99",
+      "bytes": 11634
     },
     {
       "url": "app-configs/apps/complete-first-shipment/2/app.app.json",
@@ -215,13 +215,18 @@
     },
     {
       "url": "app-configs/catalog.json",
-      "sha256": "4f646acf3ee92bdc61527b87f9abeb03e33a93fc7cb3fc07019bd4f2e2a15567",
-      "bytes": 42181
+      "sha256": "05b979a6207b87fd4d98e82f500fc98bb44015261f97e883400150d6c005e16a",
+      "bytes": 44740
     },
     {
       "url": "app-configs/generate-feed.mjs",
-      "sha256": "6d0e29be8f8f255fc49184681d4743d62dfc3c38c5ccc5b70a672c3b3edd2638",
-      "bytes": 4959
+      "sha256": "6b0cb438d04f6bd1f7f0e8c47c244ac80bc7541a4039b6331c0ec408092d020f",
+      "bytes": 8929
+    },
+    {
+      "url": "app-configs/workflows/review-first-shipment/1.0.0/workflow.workflow.json",
+      "sha256": "57edec2aea6e721f284a8ca77abdd5b044071a2a5431d7c41df62fa841fa31da",
+      "bytes": 926168
     },
     {
       "url": "assets/clingo-Bbt-XjUT.js",
@@ -249,14 +254,14 @@
       "bytes": 50792
     },
     {
-      "url": "assets/index-6XWLp_rm.css",
-      "sha256": "a538488867bb1a8401c25ec88d805730da7943ef7e504769fba68ca993b255de",
-      "bytes": 206114
+      "url": "assets/index-DgG8-5r9.css",
+      "sha256": "23797e2d119cad2952db163892fc21e5087584702f780c2f01f107938e86bdb2",
+      "bytes": 229285
     },
     {
-      "url": "assets/index-_u3gmj4Y.js",
-      "sha256": "b7fd9470bda660f9a9295e5a018e0b4fd89e0d4e78fc2c9a1ffb3965cfbe83fc",
-      "bytes": 6525532
+      "url": "assets/index-nlru2UAz.js",
+      "sha256": "4bbe97126f547f38ff6ed1dbf29c18fe332748423b33c6d40e656e3246695b01",
+      "bytes": 6718097
     },
     {
       "url": "assets/run.worker-Dcf80R0t.js",
@@ -264,9 +269,9 @@
       "bytes": 2360
     },
     {
-      "url": "assets/worker-vx7WVNNu.js",
-      "sha256": "83a590c64ccc9e6bf919de1fb03d51eb9d5fe8567564d212e76f84958b4b8eeb",
-      "bytes": 346062
+      "url": "assets/worker-DdU8Ve5E.js",
+      "sha256": "212df626c3f31a9d6d0cd5379f5bd0643bb1bd0c36e4a35a72148924b177d269",
+      "bytes": 369282
     },
     {
       "url": "icons/apple-touch-icon.png",
@@ -295,7 +300,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "72c5687bb25c06a877bd39728835cb346842311c6782815b3a6e7d1e5243ee61",
+      "sha256": "2426207bd62764ffaf5a6883e19b792f5be39169159c31e17e1e50511aba7bf7",
       "bytes": 1023
     },
     {

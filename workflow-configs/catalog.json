@@ -1,0 +1,12 @@
+{
+  "format": "decision-lab-workflow-catalog/1",
+  "workflows": [
+    {
+      "id": "review-first-shipment",
+      "title": "Review a first shipment",
+      "description": "Review one delivery commitment, the actual transportation records and complete alternative arrangements. If a timely verification could change the choice, compare its feasible responses with reserving now. Finish with a reviewable proposal and its unresolved conditions.",
+      "definitionUrl": "first-shipment/workflow.definition.json",
+      "contentHash": "15e1b4f5b266253280f8eca828fa1e38dd69eecfaabd0c6ef7682e1e53000fdb"
+    }
+  ]
+}
