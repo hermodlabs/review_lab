@@ -1,0 +1,1706 @@
+{
+  "format": "decision-lab-app/1",
+  "template": {
+    "format": "decision-lab-template/1",
+    "definition": {
+      "format": "decision-lab-template-definition/1",
+      "templateId": "complete-a-commitment",
+      "version": "1.0.0",
+      "pattern": "complete-a-commitment/1",
+      "title": "Complete a commitment",
+      "description": "Determine whether one complete static plan can satisfy every mandatory obligation across every explicitly admitted scenario. Compare feasible plans only after whole-plan execution feasibility is established.",
+      "authoring": {
+        "requiredModuleFields": [
+          "description",
+          "question",
+          "assumptions",
+          "units",
+          "inputs",
+          "choices",
+          "scenarioDomain",
+          "derived",
+          "activities",
+          "resources",
+          "requirements",
+          "constraints",
+          "finance",
+          "preference",
+          "labels"
+        ],
+        "guidance": "What must be completed, for whom, and within which accepted limits?\nWhich objects, quantities, revisions and locations are covered?\nWhich factual records and admitted states are we relying on?\nWhich complete choices may the planner make?\nWhich activities, dependencies, calendars and capacities must the same plan respect?\nWhich scoped permissions must cover each required operation?\nWhich joint operating scenarios must this commitment withstand?\nWhich obligations are mandatory, and how will passing complete plans be compared?\nModule authors supply these declarations and domain vocabulary. Case workers supply only values allowed by the frozen module. Facts, scenarios and operating permission must never be inferred from a preferred plan."
+      },
+      "contract": {
+        "format": "decision-lab-installed-contract/1",
+        "pattern": "complete-a-commitment/1",
+        "definition": {
+          "id": "complete-a-commitment",
+          "version": "1.0.0",
+          "evaluator": "bounded-static-commitment/1",
+          "title": "Complete a commitment",
+          "responsibility": "Find one complete static operating choice that satisfies every mandatory obligation across every explicitly admitted joint scenario, then compare feasible choices.",
+          "invariants": [
+            "Choices are finite, input-only controls. One complete assignment is shared across every admitted scenario and obligation.",
+            "Admitted joint scenarios are explicit facts; neither independence, probabilities nor unlisted scenarios are inferred.",
+            "An empty admitted basis is inconsistent, never a vacuous feasibility result.",
+            "Typed acyclic expressions separate static controls, scenario consequences and post-scenario preference aggregates.",
+            "Activities, calendars, bookings and permission validity use half-open intervals; adjacent intervals do not overlap.",
+            "Capacity is the sum of simultaneous renewable demands. A scoped grant must cover its entire required operation.",
+            "Expense sums nonrefundable charges. Refundable holds affect cash only; simultaneous cash events are netted before peak cash is measured.",
+            "Every mandatory condition must pass for the same choice in every admitted scenario. Preference cannot compensate for failure.",
+            "Ranking is lexicographic over feasible choices only; genuine ties are retained and identifiers only stabilize display order.",
+            "A fully checked witness establishes existence during partial search. No-plan and optimality claims require complete relevant coverage.",
+            "Missing data, unresolved lookups, unsafe arithmetic and unsupported declarations are invalid input, never invented facts.",
+            "Calculated feasibility is conditional on accepted facts and fixed assumptions, not permission, reservation or evidence of actual completion."
+          ],
+          "expressionLanguage": {
+            "id": "typed-static-commitment-expressions/1",
+            "literals": "Finite scalar or homogeneous scalar-array data; no executable code.",
+            "references": [
+              "parameter",
+              "choice",
+              "scenario",
+              "derived",
+              "activity",
+              "finance",
+              "row (inside exists.test)"
+            ],
+            "operators": {
+              "eq": "Two compatible scalars -> boolean",
+              "ne": "Two compatible scalars -> boolean",
+              "lt": "Two compatible numbers -> boolean",
+              "lte": "Two compatible numbers -> boolean",
+              "gt": "Two compatible numbers -> boolean",
+              "gte": "Two compatible numbers -> boolean",
+              "add": "At least two compatible numbers -> number",
+              "sub": "Two compatible numbers -> number",
+              "mul": "Two numbers with at most one dimensional operand -> number; count is a multiplicity",
+              "and": "At least two booleans -> boolean",
+              "or": "At least two booleans -> boolean",
+              "not": "One boolean -> boolean",
+              "in": "Scalar and compatible scalar-array -> boolean",
+              "lookup": "Complete primary-key binding in a typed input table -> exactly one selected scalar; missing or ambiguous lookup is invalid",
+              "exists": "Typed equality bindings plus optional row-scoped predicate -> boolean; no match is false",
+              "interval-covered": "Typed selected calendar rows and a positive half-open interval -> boolean; adjacent coverage may combine",
+              "worst-case": "Numeric expression -> maximum across admitted scenarios for preference only; nested or unreduced scenario aggregates are invalid"
+            }
+          }
+        },
+        "schema": {
+          "kind": "installed-validator-descriptor/1",
+          "modelFormat": "complete-a-commitment/1",
+          "moduleValidator": "assertCommitmentModule",
+          "caseValidator": "validateCommitmentCase",
+          "requiredModelFields": [
+            "format",
+            "module",
+            "case"
+          ],
+          "requiredModuleFields": [
+            "id",
+            "title",
+            "template",
+            "units",
+            "inputs",
+            "choices",
+            "scenarioDomain",
+            "derived",
+            "activities",
+            "resources",
+            "requirements",
+            "constraints",
+            "finance",
+            "preference",
+            "labels"
+          ],
+          "moduleFields": [
+            "id",
+            "title",
+            "template",
+            "template.id",
+            "template.version",
+            "description",
+            "question",
+            "assumptions",
+            "units",
+            "units.time",
+            "units.timeOrigin",
+            "units.money",
+            "inputs",
+            "inputs.parameters",
+            "inputs.tables",
+            "choices",
+            "scenarioDomain",
+            "derived",
+            "activities",
+            "resources",
+            "resources.definitions",
+            "resources.bookings",
+            "requirements",
+            "constraints",
+            "finance",
+            "finance.mode",
+            "finance.charges",
+            "finance.holds",
+            "preference",
+            "preference.direction",
+            "preference.expression",
+            "preference.then",
+            "labels",
+            "lookupCoverage"
+          ],
+          "requiredCaseFields": [
+            "id",
+            "parameters",
+            "tables",
+            "provenance"
+          ],
+          "optionalCaseFields": [],
+          "caseDerivation": [
+            "All case parameters and keyed input rows use the frozen module.inputs types, units, bounds, keys and references; no missing-value defaults or coercion are inferred.",
+            "Finite choices draw only from input arrays, input table columns or fixed literal domains; the same assignment applies to every scenario.",
+            "The scenarioDomain table explicitly lists admitted joint scenarios; an empty table is an inconsistent basis rather than vacuous feasibility.",
+            "Activity graphs, constraints, mandatory obligations, resource mappings, financial mode and preference remain frozen module declarations.",
+            "Provenance describes accepted factual sources; identifying a source does not authenticate it or infer readiness."
+          ],
+          "description": "Installed closed typed declaration and case-admission validators; this descriptor is not a complete JSON Schema. Publication checks admission, not computed feasibility."
+        },
+        "structuralSlots": [
+          {
+            "path": "units",
+            "owner": "module-author",
+            "description": "Declare one time origin, common time and money units, and additional numeric units."
+          },
+          {
+            "path": "inputs",
+            "owner": "module-author",
+            "description": "Declare required typed parameters and keyed relations."
+          },
+          {
+            "path": "choices",
+            "owner": "module-author",
+            "description": "Declare finite static controls from input-only domains."
+          },
+          {
+            "path": "scenarioDomain",
+            "owner": "module-author",
+            "description": "Bind the input relation containing explicit joint scenarios."
+          },
+          {
+            "path": "derived",
+            "owner": "module-author",
+            "description": "Bind typed acyclic consequences using the installed expression language."
+          },
+          {
+            "path": "activities",
+            "owner": "module-author",
+            "description": "Declare static activity actors, timing and renewable resource demands."
+          },
+          {
+            "path": "resources",
+            "owner": "module-author",
+            "description": "Map resource capacities and existing bookings."
+          },
+          {
+            "path": "requirements",
+            "owner": "module-author",
+            "description": "Name and explain every mandatory commitment obligation."
+          },
+          {
+            "path": "constraints",
+            "owner": "module-author",
+            "description": "Bind predicates and shared resource-capacity checks to obligations."
+          },
+          {
+            "path": "finance",
+            "owner": "module-author",
+            "description": "Declare nonrefundable charges and optional timed refundable holds."
+          },
+          {
+            "path": "preference",
+            "owner": "module-author",
+            "description": "Declare feasible-only lexicographic comparison."
+          },
+          {
+            "path": "lookupCoverage",
+            "owner": "module-author",
+            "description": "Optionally require complete finite lookup coverage."
+          },
+          {
+            "path": "labels",
+            "owner": "module-author",
+            "description": "Supply domain vocabulary without changing calculations."
+          },
+          {
+            "path": "assumptions",
+            "owner": "module-author",
+            "description": "State accepted premises and the applicability boundary."
+          }
+        ],
+        "caseInputs": [
+          {
+            "path": "id",
+            "owner": "case-worker",
+            "description": "Identify this case."
+          },
+          {
+            "path": "parameters",
+            "owner": "case-worker",
+            "description": "Supply every declared parameter, including finite choice grids and current limits."
+          },
+          {
+            "path": "tables",
+            "owner": "case-worker",
+            "description": "Supply typed records, accepted scenarios, calendars, grants, resources and other declared facts."
+          },
+          {
+            "path": "provenance",
+            "owner": "case-worker",
+            "description": "Record the accepted source and scope of supplied information."
+          }
+        ],
+        "capabilities": {
+          "language": "typed-static-commitment-expressions/1",
+          "supported": [
+            "finite-static-plans",
+            "explicit-joint-scenarios",
+            "typed-acyclic-expressions",
+            "variable-activity-graphs",
+            "half-open-intervals",
+            "renewable-capacity",
+            "scoped-permission-predicates",
+            "expense-and-cash-accounting",
+            "all-scenario-conjunction",
+            "coverage-qualified-findings",
+            "feasible-only-lexicographic-preference"
+          ],
+          "unsupported": [
+            "conditional-policy-synthesis",
+            "continuous-time-optimization",
+            "inferred-readiness-or-probabilities",
+            "live-reservations",
+            "permission-issuance",
+            "arbitrary-code"
+          ]
+        },
+        "limits": {
+          "admission": {
+            "nodes": 250000,
+            "depth": 80,
+            "list": 10000,
+            "text": 200000,
+            "expressions": 20000,
+            "expressionDepth": 64,
+            "dependencyDepth": 64,
+            "lookupTuples": 100000,
+            "errors": 200
+          },
+          "defaults": {
+            "maxPlans": 10000,
+            "maxScenarioChecks": 100000,
+            "maxOperations": 10000000
+          },
+          "hard": {
+            "maxPlans": 100000,
+            "maxScenarioChecks": 1000000,
+            "maxOperations": 50000000
+          }
+        },
+        "reportResponsibilities": {
+          "assessmentContract": "complete-a-commitment.assessment/1",
+          "reportIds": [],
+          "responsibilities": [
+            "Complete candidate assignments and all checked scenarios",
+            "Feasibility, coverage and feasible-only preference",
+            "Activities, interval/resource checks and scoped permission traces",
+            "Expense, timed cash events and peak cash where declared",
+            "Mandatory obligation results and blockers",
+            "Accepted basis and calculation provenance"
+          ],
+          "completeReportDocument": "Unavailable for this pattern until milestone 5. Public assessment artifacts expose complete calculation data without claiming renderer-ready report support."
+        }
+      }
+    },
+    "createdAt": "2026-11-16T12:00:00.000Z",
+    "contentHash": "2fe9902f4f2b8deebd5663a8467fc2d5c24aeaa9fdcdca1ccd1bb42574a144b2"
+  },
+  "app": {
+    "schemaVersion": 5,
+    "kind": "hermod-published-app",
+    "runtime": "diagnostic-evidence",
+    "id": "plan-marble-delivery",
+    "version": 2,
+    "name": "Plan marble delivery",
+    "description": "Can one complete plan deliver the whole bag containing the heavy marble, sealed and accompanied by its identifying record, within the accepted receipt and prepaid expense limits?",
+    "source": "# Canonical Decision Lab data. Rules are data, never executable code.\nformat: complete-a-commitment/1\nmodule:\n  id: marble-bag-delivery\n  title: Plan marble delivery\n  description: \"Can one complete plan deliver the whole bag containing the heavy marble, sealed and accompanied by its identifying record, within the accepted receipt and prepaid expense limits?\"\n  question: \"Can we complete the whole-bag delivery?\"\n  template:\n    id: complete-a-commitment\n    version: 1\n  units:\n    time: synthetic tick\n    money: hypothetical dollar\n    count: unit of resource capacity\n    timeOrigin: tick 0 of the accepted operating snapshot\n  assumptions: [\"This draft is a static, finite planning model. Every activity in a complete plan must be performed; task assignments cannot branch on a future observation.\", \"Packing means packing and sealing one selected whole bag. Record preparation produces the identifying record that accompanies that same bag; no further work is required in this stipulated fixture.\", All modeled intervals use the common OPS-1 clock and are half-open. Adjacent intervals may share a boundary without overlapping., \"The nine listed marble memberships and masses remain stable. Transporting a sealed bag preserves its contents. Receipt occurs at modeled arrival; no loss, damage or unlisted work is modeled.\", \"The accepted E3 evidence review supplies factual alternatives, not controllable choices. All six listed heavy-identity and travel-condition combinations are admitted; their rows assert no probabilities.\", \"Every listed worker has capacity one. Packing additionally uses the single bench; preparing the record uses the separate single desk. The bench reservation is fixed.\", The packing-grant registry is complete within this fixture. An absent matching full-interval grant means no usable packing permission. Record preparation requires its declared capability and no separate grant., \"Service durations are deterministic conditional on the listed travel condition. Each modeled task fee and service fee is prepaid. No borrowing, separate refundable hold or time-indexed cash constraint is modeled.\", The timing grids and listed entities bound the candidate domain. Passing this calculation neither grants authority nor books workers or transport., \"The paper’s reliable-signal conditional-policy supplement is excluded from this first static-plan draft.\"]\n  inputs:\n    parameters:\n      owner:\n        type: string\n      recipient:\n        type: string\n      inventory:\n        type: string\n      snapshot:\n        type: string\n      deadline:\n        type: integer\n        unit: time\n        minimum: 0\n      expenseLimit:\n        type: integer\n        unit: money\n        minimum: 0\n      receiptOpen:\n        type: integer\n        unit: time\n        minimum: 0\n      receiptClose:\n        type: integer\n        unit: time\n        minimum: 0\n      packDuration:\n        type: integer\n        unit: time\n        exclusiveMinimum: 0\n      recordDuration:\n        type: integer\n        unit: time\n        exclusiveMinimum: 0\n      packStarts:\n        type: array\n        items:\n          type: integer\n          unit: time\n          minimum: 0\n      recordStarts:\n        type: array\n        items:\n          type: integer\n          unit: time\n          minimum: 0\n      departures:\n        type: array\n        items:\n          type: integer\n          unit: time\n          minimum: 0\n    tables:\n      bags:\n        key: [id]\n        columns:\n          id:\n            type: string\n          label:\n            type: string\n          inventory:\n            type: string\n      marbles:\n        key: [id]\n        columns:\n          id:\n            type: string\n          bag:\n            type: string\n            references:\n              table: bags\n              column: id\n          inventory:\n            type: string\n      workers:\n        key: [id]\n        columns:\n          id:\n            type: string\n            references:\n              table: resources\n              column: id\n          fee:\n            type: integer\n            unit: money\n            minimum: 0\n      workerCapabilities:\n        key: [worker, action]\n        columns:\n          worker:\n            type: string\n            references:\n              table: workers\n              column: id\n          action:\n            type: string\n      workerAvailability:\n        key: [worker, start, end]\n        columns:\n          worker:\n            type: string\n            references:\n              table: workers\n              column: id\n          start:\n            type: integer\n            unit: time\n            minimum: 0\n          end:\n            type: integer\n            unit: time\n            minimum: 0\n      resources:\n        key: [id]\n        columns:\n          id:\n            type: string\n          capacity:\n            type: integer\n            unit: count\n            minimum: 0\n      bookings:\n        key: [id]\n        columns:\n          id:\n            type: string\n          resource:\n            type: string\n            references:\n              table: resources\n              column: id\n          start:\n            type: integer\n            unit: time\n            minimum: 0\n          end:\n            type: integer\n            unit: time\n            minimum: 0\n          amount:\n            type: integer\n            unit: count\n            minimum: 0\n      grants:\n        key: [id]\n        columns:\n          id:\n            type: string\n          actor:\n            type: string\n            references:\n              table: workers\n              column: id\n          action:\n            type: string\n          bag:\n            type: string\n            references:\n              table: bags\n              column: id\n          start:\n            type: integer\n            unit: time\n            minimum: 0\n          end:\n            type: integer\n            unit: time\n            minimum: 0\n      services:\n        key: [id]\n        columns:\n          id:\n            type: string\n          fee:\n            type: integer\n            unit: money\n            minimum: 0\n      serviceDepartures:\n        key: [service, time]\n        columns:\n          service:\n            type: string\n            references:\n              table: services\n              column: id\n          time:\n            type: integer\n            unit: time\n            minimum: 0\n      conditions:\n        key: [id]\n        columns:\n          id:\n            type: string\n      travel:\n        key: [service, condition]\n        columns:\n          service:\n            type: string\n            references:\n              table: services\n              column: id\n          condition:\n            type: string\n            references:\n              table: conditions\n              column: id\n          duration:\n            type: integer\n            unit: time\n            exclusiveMinimum: 0\n      scenarios:\n        key: [id]\n        columns:\n          id:\n            type: string\n          heavy:\n            type: string\n            references:\n              table: marbles\n              column: id\n          condition:\n            type: string\n            references:\n              table: conditions\n              column: id\n  lookupCoverage:\n    - table: travel\n      keys:\n        service:\n          domain:\n            table: services\n            column: id\n        condition:\n          domain:\n            table: conditions\n            column: id\n  choices:\n    - id: bag\n      domain:\n        table: bags\n        column: id\n    - id: packWorker\n      domain:\n        table: workers\n        column: id\n    - id: recordWorker\n      domain:\n        table: workers\n        column: id\n    - id: packStart\n      domain:\n        parameter: packStarts\n    - id: recordStart\n      domain:\n        parameter: recordStarts\n    - id: service\n      domain:\n        table: services\n        column: id\n    - id: departure\n      domain:\n        parameter: departures\n  scenarioDomain:\n    table: scenarios\n  derived:\n    - id: travelDuration\n      type: integer\n      unit: time\n      expr:\n        op: lookup\n        table: travel\n        where:\n          service:\n            ref: choice.service\n          condition:\n            ref: scenario.condition\n        column: duration\n    - id: arrival\n      type: integer\n      unit: time\n      expr:\n        op: add\n        args:\n          - ref: choice.departure\n          - ref: derived.travelDuration\n  activities:\n    - id: pack\n      actor:\n        ref: choice.packWorker\n      start:\n        ref: choice.packStart\n      duration:\n        ref: parameter.packDuration\n      resources:\n        - resource:\n            ref: choice.packWorker\n          amount:\n            literal: 1\n        - resource:\n            literal: bench\n          amount:\n            literal: 1\n    - id: record\n      actor:\n        ref: choice.recordWorker\n      start:\n        ref: choice.recordStart\n      duration:\n        ref: parameter.recordDuration\n      resources:\n        - resource:\n            ref: choice.recordWorker\n          amount:\n            literal: 1\n        - resource:\n            literal: desk\n          amount:\n            literal: 1\n  resources:\n    definitions:\n      table: resources\n      idColumn: id\n      capacityColumn: capacity\n    bookings:\n      table: bookings\n      resourceColumn: resource\n      startColumn: start\n      endColumn: end\n      amountColumn: amount\n  requirements:\n    - id: SUFFICIENCY\n      label: Correct whole bag\n      meaning: \"Deliver the selected whole bag, which contains the heavy marble under each admitted factual state. Packing seals it; its completed identifying record accompanies it.\"\n      waivable: false\n    - id: RESOURCES\n      label: Workers and workspaces\n      meaning: \"Each assigned worker has the required capability and full task availability. Combined worker, bench and desk demands respect capacity and fixed bookings.\"\n      waivable: false\n    - id: TIME\n      label: Ready and received in time\n      meaning: \"Packing and record preparation both finish before dispatch; receipt occurs by the accepted deadline in every admitted travel condition.\"\n      waivable: false\n    - id: AUTHORITY\n      label: Packing permission\n      meaning: \"A grant for the same worker, selected bag and pack action covers the entire packing interval in the stipulated complete registry.\"\n      waivable: false\n    - id: ACCESS\n      label: Dispatch and receipt access\n      meaning: \"The chosen service offers the selected dispatch time and arrival is within the recipient’s half-open access window.\"\n      waivable: false\n    - id: COST\n      label: Prepaid expense\n      meaning: Both task fees and the service fee together stay within the accepted prepaid expense limit.\n      waivable: false\n  constraints:\n    - id: contains-heavy-marble\n      requirement: SUFFICIENCY\n      kind: predicate\n      predicate:\n        op: exists\n        table: marbles\n        where:\n          id:\n            ref: scenario.heavy\n          bag:\n            ref: choice.bag\n          inventory:\n            ref: parameter.inventory\n    - id: bag-in-scope\n      requirement: SUFFICIENCY\n      kind: predicate\n      predicate:\n        op: exists\n        table: bags\n        where:\n          id:\n            ref: choice.bag\n          inventory:\n            ref: parameter.inventory\n    - id: pack-capability\n      requirement: RESOURCES\n      kind: predicate\n      predicate:\n        op: exists\n        table: workerCapabilities\n        where:\n          worker:\n            ref: choice.packWorker\n          action:\n            literal: pack\n    - id: record-capability\n      requirement: RESOURCES\n      kind: predicate\n      predicate:\n        op: exists\n        table: workerCapabilities\n        where:\n          worker:\n            ref: choice.recordWorker\n          action:\n            literal: record\n    - id: pack-availability\n      requirement: RESOURCES\n      kind: predicate\n      predicate:\n        op: interval-covered\n        table: workerAvailability\n        where:\n          worker:\n            ref: activity.pack.actor\n        start:\n          ref: activity.pack.start\n        end:\n          ref: activity.pack.end\n        startColumn: start\n        endColumn: end\n    - id: record-availability\n      requirement: RESOURCES\n      kind: predicate\n      predicate:\n        op: interval-covered\n        table: workerAvailability\n        where:\n          worker:\n            ref: activity.record.actor\n        start:\n          ref: activity.record.start\n        end:\n          ref: activity.record.end\n        startColumn: start\n        endColumn: end\n    - id: combined-resource-capacity\n      requirement: RESOURCES\n      kind: resource-capacity\n    - id: pack-before-dispatch\n      requirement: TIME\n      kind: predicate\n      predicate:\n        op: lte\n        args:\n          - ref: activity.pack.end\n          - ref: choice.departure\n    - id: record-before-dispatch\n      requirement: TIME\n      kind: predicate\n      predicate:\n        op: lte\n        args:\n          - ref: activity.record.end\n          - ref: choice.departure\n    - id: receipt-by-deadline\n      requirement: TIME\n      kind: predicate\n      predicate:\n        op: lte\n        args:\n          - ref: derived.arrival\n          - ref: parameter.deadline\n    - id: scoped-packing-grant\n      requirement: AUTHORITY\n      kind: predicate\n      predicate:\n        op: exists\n        table: grants\n        where:\n          actor:\n            ref: choice.packWorker\n          bag:\n            ref: choice.bag\n          action:\n            literal: pack\n        test:\n          op: and\n          args:\n            - op: lte\n              args:\n                - ref: row.start\n                - ref: activity.pack.start\n            - op: gte\n              args:\n                - ref: row.end\n                - ref: activity.pack.end\n    - id: offered-dispatch\n      requirement: ACCESS\n      kind: predicate\n      predicate:\n        op: exists\n        table: serviceDepartures\n        where:\n          service:\n            ref: choice.service\n          time:\n            ref: choice.departure\n    - id: receipt-window\n      requirement: ACCESS\n      kind: predicate\n      predicate:\n        op: and\n        args:\n          - op: lte\n            args:\n              - ref: parameter.receiptOpen\n              - ref: derived.arrival\n          - op: lt\n            args:\n              - ref: derived.arrival\n              - ref: parameter.receiptClose\n    - id: prepaid-expense-limit\n      requirement: COST\n      kind: predicate\n      predicate:\n        op: lte\n        args:\n          - ref: finance.expense\n          - ref: parameter.expenseLimit\n  finance:\n    mode: expense\n    charges:\n      - id: packing-fee\n        amount:\n          op: lookup\n          table: workers\n          where:\n            id:\n              ref: choice.packWorker\n          column: fee\n      - id: record-fee\n        amount:\n          op: lookup\n          table: workers\n          where:\n            id:\n              ref: choice.recordWorker\n          column: fee\n      - id: delivery-fee\n        amount:\n          op: lookup\n          table: services\n          where:\n            id:\n              ref: choice.service\n          column: fee\n    holds: []\n  preference:\n    direction: min\n    expression:\n      ref: finance.expense\n    then:\n      - direction: min\n        expression:\n          op: worst-case\n          expression:\n            ref: derived.arrival\n  labels:\n    plan: Delivery plan\n    object: Whole bag\n    actor: Worker\n    service: Delivery service\n    departure: Dispatch\n    arrival: Receipt\n    expense: Prepaid expense\n    activity.pack: Pack and seal the selected bag\n    activity.record: Prepare its identifying record\n    resource.bench: Packing bench\n    resource.desk: Record desk\n    scenario.heavy: Possible heavy marble\n    scenario.condition: Travel condition\n    input.owner: Decision owner\n    input.recipient: Recipient\n    input.snapshot: Operating snapshot\n  version: \"1.0.0\"\n  metadata:\n    catalog:\n      domain:\n        id: canonical-examples\n        label: Canonical examples\n        description: Reference problems for understanding and testing reusable evidence patterns.\n      useCase:\n        id: deliver-heavy-marble-bag\n        label: Deliver the heavy-marble bag\n        description: Find a complete plan to deliver the identified bag with its seal and identifying record within the accepted time and expense limits.\ncase:\n  id: C0\n  parameters:\n    owner: decision-owner\n    recipient: receiver\n    inventory: N1\n    snapshot: OPS-1\n    deadline: 4\n    expenseLimit: 7\n    receiptOpen: 0\n    receiptClose: 5\n    packDuration: 1\n    recordDuration: 1\n    packStarts: [0, 1, 2]\n    recordStarts: [0, 1, 2]\n    departures: [1, 2, 3]\n  tables:\n    bags:\n      - id: red\n        label: Red\n        inventory: N1\n      - id: blue\n        label: Blue\n        inventory: N1\n      - id: gold\n        label: Gold\n        inventory: N1\n    marbles:\n      - id: r1\n        bag: red\n        inventory: N1\n      - id: r2\n        bag: red\n        inventory: N1\n      - id: r3\n        bag: red\n        inventory: N1\n      - id: b1\n        bag: blue\n        inventory: N1\n      - id: b2\n        bag: blue\n        inventory: N1\n      - id: b3\n        bag: blue\n        inventory: N1\n      - id: g1\n        bag: gold\n        inventory: N1\n      - id: g2\n        bag: gold\n        inventory: N1\n      - id: g3\n        bag: gold\n        inventory: N1\n    workers:\n      - id: A\n        fee: 2\n      - id: B\n        fee: 1\n    workerCapabilities:\n      - worker: A\n        action: pack\n      - worker: A\n        action: record\n      - worker: B\n        action: pack\n      - worker: B\n        action: record\n    workerAvailability:\n      - worker: A\n        start: 0\n        end: 3\n      - worker: B\n        start: 1\n        end: 3\n    resources:\n      - id: A\n        capacity: 1\n      - id: B\n        capacity: 1\n      - id: bench\n        capacity: 1\n      - id: desk\n        capacity: 1\n    bookings:\n      - id: bench-reservation\n        resource: bench\n        start: 1\n        end: 2\n        amount: 1\n    grants:\n      - id: GA-red\n        actor: A\n        action: pack\n        bag: red\n        start: 0\n        end: 2\n      - id: GA-blue\n        actor: A\n        action: pack\n        bag: blue\n        start: 0\n        end: 3\n      - id: GB-red\n        actor: B\n        action: pack\n        bag: red\n        start: 1\n        end: 3\n      - id: GB-gold\n        actor: B\n        action: pack\n        bag: gold\n        start: 1\n        end: 3\n    services:\n      - id: standard\n        fee: 2\n      - id: express\n        fee: 5\n    serviceDepartures:\n      - service: standard\n        time: 1\n      - service: standard\n        time: 2\n      - service: standard\n        time: 3\n      - service: express\n        time: 2\n      - service: express\n        time: 3\n    conditions:\n      - id: clear\n      - id: delay\n    travel:\n      - service: standard\n        condition: clear\n        duration: 1\n      - service: standard\n        condition: delay\n        duration: 2\n      - service: express\n        condition: clear\n        duration: 1\n      - service: express\n        condition: delay\n        duration: 1\n    scenarios:\n      - id: r1-clear\n        heavy: r1\n        condition: clear\n      - id: r1-delay\n        heavy: r1\n        condition: delay\n      - id: r2-clear\n        heavy: r2\n        condition: clear\n      - id: r2-delay\n        heavy: r2\n        condition: delay\n      - id: r3-clear\n        heavy: r3\n        condition: clear\n      - id: r3-delay\n        heavy: r3\n        condition: delay\n  provenance:\n    - id: marble-paper-C0\n      kind: synthetic-stipulation\n      source: Can_We_Complete_the_Commitment.pdf\n      pages: \"2-10, 19-21\"\n      meaning: \"Hypothetical instruction, operating scope, workers, grants, service offerings, common clock, timing grids and fees. These are declarations rather than observations of real delivery operations.\"\n    - id: reviewed-E3\n      kind: sdk-reviewed-state-projection\n      source: marble.basis.json\n      meaning: \"The public evidence-review/1 SDK evaluated the existing E3 fixture. Its admitted heavy identities populate the explicit joint scenario rows; no preferred bag or feasible-plan flag is supplied.\"\n      limitations: \"This is a pinned, accepted projection for the milestone-1 draft, not an implemented automatic dependency bridge or support for the paper’s older evidence-case/2 envelope.\"\n    - id: joint-domain\n      kind: synthetic-stipulation\n      source: Can_We_Complete_the_Commitment.pdf\n      pages: \"10\"\n      meaning: All six listed r1/r2/r3 and clear/delay combinations are admitted. No independence or probability claim is inferred from enumeration.\n    - id: marble-static-boundary\n      kind: scope-exclusion\n      source: Can_We_Complete_the_Commitment.pdf\n      pages: \"11-12\"\n      meaning: \"The conditional-policy supplement, reliable time-1 signal, budget 8 and blue branch are excluded. No observation-dependent action is supported by this draft.\"\n",
+    "sourceHash": "087f354f44c8dc0a5eb250e12d872492c635e77571184af878ecf09a9a60a5b8",
+    "definitionHash": "681928cdfc0f220a5a206dfbabd76b2bb410406cbba7afc4fbbff0dae9831972",
+    "definitionContract": {
+      "id": "complete-a-commitment",
+      "version": "1.0.0",
+      "evaluator": "bounded-static-commitment/1",
+      "title": "Complete a commitment",
+      "responsibility": "Find one complete static operating choice that satisfies every mandatory obligation across every explicitly admitted joint scenario, then compare feasible choices.",
+      "invariants": [
+        "Choices are finite, input-only controls. One complete assignment is shared across every admitted scenario and obligation.",
+        "Admitted joint scenarios are explicit facts; neither independence, probabilities nor unlisted scenarios are inferred.",
+        "An empty admitted basis is inconsistent, never a vacuous feasibility result.",
+        "Typed acyclic expressions separate static controls, scenario consequences and post-scenario preference aggregates.",
+        "Activities, calendars, bookings and permission validity use half-open intervals; adjacent intervals do not overlap.",
+        "Capacity is the sum of simultaneous renewable demands. A scoped grant must cover its entire required operation.",
+        "Expense sums nonrefundable charges. Refundable holds affect cash only; simultaneous cash events are netted before peak cash is measured.",
+        "Every mandatory condition must pass for the same choice in every admitted scenario. Preference cannot compensate for failure.",
+        "Ranking is lexicographic over feasible choices only; genuine ties are retained and identifiers only stabilize display order.",
+        "A fully checked witness establishes existence during partial search. No-plan and optimality claims require complete relevant coverage.",
+        "Missing data, unresolved lookups, unsafe arithmetic and unsupported declarations are invalid input, never invented facts.",
+        "Calculated feasibility is conditional on accepted facts and fixed assumptions, not permission, reservation or evidence of actual completion."
+      ],
+      "expressionLanguage": {
+        "id": "typed-static-commitment-expressions/1",
+        "literals": "Finite scalar or homogeneous scalar-array data; no executable code.",
+        "references": [
+          "parameter",
+          "choice",
+          "scenario",
+          "derived",
+          "activity",
+          "finance",
+          "row (inside exists.test)"
+        ],
+        "operators": {
+          "eq": "Two compatible scalars -> boolean",
+          "ne": "Two compatible scalars -> boolean",
+          "lt": "Two compatible numbers -> boolean",
+          "lte": "Two compatible numbers -> boolean",
+          "gt": "Two compatible numbers -> boolean",
+          "gte": "Two compatible numbers -> boolean",
+          "add": "At least two compatible numbers -> number",
+          "sub": "Two compatible numbers -> number",
+          "mul": "Two numbers with at most one dimensional operand -> number; count is a multiplicity",
+          "and": "At least two booleans -> boolean",
+          "or": "At least two booleans -> boolean",
+          "not": "One boolean -> boolean",
+          "in": "Scalar and compatible scalar-array -> boolean",
+          "lookup": "Complete primary-key binding in a typed input table -> exactly one selected scalar; missing or ambiguous lookup is invalid",
+          "exists": "Typed equality bindings plus optional row-scoped predicate -> boolean; no match is false",
+          "interval-covered": "Typed selected calendar rows and a positive half-open interval -> boolean; adjacent coverage may combine",
+          "worst-case": "Numeric expression -> maximum across admitted scenarios for preference only; nested or unreduced scenario aggregates are invalid"
+        }
+      }
+    },
+    "model": {
+      "format": "complete-a-commitment/1",
+      "module": {
+        "id": "marble-bag-delivery",
+        "title": "Plan marble delivery",
+        "description": "Can one complete plan deliver the whole bag containing the heavy marble, sealed and accompanied by its identifying record, within the accepted receipt and prepaid expense limits?",
+        "question": "Can we complete the whole-bag delivery?",
+        "template": {
+          "id": "complete-a-commitment",
+          "version": 1
+        },
+        "units": {
+          "time": "synthetic tick",
+          "money": "hypothetical dollar",
+          "count": "unit of resource capacity",
+          "timeOrigin": "tick 0 of the accepted operating snapshot"
+        },
+        "assumptions": [
+          "This draft is a static, finite planning model. Every activity in a complete plan must be performed; task assignments cannot branch on a future observation.",
+          "Packing means packing and sealing one selected whole bag. Record preparation produces the identifying record that accompanies that same bag; no further work is required in this stipulated fixture.",
+          "All modeled intervals use the common OPS-1 clock and are half-open. Adjacent intervals may share a boundary without overlapping.",
+          "The nine listed marble memberships and masses remain stable. Transporting a sealed bag preserves its contents. Receipt occurs at modeled arrival; no loss, damage or unlisted work is modeled.",
+          "The accepted E3 evidence review supplies factual alternatives, not controllable choices. All six listed heavy-identity and travel-condition combinations are admitted; their rows assert no probabilities.",
+          "Every listed worker has capacity one. Packing additionally uses the single bench; preparing the record uses the separate single desk. The bench reservation is fixed.",
+          "The packing-grant registry is complete within this fixture. An absent matching full-interval grant means no usable packing permission. Record preparation requires its declared capability and no separate grant.",
+          "Service durations are deterministic conditional on the listed travel condition. Each modeled task fee and service fee is prepaid. No borrowing, separate refundable hold or time-indexed cash constraint is modeled.",
+          "The timing grids and listed entities bound the candidate domain. Passing this calculation neither grants authority nor books workers or transport.",
+          "The paper’s reliable-signal conditional-policy supplement is excluded from this first static-plan draft."
+        ],
+        "inputs": {
+          "parameters": {
+            "owner": {
+              "type": "string"
+            },
+            "recipient": {
+              "type": "string"
+            },
+            "inventory": {
+              "type": "string"
+            },
+            "snapshot": {
+              "type": "string"
+            },
+            "deadline": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "expenseLimit": {
+              "type": "integer",
+              "unit": "money",
+              "minimum": 0
+            },
+            "receiptOpen": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "receiptClose": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "packDuration": {
+              "type": "integer",
+              "unit": "time",
+              "exclusiveMinimum": 0
+            },
+            "recordDuration": {
+              "type": "integer",
+              "unit": "time",
+              "exclusiveMinimum": 0
+            },
+            "packStarts": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "unit": "time",
+                "minimum": 0
+              }
+            },
+            "recordStarts": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "unit": "time",
+                "minimum": 0
+              }
+            },
+            "departures": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "unit": "time",
+                "minimum": 0
+              }
+            }
+          },
+          "tables": {
+            "bags": {
+              "key": [
+                "id"
+              ],
+              "columns": {
+                "id": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "inventory": {
+                  "type": "string"
+                }
+              }
+            },
+            "marbles": {
+              "key": [
+                "id"
+              ],
+              "columns": {
+                "id": {
+                  "type": "string"
+                },
+                "bag": {
+                  "type": "string",
+                  "references": {
+                    "table": "bags",
+                    "column": "id"
+                  }
+                },
+                "inventory": {
+                  "type": "string"
+                }
+              }
+            },
+            "workers": {
+              "key": [
+                "id"
+              ],
+              "columns": {
+                "id": {
+                  "type": "string",
+                  "references": {
+                    "table": "resources",
+                    "column": "id"
+                  }
+                },
+                "fee": {
+                  "type": "integer",
+                  "unit": "money",
+                  "minimum": 0
+                }
+              }
+            },
+            "workerCapabilities": {
+              "key": [
+                "worker",
+                "action"
+              ],
+              "columns": {
+                "worker": {
+                  "type": "string",
+                  "references": {
+                    "table": "workers",
+                    "column": "id"
+                  }
+                },
+                "action": {
+                  "type": "string"
+                }
+              }
+            },
+            "workerAvailability": {
+              "key": [
+                "worker",
+                "start",
+                "end"
+              ],
+              "columns": {
+                "worker": {
+                  "type": "string",
+                  "references": {
+                    "table": "workers",
+                    "column": "id"
+                  }
+                },
+                "start": {
+                  "type": "integer",
+                  "unit": "time",
+                  "minimum": 0
+                },
+                "end": {
+                  "type": "integer",
+                  "unit": "time",
+                  "minimum": 0
+                }
+              }
+            },
+            "resources": {
+              "key": [
+                "id"
+              ],
+              "columns": {
+                "id": {
+                  "type": "string"
+                },
+                "capacity": {
+                  "type": "integer",
+                  "unit": "count",
+                  "minimum": 0
+                }
+              }
+            },
+            "bookings": {
+              "key": [
+                "id"
+              ],
+              "columns": {
+                "id": {
+                  "type": "string"
+                },
+                "resource": {
+                  "type": "string",
+                  "references": {
+                    "table": "resources",
+                    "column": "id"
+                  }
+                },
+                "start": {
+                  "type": "integer",
+                  "unit": "time",
+                  "minimum": 0
+                },
+                "end": {
+                  "type": "integer",
+                  "unit": "time",
+                  "minimum": 0
+                },
+                "amount": {
+                  "type": "integer",
+                  "unit": "count",
+                  "minimum": 0
+                }
+              }
+            },
+            "grants": {
+              "key": [
+                "id"
+              ],
+              "columns": {
+                "id": {
+                  "type": "string"
+                },
+                "actor": {
+                  "type": "string",
+                  "references": {
+                    "table": "workers",
+                    "column": "id"
+                  }
+                },
+                "action": {
+                  "type": "string"
+                },
+                "bag": {
+                  "type": "string",
+                  "references": {
+                    "table": "bags",
+                    "column": "id"
+                  }
+                },
+                "start": {
+                  "type": "integer",
+                  "unit": "time",
+                  "minimum": 0
+                },
+                "end": {
+                  "type": "integer",
+                  "unit": "time",
+                  "minimum": 0
+                }
+              }
+            },
+            "services": {
+              "key": [
+                "id"
+              ],
+              "columns": {
+                "id": {
+                  "type": "string"
+                },
+                "fee": {
+                  "type": "integer",
+                  "unit": "money",
+                  "minimum": 0
+                }
+              }
+            },
+            "serviceDepartures": {
+              "key": [
+                "service",
+                "time"
+              ],
+              "columns": {
+                "service": {
+                  "type": "string",
+                  "references": {
+                    "table": "services",
+                    "column": "id"
+                  }
+                },
+                "time": {
+                  "type": "integer",
+                  "unit": "time",
+                  "minimum": 0
+                }
+              }
+            },
+            "conditions": {
+              "key": [
+                "id"
+              ],
+              "columns": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            },
+            "travel": {
+              "key": [
+                "service",
+                "condition"
+              ],
+              "columns": {
+                "service": {
+                  "type": "string",
+                  "references": {
+                    "table": "services",
+                    "column": "id"
+                  }
+                },
+                "condition": {
+                  "type": "string",
+                  "references": {
+                    "table": "conditions",
+                    "column": "id"
+                  }
+                },
+                "duration": {
+                  "type": "integer",
+                  "unit": "time",
+                  "exclusiveMinimum": 0
+                }
+              }
+            },
+            "scenarios": {
+              "key": [
+                "id"
+              ],
+              "columns": {
+                "id": {
+                  "type": "string"
+                },
+                "heavy": {
+                  "type": "string",
+                  "references": {
+                    "table": "marbles",
+                    "column": "id"
+                  }
+                },
+                "condition": {
+                  "type": "string",
+                  "references": {
+                    "table": "conditions",
+                    "column": "id"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "lookupCoverage": [
+          {
+            "table": "travel",
+            "keys": {
+              "service": {
+                "domain": {
+                  "table": "services",
+                  "column": "id"
+                }
+              },
+              "condition": {
+                "domain": {
+                  "table": "conditions",
+                  "column": "id"
+                }
+              }
+            }
+          }
+        ],
+        "choices": [
+          {
+            "id": "bag",
+            "domain": {
+              "table": "bags",
+              "column": "id"
+            }
+          },
+          {
+            "id": "packWorker",
+            "domain": {
+              "table": "workers",
+              "column": "id"
+            }
+          },
+          {
+            "id": "recordWorker",
+            "domain": {
+              "table": "workers",
+              "column": "id"
+            }
+          },
+          {
+            "id": "packStart",
+            "domain": {
+              "parameter": "packStarts"
+            }
+          },
+          {
+            "id": "recordStart",
+            "domain": {
+              "parameter": "recordStarts"
+            }
+          },
+          {
+            "id": "service",
+            "domain": {
+              "table": "services",
+              "column": "id"
+            }
+          },
+          {
+            "id": "departure",
+            "domain": {
+              "parameter": "departures"
+            }
+          }
+        ],
+        "scenarioDomain": {
+          "table": "scenarios"
+        },
+        "derived": [
+          {
+            "id": "travelDuration",
+            "type": "integer",
+            "unit": "time",
+            "expr": {
+              "op": "lookup",
+              "table": "travel",
+              "where": {
+                "service": {
+                  "ref": "choice.service"
+                },
+                "condition": {
+                  "ref": "scenario.condition"
+                }
+              },
+              "column": "duration"
+            }
+          },
+          {
+            "id": "arrival",
+            "type": "integer",
+            "unit": "time",
+            "expr": {
+              "op": "add",
+              "args": [
+                {
+                  "ref": "choice.departure"
+                },
+                {
+                  "ref": "derived.travelDuration"
+                }
+              ]
+            }
+          }
+        ],
+        "activities": [
+          {
+            "id": "pack",
+            "actor": {
+              "ref": "choice.packWorker"
+            },
+            "start": {
+              "ref": "choice.packStart"
+            },
+            "duration": {
+              "ref": "parameter.packDuration"
+            },
+            "resources": [
+              {
+                "resource": {
+                  "ref": "choice.packWorker"
+                },
+                "amount": {
+                  "literal": 1
+                }
+              },
+              {
+                "resource": {
+                  "literal": "bench"
+                },
+                "amount": {
+                  "literal": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "record",
+            "actor": {
+              "ref": "choice.recordWorker"
+            },
+            "start": {
+              "ref": "choice.recordStart"
+            },
+            "duration": {
+              "ref": "parameter.recordDuration"
+            },
+            "resources": [
+              {
+                "resource": {
+                  "ref": "choice.recordWorker"
+                },
+                "amount": {
+                  "literal": 1
+                }
+              },
+              {
+                "resource": {
+                  "literal": "desk"
+                },
+                "amount": {
+                  "literal": 1
+                }
+              }
+            ]
+          }
+        ],
+        "resources": {
+          "definitions": {
+            "table": "resources",
+            "idColumn": "id",
+            "capacityColumn": "capacity"
+          },
+          "bookings": {
+            "table": "bookings",
+            "resourceColumn": "resource",
+            "startColumn": "start",
+            "endColumn": "end",
+            "amountColumn": "amount"
+          }
+        },
+        "requirements": [
+          {
+            "id": "SUFFICIENCY",
+            "label": "Correct whole bag",
+            "meaning": "Deliver the selected whole bag, which contains the heavy marble under each admitted factual state. Packing seals it; its completed identifying record accompanies it.",
+            "waivable": false
+          },
+          {
+            "id": "RESOURCES",
+            "label": "Workers and workspaces",
+            "meaning": "Each assigned worker has the required capability and full task availability. Combined worker, bench and desk demands respect capacity and fixed bookings.",
+            "waivable": false
+          },
+          {
+            "id": "TIME",
+            "label": "Ready and received in time",
+            "meaning": "Packing and record preparation both finish before dispatch; receipt occurs by the accepted deadline in every admitted travel condition.",
+            "waivable": false
+          },
+          {
+            "id": "AUTHORITY",
+            "label": "Packing permission",
+            "meaning": "A grant for the same worker, selected bag and pack action covers the entire packing interval in the stipulated complete registry.",
+            "waivable": false
+          },
+          {
+            "id": "ACCESS",
+            "label": "Dispatch and receipt access",
+            "meaning": "The chosen service offers the selected dispatch time and arrival is within the recipient’s half-open access window.",
+            "waivable": false
+          },
+          {
+            "id": "COST",
+            "label": "Prepaid expense",
+            "meaning": "Both task fees and the service fee together stay within the accepted prepaid expense limit.",
+            "waivable": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "contains-heavy-marble",
+            "requirement": "SUFFICIENCY",
+            "kind": "predicate",
+            "predicate": {
+              "op": "exists",
+              "table": "marbles",
+              "where": {
+                "id": {
+                  "ref": "scenario.heavy"
+                },
+                "bag": {
+                  "ref": "choice.bag"
+                },
+                "inventory": {
+                  "ref": "parameter.inventory"
+                }
+              }
+            }
+          },
+          {
+            "id": "bag-in-scope",
+            "requirement": "SUFFICIENCY",
+            "kind": "predicate",
+            "predicate": {
+              "op": "exists",
+              "table": "bags",
+              "where": {
+                "id": {
+                  "ref": "choice.bag"
+                },
+                "inventory": {
+                  "ref": "parameter.inventory"
+                }
+              }
+            }
+          },
+          {
+            "id": "pack-capability",
+            "requirement": "RESOURCES",
+            "kind": "predicate",
+            "predicate": {
+              "op": "exists",
+              "table": "workerCapabilities",
+              "where": {
+                "worker": {
+                  "ref": "choice.packWorker"
+                },
+                "action": {
+                  "literal": "pack"
+                }
+              }
+            }
+          },
+          {
+            "id": "record-capability",
+            "requirement": "RESOURCES",
+            "kind": "predicate",
+            "predicate": {
+              "op": "exists",
+              "table": "workerCapabilities",
+              "where": {
+                "worker": {
+                  "ref": "choice.recordWorker"
+                },
+                "action": {
+                  "literal": "record"
+                }
+              }
+            }
+          },
+          {
+            "id": "pack-availability",
+            "requirement": "RESOURCES",
+            "kind": "predicate",
+            "predicate": {
+              "op": "interval-covered",
+              "table": "workerAvailability",
+              "where": {
+                "worker": {
+                  "ref": "activity.pack.actor"
+                }
+              },
+              "start": {
+                "ref": "activity.pack.start"
+              },
+              "end": {
+                "ref": "activity.pack.end"
+              },
+              "startColumn": "start",
+              "endColumn": "end"
+            }
+          },
+          {
+            "id": "record-availability",
+            "requirement": "RESOURCES",
+            "kind": "predicate",
+            "predicate": {
+              "op": "interval-covered",
+              "table": "workerAvailability",
+              "where": {
+                "worker": {
+                  "ref": "activity.record.actor"
+                }
+              },
+              "start": {
+                "ref": "activity.record.start"
+              },
+              "end": {
+                "ref": "activity.record.end"
+              },
+              "startColumn": "start",
+              "endColumn": "end"
+            }
+          },
+          {
+            "id": "combined-resource-capacity",
+            "requirement": "RESOURCES",
+            "kind": "resource-capacity"
+          },
+          {
+            "id": "pack-before-dispatch",
+            "requirement": "TIME",
+            "kind": "predicate",
+            "predicate": {
+              "op": "lte",
+              "args": [
+                {
+                  "ref": "activity.pack.end"
+                },
+                {
+                  "ref": "choice.departure"
+                }
+              ]
+            }
+          },
+          {
+            "id": "record-before-dispatch",
+            "requirement": "TIME",
+            "kind": "predicate",
+            "predicate": {
+              "op": "lte",
+              "args": [
+                {
+                  "ref": "activity.record.end"
+                },
+                {
+                  "ref": "choice.departure"
+                }
+              ]
+            }
+          },
+          {
+            "id": "receipt-by-deadline",
+            "requirement": "TIME",
+            "kind": "predicate",
+            "predicate": {
+              "op": "lte",
+              "args": [
+                {
+                  "ref": "derived.arrival"
+                },
+                {
+                  "ref": "parameter.deadline"
+                }
+              ]
+            }
+          },
+          {
+            "id": "scoped-packing-grant",
+            "requirement": "AUTHORITY",
+            "kind": "predicate",
+            "predicate": {
+              "op": "exists",
+              "table": "grants",
+              "where": {
+                "actor": {
+                  "ref": "choice.packWorker"
+                },
+                "bag": {
+                  "ref": "choice.bag"
+                },
+                "action": {
+                  "literal": "pack"
+                }
+              },
+              "test": {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "lte",
+                    "args": [
+                      {
+                        "ref": "row.start"
+                      },
+                      {
+                        "ref": "activity.pack.start"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "gte",
+                    "args": [
+                      {
+                        "ref": "row.end"
+                      },
+                      {
+                        "ref": "activity.pack.end"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "offered-dispatch",
+            "requirement": "ACCESS",
+            "kind": "predicate",
+            "predicate": {
+              "op": "exists",
+              "table": "serviceDepartures",
+              "where": {
+                "service": {
+                  "ref": "choice.service"
+                },
+                "time": {
+                  "ref": "choice.departure"
+                }
+              }
+            }
+          },
+          {
+            "id": "receipt-window",
+            "requirement": "ACCESS",
+            "kind": "predicate",
+            "predicate": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "lte",
+                  "args": [
+                    {
+                      "ref": "parameter.receiptOpen"
+                    },
+                    {
+                      "ref": "derived.arrival"
+                    }
+                  ]
+                },
+                {
+                  "op": "lt",
+                  "args": [
+                    {
+                      "ref": "derived.arrival"
+                    },
+                    {
+                      "ref": "parameter.receiptClose"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "prepaid-expense-limit",
+            "requirement": "COST",
+            "kind": "predicate",
+            "predicate": {
+              "op": "lte",
+              "args": [
+                {
+                  "ref": "finance.expense"
+                },
+                {
+                  "ref": "parameter.expenseLimit"
+                }
+              ]
+            }
+          }
+        ],
+        "finance": {
+          "mode": "expense",
+          "charges": [
+            {
+              "id": "packing-fee",
+              "amount": {
+                "op": "lookup",
+                "table": "workers",
+                "where": {
+                  "id": {
+                    "ref": "choice.packWorker"
+                  }
+                },
+                "column": "fee"
+              }
+            },
+            {
+              "id": "record-fee",
+              "amount": {
+                "op": "lookup",
+                "table": "workers",
+                "where": {
+                  "id": {
+                    "ref": "choice.recordWorker"
+                  }
+                },
+                "column": "fee"
+              }
+            },
+            {
+              "id": "delivery-fee",
+              "amount": {
+                "op": "lookup",
+                "table": "services",
+                "where": {
+                  "id": {
+                    "ref": "choice.service"
+                  }
+                },
+                "column": "fee"
+              }
+            }
+          ],
+          "holds": []
+        },
+        "preference": {
+          "direction": "min",
+          "expression": {
+            "ref": "finance.expense"
+          },
+          "then": [
+            {
+              "direction": "min",
+              "expression": {
+                "op": "worst-case",
+                "expression": {
+                  "ref": "derived.arrival"
+                }
+              }
+            }
+          ]
+        },
+        "labels": {
+          "plan": "Delivery plan",
+          "object": "Whole bag",
+          "actor": "Worker",
+          "service": "Delivery service",
+          "departure": "Dispatch",
+          "arrival": "Receipt",
+          "expense": "Prepaid expense",
+          "activity.pack": "Pack and seal the selected bag",
+          "activity.record": "Prepare its identifying record",
+          "resource.bench": "Packing bench",
+          "resource.desk": "Record desk",
+          "scenario.heavy": "Possible heavy marble",
+          "scenario.condition": "Travel condition",
+          "input.owner": "Decision owner",
+          "input.recipient": "Recipient",
+          "input.snapshot": "Operating snapshot"
+        },
+        "version": "1.0.0",
+        "metadata": {
+          "catalog": {
+            "domain": {
+              "id": "canonical-examples",
+              "label": "Canonical examples",
+              "description": "Reference problems for understanding and testing reusable evidence patterns."
+            },
+            "useCase": {
+              "id": "deliver-heavy-marble-bag",
+              "label": "Deliver the heavy-marble bag",
+              "description": "Find a complete plan to deliver the identified bag with its seal and identifying record within the accepted time and expense limits."
+            }
+          }
+        }
+      },
+      "case": {
+        "id": "C0",
+        "parameters": {
+          "owner": "decision-owner",
+          "recipient": "receiver",
+          "inventory": "N1",
+          "snapshot": "OPS-1",
+          "deadline": 4,
+          "expenseLimit": 7,
+          "receiptOpen": 0,
+          "receiptClose": 5,
+          "packDuration": 1,
+          "recordDuration": 1,
+          "packStarts": [
+            0,
+            1,
+            2
+          ],
+          "recordStarts": [
+            0,
+            1,
+            2
+          ],
+          "departures": [
+            1,
+            2,
+            3
+          ]
+        },
+        "tables": {
+          "bags": [
+            {
+              "id": "red",
+              "label": "Red",
+              "inventory": "N1"
+            },
+            {
+              "id": "blue",
+              "label": "Blue",
+              "inventory": "N1"
+            },
+            {
+              "id": "gold",
+              "label": "Gold",
+              "inventory": "N1"
+            }
+          ],
+          "marbles": [
+            {
+              "id": "r1",
+              "bag": "red",
+              "inventory": "N1"
+            },
+            {
+              "id": "r2",
+              "bag": "red",
+              "inventory": "N1"
+            },
+            {
+              "id": "r3",
+              "bag": "red",
+              "inventory": "N1"
+            },
+            {
+              "id": "b1",
+              "bag": "blue",
+              "inventory": "N1"
+            },
+            {
+              "id": "b2",
+              "bag": "blue",
+              "inventory": "N1"
+            },
+            {
+              "id": "b3",
+              "bag": "blue",
+              "inventory": "N1"
+            },
+            {
+              "id": "g1",
+              "bag": "gold",
+              "inventory": "N1"
+            },
+            {
+              "id": "g2",
+              "bag": "gold",
+              "inventory": "N1"
+            },
+            {
+              "id": "g3",
+              "bag": "gold",
+              "inventory": "N1"
+            }
+          ],
+          "workers": [
+            {
+              "id": "A",
+              "fee": 2
+            },
+            {
+              "id": "B",
+              "fee": 1
+            }
+          ],
+          "workerCapabilities": [
+            {
+              "worker": "A",
+              "action": "pack"
+            },
+            {
+              "worker": "A",
+              "action": "record"
+            },
+            {
+              "worker": "B",
+              "action": "pack"
+            },
+            {
+              "worker": "B",
+              "action": "record"
+            }
+          ],
+          "workerAvailability": [
+            {
+              "worker": "A",
+              "start": 0,
+              "end": 3
+            },
+            {
+              "worker": "B",
+              "start": 1,
+              "end": 3
+            }
+          ],
+          "resources": [
+            {
+              "id": "A",
+              "capacity": 1
+            },
+            {
+              "id": "B",
+              "capacity": 1
+            },
+            {
+              "id": "bench",
+              "capacity": 1
+            },
+            {
+              "id": "desk",
+              "capacity": 1
+            }
+          ],
+          "bookings": [
+            {
+              "id": "bench-reservation",
+              "resource": "bench",
+              "start": 1,
+              "end": 2,
+              "amount": 1
+            }
+          ],
+          "grants": [
+            {
+              "id": "GA-red",
+              "actor": "A",
+              "action": "pack",
+              "bag": "red",
+              "start": 0,
+              "end": 2
+            },
+            {
+              "id": "GA-blue",
+              "actor": "A",
+              "action": "pack",
+              "bag": "blue",
+              "start": 0,
+              "end": 3
+            },
+            {
+              "id": "GB-red",
+              "actor": "B",
+              "action": "pack",
+              "bag": "red",
+              "start": 1,
+              "end": 3
+            },
+            {
+              "id": "GB-gold",
+              "actor": "B",
+              "action": "pack",
+              "bag": "gold",
+              "start": 1,
+              "end": 3
+            }
+          ],
+          "services": [
+            {
+              "id": "standard",
+              "fee": 2
+            },
+            {
+              "id": "express",
+              "fee": 5
+            }
+          ],
+          "serviceDepartures": [
+            {
+              "service": "standard",
+              "time": 1
+            },
+            {
+              "service": "standard",
+              "time": 2
+            },
+            {
+              "service": "standard",
+              "time": 3
+            },
+            {
+              "service": "express",
+              "time": 2
+            },
+            {
+              "service": "express",
+              "time": 3
+            }
+          ],
+          "conditions": [
+            {
+              "id": "clear"
+            },
+            {
+              "id": "delay"
+            }
+          ],
+          "travel": [
+            {
+              "service": "standard",
+              "condition": "clear",
+              "duration": 1
+            },
+            {
+              "service": "standard",
+              "condition": "delay",
+              "duration": 2
+            },
+            {
+              "service": "express",
+              "condition": "clear",
+              "duration": 1
+            },
+            {
+              "service": "express",
+              "condition": "delay",
+              "duration": 1
+            }
+          ],
+          "scenarios": [
+            {
+              "id": "r1-clear",
+              "heavy": "r1",
+              "condition": "clear"
+            },
+            {
+              "id": "r1-delay",
+              "heavy": "r1",
+              "condition": "delay"
+            },
+            {
+              "id": "r2-clear",
+              "heavy": "r2",
+              "condition": "clear"
+            },
+            {
+              "id": "r2-delay",
+              "heavy": "r2",
+              "condition": "delay"
+            },
+            {
+              "id": "r3-clear",
+              "heavy": "r3",
+              "condition": "clear"
+            },
+            {
+              "id": "r3-delay",
+              "heavy": "r3",
+              "condition": "delay"
+            }
+          ]
+        },
+        "provenance": [
+          {
+            "id": "marble-paper-C0",
+            "kind": "synthetic-stipulation",
+            "source": "Can_We_Complete_the_Commitment.pdf",
+            "pages": "2-10, 19-21",
+            "meaning": "Hypothetical instruction, operating scope, workers, grants, service offerings, common clock, timing grids and fees. These are declarations rather than observations of real delivery operations."
+          },
+          {
+            "id": "reviewed-E3",
+            "kind": "sdk-reviewed-state-projection",
+            "source": "marble.basis.json",
+            "meaning": "The public evidence-review/1 SDK evaluated the existing E3 fixture. Its admitted heavy identities populate the explicit joint scenario rows; no preferred bag or feasible-plan flag is supplied.",
+            "limitations": "This is a pinned, accepted projection for the milestone-1 draft, not an implemented automatic dependency bridge or support for the paper’s older evidence-case/2 envelope."
+          },
+          {
+            "id": "joint-domain",
+            "kind": "synthetic-stipulation",
+            "source": "Can_We_Complete_the_Commitment.pdf",
+            "pages": "10",
+            "meaning": "All six listed r1/r2/r3 and clear/delay combinations are admitted. No independence or probability claim is inferred from enumeration."
+          },
+          {
+            "id": "marble-static-boundary",
+            "kind": "scope-exclusion",
+            "source": "Can_We_Complete_the_Commitment.pdf",
+            "pages": "11-12",
+            "meaning": "The conditional-policy supplement, reliable time-1 signal, budget 8 and blue branch are excluded. No observation-dependent action is supported by this draft."
+          }
+        ]
+      }
+    },
+    "presentation": {
+      "schemaVersion": 1,
+      "provider": "native-commitment-planning",
+      "contract": "complete-a-commitment.assessment/1",
+      "views": []
+    },
+    "viewContracts": [],
+    "fields": [],
+    "reports": [],
+    "defaultReport": null,
+    "originWorkspaceId": null,
+    "createdAt": "2026-11-16T18:00:00.000Z",
+    "contentHash": "1c0006c957c95c731b8f6572da95898116094f2db56a548841b54d3ad8b8c515"
+  },
+  "sourceProvenance": "supplied",
+  "contentHash": "7b94dc0138ad1b6aae9ca343a140d19f3234570e4e9b448b09c9ec45de98d121"
+}

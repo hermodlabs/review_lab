@@ -1,7 +1,7 @@
 {
-  "version": "459b9149aedf3f22c77a",
+  "version": "dd5c720ee0eb0e2bb321",
   "appVersion": "0.2.0",
-  "totalBytes": 14601939,
+  "totalBytes": 15411868,
   "assets": [
     {
       "url": "app-configs/.nojekyll",
@@ -10,8 +10,28 @@
     },
     {
       "url": "app-configs/README.txt",
-      "sha256": "913182a5b0fa34e59cc70b07b4b9c59261da53ce5e41895ca573b5438609c066",
-      "bytes": 7593
+      "sha256": "688572802be6f8789414243c72a8539d89bcc256787c0aa495f6e208d7e01bf8",
+      "bytes": 9090
+    },
+    {
+      "url": "app-configs/apps/complete-first-shipment/2/app.app.json",
+      "sha256": "1606ac4cdf4308f2aa2d495691d0d1ea3715b1e2f8fffc2c5d0ae12611520f22",
+      "bytes": 115537
+    },
+    {
+      "url": "app-configs/apps/complete-first-shipment/2/model.yaml",
+      "sha256": "3b03f9d45f8836432eee8ad4410fde18cddad3068466efe6fa09f0cd7c97a777",
+      "bytes": 33749
+    },
+    {
+      "url": "app-configs/apps/plan-marble-delivery/2/app.app.json",
+      "sha256": "ca0089ec5005bab8a035005e758abc1530294c6a9c4391cb0e73eed5a8fd1ee5",
+      "bytes": 78327
+    },
+    {
+      "url": "app-configs/apps/plan-marble-delivery/2/model.yaml",
+      "sha256": "087f354f44c8dc0a5eb250e12d872492c635e77571184af878ecf09a9a60a5b8",
+      "bytes": 21116
     },
     {
       "url": "app-configs/apps/sample-evidence-food/1/app.app.json",
@@ -195,13 +215,13 @@
     },
     {
       "url": "app-configs/catalog.json",
-      "sha256": "a4e1ce01db77347d6208ee87075aac7c71005bd6408556c6d91eaacf4ea4411b",
-      "bytes": 38189
+      "sha256": "4f646acf3ee92bdc61527b87f9abeb03e33a93fc7cb3fc07019bd4f2e2a15567",
+      "bytes": 42181
     },
     {
       "url": "app-configs/generate-feed.mjs",
-      "sha256": "64c5ab9bc6a4e6ff936bc143be60ee680d93aada8247379f709f5f37f8356859",
-      "bytes": 4904
+      "sha256": "6d0e29be8f8f255fc49184681d4743d62dfc3c38c5ccc5b70a672c3b3edd2638",
+      "bytes": 4959
     },
     {
       "url": "assets/clingo-Bbt-XjUT.js",
@@ -229,29 +249,24 @@
       "bytes": 50792
     },
     {
-      "url": "assets/index-B_cr8O5C.css",
-      "sha256": "bf6f1de452822741394bde871c8e932d61999e83eaba56a22071b4c392619273",
-      "bytes": 201929
+      "url": "assets/index-6XWLp_rm.css",
+      "sha256": "a538488867bb1a8401c25ec88d805730da7943ef7e504769fba68ca993b255de",
+      "bytes": 206114
     },
     {
-      "url": "assets/index-DfxpZj_F.js",
-      "sha256": "5e73968fb9344e9c03327985a8543dcca76d0fb78d2326e32f02692e81e17220",
-      "bytes": 6238852
-    },
-    {
-      "url": "assets/review.worker-BndGg04M.js",
-      "sha256": "24c54cd6af62484e00b0cd6726ba2283f62de624ed59109d5463a7db9c16f4da",
-      "bytes": 30445
-    },
-    {
-      "url": "assets/review.worker-CRDiFgO6.js",
-      "sha256": "3b85785a3cce1fb6fe2119e56ff55bcb9a2de0f1a0e7c56b47c4743ea7aa62c6",
-      "bytes": 50826
+      "url": "assets/index-_u3gmj4Y.js",
+      "sha256": "b7fd9470bda660f9a9295e5a018e0b4fd89e0d4e78fc2c9a1ffb3965cfbe83fc",
+      "bytes": 6525532
     },
     {
       "url": "assets/run.worker-Dcf80R0t.js",
       "sha256": "dd9fdddeabd56d071071bc5c66328b7fd587f8db619e5b01b7c2a1104c1c6cd4",
       "bytes": 2360
+    },
+    {
+      "url": "assets/worker-vx7WVNNu.js",
+      "sha256": "83a590c64ccc9e6bf919de1fb03d51eb9d5fe8567564d212e76f84958b4b8eeb",
+      "bytes": 346062
     },
     {
       "url": "icons/apple-touch-icon.png",
@@ -280,7 +295,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "8c9f1aa23258d4b7cca7e54d3f5816f4b92742562d68db308ad2dcf06a44a95a",
+      "sha256": "72c5687bb25c06a877bd39728835cb346842311c6782815b3a6e7d1e5243ee61",
       "bytes": 1023
     },
     {

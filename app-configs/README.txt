@@ -1,7 +1,8 @@
 DECISION LAB MARKETPLACE CONFIGURATIONS
 
-This folder contains five bundled evidence-review and learning-value apps,
-including eighteen immutable releases and their canonical YAML sources. It is not a snapshot of your
+This folder contains seven bundled evidence-review, learning-value and
+commitment-planning apps, including twenty immutable releases and their
+canonical YAML sources. It is not a snapshot of your
 browser store and contains no saved cases, local edits or calculation history.
 
 INCLUDED COLLECTIONS AND APPS
@@ -19,6 +20,11 @@ Canonical examples / Choose a marble investigation / Assess the value of learnin
   Latest directory: apps/sample-learning-marbles/4/
   Module version: 1.3.0
 
+Canonical examples / Deliver the heavy-marble bag / Complete a commitment
+  App: Plan marble delivery
+  Latest directory: apps/plan-marble-delivery/2/
+  Module version: 1.0.0
+
 Food supply chains / Identify firms for a tracing inquiry / Evidence review
   App: Review food-traceability evidence
   Latest directory: apps/sample-evidence-food/4/
@@ -34,11 +40,23 @@ Product launches / Choose a launch-readiness review / Assess the value of learni
   Latest directory: apps/sample-learning-launch/4/
   Module version: 1.3.0
 
-These five apps form four collections and use two installed reasoning patterns.
+Order fulfillment / Complete the first shipment / Complete a commitment
+  App: Plan the first shipment
+  Latest directory: apps/complete-first-shipment/2/
+  Module version: 1.0.0
+
+These seven apps form five collections and use three installed reasoning patterns.
 Evidence review assesses stable factual answers. Learning value compares complete
 study-and-response policies under explicit economic and probability assumptions.
 Learning examples consume reviewed finite state alternatives and supplied actions;
 their source records do not automatically derive facts, priors or operating plans.
+Commitment planning compares complete static plans against every mandatory
+obligation in every admitted scenario, then ranks the plans that pass. The two
+commitment apps embed the same complete-a-commitment template. Their release 2
+adds only module version and collection/use-case metadata to the qualified
+release-1 examples; operating declarations and starting case values are unchanged.
+The original release-1 artifacts remain in examples/commitment-planning/artifacts
+in the development repository and are not rewritten or listed here.
 
 Each directory contains app.app.json and model.yaml. Food and network release 2
 add authored connection tables/diagrams using one selected possible explanation,
@@ -68,8 +86,8 @@ inputs, inference rules, probabilities, payoffs or calculated findings. Earlier
 learning releases without authored view metadata receive a display-only bar
 default; authored defaults in older releases remain part of their frozen module.
 
-The catalog lists all eighteen releases. Marketplace selects the latest release of
-each identity, displaying five apps in four collections; RSS lists the separate
+The catalog lists all twenty distributed releases. Marketplace selects the latest release of
+each identity, displaying seven apps in five collections; RSS lists the separate
 release entries. Publication release numbers and the module's semantic version
 are separate: a /1/ directory does not imply module version 1.0.0.
 
@@ -131,6 +149,14 @@ model.yaml is the complete canonical authoring source, including the module and
 starting case. Open it in an authoring workspace to change the app and publish
 a new package. A published app exposes case inputs while its module remains
 fixed. Editing YAML does not update the accompanying app.app.json automatically.
+Commitment packages use the public decision-lab-app/1 envelope and include their
+shared template. Existing evidence and learning packages retain their original
+package format. Decision Lab and the standalone RSS generator support both.
+
+To reproduce the commitment marketplace releases from the development repository,
+run npm run build:commitment:marketplace, then npm run build to refresh dist.
+npm run check:commitment:marketplace verifies the exported bytes without repairs.
+The collection labels are configured in examples/commitment-planning/marketplace.json.
 
 Published releases are immutable. An existing app with the same ID and release
 can be imported again only when its content matches. Different content under

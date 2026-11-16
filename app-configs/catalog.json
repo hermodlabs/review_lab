@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "kind": "decision-lab-app-catalog",
   "title": "Decision Lab app marketplace",
-  "description": "Installable evidence-review and learning-value apps, organized into collections by use case.",
-  "exportedAt": "2026-11-14T22:00:07.843Z",
+  "description": "Installable evidence-review, learning-value and commitment-planning apps, organized into collections by use case.",
+  "exportedAt": "2026-11-16T18:00:00.000Z",
   "scope": "bundled-clean-install-releases",
   "apps": [
     {
@@ -832,6 +832,98 @@
         "path": "apps/sample-learning-launch/4/model.yaml",
         "bytes": 43521,
         "sha256": "6631d017d17ef9bc1f7d7d1aecdd28fe2dfc7381ecd09f1ade8342944bda768f"
+      }
+    },
+    {
+      "id": "plan-marble-delivery",
+      "version": 2,
+      "name": "Plan marble delivery",
+      "description": "Can one complete plan deliver the whole bag containing the heavy marble, sealed and accompanied by its identifying record, within the accepted receipt and prepaid expense limits?",
+      "publishedAt": "2026-11-16T18:00:00.000Z",
+      "contentHash": "1c0006c957c95c731b8f6572da95898116094f2db56a548841b54d3ad8b8c515",
+      "module": {
+        "id": "marble-bag-delivery",
+        "version": "1.0.0"
+      },
+      "domain": {
+        "id": "canonical-examples",
+        "label": "Canonical examples",
+        "description": "Reference problems for understanding and testing reusable evidence patterns."
+      },
+      "useCase": {
+        "id": "deliver-heavy-marble-bag",
+        "label": "Deliver the heavy-marble bag",
+        "description": "Find a complete plan to deliver the identified bag with its seal and identifying record within the accepted time and expense limits."
+      },
+      "pattern": {
+        "id": "complete-a-commitment/1",
+        "label": "Complete a commitment"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "complete-a-commitment/1",
+        "definition": {
+          "id": "complete-a-commitment",
+          "version": "1.0.0",
+          "evaluator": "bounded-static-commitment/1"
+        },
+        "presentationContract": "complete-a-commitment.assessment/1"
+      },
+      "package": {
+        "path": "apps/plan-marble-delivery/2/app.app.json",
+        "bytes": 78327,
+        "sha256": "ca0089ec5005bab8a035005e758abc1530294c6a9c4391cb0e73eed5a8fd1ee5"
+      },
+      "source": {
+        "path": "apps/plan-marble-delivery/2/model.yaml",
+        "bytes": 21116,
+        "sha256": "087f354f44c8dc0a5eb250e12d872492c635e77571184af878ecf09a9a60a5b8"
+      }
+    },
+    {
+      "id": "complete-first-shipment",
+      "version": 2,
+      "name": "Plan the first shipment",
+      "description": "Generate complete, static shipment plans from selectable lots, workers, preparation times, release time, carrier and departure. Check each whole plan against every declared readiness and travel scenario before comparing incremental expense. This synthetic operating snapshot does not infer readiness from business records or reserve stock, staff, authority or carrier capacity.",
+      "publishedAt": "2026-11-16T18:00:00.000Z",
+      "contentHash": "7d9cea7e635e7e37d085c6ef20294c8ba2512533272e6b355f57d862e7814ab6",
+      "module": {
+        "id": "plan-first-shipment",
+        "version": "1.0.0"
+      },
+      "domain": {
+        "id": "order-fulfillment",
+        "label": "Order fulfillment",
+        "description": "Plan complete deliveries against accepted readiness, resource, permission, timing and financial constraints."
+      },
+      "useCase": {
+        "id": "complete-first-shipment",
+        "label": "Complete the first shipment",
+        "description": "Compare complete shipment plans that must meet every mandatory obligation across the declared readiness and travel scenarios."
+      },
+      "pattern": {
+        "id": "complete-a-commitment/1",
+        "label": "Complete a commitment"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "complete-a-commitment/1",
+        "definition": {
+          "id": "complete-a-commitment",
+          "version": "1.0.0",
+          "evaluator": "bounded-static-commitment/1"
+        },
+        "presentationContract": "complete-a-commitment.assessment/1"
+      },
+      "package": {
+        "path": "apps/complete-first-shipment/2/app.app.json",
+        "bytes": 115537,
+        "sha256": "1606ac4cdf4308f2aa2d495691d0d1ea3715b1e2f8fffc2c5d0ae12611520f22"
+      },
+      "source": {
+        "path": "apps/complete-first-shipment/2/model.yaml",
+        "bytes": 33749,
+        "sha256": "3b03f9d45f8836432eee8ad4410fde18cddad3068466efe6fa09f0cd7c97a777"
       }
     }
   ]

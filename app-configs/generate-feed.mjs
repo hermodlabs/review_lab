@@ -43,7 +43,8 @@ try {
     const packageBytes = await checkFile(app.package);
     const sourceBytes = await checkFile(app.source);
     const envelope = JSON.parse(packageBytes.toString('utf8'));
-    if (envelope.schemaVersion !== 1 || envelope.kind !== 'hermod-published-app-package'
+    if (!(envelope.format === 'decision-lab-app/1'
+        || envelope.schemaVersion === 1 && envelope.kind === 'hermod-published-app-package')
       || envelope.app?.id !== app.id || envelope.app?.version !== app.version || envelope.app?.contentHash !== app.contentHash)
       throw new Error(`Package identity differs from its catalog listing: ${identity}`);
     if (sourceBytes.toString('utf8') !== envelope.app.source)
