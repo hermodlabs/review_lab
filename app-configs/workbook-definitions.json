@@ -1,0 +1,9 @@
+{
+  "format": "decision-lab-workbook-sources/1",
+  "products": [
+    {
+      "target": "workflows/review-first-shipment/1.0.0/workflow.workflow.json",
+      "schema": "workbook-schemas/first-shipment-review.schema.json"
+    }
+  ]
+}

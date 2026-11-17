@@ -1,0 +1,37 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "network-operations",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "version": "1.0.0",
+    "title": "Network operations",
+    "description": "Network monitoring and diagnosis from declared topology and test records.",
+    "useCases": [
+      {
+        "id": "fault-localization",
+        "label": "Locate network faults",
+        "description": "Determine which fault zones and individual node failures are established by path-test results."
+      }
+    ],
+    "members": [
+      {
+        "type": "app",
+        "id": "sample-evidence-network",
+        "version": 4,
+        "packageHash": "e9d39668be1c2aae72a1c67827d4e2852ab99c8e02fb4406afda259448900cfd",
+        "useCaseId": "fault-localization",
+        "artifact": {
+          "path": "apps/sample-evidence-network/4/app.app.json",
+          "bytes": 133952,
+          "sha256": "cd415edbdbadd914881944487a5aa9f6846b7ad7ce53be4e45f1b42ea8c2ef25"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-16T18:00:00.000Z",
+  "contentHash": "192dffe0e505a49f4c9fe5be29b212b0a78c536162bba7781d891012056593a6"
+}

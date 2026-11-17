@@ -1,210 +1,134 @@
 DECISION LAB MARKETPLACE CONFIGURATIONS
 
-This folder contains seven standalone evidence-review, learning-value and
-commitment-planning apps, including twenty immutable releases and their
-canonical YAML sources, plus the self-contained Review a first shipment
-guided workflow (version 1.0.0). It is not a snapshot of your
-browser store and contains no saved cases, local edits or calculation history.
+Copy this entire directory to a repository or static host. Preserve the tree:
 
-INCLUDED COLLECTIONS AND APPS
+  catalog.json
+  collection-definitions.json
+  collections/PUBLISHER/COLLECTION/VERSION/collection.collection.json
+  apps/APP/RELEASE/app.app.json
+  apps/APP/RELEASE/model.yaml
+  apps/APP/RELEASE/inputs.workbook.json
+  workflows/WORKFLOW/VERSION/workflow.workflow.json
+  workflows/WORKFLOW/VERSION/inputs.workbook.json
+  workbook-definitions.json
+  workbook-schemas/NAME.schema.json
+  generate-feed.mjs
 
-The entries below list collection / use case / pattern. The portable catalog
-and module metadata retain the field name "domain" for a collection.
+The production build copies these same bytes to dist/app-configs/. Development
+serves this directory at /app-configs/. Local and RSS modes use the same relative
+paths; only their base location changes. No user cases or browser edits are
+included in this export.
 
-Canonical examples / Locate a heavy marble / Evidence review
-  App: Review marble evidence
-  Latest directory: apps/sample-evidence-marbles/2/
-  Module version: 1.3.0
+COLLECTIONS
 
-Canonical examples / Choose a marble investigation / Assess the value of learning
-  App: Assess marble learning value
-  Latest directory: apps/sample-learning-marbles/4/
-  Module version: 1.3.0
+catalog.json has explicit collection listings. Each points to an immutable SDK
+collection package (decision-lab-collection/1), with its exact byte length and
+SHA-256 checksum. A publisher ID scopes the collection ID; a title is display
+text and does not establish publisher authenticity.
 
-Canonical examples / Deliver the heavy-marble bag / Complete a commitment
-  App: Plan marble delivery
-  Latest directory: apps/plan-marble-delivery/2/
-  Module version: 1.0.0
+Each collection definition declares its own use cases and typed app/workflow
+members. Each member pins an exact version and canonical SDK package hash, plus
+the relative artifact path, exact file byte length and raw SHA-256 checksum.
+Artifact paths are relative to this directory, not to the nested collection
+file. The raw checksum and SDK package hash serve different purposes.
 
-Food supply chains / Identify firms for a tracing inquiry / Evidence review
-  App: Review food-traceability evidence
-  Latest directory: apps/sample-evidence-food/4/
-  Module version: 1.6.0
+Membership is independent of the domain/use-case classification embedded in an
+app or workflow. The current initial collections retain the familiar organization:
+Canonical examples, Food supply chains, Network operations, Order fulfillment,
+Product launches, and Walmart Supplier Operations. A collection may be empty,
+and one unchanged package may belong to several collections. Workflow dependency
+packages remain embedded and pinned; collection membership never replaces them.
 
-Network operations / Locate network faults / Evidence review
-  App: Localize network faults
-  Latest directory: apps/sample-evidence-network/4/
-  Module version: 1.6.0
+Installing a collection adds its exact products and membership in one transaction.
+Updating it preserves local additions, local use cases and hidden upstream
+members. Incompatible changes report conflicts. Saved cases and guided reviews
+retain their original definitions. Removing a collection does not rewrite saved
+cases or products still owned by another collection.
 
-Product launches / Choose a launch-readiness review / Assess the value of learning
-  App: Assess launch review value
-  Latest directory: apps/sample-learning-launch/4/
-  Module version: 1.3.0
+Older catalogs without a collections field remain readable: their product domain
+metadata supplies legacy groups. An explicit collections array is authoritative;
+unlisted products do not silently create additional marketplace collections.
 
-Order fulfillment / Complete the first shipment / Complete a commitment
-  App: Plan the first shipment
-  Latest directory: apps/complete-first-shipment/2/
-  Module version: 1.0.0
+AUTHOR OR UPDATE COLLECTION METADATA
 
-Order fulfillment / Review a first shipment / Guided workflow
-  Workflow: Review a first shipment
-  Directory: workflows/review-first-shipment/1.0.0/
-  Package: workflow.workflow.json
-  Includes exact evidence-review, commitment-planning and learning-value app
-  packages, reviewed handoff mappings, questions, form presentation, transition
-  conditions and decision-brief configuration. These embedded dependencies do
-  not become independent published apps and cannot be replaced with a newer
-  standalone app. No saved run, accepted answer or reviewed finding is included.
+collection-definitions.json is the repository-owned authoring source. It stores
+portable SDK definitions and a fixed createdAt date. It contains organizational
+metadata and exact references; it defines no inference rules. Change this source
+through the SDK/CLI collection APIs, deliberately select exact releases, and
+increment the collection's stable major.minor.patch version when changing a
+published definition. Newer app/workflow releases are not silently substituted.
 
-These seven standalone apps and one workflow form five collections and use
-three installed reasoning patterns.
-Evidence review assesses stable factual answers. Learning value compares complete
-study-and-response policies under explicit economic and probability assumptions.
-Learning examples consume reviewed finite state alternatives and supplied actions;
-their source records do not automatically derive facts, priors or operating plans.
-Commitment planning compares complete static plans against every mandatory
-obligation in every admitted scenario, then ranks the plans that pass. The two
-commitment apps embed the same complete-a-commitment template. Their release 2
-adds only module version and collection/use-case metadata to the qualified
-release-1 examples; operating declarations and starting case values are unchanged.
-The original release-1 artifacts remain in examples/commitment-planning/artifacts
-in the development repository and are not rewritten or listed here.
+From the Decision Lab development repository:
 
-Each directory contains app.app.json and model.yaml. Food and network release 2
-add authored connection tables/diagrams using one selected possible explanation,
-while retaining their original release-1 packages. Their case inputs and existing
-findings are unchanged. Food and network release 3 and marble evidence release 2
-add business-purpose explanation groups, separating comparison of all remaining
-possibilities from inspection of one explanation. Food separates incident and
-inquiry, product tracing, reporting reach and conditional recall comparisons.
-Network separates possible faults, test results and routes. Marble separates the
-heavy-marble possibility from weighing results. Tables and connection views share
-the same authored groups, with disjoint inquiry/reporting count columns and fewer
-duplicated supporting tables. These successors preserve all earlier package and
-source files, case inputs, inference rules, answers and calculated report rows.
-Learning release 2 adds six purpose-based basis
-subtabs; release 3 adds authored table, value-bar and timing representations.
-Neither successor changes the valuation inputs or calculations. Both learning
-apps retain their original release-1 and release-2 packages and sources unchanged. Existing
-cases remain pinned to their original release; installing a successor does not
-rewrite their frozen module.
+  npm run build:collections:marketplace
+  npm run check:collections:marketplace
 
-Food and network release 4 (module 1.6.0) opens each relationship view as a
-diagram. Learning release 4 (module 1.3.0) opens payoff comparisons as bars with
-the evaluated acting-now benchmark. Timing views still start as tables. Table
-representations remain available everywhere, and a saved representation choice
-takes precedence over these initial defaults. These releases change no case
-inputs, inference rules, probabilities, payoffs or calculated findings. Earlier
-learning releases without authored view metadata receive a display-only bar
-default; authored defaults in older releases remain part of their frozen module.
+The builder validates every referenced product, writes missing immutable
+collection packages and adds collection listings to catalog.json. It refuses to
+replace different bytes or metadata under an existing scoped ID/version. Normal
+builds run it after the workflow exporters and before copying the distribution.
+A changed app/workflow must also have its own new version. Existing product and
+collection releases remain immutable.
 
-The catalog lists all twenty standalone app releases plus one workflow release.
-Marketplace selects the latest release of each product identity, displaying
-seven standalone apps and one guided workflow in five collections; RSS lists
-the separate release entries with their app/workflow classifications. Publication release numbers and the module's semantic version
-are separate: a /1/ directory does not imply module version 1.0.0.
+CREATE THE RSS FEED
 
-COPY AND CREATE THE RSS FEED
+After copying the complete directory, run Node.js 24 with the real public URL:
 
-1. Copy this folder's entire contents into the repository directory you intend
-   to publish, preserving catalog.json, generate-feed.mjs, the apps tree and the workflows
-   tree.
-   catalog.json uses relative package and source paths.
+  node generate-feed.mjs --base-url https://OWNER.github.io/REPOSITORY/
 
-2. From that directory, run the generator with Node.js 24 and the actual public
-   URL of the directory. Replace OWNER and REPO; do not publish placeholder URLs.
-   For a GitHub Pages repository root, for example:
-
-   node generate-feed.mjs --base-url https://OWNER.github.io/REPO/
-
-   If these files are hosted in a subdirectory, include that subdirectory in the
-   URL. The generator writes feed.xml. This command creates local files; it does
-   not upload or publish the repository.
-
-3. Commit the copied files and generated feed.xml, then publish that directory
-   through your static hosting. The RSS address is its public URL plus feed.xml.
-   Regenerate the feed when you add releases or change catalog entries.
-
-The feed declares the Decision Lab marketplace namespace and points to
-catalog.json. Relative paths keep the same directory layout usable locally or
-on a remote host. Feed generation checks all listed package and YAML hashes, workflow envelope
-and definition hashes, exact embedded app/template package hashes, dependency
-pins and the matching workflow listing metadata. It needs no Decision Lab
-source code or npm dependencies.
+The helper writes feed.xml with app, workflow and collection release entries.
+It verifies catalog file checksums, collection envelopes and exact member pins,
+workflow envelopes and embedded dependencies. It needs no Decision Lab source
+or npm dependencies. This only creates local files; it does not publish them.
+Commit the complete tree and generated feed.xml, then publish with GitHub Pages
+or another static host. Regenerate the feed whenever published listings change.
+Do not use placeholder URLs in the actual feed.
 
 CONNECT DECISION LAB
 
-The app's default runtime marketplace-config.json selects source "local" and
-localBaseUrl "./app-configs/". Development serves this source folder directly;
-the production build copies it to dist/app-configs/ before hashing and caching
-the entire tree for offline use. No public URL or generated feed is needed for
-the local marketplace.
+marketplace-config.json beside the deployed index.html controls the source:
 
-For a remote host, edit marketplace-config.json beside Decision Lab's deployed
-index.html. Set enabled to true, source to "rss", and remoteFeedUrl to your
-actual public feed.xml URL. Keep the catalog, packages and source tree together.
-If that host is on another origin, its feed, catalog and package responses must
-allow browser cross-origin requests (CORS). Remote files are not included in
-Decision Lab's build precache. Already installed apps and cases remain local.
+  {"enabled":true,"source":"local","localBaseUrl":"./app-configs/","remoteFeedUrl":""}
 
-The runtime config is fetched independently of the build cache. Reload after
-changing it. Offline sessions retain the last valid settings, or use local
-defaults if no settings were saved. Setting enabled to false makes marketplace
-browsing unavailable without removing installed apps or saved cases.
+For remote mode set source to "rss" and remoteFeedUrl to the actual feed.xml
+URL. The feed points to catalog.json, whose paths locate the same package tree.
+A different origin must allow browser cross-origin requests. Already installed
+collections, products and cases remain local and work offline. Remote files are
+not part of the build precache. Reload after changing runtime configuration.
+Setting enabled to false hides browsing without deleting installed collections.
 
-IMPORT OR AUTHOR AN APP
+APP AND WORKFLOW INPUTS
 
-Open Marketplace and install a collection to add its standalone apps and guided
-workflows to the local published inventory atomically. Workflow cards start a
-guided review; app cards create an independent app case. Starting a workflow
-does not accept any seed answers or review any findings on the user's behalf.
-Existing runs remain pinned to their original complete workflow definition.
-Removing a collection hides its installed entries; retained runs keep their
-frozen definitions and supporting reports.
+App packages carry fixed module rules and initial case inputs. Their model.yaml
+files are canonical authoring sources; editing YAML does not update an existing
+package. Cases can vary supported inputs without changing those rules.
+Workflow packages include the full reviewed definition, exact supporting apps,
+questions, mappings, forms and decision brief. Starting a workflow does not accept
+seed answers, review findings or obtain operating permission on a user's behalf.
+Collection metadata changes neither evaluation semantics nor human approvals.
 
-In Decision Lab, open Published apps, choose Import app or case, and select an
-app.app.json file. Choose Use app to create an independent case. A feed reader
-can expose the hosted package links; importing a downloaded package installs
-that frozen app release.
+EXCEL INPUTS
 
-model.yaml is the complete canonical authoring source, including the module and
-starting case. Open it in an authoring workspace to change the app and publish
-a new package. A published app exposes case inputs while its module remains
-fixed. Editing YAML does not update the accompanying app.app.json automatically.
-Commitment packages use the public decision-lab-app/1 envelope and include their
-shared template. Existing evidence and learning packages retain their original
-package format. Decision Lab and the standalone RSS generator support both.
+Every current product listing includes a workbook file descriptor. Installing a
+collection validates and retains these files in the same transaction as its apps
+and workflows. Workers can download prefilled Excel inputs immediately; no
+mapping file, local configuration or YAML knowledge is needed to start.
 
-To reproduce the commitment marketplace releases from the development repository,
-run npm run build:commitment:marketplace, then npm run build to refresh dist.
-npm run check:commitment:marketplace verifies the exported bytes without repairs.
-The collection labels are configured in examples/commitment-planning/marketplace.json.
+inputs.workbook.json is a portable decision-lab-workbook-release/1 envelope:
+the exact unchanged native package, its author-owned worksheet definitions,
+starter inputs and whether those inputs are examples or operational defaults.
+RSS product links download this complete envelope. Direct imports preserve it.
+Native packages and collection pins remain unchanged.
 
-Published releases are immutable. An existing app with the same ID and release
-can be imported again only when its content matches. Different content under
-that same identity is a collision, not an update. Preserve existing packages;
-publish changed apps with a new integer release and directory, update the
-module version when its authored meaning changes, and add the new release to
-catalog.json before regenerating feed.xml.
+Authors can supply an explicit schema or layout in workbook-definitions.json.
+The shared SDK proposes a default layout from declared input types otherwise.
+Some complex inputs can remain outside a generated workbook; the input interface
+states its coverage. Publication proves an unchanged starter Excel round trip.
+Unsupported or lossy layouts fail publication rather than asking workers to
+configure mappings. Never replace unknown information with an empty table merely
+to make a workbook exportable.
 
-WORKFLOW RELEASES
-
-Workflow releases use stable major.minor.patch versions and the portable
-format decision-lab-workflow-package/1. catalog.json retains its app catalog
-schemaVersion 1 and adds an optional workflows array; app-only catalogs remain
-supported. Each workflow entry describes its collection, use case, required
-workflow runtime format, exact embedded app dependencies, and package bytes and
-SHA-256 checksum. The package contains the complete SDK workflow definition.
-
-From the development repository, run:
-
-  npm run build:shipment:marketplace
-  npm run check:shipment:marketplace
-
-The production build verifies or creates this immutable release before copying
-the same published-app-configs tree into dist/app-configs/. Local and RSS
-installation resolve identical relative paths; only the base location changes.
-The check command never repairs modified or missing files. The builder refuses
-to overwrite changed workflow bytes or changed catalog metadata for the same
-ID and version. Publish a new version and directory for any changed definition,
-embedded dependency, authored presentation or collection classification.
+Downloads from an existing case use current inputs. Starting another case creates
+a separate identity and preserves previous cases and reports. Example values do
+not accept answers, establish facts or authorize work. Uploads are validated and
+reviewed before application; changed workflow answers require ordinary review.

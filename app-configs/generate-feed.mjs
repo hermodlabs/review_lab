@@ -18,7 +18,7 @@ function checkHash(value, label) {
   if (typeof contentHash !== 'string' || contentHash !== canonicalHash(payload)) throw new Error(`${label} differs from its content hash.`);
 }
 function item({ productType, listing, packageBytes, categories, includedApps = [] }, url) {
-  const download = url(listing.package.path), identity = `${listing.id}:${listing.version}`;
+  const download = url((listing.workbook || listing.package).path), identity = `${listing.publisher ? `${listing.publisher.id}:` : ''}${listing.id}:${listing.version}`;
   return `    <item>
       <title>${xml(listing.name)} — version ${listing.version}</title>
       <link>${xml(download)}</link>
@@ -28,7 +28,7 @@ function item({ productType, listing, packageBytes, categories, includedApps = [
       <dl:productType>${productType}</dl:productType>
 ${categories.map(category => `      <category>${xml(category)}</category>`).join('\n')}
 ${includedApps.map(dependency => `      <dl:includedApp alias="${xml(dependency.id)}" id="${xml(dependency.appId)}" version="${dependency.version}" packageHash="${dependency.packageHash}" />`).join('\n')}
-      <enclosure url="${xml(download)}" length="${packageBytes.length}" type="application/json" />
+      <enclosure url="${xml(download)}" length="${listing.workbook?.bytes || packageBytes.length}" type="application/json" />
     </item>`;
 }
 
@@ -42,6 +42,16 @@ async function checkFile(file) {
   return bytes;
 }
 
+async function checkWorkbook(listing, packageHash) {
+  if (!listing.workbook) return;
+  const bytes = await checkFile(listing.workbook), release = JSON.parse(bytes.toString('utf8'));
+  if (release.format !== 'decision-lab-workbook-release/1' || !['example', 'defaults'].includes(release.starterMeaning)
+    || !release.starter || release.target?.contentHash !== packageHash) throw new Error(`Excel inputs differ from their exact product release: ${listing.id}.`);
+  checkHash(release, 'Excel release'); checkHash(release.target, 'Excel target'); checkHash(release.mapping, 'Excel layout');
+  const pin = release.mapping.target;
+  if (pin.packageHash !== packageHash) throw new Error(`Excel layout targets a different package: ${listing.id}.`);
+}
+
 try {
   const args = process.argv.slice(2);
   if (args.length === 1 && args[0] === '--help') { console.log(usage); process.exit(0); }
@@ -52,9 +62,9 @@ try {
   if (!base.pathname.endsWith('/')) base.pathname += '/';
   const url = path => new URL(path.split('/').map(encodeURIComponent).join('/'), base).href;
   const catalog = JSON.parse(await readFile(new URL('./catalog.json', import.meta.url), 'utf8'));
-  if (catalog.schemaVersion !== 1 || catalog.kind !== 'decision-lab-app-catalog' || !Array.isArray(catalog.apps) || !Array.isArray(catalog.workflows ?? []) || !catalog.apps.length && !catalog.workflows?.length)
+  if (catalog.schemaVersion !== 1 || catalog.kind !== 'decision-lab-app-catalog' || !Array.isArray(catalog.apps) || !Array.isArray(catalog.workflows ?? []) || !Array.isArray(catalog.collections ?? []) || !catalog.apps.length && !catalog.workflows?.length && !catalog.collections?.length)
     throw new Error('Use a supported, nonempty Decision Lab marketplace catalog.');
-  const identities = new Set(), items = [];
+  const identities = new Set(), items = [], products = new Map();
   for (const app of catalog.apps) {
     if (!app.id || !Number.isSafeInteger(app.version) || app.version < 1 || !app.name || !app.description
       || !app.domain?.label || !app.useCase?.label || !app.pattern?.label || !Number.isFinite(Date.parse(app.publishedAt)))
@@ -71,6 +81,9 @@ try {
       throw new Error(`Package identity differs from its catalog listing: ${identity}`);
     if (sourceBytes.toString('utf8') !== envelope.app.source)
       throw new Error(`Canonical YAML differs from its packaged source: ${identity}`);
+    const sdkPayload = { format: 'decision-lab-app/1', template: null, app: envelope.app, sourceProvenance: 'legacy' };
+    products.set(JSON.stringify(['app', app.id, app.version]), { listing: app, packageHash: envelope.format === 'decision-lab-app/1' ? envelope.contentHash : canonicalHash(sdkPayload) });
+    await checkWorkbook(app, envelope.format === 'decision-lab-app/1' ? envelope.contentHash : canonicalHash(sdkPayload));
     items.push(item({ productType: 'app', listing: app, packageBytes,
       categories: ['Standalone app', app.domain.label, app.useCase.label, app.pattern.label] }, url));
   }
@@ -103,8 +116,35 @@ try {
       requires: { workflowFormat: 'decision-lab-workflow/1' }, dependencies };
     if (!same(expected, Object.fromEntries(Object.keys(expected).map(key => [key, workflow[key]]))))
       throw new Error(`Workflow package differs from its catalog listing: ${identity}`);
+    products.set(JSON.stringify(['workflow', workflow.id, workflow.version]), { listing: workflow, packageHash: pkg.contentHash });
+    await checkWorkbook(workflow, pkg.contentHash);
     items.push(item({ productType: 'workflow', listing: workflow, packageBytes,
       categories: ['Guided workflow', workflow.domain.label, workflow.useCase.label], includedApps: dependencies }, url));
+  }
+  for (const collection of catalog.collections || []) {
+    const identity = JSON.stringify([collection.publisher?.id, collection.id, collection.version]);
+    if (identities.has(identity)) throw new Error('Duplicate scoped collection release.');
+    identities.add(identity);
+    const packageBytes = await checkFile(collection.package), pkg = JSON.parse(packageBytes.toString('utf8'));
+    if (pkg.format !== 'decision-lab-collection/1' || pkg.definition?.format !== 'decision-lab-collection-definition/1')
+      throw new Error('Unsupported collection package.');
+    checkHash(pkg, 'Collection package');
+    const definition = pkg.definition;
+    const expected = { id: definition.id, publisher: definition.publisher, version: definition.version,
+      title: definition.title, description: definition.description, createdAt: pkg.createdAt, contentHash: pkg.contentHash };
+    if (!same(expected, Object.fromEntries(Object.keys(expected).map(key => [key, collection[key]]))))
+      throw new Error('Collection package differs from its catalog listing.');
+    if (!Array.isArray(definition.members) || !Array.isArray(definition.useCases)) throw new Error('Collection membership is invalid.');
+    const seen = new Set();
+    for (const member of definition.members) {
+      const product = products.get(JSON.stringify([member.type, member.id, member.version]));
+      const key = JSON.stringify([member.type, member.id]);
+      if (seen.has(key) || !product || product.packageHash !== member.packageHash || !same(member.artifact, product.listing.package)
+        || !definition.useCases.some(row => row.id === member.useCaseId)) throw new Error('Collection member differs from its exact product package.');
+      seen.add(key);
+    }
+    items.push(item({ productType: 'collection', listing: { ...collection, name: collection.title, publishedAt: collection.createdAt },
+      packageBytes, categories: ['Collection', collection.publisher.label, collection.title] }, url));
   }
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dl="urn:decision-lab:marketplace:1">
@@ -120,7 +160,7 @@ ${items.join('\n')}
 </rss>
 `;
   await writeFile(new URL('./feed.xml', import.meta.url), feed, 'utf8');
-  console.log(`Created feed.xml with ${items.length} app and workflow releases. Public feed URL: ${url('feed.xml')}`);
+  console.log(`Created feed.xml with ${items.length} app, workflow and collection releases. Public feed URL: ${url('feed.xml')}`);
 } catch (error) {
   console.error(error.message);
   process.exitCode = 1;
