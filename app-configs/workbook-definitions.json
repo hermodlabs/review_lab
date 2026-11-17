@@ -4,6 +4,10 @@
     {
       "target": "workflows/review-first-shipment/1.0.0/workflow.workflow.json",
       "schema": "workbook-schemas/first-shipment-review.schema.json"
+    },
+    {
+      "target": "workflows/review-gift-kit-commitment/1.0.0/workflow.workflow.json",
+      "mapping": "workbook-mappings/review-gift-kit-commitment-1.0.0.mapping.json"
     }
   ]
 }

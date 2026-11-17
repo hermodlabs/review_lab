@@ -1,7 +1,7 @@
 {
-  "version": "835c85dc8b617aa4425d",
+  "version": "344cc2dd82e59037a578",
   "appVersion": "0.2.0",
-  "totalBytes": 46520346,
+  "totalBytes": 47370045,
   "assets": [
     {
       "url": "app-configs/.nojekyll",
@@ -315,13 +315,13 @@
     },
     {
       "url": "app-configs/catalog.json",
-      "sha256": "bb2b6de31da28240c75c44692d8313de13746de8c38ee531de04a1c4f51a0e14",
-      "bytes": 66058
+      "sha256": "c995d7c92f452d2bbb8a7f0e0718001e094e52ffae5052f8793d93a896956689",
+      "bytes": 69335
     },
     {
       "url": "app-configs/collection-definitions.json",
-      "sha256": "70ce3708b51cee09899ee70fc707720d40424a48357132769a615290dd019cc1",
-      "bytes": 10889
+      "sha256": "08ca20096d140812e4b88ca6f2e05216ab3bb49859c52c615009b76e085d2a4f",
+      "bytes": 12261
     },
     {
       "url": "app-configs/collections/decision-lab/canonical-examples/1.0.0/collection.collection.json",
@@ -332,6 +332,11 @@
       "url": "app-configs/collections/decision-lab/food-supply-chains/1.0.0/collection.collection.json",
       "sha256": "8dfa8cff1b4a5aedce33b734c094027966c921ed4ca429ea119f554fb8907399",
       "bytes": 1253
+    },
+    {
+      "url": "app-configs/collections/decision-lab/gifting-operations/1.0.0/collection.collection.json",
+      "sha256": "bf7db92d401807f117ebb672df69770621200bbf0a49d92556dc75e723c8b745",
+      "bytes": 1357
     },
     {
       "url": "app-configs/collections/decision-lab/network-operations/1.0.0/collection.collection.json",
@@ -360,8 +365,13 @@
     },
     {
       "url": "app-configs/workbook-definitions.json",
-      "sha256": "4e88ba3a0fcd1e88390e68ab8db5b7a89141b307a1d1716bf1836211b0c83917",
-      "bytes": 232
+      "sha256": "1bfeff1de3acd4a5f8ba646ae139175deff6328c199d9c53c6f72b9cb38d2e7e",
+      "bytes": 413
+    },
+    {
+      "url": "app-configs/workbook-mappings/review-gift-kit-commitment-1.0.0.mapping.json",
+      "sha256": "8503f7364fc409709cec2a8c3ebf8bf2a454e0bd093095ca43d59b8735af5cd7",
+      "bytes": 20415
     },
     {
       "url": "app-configs/workbook-schemas/first-shipment-review.schema.json",
@@ -377,6 +387,16 @@
       "url": "app-configs/workflows/review-first-shipment/1.0.0/workflow.workflow.json",
       "sha256": "57edec2aea6e721f284a8ca77abdd5b044071a2a5431d7c41df62fa841fa31da",
       "bytes": 926168
+    },
+    {
+      "url": "app-configs/workflows/review-gift-kit-commitment/1.0.0/inputs.workbook.json",
+      "sha256": "9057468e51bcbde01227328c31c9b4cf6fd802db0e4e312901b33765bbbcdaf9",
+      "bytes": 560416
+    },
+    {
+      "url": "app-configs/workflows/review-gift-kit-commitment/1.0.0/workflow.workflow.json",
+      "sha256": "2552dc909674d110127dc763d099863670190bc75f49d24292f0e7c9990deb46",
+      "bytes": 251960
     },
     {
       "url": "app-configs/workflows/walmart-first-order-staged/1.2.0/inputs.workbook.json",
@@ -424,23 +444,23 @@
       "bytes": 50792
     },
     {
-      "url": "assets/exceljs.min-BWapBSXw.js",
-      "sha256": "629e5791d4d934f9c7552e8aaa2a75bc4766e6fc941e5cb40907bfce67711983",
+      "url": "assets/exceljs.min-DbQHOhbK.js",
+      "sha256": "c3539b9bd2738b2ad33cac3cf6e7d8b6c4f8424525ab93a42198cf92b55ccab8",
       "bytes": 929558
     },
     {
-      "url": "assets/index-Bsugdsay.js",
-      "sha256": "59b98db1ad14cf83c9e0f6bb833aaf9e0b6bcbd13967faf1ea5dd7ff264377c7",
-      "bytes": 6984928
+      "url": "assets/index-BBLrbuZf.css",
+      "sha256": "96e4ef90ef45ccda50a771516d41b42cb338f119c7b777b16b0a543f7f85cbf3",
+      "bytes": 246563
     },
     {
-      "url": "assets/index-bZWUJVSq.css",
-      "sha256": "c3a53aa3600168cdbc9ec0d91a90222949390686638e58220508fd26db55042d",
-      "bytes": 245895
+      "url": "assets/index-CaCp_qK_.js",
+      "sha256": "cbc2c5afb3925ee168c59e38a459e52f27835ad2bdec8ef7a0c6d3a146ea12b0",
+      "bytes": 6994981
     },
     {
-      "url": "assets/jszip.min-BbV_tVr1.js",
-      "sha256": "ae555221be5924cd85681546c1cb728dcde047c14ea8324497b61c53bd9cff97",
+      "url": "assets/jszip.min-CcWtGy63.js",
+      "sha256": "50a5e81027dbedae12a81d31c9de8cb1b1bf9de95815b577bb76c7bc609d83b8",
       "bytes": 95949
     },
     {
@@ -480,7 +500,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "35e29f0db813420bda828663734d9c3d0147a84ee6f4d36d520eb605285ec69d",
+      "sha256": "0a7d6283982d695c9e67a6a846472b95e0f172d6455c91a664ea6337afb91fe2",
       "bytes": 1023
     },
     {

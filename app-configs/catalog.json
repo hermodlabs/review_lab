@@ -1329,6 +1329,56 @@
         "bytes": 9297601,
         "sha256": "a9fc3098ead80b0b0f048a804dd79098e8d645ac98c14f7ce4e080fe4a15b2b1"
       }
+    },
+    {
+      "id": "review-gift-kit-commitment",
+      "version": "1.0.0",
+      "name": "Review a gift-kit commitment",
+      "description": "A failed gift-insert preorder rehearsal can have simultaneous print, destination and checkout problems. Review actual scoped reports, establish which corrections are required, and compare complete correction, fresh-rehearsal and handoff arrangements against the deadline, expense, resource and permission requirements. Prefilled inputs are fictional and await review. This review does not establish actual completion or authorize releasing kits.",
+      "publishedAt": "2026-11-17T20:00:00.000Z",
+      "contentHash": "9cb549602fdc1c04167328082f6383c23cfdbad9155ba3d4dd4216cfda862a63",
+      "definitionHash": "eceb2337f8b3039f3bd84c37fa4716fbf865712101c7496056d3593e3eb97f0f",
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations",
+        "description": "Review gift-kit evidence, corrective work and preparation commitments."
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign",
+        "description": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits."
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review gift-kit records",
+          "appId": "review-gift-kit-commitment-evidence",
+          "version": 1,
+          "appContentHash": "a0e5a1cbee48e49e00f4e979da53ff24d7f4f9270b00c6c7b3ecf4c686a16c7a",
+          "packageHash": "cd3f9040cffeba5e191654d9fad7c84896cb43b01bc1a50d76f9747f9a605361"
+        },
+        {
+          "id": "planning",
+          "name": "Prepare gift kits before commitment",
+          "appId": "review-gift-kit-commitment-planning",
+          "version": 1,
+          "appContentHash": "820e32bbb5784124550d8a239415d7c85e8c2cd7f82488375d3ff628055c49b6",
+          "packageHash": "f96d5a6ce217ef2b2aa789a6aa790ce00f101592228f89ec763ffaf427305bb0"
+        }
+      ],
+      "package": {
+        "path": "workflows/review-gift-kit-commitment/1.0.0/workflow.workflow.json",
+        "bytes": 251960,
+        "sha256": "2552dc909674d110127dc763d099863670190bc75f49d24292f0e7c9990deb46"
+      },
+      "workbook": {
+        "path": "workflows/review-gift-kit-commitment/1.0.0/inputs.workbook.json",
+        "bytes": 560416,
+        "sha256": "9057468e51bcbde01227328c31c9b4cf6fd802db0e4e312901b33765bbbcdaf9"
+      }
     }
   ],
   "collections": [
@@ -1432,6 +1482,23 @@
         "path": "collections/decision-lab/walmart-supplier-operations/1.0.0/collection.collection.json",
         "bytes": 2081,
         "sha256": "b766625c668364672889e943e3f3c9f47f1b3bb82fe102a34265c148767e4d9e"
+      }
+    },
+    {
+      "id": "gifting-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.0.0",
+      "title": "Gifting operations",
+      "description": "Review gift-kit configurations, diagnostic records and complete correction arrangements before committing a campaign.",
+      "createdAt": "2026-11-17T20:00:00.000Z",
+      "contentHash": "3eaec17215a9d52e931aced565827540dc04e34c29f8b28cccc25ef4a343b90f",
+      "package": {
+        "path": "collections/decision-lab/gifting-operations/1.0.0/collection.collection.json",
+        "bytes": 1357,
+        "sha256": "bf7db92d401807f117ebb672df69770621200bbf0a49d92556dc75e723c8b745"
       }
     }
   ]
