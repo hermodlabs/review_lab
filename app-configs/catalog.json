@@ -1025,6 +1025,206 @@
         "bytes": 162485,
         "sha256": "4fdc71ff391cce4d09eebd9bf4bb6cd114985f9b6d4089dc45468e192f5ed5fd"
       }
+    },
+    {
+      "id": "review-gift-kit-flexible-evidence",
+      "version": 1,
+      "name": "Review gift-kit records",
+      "description": "A fictional campaign review: interpret scoped checks, compare complete corrective arrangements, and finish before the handoff cutoff.",
+      "publishedAt": "2026-11-18T02:00:00.000Z",
+      "contentHash": "fabab7360423d69c32e76c4affeaaecf86fd1ac0c298dc3b10b6dff05f08dd37",
+      "module": {
+        "id": "review-gift-kit-flexible-evidence",
+        "version": "2.0.0"
+      },
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations",
+        "description": "Review gift-kit evidence, corrective work and preparation commitments."
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign",
+        "description": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits."
+      },
+      "pattern": {
+        "id": "evidence-review/1",
+        "label": "Evidence review"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "evidence-review/1",
+        "definition": {
+          "id": "evidence-review",
+          "version": "1.0.0",
+          "evaluator": "finite-relational-evidence/1"
+        },
+        "presentationContract": "evidence-assessment/1"
+      },
+      "package": {
+        "path": "apps/review-gift-kit-flexible-evidence/1/app.app.json",
+        "bytes": 140627,
+        "sha256": "623248977077a6a3ae2dcd30337191f4455da8f332979648c8106def7f4f43a2"
+      },
+      "source": {
+        "path": "apps/review-gift-kit-flexible-evidence/1/model.yaml",
+        "bytes": 43386,
+        "sha256": "d08a35933811290733c30f5ea5770a152f7bb2776493f230dea5479cc604fdcf"
+      },
+      "workbook": {
+        "path": "apps/review-gift-kit-flexible-evidence/1/inputs.workbook.json",
+        "bytes": 172835,
+        "sha256": "581d1e92028aff5a4d7704a950b357c6ce5bd4875f9482aaf2d54e75d9603bbf"
+      }
+    },
+    {
+      "id": "review-gift-kit-flexible-planning",
+      "version": 1,
+      "name": "Review a gift-kit commitment — complete arrangements",
+      "description": "Compare one authored correction package across every remaining fault configuration, including simultaneous faults. Prospective correction is distinct from completed work.",
+      "publishedAt": "2026-11-18T02:00:00.000Z",
+      "contentHash": "d394fd9e7730501bc51244d84bc406c0db4bef1c204a2f6b16e9c6f532d21ebd",
+      "module": {
+        "id": "review-gift-kit-flexible-planning",
+        "version": "2.0.0"
+      },
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations"
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign"
+      },
+      "pattern": {
+        "id": "complete-a-commitment/1",
+        "label": "Complete a commitment"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "complete-a-commitment/1",
+        "definition": {
+          "id": "complete-a-commitment",
+          "version": "1.0.0",
+          "evaluator": "bounded-static-commitment/1"
+        },
+        "presentationContract": "complete-a-commitment.assessment/1"
+      },
+      "package": {
+        "path": "apps/review-gift-kit-flexible-planning/1/app.app.json",
+        "bytes": 124691,
+        "sha256": "2f20ba5f63075d2e6853320835e512f1205407a14c967968269192df0ff6cec5"
+      },
+      "source": {
+        "path": "apps/review-gift-kit-flexible-planning/1/model.yaml",
+        "bytes": 36895,
+        "sha256": "cf44dec307c7adae7977c022bbfd21dfd5de293f324c7af3eb1962a9013bff2d"
+      },
+      "workbook": {
+        "path": "apps/review-gift-kit-flexible-planning/1/inputs.workbook.json",
+        "bytes": 158256,
+        "sha256": "cabab5e4e93d9068632c495a5b077a6fb3650433fbbc73acaad60d3040bcf206"
+      }
+    },
+    {
+      "id": "review-gift-kit-earliest-evidence",
+      "version": 1,
+      "name": "Review gift-kit records",
+      "description": "A fictional campaign review: interpret scoped checks, compare complete corrective arrangements, and finish before the handoff cutoff.",
+      "publishedAt": "2026-11-18T02:00:00.000Z",
+      "contentHash": "7c14517fdf36a4ffc3e00a50452c18e5c1ff9411a18506cad3504fc2105c4dc3",
+      "module": {
+        "id": "review-gift-kit-earliest-evidence",
+        "version": "2.0.0"
+      },
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations",
+        "description": "Review gift-kit evidence, corrective work and preparation commitments."
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign",
+        "description": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits."
+      },
+      "pattern": {
+        "id": "evidence-review/1",
+        "label": "Evidence review"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "evidence-review/1",
+        "definition": {
+          "id": "evidence-review",
+          "version": "1.0.0",
+          "evaluator": "finite-relational-evidence/1"
+        },
+        "presentationContract": "evidence-assessment/1"
+      },
+      "package": {
+        "path": "apps/review-gift-kit-earliest-evidence/1/app.app.json",
+        "bytes": 140627,
+        "sha256": "4232268bc2ed41f52c18b69936fd7dc6de91bd6714531d46f7ec8ae499a349b9"
+      },
+      "source": {
+        "path": "apps/review-gift-kit-earliest-evidence/1/model.yaml",
+        "bytes": 43386,
+        "sha256": "37c67954c4d1d199af2670488941d7df3820c71fe6a307c8bd2f508eb5dc302d"
+      },
+      "workbook": {
+        "path": "apps/review-gift-kit-earliest-evidence/1/inputs.workbook.json",
+        "bytes": 172835,
+        "sha256": "5d66f683b62c69e7cedda985246a520b5705f931ece10eed23a4ffdc60c38f8a"
+      }
+    },
+    {
+      "id": "review-gift-kit-earliest-planning",
+      "version": 1,
+      "name": "Review gift kits with earliest handoff priority — complete arrangements",
+      "description": "Compare one authored correction package across every remaining fault configuration, including simultaneous faults. Prospective correction is distinct from completed work.",
+      "publishedAt": "2026-11-18T02:00:00.000Z",
+      "contentHash": "5bc9b7c4eb79011e60feb6415a3060f9435b9a84461b4ed2ec1d8cb916f0f6b2",
+      "module": {
+        "id": "review-gift-kit-earliest-planning",
+        "version": "2.0.0"
+      },
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations"
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign"
+      },
+      "pattern": {
+        "id": "complete-a-commitment/1",
+        "label": "Complete a commitment"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "complete-a-commitment/1",
+        "definition": {
+          "id": "complete-a-commitment",
+          "version": "1.0.0",
+          "evaluator": "bounded-static-commitment/1"
+        },
+        "presentationContract": "complete-a-commitment.assessment/1"
+      },
+      "package": {
+        "path": "apps/review-gift-kit-earliest-planning/1/app.app.json",
+        "bytes": 124710,
+        "sha256": "7f93033c507b26ceead2fff7346f27a525a73c54208352644092f6887791c150"
+      },
+      "source": {
+        "path": "apps/review-gift-kit-earliest-planning/1/model.yaml",
+        "bytes": 36895,
+        "sha256": "2485ccdc55fd328c17ba84093350ad8ee92d6abbe89766981dd26384dbac239a"
+      },
+      "workbook": {
+        "path": "apps/review-gift-kit-earliest-planning/1/inputs.workbook.json",
+        "bytes": 158294,
+        "sha256": "05a6b59865a6553430a370c8e5a6ce95250d2b975e6c469f8e595ae5b598d5be"
+      }
     }
   ],
   "workflows": [
@@ -1379,6 +1579,106 @@
         "bytes": 560416,
         "sha256": "9057468e51bcbde01227328c31c9b4cf6fd802db0e4e312901b33765bbbcdaf9"
       }
+    },
+    {
+      "id": "review-gift-kit-flexible",
+      "version": "2.0.0",
+      "name": "Review a gift-kit commitment",
+      "description": "Review actual gift-kit records and compare complete corrective arrangements. An external arrangement requires a sourced confirmation for this exact batch and configuration before work starts, valid through handoff. Prefilled values are fictional; feasible plans do not establish completed work or issue permission.",
+      "publishedAt": "2026-11-18T02:00:00.000Z",
+      "contentHash": "2dbc1160dfb58e2b4365ec9eaae1f9f27617c6aaa5b482372f5cc1a007e6f443",
+      "definitionHash": "ef8be37b85d8f1d0104115a033a7fb878f3f60c1b067f337b9c13492dd27c388",
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations",
+        "description": "Review gift-kit evidence, corrective work and preparation commitments."
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign",
+        "description": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits."
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review gift-kit records",
+          "appId": "review-gift-kit-flexible-evidence",
+          "version": 1,
+          "appContentHash": "fabab7360423d69c32e76c4affeaaecf86fd1ac0c298dc3b10b6dff05f08dd37",
+          "packageHash": "05392b3025e200154cd050ef8c1d34212d7d5f0f54e31bbf4c7e1157a87a4f1a"
+        },
+        {
+          "id": "planning",
+          "name": "Review a gift-kit commitment — complete arrangements",
+          "appId": "review-gift-kit-flexible-planning",
+          "version": 1,
+          "appContentHash": "d394fd9e7730501bc51244d84bc406c0db4bef1c204a2f6b16e9c6f532d21ebd",
+          "packageHash": "d99c58a18df7351840faa440806c8a62be6e56e03fcee4feb3d11561c9efdeac"
+        }
+      ],
+      "package": {
+        "path": "workflows/review-gift-kit-flexible/2.0.0/workflow.workflow.json",
+        "bytes": 538630,
+        "sha256": "eea4c63f10c8486ee7f77ef89dc50ccfa0ceeb60ca5181bb104f33df2d8249ea"
+      },
+      "workbook": {
+        "path": "workflows/review-gift-kit-flexible/2.0.0/inputs.workbook.json",
+        "bytes": 595575,
+        "sha256": "d137231d350cc3c1e5c7a19c375ad7a2b150a3452fc4c07f954d77a26e69a0c4"
+      }
+    },
+    {
+      "id": "review-gift-kit-earliest",
+      "version": "2.0.0",
+      "name": "Review gift kits with earliest handoff priority",
+      "description": "Review actual gift-kit records and compare complete corrective arrangements. An external arrangement requires a sourced confirmation for this exact batch and configuration before work starts, valid through handoff. Prefilled values are fictional; feasible plans do not establish completed work or issue permission.",
+      "publishedAt": "2026-11-18T02:00:00.000Z",
+      "contentHash": "dea23afd90f5811bbe31e327815918df38cd6cda16c59309c878c32d439b3ff2",
+      "definitionHash": "46eead839e241865020cf3aef2d05f06f1c7e557e6047e106b897f203faed5be",
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations",
+        "description": "Review gift-kit evidence, corrective work and preparation commitments."
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign",
+        "description": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits."
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review gift-kit records",
+          "appId": "review-gift-kit-earliest-evidence",
+          "version": 1,
+          "appContentHash": "7c14517fdf36a4ffc3e00a50452c18e5c1ff9411a18506cad3504fc2105c4dc3",
+          "packageHash": "f5a4b195dc26b9d8ca24a312e8e464003d0338e8462260d9ecd9a4e1fa643b46"
+        },
+        {
+          "id": "planning",
+          "name": "Review gift kits with earliest handoff priority — complete arrangements",
+          "appId": "review-gift-kit-earliest-planning",
+          "version": 1,
+          "appContentHash": "5bc9b7c4eb79011e60feb6415a3060f9435b9a84461b4ed2ec1d8cb916f0f6b2",
+          "packageHash": "1fc3ad7559d0747fc61fa5b56be27a42c56dac653b28c255d44f3c321ed4c758"
+        }
+      ],
+      "package": {
+        "path": "workflows/review-gift-kit-earliest/2.0.0/workflow.workflow.json",
+        "bytes": 538676,
+        "sha256": "dc568205fbc7f43b0734d6e01b6b1d39a57721cc128687734fa415a563e5ccae"
+      },
+      "workbook": {
+        "path": "workflows/review-gift-kit-earliest/2.0.0/inputs.workbook.json",
+        "bytes": 595640,
+        "sha256": "28b8cce53e7eb5b4118a140631cfc43648fca953b141321d8400d46f7b45a360"
+      }
     }
   ],
   "collections": [
@@ -1499,6 +1799,23 @@
         "path": "collections/decision-lab/gifting-operations/1.0.0/collection.collection.json",
         "bytes": 1357,
         "sha256": "bf7db92d401807f117ebb672df69770621200bbf0a49d92556dc75e723c8b745"
+      }
+    },
+    {
+      "id": "gifting-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "2.0.0",
+      "title": "Gifting operations",
+      "description": "Review gift-kit records and complete correction packages. Compare cost-first and earliest-handoff policies, with exact-configuration confirmations for arrangements that require them. Includes adaptable standalone apps and guided workflows.",
+      "createdAt": "2026-11-18T02:00:00.000Z",
+      "contentHash": "f3473e6bf0720353c0a6531bf8b6762a47ac1bec31b328c18d5e793907317dd3",
+      "package": {
+        "path": "collections/decision-lab/gifting-operations/2.0.0/collection.collection.json",
+        "bytes": 3366,
+        "sha256": "d1df97e8ddcd2ff4d1bb7cd55b7433b6b6fac19eb09fc94842c802d089700999"
       }
     }
   ]

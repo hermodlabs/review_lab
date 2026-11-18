@@ -8,6 +8,14 @@
     {
       "target": "workflows/review-gift-kit-commitment/1.0.0/workflow.workflow.json",
       "mapping": "workbook-mappings/review-gift-kit-commitment-1.0.0.mapping.json"
+    },
+    {
+      "target": "workflows/review-gift-kit-flexible/2.0.0/workflow.workflow.json",
+      "mapping": "workbook-mappings/review-gift-kit-flexible-2.0.0.mapping.json"
+    },
+    {
+      "target": "workflows/review-gift-kit-earliest/2.0.0/workflow.workflow.json",
+      "mapping": "workbook-mappings/review-gift-kit-earliest-2.0.0.mapping.json"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
-  "version": "7ad3ad16637fdc498ff0",
+  "version": "2f12f7f5656a4f5899a9",
   "appVersion": "0.2.0",
-  "totalBytes": 47456275,
+  "totalBytes": 51284667,
   "assets": [
     {
       "url": "app-configs/.nojekyll",
@@ -42,6 +42,66 @@
       "url": "app-configs/apps/plan-marble-delivery/2/model.yaml",
       "sha256": "087f354f44c8dc0a5eb250e12d872492c635e77571184af878ecf09a9a60a5b8",
       "bytes": 21116
+    },
+    {
+      "url": "app-configs/apps/review-gift-kit-earliest-evidence/1/app.app.json",
+      "sha256": "4232268bc2ed41f52c18b69936fd7dc6de91bd6714531d46f7ec8ae499a349b9",
+      "bytes": 140627
+    },
+    {
+      "url": "app-configs/apps/review-gift-kit-earliest-evidence/1/inputs.workbook.json",
+      "sha256": "5d66f683b62c69e7cedda985246a520b5705f931ece10eed23a4ffdc60c38f8a",
+      "bytes": 172835
+    },
+    {
+      "url": "app-configs/apps/review-gift-kit-earliest-evidence/1/model.yaml",
+      "sha256": "37c67954c4d1d199af2670488941d7df3820c71fe6a307c8bd2f508eb5dc302d",
+      "bytes": 43386
+    },
+    {
+      "url": "app-configs/apps/review-gift-kit-earliest-planning/1/app.app.json",
+      "sha256": "7f93033c507b26ceead2fff7346f27a525a73c54208352644092f6887791c150",
+      "bytes": 124710
+    },
+    {
+      "url": "app-configs/apps/review-gift-kit-earliest-planning/1/inputs.workbook.json",
+      "sha256": "05a6b59865a6553430a370c8e5a6ce95250d2b975e6c469f8e595ae5b598d5be",
+      "bytes": 158294
+    },
+    {
+      "url": "app-configs/apps/review-gift-kit-earliest-planning/1/model.yaml",
+      "sha256": "2485ccdc55fd328c17ba84093350ad8ee92d6abbe89766981dd26384dbac239a",
+      "bytes": 36895
+    },
+    {
+      "url": "app-configs/apps/review-gift-kit-flexible-evidence/1/app.app.json",
+      "sha256": "623248977077a6a3ae2dcd30337191f4455da8f332979648c8106def7f4f43a2",
+      "bytes": 140627
+    },
+    {
+      "url": "app-configs/apps/review-gift-kit-flexible-evidence/1/inputs.workbook.json",
+      "sha256": "581d1e92028aff5a4d7704a950b357c6ce5bd4875f9482aaf2d54e75d9603bbf",
+      "bytes": 172835
+    },
+    {
+      "url": "app-configs/apps/review-gift-kit-flexible-evidence/1/model.yaml",
+      "sha256": "d08a35933811290733c30f5ea5770a152f7bb2776493f230dea5479cc604fdcf",
+      "bytes": 43386
+    },
+    {
+      "url": "app-configs/apps/review-gift-kit-flexible-planning/1/app.app.json",
+      "sha256": "2f20ba5f63075d2e6853320835e512f1205407a14c967968269192df0ff6cec5",
+      "bytes": 124691
+    },
+    {
+      "url": "app-configs/apps/review-gift-kit-flexible-planning/1/inputs.workbook.json",
+      "sha256": "cabab5e4e93d9068632c495a5b077a6fb3650433fbbc73acaad60d3040bcf206",
+      "bytes": 158256
+    },
+    {
+      "url": "app-configs/apps/review-gift-kit-flexible-planning/1/model.yaml",
+      "sha256": "cf44dec307c7adae7977c022bbfd21dfd5de293f324c7af3eb1962a9013bff2d",
+      "bytes": 36895
     },
     {
       "url": "app-configs/apps/sample-evidence-food/1/app.app.json",
@@ -315,13 +375,13 @@
     },
     {
       "url": "app-configs/catalog.json",
-      "sha256": "c995d7c92f452d2bbb8a7f0e0718001e094e52ffae5052f8793d93a896956689",
-      "bytes": 69335
+      "sha256": "ab6d3b3cd9b63ba8db1235f72c650af564ba7e42745b0235dc9ae1931ad6b141",
+      "bytes": 82979
     },
     {
       "url": "app-configs/collection-definitions.json",
-      "sha256": "08ca20096d140812e4b88ca6f2e05216ab3bb49859c52c615009b76e085d2a4f",
-      "bytes": 12261
+      "sha256": "b86a735dab31f9eed5184e95c352c677638cedd2525f19ee5462fadf064172c6",
+      "bytes": 15834
     },
     {
       "url": "app-configs/collections/decision-lab/canonical-examples/1.0.0/collection.collection.json",
@@ -337,6 +397,11 @@
       "url": "app-configs/collections/decision-lab/gifting-operations/1.0.0/collection.collection.json",
       "sha256": "bf7db92d401807f117ebb672df69770621200bbf0a49d92556dc75e723c8b745",
       "bytes": 1357
+    },
+    {
+      "url": "app-configs/collections/decision-lab/gifting-operations/2.0.0/collection.collection.json",
+      "sha256": "d1df97e8ddcd2ff4d1bb7cd55b7433b6b6fac19eb09fc94842c802d089700999",
+      "bytes": 3366
     },
     {
       "url": "app-configs/collections/decision-lab/network-operations/1.0.0/collection.collection.json",
@@ -365,13 +430,23 @@
     },
     {
       "url": "app-configs/workbook-definitions.json",
-      "sha256": "1bfeff1de3acd4a5f8ba646ae139175deff6328c199d9c53c6f72b9cb38d2e7e",
-      "bytes": 413
+      "sha256": "6d89dd6ed88098c5a4342bd059d7f998900a2346c2f7ba64dae08b43cc818740",
+      "bytes": 767
     },
     {
       "url": "app-configs/workbook-mappings/review-gift-kit-commitment-1.0.0.mapping.json",
       "sha256": "8503f7364fc409709cec2a8c3ebf8bf2a454e0bd093095ca43d59b8735af5cd7",
       "bytes": 20415
+    },
+    {
+      "url": "app-configs/workbook-mappings/review-gift-kit-earliest-2.0.0.mapping.json",
+      "sha256": "582d24968e959a6f29325a3ae3b7da4f99338e1f5f3f7dd49b40bbff64ceb995",
+      "bytes": 24903
+    },
+    {
+      "url": "app-configs/workbook-mappings/review-gift-kit-flexible-2.0.0.mapping.json",
+      "sha256": "4a752ca6a0d728d88b8d75ee97a0264796046ee0573a4604615a78ce7b669a96",
+      "bytes": 24884
     },
     {
       "url": "app-configs/workbook-schemas/first-shipment-review.schema.json",
@@ -397,6 +472,26 @@
       "url": "app-configs/workflows/review-gift-kit-commitment/1.0.0/workflow.workflow.json",
       "sha256": "2552dc909674d110127dc763d099863670190bc75f49d24292f0e7c9990deb46",
       "bytes": 251960
+    },
+    {
+      "url": "app-configs/workflows/review-gift-kit-earliest/2.0.0/inputs.workbook.json",
+      "sha256": "28b8cce53e7eb5b4118a140631cfc43648fca953b141321d8400d46f7b45a360",
+      "bytes": 595640
+    },
+    {
+      "url": "app-configs/workflows/review-gift-kit-earliest/2.0.0/workflow.workflow.json",
+      "sha256": "dc568205fbc7f43b0734d6e01b6b1d39a57721cc128687734fa415a563e5ccae",
+      "bytes": 538676
+    },
+    {
+      "url": "app-configs/workflows/review-gift-kit-flexible/2.0.0/inputs.workbook.json",
+      "sha256": "d137231d350cc3c1e5c7a19c375ad7a2b150a3452fc4c07f954d77a26e69a0c4",
+      "bytes": 595575
+    },
+    {
+      "url": "app-configs/workflows/review-gift-kit-flexible/2.0.0/workflow.workflow.json",
+      "sha256": "eea4c63f10c8486ee7f77ef89dc50ccfa0ceeb60ca5181bb104f33df2d8249ea",
+      "bytes": 538630
     },
     {
       "url": "app-configs/workflows/walmart-first-order-staged/1.2.0/inputs.workbook.json",
@@ -444,23 +539,23 @@
       "bytes": 50792
     },
     {
-      "url": "assets/exceljs.min-BPI5IFL0.js",
-      "sha256": "c36bd81ef59cd0edb49f87e549a1c3e95f079e45f329fbcab5aba524e167ac51",
+      "url": "assets/exceljs.min-88ukjE9D.js",
+      "sha256": "128335e073250ce75e093cc40e660718b187166c4fa12fe12ae6d60cc3d18f22",
       "bytes": 929558
     },
     {
-      "url": "assets/index-oyfZfBY2.css",
-      "sha256": "872e0c0b2505889545f5857fce1d37e5499871e5969c240d98cc53f86cd9191f",
-      "bytes": 253231
+      "url": "assets/index-B5pzhIcN.js",
+      "sha256": "fc5c4dfb66858c9ff7691da9a219481803f9315fdb39560dc777476d4b7bad87",
+      "bytes": 7178930
     },
     {
-      "url": "assets/index-y0GnMhdM.js",
-      "sha256": "cb55b3ef9c09953363edaca91cd1809995cbd7718e34aacb4e0b0f22799fd736",
-      "bytes": 7074543
+      "url": "assets/index-Du_IOElN.css",
+      "sha256": "e3846ba9c05d6024776f314813293d7a3d935c3add2754bf05da5af9b2938525",
+      "bytes": 261392
     },
     {
-      "url": "assets/jszip.min-CNYIqHgw.js",
-      "sha256": "5799eeb0506311ce30a4ce061e94ea4dacc3140d046277f1155716b0ec390006",
+      "url": "assets/jszip.min-N2pDo5nL.js",
+      "sha256": "2bf79d0bd5a70922347346227fbe24b0eb40b2ae71bf813b1c8387073e156bea",
       "bytes": 95949
     },
     {
@@ -469,9 +564,9 @@
       "bytes": 2360
     },
     {
-      "url": "assets/worker-DdU8Ve5E.js",
-      "sha256": "212df626c3f31a9d6d0cd5379f5bd0643bb1bd0c36e4a35a72148924b177d269",
-      "bytes": 369282
+      "url": "assets/worker-BQfahUSL.js",
+      "sha256": "50af12e31f5181ed15a6806093116745f6c6e754598a62cbea9cebd1aaa298e1",
+      "bytes": 392444
     },
     {
       "url": "icons/apple-touch-icon.png",
@@ -500,7 +595,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "8d675c87cb598bf232bb02b8be6e6bcea16a6402f49478af52b10de59cd86dec",
+      "sha256": "a1ac44474ecc831fd2aa77840688de4f1a250f98c15110db4e37d5d96ffb7dbe",
       "bytes": 1023
     },
     {
