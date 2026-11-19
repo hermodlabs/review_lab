@@ -966,6 +966,46 @@
         "bytes": 1029921,
         "sha256": "ac1fe13514f1c2f07e02b94ad0dba7ebae407b43efcc6ec9f80b2c5ba409cefb"
       }
+    },
+    {
+      "id": "street-team-deployment",
+      "version": "1.1.0",
+      "name": "Review a street-team deployment",
+      "description": "Review staffing, timing, access and spending before Sam chooses a bounded promotion. Conditional additional-guest thresholds make the commitment explicit without forecasting response.",
+      "publishedAt": "2026-11-17T18:00:00.000Z",
+      "contentHash": "966b0d13926da6ac0e600599d618b8f06c9b18524aa7db33456d076f570e8583",
+      "definitionHash": "246fb8e7d7d7ea9099d53bd4d4b7977044989776f2d15cfd03f7a652712aa407",
+      "domain": {
+        "id": "venue-operations",
+        "label": "Venue operations"
+      },
+      "useCase": {
+        "id": "deploy-street-team",
+        "label": "Review a street-team deployment"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "operations",
+          "name": "Review a street-team deployment",
+          "appId": "street-team-operating-review",
+          "version": 1,
+          "appContentHash": "623537fd2a2735fb2f2c7f4bcf79dffe5e075c3345d2e84d72258585b86fd06b",
+          "packageHash": "170807f3452e7b86d4ed9bb50eb554d4e6a28b34e87943f74ec0bec2acb8c173"
+        }
+      ],
+      "package": {
+        "path": "workflows/street-team-deployment/1.1.0/workflow.workflow.json",
+        "bytes": 113469,
+        "sha256": "935328d7467627f84f6015f0797e483b31456093469c85e5090a1e6d0c5aac97"
+      },
+      "workbook": {
+        "path": "workflows/street-team-deployment/1.1.0/inputs.workbook.json",
+        "bytes": 278321,
+        "sha256": "f0017b40010ca5948a40a510e6d97930c79ae52ea4236f2be087dee732fd018a"
+      }
     }
   ],
   "collections": [
@@ -1086,6 +1126,23 @@
         "path": "collections/decision-lab/order-fulfillment/1.1.0/collection.collection.json",
         "bytes": 2000,
         "sha256": "86209f6254205f5646a621cee08af8b5f07617c488cbf54508253f03d9a6cd6f"
+      }
+    },
+    {
+      "id": "venue-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.0.0",
+      "title": "Venue operations",
+      "description": "Review complete venue operating commitments against staffing, timing, recorded access and spending requirements. Financial hurdles explain what a commitment would need to recover; customer response remains uncertain.",
+      "createdAt": "2026-11-19T06:00:00.000Z",
+      "contentHash": "b981f0bcf926f435106d4d414537cf7478922101d030d57b01d1d5fe0f0ffe4c",
+      "package": {
+        "path": "collections/decision-lab/venue-operations/1.0.0/collection.collection.json",
+        "bytes": 1450,
+        "sha256": "c63b345b32700ab8bf7139aa9e62a569cab525924e815dac9ed30b17c58dc163"
       }
     }
   ]

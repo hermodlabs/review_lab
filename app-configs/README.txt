@@ -10,19 +10,22 @@ Copy this entire directory to a repository or static host. Preserve the tree:
   apps/APP/RELEASE/inputs.workbook.json
   workflows/WORKFLOW/VERSION/workflow.workflow.json
   workflows/WORKFLOW/VERSION/inputs.workbook.json
+  examples/street-team-deployment/1.1.0/article.run.json
+  examples/street-team-deployment/1.1.0/README.md
   workbook-definitions.json
   workbook-schemas/NAME.schema.json
   generate-feed.mjs
 
 The production build copies these same bytes to dist/app-configs/. Development
 serves this directory at /app-configs/. Local and RSS modes use the same relative
-paths; only their base location changes. No user cases or browser edits are
-included in this export.
+paths; only their base location changes. No private user cases or browser edits
+are included. The explicitly fictional article case in examples/ is a separate
+import; installing its collection does not open it or copy its recorded reviews.
 
 CURRENT RELEASES
 
-This distribution contains 11 current standalone app definitions, five guided
-workflows and seven collection releases. Superseded evidence/learning releases,
+This distribution contains 11 current standalone app definitions, six guided
+workflows and eight collection releases. Superseded evidence/learning releases,
 the original gifting workflow and gifting collection 1.0.0 have been withdrawn.
 Historical recovery fixtures are kept only in the development test tree.
 
@@ -46,8 +49,9 @@ file. The raw checksum and SDK package hash serve different purposes.
 
 Membership is independent of the domain/use-case classification embedded in an
 app or workflow. The current initial collections retain the familiar organization:
-Canonical examples, Food supply chains, Network operations, Order fulfillment,
-Product launches, and Walmart Supplier Operations. A collection may be empty,
+Canonical examples, Food supply chains, Gifting operations, Network operations,
+Order fulfillment, Product launches, Venue operations, and Walmart Supplier
+Operations. A collection may be empty,
 and one unchanged package may belong to several collections. Workflow dependency
 packages remain embedded and pinned; collection membership never replaces them.
 
