@@ -1,7 +1,7 @@
 {
-  "version": "ff926a50c159da73aef4",
+  "version": "8a144fc026a059678d25",
   "appVersion": "0.2.0",
-  "totalBytes": 49645097,
+  "totalBytes": 50522677,
   "assets": [
     {
       "url": "app-configs/.nojekyll",
@@ -180,13 +180,13 @@
     },
     {
       "url": "app-configs/catalog.json",
-      "sha256": "915177e6fdac43d784fd7df3935c1fa1f5c9e3efda4f10edef1b45d6b3edc02e",
-      "bytes": 52149
+      "sha256": "2d729b7d0b0f2f64a9ce6bc84f727b35e79e62b392cb7725f3f6a0689fd8f47d",
+      "bytes": 54708
     },
     {
       "url": "app-configs/collection-definitions.json",
-      "sha256": "3f2d9d8f27e1647204b129740ce0d62ea101e5009cc80e0615d5e848ff84029b",
-      "bytes": 15927
+      "sha256": "f4c59ee46413d7b75da4874f6f28e1905b4294fb03e447e6cf7050ab2ec825e2",
+      "bytes": 17356
     },
     {
       "url": "app-configs/collections/decision-lab/canonical-examples/1.0.0/collection.collection.json",
@@ -229,6 +229,11 @@
       "bytes": 1450
     },
     {
+      "url": "app-configs/collections/decision-lab/venue-operations/1.1.0/collection.collection.json",
+      "sha256": "028772635ebd58b8041fe99d7da9f8b337eabffb188a508d42985c893365bc18",
+      "bytes": 1414
+    },
+    {
       "url": "app-configs/collections/decision-lab/walmart-supplier-operations/1.0.0/collection.collection.json",
       "sha256": "b766625c668364672889e943e3f3c9f47f1b3bb82fe102a34265c148767e4d9e",
       "bytes": 2081
@@ -242,6 +247,16 @@
       "url": "app-configs/examples/street-team-deployment/1.1.0/article.run.json",
       "sha256": "2d0c99682c706c0b61a158f7ccb8138b9ebb3503e12b515bf392904976c9a26e",
       "bytes": 405367
+    },
+    {
+      "url": "app-configs/examples/street-team-deployment/1.2.0/README.md",
+      "sha256": "1e1c25ae93a5867c64137b948ddd2eef15fd711d98297a82c825105a910f9b54",
+      "bytes": 4431
+    },
+    {
+      "url": "app-configs/examples/street-team-deployment/1.2.0/article.run.json",
+      "sha256": "b51c8d20f4c58ab51735325d97ad5185767d0261b2990e63bd2ef146b2da438a",
+      "bytes": 409052
     },
     {
       "url": "app-configs/generate-feed.mjs",
@@ -319,6 +334,16 @@
       "bytes": 113469
     },
     {
+      "url": "app-configs/workflows/street-team-deployment/1.2.0/inputs.workbook.json",
+      "sha256": "3a51c9f9043dd23c7e296e2c1ec31798ea97612b4255eb8adb4bedebd1f1b791",
+      "bytes": 280505
+    },
+    {
+      "url": "app-configs/workflows/street-team-deployment/1.2.0/workflow.workflow.json",
+      "sha256": "6874c1a3a3672e8b01b04b24b8262298229622eedc2a40d262b5dedc96ce8641",
+      "bytes": 115293
+    },
+    {
       "url": "app-configs/workflows/walmart-first-order-staged/1.2.0/inputs.workbook.json",
       "sha256": "a9fc3098ead80b0b0f048a804dd79098e8d645ac98c14f7ce4e080fe4a15b2b1",
       "bytes": 9297601
@@ -364,23 +389,23 @@
       "bytes": 50792
     },
     {
-      "url": "assets/exceljs.min-CkH77UW0.js",
-      "sha256": "926a189649909de0c7cf032fbf9888a336aa1e57e83acae54df79afa7164353b",
+      "url": "assets/exceljs.min-BUn3JUeb.js",
+      "sha256": "156eaa482d5fe470cfefbdcf2684d54763ae544f3a633941d77d943b4918e881",
       "bytes": 929558
     },
     {
-      "url": "assets/index-DQaijmTN.css",
-      "sha256": "bc1d7bd3610f6e612f066017b02b6375943734d5d9718274c28d7d00eeff8ed2",
-      "bytes": 262471
+      "url": "assets/index-B6Go1qBU.css",
+      "sha256": "5c20d78a44fedf2f3d0b77cba51788fd98fb9dddabb687bb1c231d3a06ec7298",
+      "bytes": 270234
     },
     {
-      "url": "assets/index-DtFwXBEo.js",
-      "sha256": "658d7a7a8d918c36b292298c3560ecccb19c1fa0d83741d41b022536a1e4bed3",
-      "bytes": 7208802
+      "url": "assets/index-X1A65w4q.js",
+      "sha256": "acb2f8c8bf5c4efd8d72dd2be93366447ddac3f753a6145e203435fa9397ac44",
+      "bytes": 7263936
     },
     {
-      "url": "assets/jszip.min-DwbUnKPA.js",
-      "sha256": "aaaac8c6c54b2db6a68047ab650161ff8671cc59cdea05d6d82f6b109e2be7f8",
+      "url": "assets/jszip.min-D_rXB6Jz.js",
+      "sha256": "1605564886deaf356bb20e8fac55a7eab79418569c80c7df66a99e195263bde1",
       "bytes": 95949
     },
     {
@@ -420,7 +445,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "df65ac1b659c4d919b36a33710f94c22c1d56ee9973a95b6f9fecd84b3b8d5a7",
+      "sha256": "0809cca5b7546a3089cf88e1ddf7b72f5f8654cbaece3ef8e4cf420db77ff43f",
       "bytes": 1023
     },
     {

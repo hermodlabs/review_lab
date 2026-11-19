@@ -4,7 +4,7 @@
   "title": "Decision Lab app marketplace",
   "description": "Installable evidence-review, learning-value and commitment-planning apps, organized into collections by use case.",
   "exportedAt": "2026-11-16T18:00:00.000Z",
-  "scope": "current-supported-releases",
+  "scope": "current-and-pinned-compatible-releases",
   "apps": [
     {
       "id": "sample-evidence-marbles",
@@ -1006,6 +1006,46 @@
         "bytes": 278321,
         "sha256": "f0017b40010ca5948a40a510e6d97930c79ae52ea4236f2be087dee732fd018a"
       }
+    },
+    {
+      "id": "street-team-deployment",
+      "version": "1.2.0",
+      "name": "Review a street-team deployment",
+      "description": "Review staffing, timing, access and spending for the planned promotion. Compare the additional guests needed to cover each plan’s expense and separate discount losses, then record the manager’s choice and approval. Customer response is not forecast.",
+      "publishedAt": "2026-11-17T18:00:00.000Z",
+      "contentHash": "3cf39529ebddaf0491ca4a8a90287caa0009126b9bfed243b8bec3e76ee984f2",
+      "definitionHash": "be34bfe68ca85991529421560d4ec06c9fff67080d0fc14b6e540e1317e85728",
+      "domain": {
+        "id": "venue-operations",
+        "label": "Venue operations"
+      },
+      "useCase": {
+        "id": "deploy-street-team",
+        "label": "Review a street-team deployment"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "operations",
+          "name": "Review a street-team deployment",
+          "appId": "street-team-operating-review",
+          "version": 2,
+          "appContentHash": "9efe886d3c4d8412a8ed76153ece3b95f7f1106a4e80e921f678290de9228daa",
+          "packageHash": "ba657e7bc03db98f19178bff31263b31b7d033e77aeecef4092bb1cb38d8ad94"
+        }
+      ],
+      "package": {
+        "path": "workflows/street-team-deployment/1.2.0/workflow.workflow.json",
+        "bytes": 115293,
+        "sha256": "6874c1a3a3672e8b01b04b24b8262298229622eedc2a40d262b5dedc96ce8641"
+      },
+      "workbook": {
+        "path": "workflows/street-team-deployment/1.2.0/inputs.workbook.json",
+        "bytes": 280505,
+        "sha256": "3a51c9f9043dd23c7e296e2c1ec31798ea97612b4255eb8adb4bedebd1f1b791"
+      }
     }
   ],
   "collections": [
@@ -1143,6 +1183,23 @@
         "path": "collections/decision-lab/venue-operations/1.0.0/collection.collection.json",
         "bytes": 1450,
         "sha256": "c63b345b32700ab8bf7139aa9e62a569cab525924e815dac9ed30b17c58dc163"
+      }
+    },
+    {
+      "id": "venue-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.1.0",
+      "title": "Venue operations",
+      "description": "Review promotion plans against staffing, timing, recorded access and spending requirements. Conditional guest counts explain expense and discount-loss recovery; customer response remains uncertain.",
+      "createdAt": "2026-11-19T07:57:32.000Z",
+      "contentHash": "d101ffc59a317c56ed0b3ffcb0cdd9af0e31ebcca7c563ee9718709d9b0931cc",
+      "package": {
+        "path": "collections/decision-lab/venue-operations/1.1.0/collection.collection.json",
+        "bytes": 1414,
+        "sha256": "028772635ebd58b8041fe99d7da9f8b337eabffb188a508d42985c893365bc18"
       }
     }
   ]
