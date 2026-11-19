@@ -1,0 +1,54 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "walmart-supplier-operations",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "version": "1.1.0",
+    "title": "Walmart Supplier Operations",
+    "description": "Walmart Supplier Operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+    "useCases": [
+      {
+        "id": "review-first-order",
+        "label": "Review a first order",
+        "description": "Review readiness, complete shipment and recovery arrangements, and optional further verification."
+      },
+      {
+        "id": "review-first-order-with-pallet-staging",
+        "label": "Review a first order with pallet staging",
+        "description": "Compare complete shipment and EDI-recovery arrangements with additional warehouse staging."
+      }
+    ],
+    "members": [
+      {
+        "type": "workflow",
+        "id": "walmart-first-order-standard",
+        "version": "1.3.0",
+        "packageHash": "02591b945b635473532956a14f51d5fb5474ede3673e778cf3413b108e4c66a5",
+        "useCaseId": "review-first-order",
+        "artifact": {
+          "path": "workflows/walmart-first-order-standard/1.3.0/workflow.workflow.json",
+          "bytes": 8799890,
+          "sha256": "9ae6aae31111a77ddb0942631b7d672ca8df006403f3bba816e60faadd041188"
+        }
+      },
+      {
+        "type": "workflow",
+        "id": "walmart-first-order-staged",
+        "version": "1.3.0",
+        "packageHash": "77cb8e9beeb9cc413d3b543e0a84943282f90824ca6809ccd02733a522c185bb",
+        "useCaseId": "review-first-order-with-pallet-staging",
+        "artifact": {
+          "path": "workflows/walmart-first-order-staged/1.3.0/workflow.workflow.json",
+          "bytes": 8903184,
+          "sha256": "ff2ecf7cbe1687639306d771b423c225573d23d556766e3bc9709e48799361f2"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-19T18:00:00.000Z",
+  "contentHash": "67931589f3f8ffe5b7ceb7c04d9f5785b1a37fe68ae43c2ff2079cea2ba3a4db"
+}

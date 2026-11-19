@@ -1,0 +1,3186 @@
+{
+  "format": "decision-lab-workflow-package/1",
+  "workflow": {
+    "format": "decision-lab-workflow/1",
+    "id": "street-team-deployment",
+    "version": "1.3.0",
+    "title": "Plan a street-team deployment",
+    "question": "Which promotion plans can we operate, and how many additional guests would cover their costs?",
+    "description": "Calculate which promotion deployments meet staffing, timing, access and spending constraints, and the additional guests needed to recover their expense. Customer response is not forecast.",
+    "dependencies": [
+      {
+        "id": "operations",
+        "app": {
+          "format": "decision-lab-app/1",
+          "template": {
+            "format": "decision-lab-template/1",
+            "definition": {
+              "format": "decision-lab-template-definition/1",
+              "templateId": "bounded-promotion",
+              "version": "1.0.0",
+              "pattern": "complete-a-commitment/1",
+              "title": "Review a bounded promotion",
+              "description": "Check complete deployments; explain conditional guest thresholds without forecasting demand.",
+              "authoring": {
+                "requiredModuleFields": [
+                  "assumptions"
+                ],
+                "guidance": ""
+              },
+              "contract": {
+                "format": "decision-lab-installed-contract/1",
+                "pattern": "complete-a-commitment/1",
+                "definition": {
+                  "id": "complete-a-commitment",
+                  "version": "1.0.0",
+                  "evaluator": "bounded-static-commitment/1",
+                  "title": "Complete a commitment",
+                  "responsibility": "Find one complete static operating choice that satisfies every mandatory obligation across every explicitly admitted joint scenario, then compare feasible choices.",
+                  "invariants": [
+                    "Choices are finite, input-only controls. One complete assignment is shared across every admitted scenario and obligation.",
+                    "Admitted joint scenarios are explicit facts; neither independence, probabilities nor unlisted scenarios are inferred.",
+                    "An empty admitted basis is inconsistent, never a vacuous feasibility result.",
+                    "Typed acyclic expressions separate static controls, scenario consequences and post-scenario preference aggregates.",
+                    "Activities, calendars, bookings and permission validity use half-open intervals; adjacent intervals do not overlap.",
+                    "Capacity is the sum of simultaneous renewable demands. A scoped grant must cover its entire required operation.",
+                    "Expense sums nonrefundable charges. Refundable holds affect cash only; simultaneous cash events are netted before peak cash is measured.",
+                    "Every mandatory condition must pass for the same choice in every admitted scenario. Preference cannot compensate for failure.",
+                    "Ranking is lexicographic over feasible choices only; genuine ties are retained and identifiers only stabilize display order.",
+                    "A fully checked witness establishes existence during partial search. No-plan and optimality claims require complete relevant coverage.",
+                    "Missing data, unresolved lookups, unsafe arithmetic and unsupported declarations are invalid input, never invented facts.",
+                    "Calculated feasibility is conditional on accepted facts and fixed assumptions, not permission, reservation or evidence of actual completion."
+                  ],
+                  "expressionLanguage": {
+                    "id": "typed-static-commitment-expressions/1",
+                    "literals": "Finite scalar or homogeneous scalar-array data; no executable code.",
+                    "references": [
+                      "parameter",
+                      "choice",
+                      "scenario",
+                      "derived",
+                      "activity",
+                      "finance",
+                      "row (inside exists.test)"
+                    ],
+                    "operators": {
+                      "eq": "Two compatible scalars -> boolean",
+                      "ne": "Two compatible scalars -> boolean",
+                      "lt": "Two compatible numbers -> boolean",
+                      "lte": "Two compatible numbers -> boolean",
+                      "gt": "Two compatible numbers -> boolean",
+                      "gte": "Two compatible numbers -> boolean",
+                      "add": "At least two compatible numbers -> number",
+                      "sub": "Two compatible numbers -> number",
+                      "mul": "Two numbers with at most one dimensional operand -> number; count is a multiplicity",
+                      "and": "At least two booleans -> boolean",
+                      "or": "At least two booleans -> boolean",
+                      "not": "One boolean -> boolean",
+                      "in": "Scalar and compatible scalar-array -> boolean",
+                      "lookup": "Complete primary-key binding in a typed input table -> exactly one selected scalar; missing or ambiguous lookup is invalid",
+                      "exists": "Typed equality bindings plus optional row-scoped predicate -> boolean; no match is false",
+                      "interval-covered": "Typed selected calendar rows and a positive half-open interval -> boolean; adjacent coverage may combine",
+                      "worst-case": "Numeric expression -> maximum across admitted scenarios for preference only; nested or unreduced scenario aggregates are invalid"
+                    }
+                  }
+                },
+                "schema": {
+                  "kind": "installed-validator-descriptor/1",
+                  "modelFormat": "complete-a-commitment/1",
+                  "moduleValidator": "assertCommitmentModule",
+                  "caseValidator": "validateCommitmentCase",
+                  "requiredModelFields": [
+                    "format",
+                    "module",
+                    "case"
+                  ],
+                  "requiredModuleFields": [
+                    "id",
+                    "title",
+                    "template",
+                    "units",
+                    "inputs",
+                    "choices",
+                    "scenarioDomain",
+                    "derived",
+                    "activities",
+                    "resources",
+                    "requirements",
+                    "constraints",
+                    "finance",
+                    "preference",
+                    "labels"
+                  ],
+                  "moduleFields": [
+                    "id",
+                    "title",
+                    "template",
+                    "template.id",
+                    "template.version",
+                    "description",
+                    "question",
+                    "assumptions",
+                    "units",
+                    "units.time",
+                    "units.timeOrigin",
+                    "units.money",
+                    "inputs",
+                    "inputs.parameters",
+                    "inputs.tables",
+                    "choices",
+                    "scenarioDomain",
+                    "derived",
+                    "activities",
+                    "resources",
+                    "resources.definitions",
+                    "resources.bookings",
+                    "requirements",
+                    "constraints",
+                    "finance",
+                    "finance.mode",
+                    "finance.charges",
+                    "finance.holds",
+                    "preference",
+                    "preference.direction",
+                    "preference.expression",
+                    "preference.then",
+                    "labels",
+                    "lookupCoverage"
+                  ],
+                  "requiredCaseFields": [
+                    "id",
+                    "parameters",
+                    "tables",
+                    "provenance"
+                  ],
+                  "optionalCaseFields": [],
+                  "caseDerivation": [
+                    "All case parameters and keyed input rows use the frozen module.inputs types, units, bounds, keys and references; no missing-value defaults or coercion are inferred.",
+                    "Finite choices draw only from input arrays, input table columns or fixed literal domains; the same assignment applies to every scenario.",
+                    "The scenarioDomain table explicitly lists admitted joint scenarios; an empty table is an inconsistent basis rather than vacuous feasibility.",
+                    "Activity graphs, constraints, mandatory obligations, resource mappings, financial mode and preference remain frozen module declarations.",
+                    "Provenance describes accepted factual sources; identifying a source does not authenticate it or infer readiness."
+                  ],
+                  "description": "Installed closed typed declaration and case-admission validators; this descriptor is not a complete JSON Schema. Publication checks admission, not computed feasibility."
+                },
+                "structuralSlots": [
+                  {
+                    "path": "units",
+                    "owner": "module-author",
+                    "description": "Declare one time origin, common time and money units, and additional numeric units."
+                  },
+                  {
+                    "path": "inputs",
+                    "owner": "module-author",
+                    "description": "Declare required typed parameters and keyed relations."
+                  },
+                  {
+                    "path": "choices",
+                    "owner": "module-author",
+                    "description": "Declare finite static controls from input-only domains."
+                  },
+                  {
+                    "path": "scenarioDomain",
+                    "owner": "module-author",
+                    "description": "Bind the input relation containing explicit joint scenarios."
+                  },
+                  {
+                    "path": "derived",
+                    "owner": "module-author",
+                    "description": "Bind typed acyclic consequences using the installed expression language."
+                  },
+                  {
+                    "path": "activities",
+                    "owner": "module-author",
+                    "description": "Declare static activity actors, timing and renewable resource demands."
+                  },
+                  {
+                    "path": "resources",
+                    "owner": "module-author",
+                    "description": "Map resource capacities and existing bookings."
+                  },
+                  {
+                    "path": "requirements",
+                    "owner": "module-author",
+                    "description": "Name and explain every mandatory commitment obligation."
+                  },
+                  {
+                    "path": "constraints",
+                    "owner": "module-author",
+                    "description": "Bind predicates and shared resource-capacity checks to obligations."
+                  },
+                  {
+                    "path": "finance",
+                    "owner": "module-author",
+                    "description": "Declare nonrefundable charges and optional timed refundable holds."
+                  },
+                  {
+                    "path": "preference",
+                    "owner": "module-author",
+                    "description": "Declare feasible-only lexicographic comparison."
+                  },
+                  {
+                    "path": "lookupCoverage",
+                    "owner": "module-author",
+                    "description": "Optionally require complete finite lookup coverage."
+                  },
+                  {
+                    "path": "labels",
+                    "owner": "module-author",
+                    "description": "Supply domain vocabulary without changing calculations."
+                  },
+                  {
+                    "path": "assumptions",
+                    "owner": "module-author",
+                    "description": "State accepted premises and the applicability boundary."
+                  }
+                ],
+                "caseInputs": [
+                  {
+                    "path": "id",
+                    "owner": "case-worker",
+                    "description": "Identify this case."
+                  },
+                  {
+                    "path": "parameters",
+                    "owner": "case-worker",
+                    "description": "Supply every declared parameter, including finite choice grids and current limits."
+                  },
+                  {
+                    "path": "tables",
+                    "owner": "case-worker",
+                    "description": "Supply typed records, accepted scenarios, calendars, grants, resources and other declared facts."
+                  },
+                  {
+                    "path": "provenance",
+                    "owner": "case-worker",
+                    "description": "Record the accepted source and scope of supplied information."
+                  }
+                ],
+                "capabilities": {
+                  "language": "typed-static-commitment-expressions/1",
+                  "supported": [
+                    "finite-static-plans",
+                    "explicit-joint-scenarios",
+                    "typed-acyclic-expressions",
+                    "variable-activity-graphs",
+                    "half-open-intervals",
+                    "renewable-capacity",
+                    "scoped-permission-predicates",
+                    "expense-and-cash-accounting",
+                    "all-scenario-conjunction",
+                    "coverage-qualified-findings",
+                    "feasible-only-lexicographic-preference"
+                  ],
+                  "unsupported": [
+                    "conditional-policy-synthesis",
+                    "continuous-time-optimization",
+                    "inferred-readiness-or-probabilities",
+                    "live-reservations",
+                    "permission-issuance",
+                    "arbitrary-code"
+                  ]
+                },
+                "limits": {
+                  "admission": {
+                    "nodes": 250000,
+                    "depth": 80,
+                    "list": 10000,
+                    "text": 200000,
+                    "expressions": 20000,
+                    "expressionDepth": 64,
+                    "dependencyDepth": 64,
+                    "lookupTuples": 100000,
+                    "errors": 200
+                  },
+                  "defaults": {
+                    "maxPlans": 10000,
+                    "maxScenarioChecks": 100000,
+                    "maxOperations": 10000000
+                  },
+                  "hard": {
+                    "maxPlans": 100000,
+                    "maxScenarioChecks": 1000000,
+                    "maxOperations": 50000000
+                  }
+                },
+                "reportResponsibilities": {
+                  "assessmentContract": "complete-a-commitment.assessment/1",
+                  "reportIds": [],
+                  "responsibilities": [
+                    "Complete candidate assignments and all checked scenarios",
+                    "Feasibility, coverage and feasible-only preference",
+                    "Activities, interval/resource checks and scoped permission traces",
+                    "Expense, timed cash events and peak cash where declared",
+                    "Mandatory obligation results and blockers",
+                    "Accepted basis and calculation provenance"
+                  ],
+                  "completeReportDocument": "Unavailable for this pattern until milestone 5. Public assessment artifacts expose complete calculation data without claiming renderer-ready report support."
+                }
+              }
+            },
+            "createdAt": "2026-11-17T18:00:00.000Z",
+            "contentHash": "31eb7d4b1d7fa7872184a12d78c489c0f84269eb684f71ad42f141dd0d499ed6"
+          },
+          "app": {
+            "schemaVersion": 5,
+            "kind": "hermod-published-app",
+            "runtime": "diagnostic-evidence",
+            "id": "street-team-operating-review",
+            "version": 2,
+            "name": "Review a street-team deployment",
+            "description": "Compare the listed promotion plans for one venue and event. Show every plan that meets the recorded requirements and let the responsible manager record a choice. Guest targets explain the costs to recover; they do not establish promotion effectiveness.",
+            "source": "{\n  \"format\": \"complete-a-commitment/1\",\n  \"module\": {\n    \"id\": \"street-team-operating-review\",\n    \"version\": \"1.1.0\",\n    \"title\": \"Review a street-team deployment\",\n    \"question\": \"Which promotion plans meet the recorded staffing, timing, access and spending requirements?\",\n    \"description\": \"Compare the listed promotion plans for one venue and event. Show every plan that meets the recorded requirements and let the responsible manager record a choice. Guest targets explain the costs to recover; they do not establish promotion effectiveness.\",\n    \"template\": {\n      \"id\": \"complete-a-commitment\",\n      \"version\": 1\n    },\n    \"units\": {\n      \"time\": \"minute\",\n      \"timeOrigin\": \"00:00 on the recorded operating date; one same-day local clock\",\n      \"money\": \"USD cent\",\n      \"count\": \"qualified staff member\"\n    },\n    \"assumptions\": [\n      \"The starter case contains fictional names, records, event details, quantities and financial amounts. Replace and review these values for the planned activity.\",\n      \"Choose one listed promotion plan before departure. The plans are alternatives; this review does not combine teams, stagger shifts or generate responses to later events.\",\n      \"Every staff member counted can cover the required inside work and remains available throughout the full team absence. Individual stations, breaks, travel staffing and other bookings are outside this review.\",\n      \"Available qualified staff equals the roster count minus unavailable staff. Required inside staffing applies throughout the full absence, not only when the team leaves.\",\n      \"Each plan quote includes its full additional cash expense. Past and already committed costs are excluded. Separate discount loss on existing customers reduces contribution but is not another cash charge for sending the team.\",\n      \"Access and spending records are treated as the complete permission register for this review. Missing, false, expired, unrelated or unsourced records do not establish permission. The manager\\u2019s choice and approval of the chosen plan are recorded separately.\",\n      \"All times are local minutes from midnight on one operating date. Event exit and customer travel times are planning inputs; they do not establish attendance or acceptance of an offer.\",\n      \"This review does not forecast additional guests, estimate response probabilities or rank expected profit. Not sending a team remains an available option; its zero expense does not make it the preferred choice.\"\n    ],\n    \"inputs\": {\n      \"parameters\": {\n        \"venueId\": {\n          \"type\": \"string\"\n        },\n        \"eventId\": {\n          \"type\": \"string\"\n        },\n        \"operatingDate\": {\n          \"type\": \"string\"\n        },\n        \"actorId\": {\n          \"type\": \"string\"\n        },\n        \"qualifiedStaff\": {\n          \"type\": \"integer\",\n          \"unit\": \"count\",\n          \"minimum\": 0\n        },\n        \"unavailableStaff\": {\n          \"type\": \"integer\",\n          \"unit\": \"count\",\n          \"minimum\": 0\n        },\n        \"minimumInside\": {\n          \"type\": \"integer\",\n          \"unit\": \"count\",\n          \"minimum\": 0\n        },\n        \"reviewMinute\": {\n          \"type\": \"integer\",\n          \"unit\": \"time\",\n          \"minimum\": 0,\n          \"maximum\": 1439\n        },\n        \"dispatchMinute\": {\n          \"type\": \"integer\",\n          \"unit\": \"time\",\n          \"minimum\": 0,\n          \"maximum\": 1439\n        },\n        \"promotionStartMinute\": {\n          \"type\": \"integer\",\n          \"unit\": \"time\",\n          \"minimum\": 0,\n          \"maximum\": 1439\n        },\n        \"eventExitMinute\": {\n          \"type\": \"integer\",\n          \"unit\": \"time\",\n          \"minimum\": 0,\n          \"maximum\": 1439\n        },\n        \"contactEndMinute\": {\n          \"type\": \"integer\",\n          \"unit\": \"time\",\n          \"minimum\": 0,\n          \"maximum\": 1439\n        },\n        \"staffReturnMinute\": {\n          \"type\": \"integer\",\n          \"unit\": \"time\",\n          \"minimum\": 0,\n          \"maximum\": 1439\n        },\n        \"customerJourneyMinutes\": {\n          \"type\": \"integer\",\n          \"unit\": \"time\",\n          \"minimum\": 0,\n          \"maximum\": 1439\n        },\n        \"latestArrivalMinute\": {\n          \"type\": \"integer\",\n          \"unit\": \"time\",\n          \"minimum\": 0,\n          \"maximum\": 1439\n        },\n        \"expenseLimitMinor\": {\n          \"type\": \"integer\",\n          \"unit\": \"money\",\n          \"minimum\": 0\n        }\n      },\n      \"tables\": {\n        \"options\": {\n          \"key\": [\n            \"id\"\n          ],\n          \"columns\": {\n            \"id\": {\n              \"type\": \"string\"\n            },\n            \"label\": {\n              \"type\": \"string\"\n            },\n            \"promoters\": {\n              \"type\": \"integer\",\n              \"unit\": \"count\",\n              \"minimum\": 0\n            },\n            \"expenseMinor\": {\n              \"type\": \"integer\",\n              \"unit\": \"money\",\n              \"minimum\": 0\n            }\n          }\n        },\n        \"scenarios\": {\n          \"key\": [\n            \"id\"\n          ],\n          \"columns\": {\n            \"id\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        \"access\": {\n          \"key\": [\n            \"id\"\n          ],\n          \"columns\": {\n            \"id\": {\n              \"type\": \"string\"\n            },\n            \"venueId\": {\n              \"type\": \"string\"\n            },\n            \"eventId\": {\n              \"type\": \"string\"\n            },\n            \"operatingDate\": {\n              \"type\": \"string\"\n            },\n            \"activity\": {\n              \"type\": \"string\"\n            },\n            \"granted\": {\n              \"type\": \"boolean\"\n            },\n            \"validFromMinute\": {\n              \"type\": \"integer\",\n              \"unit\": \"time\",\n              \"minimum\": 0,\n              \"maximum\": 1439\n            },\n            \"validThroughMinute\": {\n              \"type\": \"integer\",\n              \"unit\": \"time\",\n              \"minimum\": 0,\n              \"maximum\": 1439\n            },\n            \"source\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        \"spending\": {\n          \"key\": [\n            \"id\"\n          ],\n          \"columns\": {\n            \"id\": {\n              \"type\": \"string\"\n            },\n            \"venueId\": {\n              \"type\": \"string\"\n            },\n            \"operatingDate\": {\n              \"type\": \"string\"\n            },\n            \"actorId\": {\n              \"type\": \"string\"\n            },\n            \"ceilingMinor\": {\n              \"type\": \"integer\",\n              \"unit\": \"money\",\n              \"minimum\": 0\n            },\n            \"validFromMinute\": {\n              \"type\": \"integer\",\n              \"unit\": \"time\",\n              \"minimum\": 0,\n              \"maximum\": 1439\n            },\n            \"validThroughMinute\": {\n              \"type\": \"integer\",\n              \"unit\": \"time\",\n              \"minimum\": 0,\n              \"maximum\": 1439\n            },\n            \"source\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        \"resources\": {\n          \"key\": [\n            \"id\"\n          ],\n          \"columns\": {\n            \"id\": {\n              \"type\": \"string\"\n            },\n            \"capacity\": {\n              \"type\": \"integer\",\n              \"unit\": \"count\",\n              \"minimum\": 0\n            }\n          }\n        },\n        \"bookings\": {\n          \"key\": [\n            \"id\"\n          ],\n          \"columns\": {\n            \"id\": {\n              \"type\": \"string\"\n            },\n            \"resource\": {\n              \"type\": \"string\"\n            },\n            \"start\": {\n              \"type\": \"integer\",\n              \"unit\": \"time\",\n              \"minimum\": 0,\n              \"maximum\": 1439\n            },\n            \"end\": {\n              \"type\": \"integer\",\n              \"unit\": \"time\",\n              \"minimum\": 0,\n              \"maximum\": 1439\n            },\n            \"amount\": {\n              \"type\": \"integer\",\n              \"unit\": \"count\",\n              \"minimum\": 0\n            }\n          }\n        }\n      }\n    },\n    \"choices\": [\n      {\n        \"id\": \"deployment\",\n        \"domain\": {\n          \"values\": [\n            \"hold\",\n            \"small-standard\",\n            \"large-standard\",\n            \"large-discount\"\n          ]\n        }\n      }\n    ],\n    \"scenarioDomain\": {\n      \"table\": \"scenarios\"\n    },\n    \"lookupCoverage\": [\n      {\n        \"table\": \"options\",\n        \"keys\": {\n          \"id\": {\n            \"domain\": {\n              \"values\": [\n                \"hold\",\n                \"small-standard\",\n                \"large-standard\",\n                \"large-discount\"\n              ]\n            }\n          }\n        }\n      }\n    ],\n    \"derived\": [\n      {\n        \"id\": \"promoters\",\n        \"type\": \"integer\",\n        \"unit\": \"count\",\n        \"expr\": {\n          \"op\": \"lookup\",\n          \"table\": \"options\",\n          \"where\": {\n            \"id\": {\n              \"ref\": \"choice.deployment\"\n            }\n          },\n          \"column\": \"promoters\"\n        }\n      },\n      {\n        \"id\": \"insideStaff\",\n        \"type\": \"integer\",\n        \"unit\": \"count\",\n        \"expr\": {\n          \"op\": \"sub\",\n          \"args\": [\n            {\n              \"op\": \"sub\",\n              \"args\": [\n                {\n                  \"ref\": \"parameter.qualifiedStaff\"\n                },\n                {\n                  \"ref\": \"parameter.unavailableStaff\"\n                }\n              ]\n            },\n            {\n              \"ref\": \"derived.promoters\"\n            }\n          ]\n        }\n      },\n      {\n        \"id\": \"customerArrivalMinute\",\n        \"type\": \"integer\",\n        \"unit\": \"time\",\n        \"expr\": {\n          \"op\": \"add\",\n          \"args\": [\n            {\n              \"ref\": \"parameter.eventExitMinute\"\n            },\n            {\n              \"ref\": \"parameter.customerJourneyMinutes\"\n            }\n          ]\n        }\n      }\n    ],\n    \"activities\": [],\n    \"resources\": {\n      \"definitions\": {\n        \"table\": \"resources\",\n        \"idColumn\": \"id\",\n        \"capacityColumn\": \"capacity\"\n      },\n      \"bookings\": {\n        \"table\": \"bookings\",\n        \"resourceColumn\": \"resource\",\n        \"startColumn\": \"start\",\n        \"endColumn\": \"end\",\n        \"amountColumn\": \"amount\"\n      }\n    },\n    \"requirements\": [\n      {\n        \"id\": \"SUFFICIENCY\",\n        \"label\": \"Inside staffing\",\n        \"meaning\": \"Retain enough qualified staff for the complete absence.\",\n        \"waivable\": false\n      },\n      {\n        \"id\": \"COVERAGE\",\n        \"label\": \"Promotion plan\",\n        \"meaning\": \"Use a listed promotion plan with its stated staffing and offer.\",\n        \"waivable\": false\n      },\n      {\n        \"id\": \"ACCESS\",\n        \"label\": \"Access and spending permission\",\n        \"meaning\": \"Require current recorded permissions for this activity.\",\n        \"waivable\": false\n      },\n      {\n        \"id\": \"TIME\",\n        \"label\": \"Contact and customer arrival\",\n        \"meaning\": \"Allow time for review, team departure, contact, return and customer travel within the useful arrival window.\",\n        \"waivable\": false\n      },\n      {\n        \"id\": \"COST\",\n        \"label\": \"Additional spending limit\",\n        \"meaning\": \"Keep the plan\\u2019s full additional expense within the recorded limit.\",\n        \"waivable\": false\n      }\n    ],\n    \"constraints\": [\n      {\n        \"id\": \"published-option-structure\",\n        \"requirement\": \"COVERAGE\",\n        \"kind\": \"predicate\",\n        \"predicate\": {\n          \"op\": \"or\",\n          \"args\": [\n            {\n              \"op\": \"and\",\n              \"args\": [\n                {\n                  \"op\": \"eq\",\n                  \"args\": [\n                    {\n                      \"ref\": \"choice.deployment\"\n                    },\n                    {\n                      \"literal\": \"hold\"\n                    }\n                  ]\n                },\n                {\n                  \"op\": \"eq\",\n                  \"args\": [\n                    {\n                      \"op\": \"lookup\",\n                      \"table\": \"options\",\n                      \"where\": {\n                        \"id\": {\n                          \"ref\": \"choice.deployment\"\n                        }\n                      },\n                      \"column\": \"promoters\"\n                    },\n                    {\n                      \"literal\": 0\n                    }\n                  ]\n                },\n                {\n                  \"op\": \"eq\",\n                  \"args\": [\n                    {\n                      \"op\": \"lookup\",\n                      \"table\": \"options\",\n                      \"where\": {\n                        \"id\": {\n                          \"ref\": \"choice.deployment\"\n                        }\n                      },\n                      \"column\": \"expenseMinor\"\n                    },\n                    {\n                      \"literal\": 0\n                    }\n                  ]\n                }\n              ]\n            },\n            {\n              \"op\": \"and\",\n              \"args\": [\n                {\n                  \"op\": \"eq\",\n                  \"args\": [\n                    {\n                      \"ref\": \"choice.deployment\"\n                    },\n                    {\n                      \"literal\": \"small-standard\"\n                    }\n                  ]\n                },\n                {\n                  \"op\": \"eq\",\n                  \"args\": [\n                    {\n                      \"op\": \"lookup\",\n                      \"table\": \"options\",\n                      \"where\": {\n                        \"id\": {\n                          \"ref\": \"choice.deployment\"\n                        }\n                      },\n                      \"column\": \"promoters\"\n                    },\n                    {\n                      \"literal\": 1\n                    }\n                  ]\n                }\n              ]\n            },\n            {\n              \"op\": \"and\",\n              \"args\": [\n                {\n                  \"op\": \"eq\",\n                  \"args\": [\n                    {\n                      \"ref\": \"choice.deployment\"\n                    },\n                    {\n                      \"literal\": \"large-standard\"\n                    }\n                  ]\n                },\n                {\n                  \"op\": \"eq\",\n                  \"args\": [\n                    {\n                      \"op\": \"lookup\",\n                      \"table\": \"options\",\n                      \"where\": {\n                        \"id\": {\n                          \"ref\": \"choice.deployment\"\n                        }\n                      },\n                      \"column\": \"promoters\"\n                    },\n                    {\n                      \"literal\": 2\n                    }\n                  ]\n                }\n              ]\n            },\n            {\n              \"op\": \"and\",\n              \"args\": [\n                {\n                  \"op\": \"eq\",\n                  \"args\": [\n                    {\n                      \"ref\": \"choice.deployment\"\n                    },\n                    {\n                      \"literal\": \"large-discount\"\n                    }\n                  ]\n                },\n                {\n                  \"op\": \"eq\",\n                  \"args\": [\n                    {\n                      \"op\": \"lookup\",\n                      \"table\": \"options\",\n                      \"where\": {\n                        \"id\": {\n                          \"ref\": \"choice.deployment\"\n                        }\n                      },\n                      \"column\": \"promoters\"\n                    },\n                    {\n                      \"literal\": 2\n                    }\n                  ]\n                }\n              ]\n            }\n          ]\n        }\n      },\n      {\n        \"id\": \"staffing-coverage\",\n        \"requirement\": \"SUFFICIENCY\",\n        \"kind\": \"predicate\",\n        \"predicate\": {\n          \"op\": \"gte\",\n          \"args\": [\n            {\n              \"ref\": \"derived.insideStaff\"\n            },\n            {\n              \"ref\": \"parameter.minimumInside\"\n            }\n          ]\n        }\n      },\n      {\n        \"id\": \"staffing-register\",\n        \"requirement\": \"SUFFICIENCY\",\n        \"kind\": \"predicate\",\n        \"predicate\": {\n          \"op\": \"lte\",\n          \"args\": [\n            {\n              \"ref\": \"parameter.unavailableStaff\"\n            },\n            {\n              \"ref\": \"parameter.qualifiedStaff\"\n            }\n          ]\n        }\n      },\n      {\n        \"id\": \"event-access\",\n        \"requirement\": \"ACCESS\",\n        \"kind\": \"predicate\",\n        \"predicate\": {\n          \"op\": \"or\",\n          \"args\": [\n            {\n              \"op\": \"eq\",\n              \"args\": [\n                {\n                  \"ref\": \"choice.deployment\"\n                },\n                {\n                  \"literal\": \"hold\"\n                }\n              ]\n            },\n            {\n              \"op\": \"exists\",\n              \"table\": \"access\",\n              \"where\": {\n                \"venueId\": {\n                  \"ref\": \"parameter.venueId\"\n                },\n                \"eventId\": {\n                  \"ref\": \"parameter.eventId\"\n                },\n                \"operatingDate\": {\n                  \"ref\": \"parameter.operatingDate\"\n                },\n                \"activity\": {\n                  \"literal\": \"street-promotion\"\n                }\n              },\n              \"test\": {\n                \"op\": \"and\",\n                \"args\": [\n                  {\n                    \"ref\": \"row.granted\"\n                  },\n                  {\n                    \"op\": \"ne\",\n                    \"args\": [\n                      {\n                        \"ref\": \"row.source\"\n                      },\n                      {\n                        \"literal\": \"\"\n                      }\n                    ]\n                  },\n                  {\n                    \"op\": \"lte\",\n                    \"args\": [\n                      {\n                        \"ref\": \"row.validFromMinute\"\n                      },\n                      {\n                        \"ref\": \"parameter.promotionStartMinute\"\n                      }\n                    ]\n                  },\n                  {\n                    \"op\": \"gte\",\n                    \"args\": [\n                      {\n                        \"ref\": \"row.validThroughMinute\"\n                      },\n                      {\n                        \"ref\": \"parameter.contactEndMinute\"\n                      }\n                    ]\n                  }\n                ]\n              }\n            }\n          ]\n        }\n      },\n      {\n        \"id\": \"spending-permission\",\n        \"requirement\": \"ACCESS\",\n        \"kind\": \"predicate\",\n        \"predicate\": {\n          \"op\": \"or\",\n          \"args\": [\n            {\n              \"op\": \"eq\",\n              \"args\": [\n                {\n                  \"ref\": \"choice.deployment\"\n                },\n                {\n                  \"literal\": \"hold\"\n                }\n              ]\n            },\n            {\n              \"op\": \"exists\",\n              \"table\": \"spending\",\n              \"where\": {\n                \"venueId\": {\n                  \"ref\": \"parameter.venueId\"\n                },\n                \"operatingDate\": {\n                  \"ref\": \"parameter.operatingDate\"\n                },\n                \"actorId\": {\n                  \"ref\": \"parameter.actorId\"\n                }\n              },\n              \"test\": {\n                \"op\": \"and\",\n                \"args\": [\n                  {\n                    \"op\": \"ne\",\n                    \"args\": [\n                      {\n                        \"ref\": \"row.source\"\n                      },\n                      {\n                        \"literal\": \"\"\n                      }\n                    ]\n                  },\n                  {\n                    \"op\": \"gte\",\n                    \"args\": [\n                      {\n                        \"ref\": \"row.ceilingMinor\"\n                      },\n                      {\n                        \"ref\": \"finance.expense\"\n                      }\n                    ]\n                  },\n                  {\n                    \"op\": \"lte\",\n                    \"args\": [\n                      {\n                        \"ref\": \"row.validFromMinute\"\n                      },\n                      {\n                        \"ref\": \"parameter.dispatchMinute\"\n                      }\n                    ]\n                  },\n                  {\n                    \"op\": \"gte\",\n                    \"args\": [\n                      {\n                        \"ref\": \"row.validThroughMinute\"\n                      },\n                      {\n                        \"ref\": \"parameter.staffReturnMinute\"\n                      }\n                    ]\n                  }\n                ]\n              }\n            }\n          ]\n        }\n      },\n      {\n        \"id\": \"dispatch-timing\",\n        \"requirement\": \"TIME\",\n        \"kind\": \"predicate\",\n        \"predicate\": {\n          \"op\": \"or\",\n          \"args\": [\n            {\n              \"op\": \"eq\",\n              \"args\": [\n                {\n                  \"ref\": \"choice.deployment\"\n                },\n                {\n                  \"literal\": \"hold\"\n                }\n              ]\n            },\n            {\n              \"op\": \"and\",\n              \"args\": [\n                {\n                  \"op\": \"gte\",\n                  \"args\": [\n                    {\n                      \"ref\": \"parameter.dispatchMinute\"\n                    },\n                    {\n                      \"ref\": \"parameter.reviewMinute\"\n                    }\n                  ]\n                },\n                {\n                  \"op\": \"lte\",\n                  \"args\": [\n                    {\n                      \"ref\": \"parameter.dispatchMinute\"\n                    },\n                    {\n                      \"ref\": \"parameter.promotionStartMinute\"\n                    }\n                  ]\n                }\n              ]\n            }\n          ]\n        }\n      },\n      {\n        \"id\": \"contact-window\",\n        \"requirement\": \"TIME\",\n        \"kind\": \"predicate\",\n        \"predicate\": {\n          \"op\": \"or\",\n          \"args\": [\n            {\n              \"op\": \"eq\",\n              \"args\": [\n                {\n                  \"ref\": \"choice.deployment\"\n                },\n                {\n                  \"literal\": \"hold\"\n                }\n              ]\n            },\n            {\n              \"op\": \"and\",\n              \"args\": [\n                {\n                  \"op\": \"lte\",\n                  \"args\": [\n                    {\n                      \"ref\": \"parameter.promotionStartMinute\"\n                    },\n                    {\n                      \"ref\": \"parameter.eventExitMinute\"\n                    }\n                  ]\n                },\n                {\n                  \"op\": \"lte\",\n                  \"args\": [\n                    {\n                      \"ref\": \"parameter.eventExitMinute\"\n                    },\n                    {\n                      \"ref\": \"parameter.contactEndMinute\"\n                    }\n                  ]\n                }\n              ]\n            }\n          ]\n        }\n      },\n      {\n        \"id\": \"useful-arrival\",\n        \"requirement\": \"TIME\",\n        \"kind\": \"predicate\",\n        \"predicate\": {\n          \"op\": \"or\",\n          \"args\": [\n            {\n              \"op\": \"eq\",\n              \"args\": [\n                {\n                  \"ref\": \"choice.deployment\"\n                },\n                {\n                  \"literal\": \"hold\"\n                }\n              ]\n            },\n            {\n              \"op\": \"lte\",\n              \"args\": [\n                {\n                  \"ref\": \"derived.customerArrivalMinute\"\n                },\n                {\n                  \"ref\": \"parameter.latestArrivalMinute\"\n                }\n              ]\n            }\n          ]\n        }\n      },\n      {\n        \"id\": \"staff-return\",\n        \"requirement\": \"TIME\",\n        \"kind\": \"predicate\",\n        \"predicate\": {\n          \"op\": \"or\",\n          \"args\": [\n            {\n              \"op\": \"eq\",\n              \"args\": [\n                {\n                  \"ref\": \"choice.deployment\"\n                },\n                {\n                  \"literal\": \"hold\"\n                }\n              ]\n            },\n            {\n              \"op\": \"gte\",\n              \"args\": [\n                {\n                  \"ref\": \"parameter.staffReturnMinute\"\n                },\n                {\n                  \"ref\": \"parameter.contactEndMinute\"\n                }\n              ]\n            }\n          ]\n        }\n      },\n      {\n        \"id\": \"expense-limit\",\n        \"requirement\": \"COST\",\n        \"kind\": \"predicate\",\n        \"predicate\": {\n          \"op\": \"lte\",\n          \"args\": [\n            {\n              \"ref\": \"finance.expense\"\n            },\n            {\n              \"ref\": \"parameter.expenseLimitMinor\"\n            }\n          ]\n        }\n      }\n    ],\n    \"finance\": {\n      \"mode\": \"expense\",\n      \"charges\": [\n        {\n          \"id\": \"complete-deployment-charge\",\n          \"amount\": {\n            \"op\": \"lookup\",\n            \"table\": \"options\",\n            \"where\": {\n              \"id\": {\n                \"ref\": \"choice.deployment\"\n              }\n            },\n            \"column\": \"expenseMinor\"\n          }\n        }\n      ],\n      \"holds\": []\n    },\n    \"preference\": {\n      \"mode\": \"feasibility-only\"\n    },\n    \"labels\": {\n      \"plan\": \"Promotion plan\",\n      \"expense\": \"Additional promotion expense\",\n      \"choice.deployment\": \"Promotion plan\",\n      \"derived.promoters\": \"Promotion team members\",\n      \"derived.insideStaff\": \"Qualified staff remaining inside\",\n      \"derived.customerArrivalMinute\": \"Planned guest arrival time\",\n      \"constraint.published-option-structure\": \"Use one of the four listed promotion plans\",\n      \"constraint.staffing-coverage\": \"Keep the required qualified staff inside throughout the team\\u2019s absence\",\n      \"constraint.staffing-register\": \"Keep the unavailable staff count within the qualified roster\",\n      \"constraint.event-access\": \"Record permission for this event, date and promotion window\",\n      \"constraint.spending-permission\": \"Record spending authority covering the responsible manager, operating date and full cost\",\n      \"constraint.dispatch-timing\": \"Complete the review before team departure and the promotion start\",\n      \"constraint.contact-window\": \"Reach departing event guests before the contact window closes\",\n      \"constraint.useful-arrival\": \"Allow enough travel time for interested guests to arrive within the useful window\",\n      \"constraint.staff-return\": \"Keep staffing covered until the team returns after the contact window\",\n      \"constraint.expense-limit\": \"Keep the plan\\u2019s full additional expense within the spending limit\"\n    },\n    \"metadata\": {\n      \"catalog\": {\n        \"domain\": {\n          \"id\": \"venue-operations\",\n          \"label\": \"Venue operations\"\n        },\n        \"useCase\": {\n          \"id\": \"deploy-street-team\",\n          \"label\": \"Review a street-team deployment\"\n        }\n      },\n      \"decisionPresentation\": {\n        \"format\": \"decision-presentation/1\",\n        \"title\": \"Promotion plans\",\n        \"question\": \"Which promotion plans meet the recorded requirements?\",\n        \"priorityLabel\": \"Shows which plans meet the recorded requirements. The manager records the choice separately.\",\n        \"moneyFormat\": {\n          \"currency\": \"USD\",\n          \"divisor\": 100\n        },\n        \"columns\": [\n          {\n            \"id\": \"deployment\",\n            \"source\": \"choice:deployment\",\n            \"label\": \"Promotion plan\",\n            \"valueLabels\": {\n              \"hold\": \"Do not send a promotion team\",\n              \"small-standard\": \"One-person promotion\",\n              \"large-standard\": \"Two-person promotion\",\n              \"large-discount\": \"Two-person discounted promotion\"\n            }\n          },\n          {\n            \"id\": \"status\",\n            \"source\": \"status\"\n          },\n          {\n            \"id\": \"inside\",\n            \"source\": {\n              \"kind\": \"derived\",\n              \"id\": \"insideStaff\"\n            },\n            \"label\": \"Qualified staff remaining inside\",\n            \"format\": {\n              \"kind\": \"number\"\n            }\n          },\n          {\n            \"id\": \"expense\",\n            \"source\": \"expense\",\n            \"label\": \"Additional expense\"\n          },\n          {\n            \"id\": \"blockers\",\n            \"source\": \"blockers\"\n          }\n        ]\n      }\n    }\n  },\n  \"case\": {\n    \"id\": \"street-team-friday\",\n    \"parameters\": {\n      \"venueId\": \"VENUE-SAM\",\n      \"eventId\": \"EVENT-1120\",\n      \"operatingDate\": \"2026-11-20\",\n      \"actorId\": \"Sam\",\n      \"qualifiedStaff\": 7,\n      \"unavailableStaff\": 0,\n      \"minimumInside\": 4,\n      \"reviewMinute\": 1170,\n      \"dispatchMinute\": 1185,\n      \"promotionStartMinute\": 1200,\n      \"eventExitMinute\": 1215,\n      \"contactEndMinute\": 1245,\n      \"staffReturnMinute\": 1260,\n      \"customerJourneyMinutes\": 30,\n      \"latestArrivalMinute\": 1275,\n      \"expenseLimitMinor\": 40000\n    },\n    \"tables\": {\n      \"options\": [\n        {\n          \"id\": \"hold\",\n          \"label\": \"Do not send a promotion team\",\n          \"promoters\": 0,\n          \"expenseMinor\": 0\n        },\n        {\n          \"id\": \"small-standard\",\n          \"label\": \"One-person promotion\",\n          \"promoters\": 1,\n          \"expenseMinor\": 20000\n        },\n        {\n          \"id\": \"large-standard\",\n          \"label\": \"Two-person promotion\",\n          \"promoters\": 2,\n          \"expenseMinor\": 40000\n        },\n        {\n          \"id\": \"large-discount\",\n          \"label\": \"Two-person discounted promotion\",\n          \"promoters\": 2,\n          \"expenseMinor\": 40000\n        }\n      ],\n      \"scenarios\": [\n        {\n          \"id\": \"declared-evening\"\n        }\n      ],\n      \"access\": [\n        {\n          \"id\": \"ACCESS-1120\",\n          \"venueId\": \"VENUE-SAM\",\n          \"eventId\": \"EVENT-1120\",\n          \"operatingDate\": \"2026-11-20\",\n          \"activity\": \"street-promotion\",\n          \"granted\": true,\n          \"validFromMinute\": 1200,\n          \"validThroughMinute\": 1260,\n          \"source\": \"Fictional event organizer access record ACCESS-1120\"\n        }\n      ],\n      \"spending\": [\n        {\n          \"id\": \"BUDGET-1120\",\n          \"venueId\": \"VENUE-SAM\",\n          \"operatingDate\": \"2026-11-20\",\n          \"actorId\": \"Sam\",\n          \"ceilingMinor\": 40000,\n          \"validFromMinute\": 1170,\n          \"validThroughMinute\": 1260,\n          \"source\": \"Fictional delegated spending-limit record BUDGET-1120\"\n        }\n      ],\n      \"resources\": [],\n      \"bookings\": []\n    },\n    \"provenance\": [\n      {\n        \"source\": \"Fictional tutorial snapshot; review each current record before use.\"\n      }\n    ]\n  }\n}\n",
+            "sourceHash": "5a65e8f16cd15ddf622b7f76d63a79e566bbe462fcb9edf91f5f28e0f247d97c",
+            "definitionHash": "681928cdfc0f220a5a206dfbabd76b2bb410406cbba7afc4fbbff0dae9831972",
+            "definitionContract": {
+              "id": "complete-a-commitment",
+              "version": "1.0.0",
+              "evaluator": "bounded-static-commitment/1",
+              "title": "Complete a commitment",
+              "responsibility": "Find one complete static operating choice that satisfies every mandatory obligation across every explicitly admitted joint scenario, then compare feasible choices.",
+              "invariants": [
+                "Choices are finite, input-only controls. One complete assignment is shared across every admitted scenario and obligation.",
+                "Admitted joint scenarios are explicit facts; neither independence, probabilities nor unlisted scenarios are inferred.",
+                "An empty admitted basis is inconsistent, never a vacuous feasibility result.",
+                "Typed acyclic expressions separate static controls, scenario consequences and post-scenario preference aggregates.",
+                "Activities, calendars, bookings and permission validity use half-open intervals; adjacent intervals do not overlap.",
+                "Capacity is the sum of simultaneous renewable demands. A scoped grant must cover its entire required operation.",
+                "Expense sums nonrefundable charges. Refundable holds affect cash only; simultaneous cash events are netted before peak cash is measured.",
+                "Every mandatory condition must pass for the same choice in every admitted scenario. Preference cannot compensate for failure.",
+                "Ranking is lexicographic over feasible choices only; genuine ties are retained and identifiers only stabilize display order.",
+                "A fully checked witness establishes existence during partial search. No-plan and optimality claims require complete relevant coverage.",
+                "Missing data, unresolved lookups, unsafe arithmetic and unsupported declarations are invalid input, never invented facts.",
+                "Calculated feasibility is conditional on accepted facts and fixed assumptions, not permission, reservation or evidence of actual completion."
+              ],
+              "expressionLanguage": {
+                "id": "typed-static-commitment-expressions/1",
+                "literals": "Finite scalar or homogeneous scalar-array data; no executable code.",
+                "references": [
+                  "parameter",
+                  "choice",
+                  "scenario",
+                  "derived",
+                  "activity",
+                  "finance",
+                  "row (inside exists.test)"
+                ],
+                "operators": {
+                  "eq": "Two compatible scalars -> boolean",
+                  "ne": "Two compatible scalars -> boolean",
+                  "lt": "Two compatible numbers -> boolean",
+                  "lte": "Two compatible numbers -> boolean",
+                  "gt": "Two compatible numbers -> boolean",
+                  "gte": "Two compatible numbers -> boolean",
+                  "add": "At least two compatible numbers -> number",
+                  "sub": "Two compatible numbers -> number",
+                  "mul": "Two numbers with at most one dimensional operand -> number; count is a multiplicity",
+                  "and": "At least two booleans -> boolean",
+                  "or": "At least two booleans -> boolean",
+                  "not": "One boolean -> boolean",
+                  "in": "Scalar and compatible scalar-array -> boolean",
+                  "lookup": "Complete primary-key binding in a typed input table -> exactly one selected scalar; missing or ambiguous lookup is invalid",
+                  "exists": "Typed equality bindings plus optional row-scoped predicate -> boolean; no match is false",
+                  "interval-covered": "Typed selected calendar rows and a positive half-open interval -> boolean; adjacent coverage may combine",
+                  "worst-case": "Numeric expression -> maximum across admitted scenarios for preference only; nested or unreduced scenario aggregates are invalid"
+                }
+              }
+            },
+            "model": {
+              "format": "complete-a-commitment/1",
+              "module": {
+                "id": "street-team-operating-review",
+                "version": "1.1.0",
+                "title": "Review a street-team deployment",
+                "question": "Which promotion plans meet the recorded staffing, timing, access and spending requirements?",
+                "description": "Compare the listed promotion plans for one venue and event. Show every plan that meets the recorded requirements and let the responsible manager record a choice. Guest targets explain the costs to recover; they do not establish promotion effectiveness.",
+                "template": {
+                  "id": "complete-a-commitment",
+                  "version": 1
+                },
+                "units": {
+                  "time": "minute",
+                  "timeOrigin": "00:00 on the recorded operating date; one same-day local clock",
+                  "money": "USD cent",
+                  "count": "qualified staff member"
+                },
+                "assumptions": [
+                  "The starter case contains fictional names, records, event details, quantities and financial amounts. Replace and review these values for the planned activity.",
+                  "Choose one listed promotion plan before departure. The plans are alternatives; this review does not combine teams, stagger shifts or generate responses to later events.",
+                  "Every staff member counted can cover the required inside work and remains available throughout the full team absence. Individual stations, breaks, travel staffing and other bookings are outside this review.",
+                  "Available qualified staff equals the roster count minus unavailable staff. Required inside staffing applies throughout the full absence, not only when the team leaves.",
+                  "Each plan quote includes its full additional cash expense. Past and already committed costs are excluded. Separate discount loss on existing customers reduces contribution but is not another cash charge for sending the team.",
+                  "Access and spending records are treated as the complete permission register for this review. Missing, false, expired, unrelated or unsourced records do not establish permission. The manager’s choice and approval of the chosen plan are recorded separately.",
+                  "All times are local minutes from midnight on one operating date. Event exit and customer travel times are planning inputs; they do not establish attendance or acceptance of an offer.",
+                  "This review does not forecast additional guests, estimate response probabilities or rank expected profit. Not sending a team remains an available option; its zero expense does not make it the preferred choice."
+                ],
+                "inputs": {
+                  "parameters": {
+                    "venueId": {
+                      "type": "string"
+                    },
+                    "eventId": {
+                      "type": "string"
+                    },
+                    "operatingDate": {
+                      "type": "string"
+                    },
+                    "actorId": {
+                      "type": "string"
+                    },
+                    "qualifiedStaff": {
+                      "type": "integer",
+                      "unit": "count",
+                      "minimum": 0
+                    },
+                    "unavailableStaff": {
+                      "type": "integer",
+                      "unit": "count",
+                      "minimum": 0
+                    },
+                    "minimumInside": {
+                      "type": "integer",
+                      "unit": "count",
+                      "minimum": 0
+                    },
+                    "reviewMinute": {
+                      "type": "integer",
+                      "unit": "time",
+                      "minimum": 0,
+                      "maximum": 1439
+                    },
+                    "dispatchMinute": {
+                      "type": "integer",
+                      "unit": "time",
+                      "minimum": 0,
+                      "maximum": 1439
+                    },
+                    "promotionStartMinute": {
+                      "type": "integer",
+                      "unit": "time",
+                      "minimum": 0,
+                      "maximum": 1439
+                    },
+                    "eventExitMinute": {
+                      "type": "integer",
+                      "unit": "time",
+                      "minimum": 0,
+                      "maximum": 1439
+                    },
+                    "contactEndMinute": {
+                      "type": "integer",
+                      "unit": "time",
+                      "minimum": 0,
+                      "maximum": 1439
+                    },
+                    "staffReturnMinute": {
+                      "type": "integer",
+                      "unit": "time",
+                      "minimum": 0,
+                      "maximum": 1439
+                    },
+                    "customerJourneyMinutes": {
+                      "type": "integer",
+                      "unit": "time",
+                      "minimum": 0,
+                      "maximum": 1439
+                    },
+                    "latestArrivalMinute": {
+                      "type": "integer",
+                      "unit": "time",
+                      "minimum": 0,
+                      "maximum": 1439
+                    },
+                    "expenseLimitMinor": {
+                      "type": "integer",
+                      "unit": "money",
+                      "minimum": 0
+                    }
+                  },
+                  "tables": {
+                    "options": {
+                      "key": [
+                        "id"
+                      ],
+                      "columns": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "promoters": {
+                          "type": "integer",
+                          "unit": "count",
+                          "minimum": 0
+                        },
+                        "expenseMinor": {
+                          "type": "integer",
+                          "unit": "money",
+                          "minimum": 0
+                        }
+                      }
+                    },
+                    "scenarios": {
+                      "key": [
+                        "id"
+                      ],
+                      "columns": {
+                        "id": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "access": {
+                      "key": [
+                        "id"
+                      ],
+                      "columns": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "venueId": {
+                          "type": "string"
+                        },
+                        "eventId": {
+                          "type": "string"
+                        },
+                        "operatingDate": {
+                          "type": "string"
+                        },
+                        "activity": {
+                          "type": "string"
+                        },
+                        "granted": {
+                          "type": "boolean"
+                        },
+                        "validFromMinute": {
+                          "type": "integer",
+                          "unit": "time",
+                          "minimum": 0,
+                          "maximum": 1439
+                        },
+                        "validThroughMinute": {
+                          "type": "integer",
+                          "unit": "time",
+                          "minimum": 0,
+                          "maximum": 1439
+                        },
+                        "source": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "spending": {
+                      "key": [
+                        "id"
+                      ],
+                      "columns": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "venueId": {
+                          "type": "string"
+                        },
+                        "operatingDate": {
+                          "type": "string"
+                        },
+                        "actorId": {
+                          "type": "string"
+                        },
+                        "ceilingMinor": {
+                          "type": "integer",
+                          "unit": "money",
+                          "minimum": 0
+                        },
+                        "validFromMinute": {
+                          "type": "integer",
+                          "unit": "time",
+                          "minimum": 0,
+                          "maximum": 1439
+                        },
+                        "validThroughMinute": {
+                          "type": "integer",
+                          "unit": "time",
+                          "minimum": 0,
+                          "maximum": 1439
+                        },
+                        "source": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "resources": {
+                      "key": [
+                        "id"
+                      ],
+                      "columns": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "capacity": {
+                          "type": "integer",
+                          "unit": "count",
+                          "minimum": 0
+                        }
+                      }
+                    },
+                    "bookings": {
+                      "key": [
+                        "id"
+                      ],
+                      "columns": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "resource": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "unit": "time",
+                          "minimum": 0,
+                          "maximum": 1439
+                        },
+                        "end": {
+                          "type": "integer",
+                          "unit": "time",
+                          "minimum": 0,
+                          "maximum": 1439
+                        },
+                        "amount": {
+                          "type": "integer",
+                          "unit": "count",
+                          "minimum": 0
+                        }
+                      }
+                    }
+                  }
+                },
+                "choices": [
+                  {
+                    "id": "deployment",
+                    "domain": {
+                      "values": [
+                        "hold",
+                        "small-standard",
+                        "large-standard",
+                        "large-discount"
+                      ]
+                    }
+                  }
+                ],
+                "scenarioDomain": {
+                  "table": "scenarios"
+                },
+                "lookupCoverage": [
+                  {
+                    "table": "options",
+                    "keys": {
+                      "id": {
+                        "domain": {
+                          "values": [
+                            "hold",
+                            "small-standard",
+                            "large-standard",
+                            "large-discount"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ],
+                "derived": [
+                  {
+                    "id": "promoters",
+                    "type": "integer",
+                    "unit": "count",
+                    "expr": {
+                      "op": "lookup",
+                      "table": "options",
+                      "where": {
+                        "id": {
+                          "ref": "choice.deployment"
+                        }
+                      },
+                      "column": "promoters"
+                    }
+                  },
+                  {
+                    "id": "insideStaff",
+                    "type": "integer",
+                    "unit": "count",
+                    "expr": {
+                      "op": "sub",
+                      "args": [
+                        {
+                          "op": "sub",
+                          "args": [
+                            {
+                              "ref": "parameter.qualifiedStaff"
+                            },
+                            {
+                              "ref": "parameter.unavailableStaff"
+                            }
+                          ]
+                        },
+                        {
+                          "ref": "derived.promoters"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "customerArrivalMinute",
+                    "type": "integer",
+                    "unit": "time",
+                    "expr": {
+                      "op": "add",
+                      "args": [
+                        {
+                          "ref": "parameter.eventExitMinute"
+                        },
+                        {
+                          "ref": "parameter.customerJourneyMinutes"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "activities": [],
+                "resources": {
+                  "definitions": {
+                    "table": "resources",
+                    "idColumn": "id",
+                    "capacityColumn": "capacity"
+                  },
+                  "bookings": {
+                    "table": "bookings",
+                    "resourceColumn": "resource",
+                    "startColumn": "start",
+                    "endColumn": "end",
+                    "amountColumn": "amount"
+                  }
+                },
+                "requirements": [
+                  {
+                    "id": "SUFFICIENCY",
+                    "label": "Inside staffing",
+                    "meaning": "Retain enough qualified staff for the complete absence.",
+                    "waivable": false
+                  },
+                  {
+                    "id": "COVERAGE",
+                    "label": "Promotion plan",
+                    "meaning": "Use a listed promotion plan with its stated staffing and offer.",
+                    "waivable": false
+                  },
+                  {
+                    "id": "ACCESS",
+                    "label": "Access and spending permission",
+                    "meaning": "Require current recorded permissions for this activity.",
+                    "waivable": false
+                  },
+                  {
+                    "id": "TIME",
+                    "label": "Contact and customer arrival",
+                    "meaning": "Allow time for review, team departure, contact, return and customer travel within the useful arrival window.",
+                    "waivable": false
+                  },
+                  {
+                    "id": "COST",
+                    "label": "Additional spending limit",
+                    "meaning": "Keep the plan’s full additional expense within the recorded limit.",
+                    "waivable": false
+                  }
+                ],
+                "constraints": [
+                  {
+                    "id": "published-option-structure",
+                    "requirement": "COVERAGE",
+                    "kind": "predicate",
+                    "predicate": {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "ref": "choice.deployment"
+                                },
+                                {
+                                  "literal": "hold"
+                                }
+                              ]
+                            },
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "op": "lookup",
+                                  "table": "options",
+                                  "where": {
+                                    "id": {
+                                      "ref": "choice.deployment"
+                                    }
+                                  },
+                                  "column": "promoters"
+                                },
+                                {
+                                  "literal": 0
+                                }
+                              ]
+                            },
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "op": "lookup",
+                                  "table": "options",
+                                  "where": {
+                                    "id": {
+                                      "ref": "choice.deployment"
+                                    }
+                                  },
+                                  "column": "expenseMinor"
+                                },
+                                {
+                                  "literal": 0
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "ref": "choice.deployment"
+                                },
+                                {
+                                  "literal": "small-standard"
+                                }
+                              ]
+                            },
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "op": "lookup",
+                                  "table": "options",
+                                  "where": {
+                                    "id": {
+                                      "ref": "choice.deployment"
+                                    }
+                                  },
+                                  "column": "promoters"
+                                },
+                                {
+                                  "literal": 1
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "ref": "choice.deployment"
+                                },
+                                {
+                                  "literal": "large-standard"
+                                }
+                              ]
+                            },
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "op": "lookup",
+                                  "table": "options",
+                                  "where": {
+                                    "id": {
+                                      "ref": "choice.deployment"
+                                    }
+                                  },
+                                  "column": "promoters"
+                                },
+                                {
+                                  "literal": 2
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "ref": "choice.deployment"
+                                },
+                                {
+                                  "literal": "large-discount"
+                                }
+                              ]
+                            },
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "op": "lookup",
+                                  "table": "options",
+                                  "where": {
+                                    "id": {
+                                      "ref": "choice.deployment"
+                                    }
+                                  },
+                                  "column": "promoters"
+                                },
+                                {
+                                  "literal": 2
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "staffing-coverage",
+                    "requirement": "SUFFICIENCY",
+                    "kind": "predicate",
+                    "predicate": {
+                      "op": "gte",
+                      "args": [
+                        {
+                          "ref": "derived.insideStaff"
+                        },
+                        {
+                          "ref": "parameter.minimumInside"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "staffing-register",
+                    "requirement": "SUFFICIENCY",
+                    "kind": "predicate",
+                    "predicate": {
+                      "op": "lte",
+                      "args": [
+                        {
+                          "ref": "parameter.unavailableStaff"
+                        },
+                        {
+                          "ref": "parameter.qualifiedStaff"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "event-access",
+                    "requirement": "ACCESS",
+                    "kind": "predicate",
+                    "predicate": {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "choice.deployment"
+                            },
+                            {
+                              "literal": "hold"
+                            }
+                          ]
+                        },
+                        {
+                          "op": "exists",
+                          "table": "access",
+                          "where": {
+                            "venueId": {
+                              "ref": "parameter.venueId"
+                            },
+                            "eventId": {
+                              "ref": "parameter.eventId"
+                            },
+                            "operatingDate": {
+                              "ref": "parameter.operatingDate"
+                            },
+                            "activity": {
+                              "literal": "street-promotion"
+                            }
+                          },
+                          "test": {
+                            "op": "and",
+                            "args": [
+                              {
+                                "ref": "row.granted"
+                              },
+                              {
+                                "op": "ne",
+                                "args": [
+                                  {
+                                    "ref": "row.source"
+                                  },
+                                  {
+                                    "literal": ""
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "lte",
+                                "args": [
+                                  {
+                                    "ref": "row.validFromMinute"
+                                  },
+                                  {
+                                    "ref": "parameter.promotionStartMinute"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "gte",
+                                "args": [
+                                  {
+                                    "ref": "row.validThroughMinute"
+                                  },
+                                  {
+                                    "ref": "parameter.contactEndMinute"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "spending-permission",
+                    "requirement": "ACCESS",
+                    "kind": "predicate",
+                    "predicate": {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "choice.deployment"
+                            },
+                            {
+                              "literal": "hold"
+                            }
+                          ]
+                        },
+                        {
+                          "op": "exists",
+                          "table": "spending",
+                          "where": {
+                            "venueId": {
+                              "ref": "parameter.venueId"
+                            },
+                            "operatingDate": {
+                              "ref": "parameter.operatingDate"
+                            },
+                            "actorId": {
+                              "ref": "parameter.actorId"
+                            }
+                          },
+                          "test": {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "ne",
+                                "args": [
+                                  {
+                                    "ref": "row.source"
+                                  },
+                                  {
+                                    "literal": ""
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "gte",
+                                "args": [
+                                  {
+                                    "ref": "row.ceilingMinor"
+                                  },
+                                  {
+                                    "ref": "finance.expense"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "lte",
+                                "args": [
+                                  {
+                                    "ref": "row.validFromMinute"
+                                  },
+                                  {
+                                    "ref": "parameter.dispatchMinute"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "gte",
+                                "args": [
+                                  {
+                                    "ref": "row.validThroughMinute"
+                                  },
+                                  {
+                                    "ref": "parameter.staffReturnMinute"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "dispatch-timing",
+                    "requirement": "TIME",
+                    "kind": "predicate",
+                    "predicate": {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "choice.deployment"
+                            },
+                            {
+                              "literal": "hold"
+                            }
+                          ]
+                        },
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "gte",
+                              "args": [
+                                {
+                                  "ref": "parameter.dispatchMinute"
+                                },
+                                {
+                                  "ref": "parameter.reviewMinute"
+                                }
+                              ]
+                            },
+                            {
+                              "op": "lte",
+                              "args": [
+                                {
+                                  "ref": "parameter.dispatchMinute"
+                                },
+                                {
+                                  "ref": "parameter.promotionStartMinute"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "contact-window",
+                    "requirement": "TIME",
+                    "kind": "predicate",
+                    "predicate": {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "choice.deployment"
+                            },
+                            {
+                              "literal": "hold"
+                            }
+                          ]
+                        },
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "lte",
+                              "args": [
+                                {
+                                  "ref": "parameter.promotionStartMinute"
+                                },
+                                {
+                                  "ref": "parameter.eventExitMinute"
+                                }
+                              ]
+                            },
+                            {
+                              "op": "lte",
+                              "args": [
+                                {
+                                  "ref": "parameter.eventExitMinute"
+                                },
+                                {
+                                  "ref": "parameter.contactEndMinute"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "useful-arrival",
+                    "requirement": "TIME",
+                    "kind": "predicate",
+                    "predicate": {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "choice.deployment"
+                            },
+                            {
+                              "literal": "hold"
+                            }
+                          ]
+                        },
+                        {
+                          "op": "lte",
+                          "args": [
+                            {
+                              "ref": "derived.customerArrivalMinute"
+                            },
+                            {
+                              "ref": "parameter.latestArrivalMinute"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "staff-return",
+                    "requirement": "TIME",
+                    "kind": "predicate",
+                    "predicate": {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "choice.deployment"
+                            },
+                            {
+                              "literal": "hold"
+                            }
+                          ]
+                        },
+                        {
+                          "op": "gte",
+                          "args": [
+                            {
+                              "ref": "parameter.staffReturnMinute"
+                            },
+                            {
+                              "ref": "parameter.contactEndMinute"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "expense-limit",
+                    "requirement": "COST",
+                    "kind": "predicate",
+                    "predicate": {
+                      "op": "lte",
+                      "args": [
+                        {
+                          "ref": "finance.expense"
+                        },
+                        {
+                          "ref": "parameter.expenseLimitMinor"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "finance": {
+                  "mode": "expense",
+                  "charges": [
+                    {
+                      "id": "complete-deployment-charge",
+                      "amount": {
+                        "op": "lookup",
+                        "table": "options",
+                        "where": {
+                          "id": {
+                            "ref": "choice.deployment"
+                          }
+                        },
+                        "column": "expenseMinor"
+                      }
+                    }
+                  ],
+                  "holds": []
+                },
+                "preference": {
+                  "mode": "feasibility-only"
+                },
+                "labels": {
+                  "plan": "Promotion plan",
+                  "expense": "Additional promotion expense",
+                  "choice.deployment": "Promotion plan",
+                  "derived.promoters": "Promotion team members",
+                  "derived.insideStaff": "Qualified staff remaining inside",
+                  "derived.customerArrivalMinute": "Planned guest arrival time",
+                  "constraint.published-option-structure": "Use one of the four listed promotion plans",
+                  "constraint.staffing-coverage": "Keep the required qualified staff inside throughout the team’s absence",
+                  "constraint.staffing-register": "Keep the unavailable staff count within the qualified roster",
+                  "constraint.event-access": "Record permission for this event, date and promotion window",
+                  "constraint.spending-permission": "Record spending authority covering the responsible manager, operating date and full cost",
+                  "constraint.dispatch-timing": "Complete the review before team departure and the promotion start",
+                  "constraint.contact-window": "Reach departing event guests before the contact window closes",
+                  "constraint.useful-arrival": "Allow enough travel time for interested guests to arrive within the useful window",
+                  "constraint.staff-return": "Keep staffing covered until the team returns after the contact window",
+                  "constraint.expense-limit": "Keep the plan’s full additional expense within the spending limit"
+                },
+                "metadata": {
+                  "catalog": {
+                    "domain": {
+                      "id": "venue-operations",
+                      "label": "Venue operations"
+                    },
+                    "useCase": {
+                      "id": "deploy-street-team",
+                      "label": "Review a street-team deployment"
+                    }
+                  },
+                  "decisionPresentation": {
+                    "format": "decision-presentation/1",
+                    "title": "Promotion plans",
+                    "question": "Which promotion plans meet the recorded requirements?",
+                    "priorityLabel": "Shows which plans meet the recorded requirements. The manager records the choice separately.",
+                    "moneyFormat": {
+                      "currency": "USD",
+                      "divisor": 100
+                    },
+                    "columns": [
+                      {
+                        "id": "deployment",
+                        "source": "choice:deployment",
+                        "label": "Promotion plan",
+                        "valueLabels": {
+                          "hold": "Do not send a promotion team",
+                          "small-standard": "One-person promotion",
+                          "large-standard": "Two-person promotion",
+                          "large-discount": "Two-person discounted promotion"
+                        }
+                      },
+                      {
+                        "id": "status",
+                        "source": "status"
+                      },
+                      {
+                        "id": "inside",
+                        "source": {
+                          "kind": "derived",
+                          "id": "insideStaff"
+                        },
+                        "label": "Qualified staff remaining inside",
+                        "format": {
+                          "kind": "number"
+                        }
+                      },
+                      {
+                        "id": "expense",
+                        "source": "expense",
+                        "label": "Additional expense"
+                      },
+                      {
+                        "id": "blockers",
+                        "source": "blockers"
+                      }
+                    ]
+                  }
+                }
+              },
+              "case": {
+                "id": "street-team-friday",
+                "parameters": {
+                  "venueId": "VENUE-SAM",
+                  "eventId": "EVENT-1120",
+                  "operatingDate": "2026-11-20",
+                  "actorId": "Sam",
+                  "qualifiedStaff": 7,
+                  "unavailableStaff": 0,
+                  "minimumInside": 4,
+                  "reviewMinute": 1170,
+                  "dispatchMinute": 1185,
+                  "promotionStartMinute": 1200,
+                  "eventExitMinute": 1215,
+                  "contactEndMinute": 1245,
+                  "staffReturnMinute": 1260,
+                  "customerJourneyMinutes": 30,
+                  "latestArrivalMinute": 1275,
+                  "expenseLimitMinor": 40000
+                },
+                "tables": {
+                  "options": [
+                    {
+                      "id": "hold",
+                      "label": "Do not send a promotion team",
+                      "promoters": 0,
+                      "expenseMinor": 0
+                    },
+                    {
+                      "id": "small-standard",
+                      "label": "One-person promotion",
+                      "promoters": 1,
+                      "expenseMinor": 20000
+                    },
+                    {
+                      "id": "large-standard",
+                      "label": "Two-person promotion",
+                      "promoters": 2,
+                      "expenseMinor": 40000
+                    },
+                    {
+                      "id": "large-discount",
+                      "label": "Two-person discounted promotion",
+                      "promoters": 2,
+                      "expenseMinor": 40000
+                    }
+                  ],
+                  "scenarios": [
+                    {
+                      "id": "declared-evening"
+                    }
+                  ],
+                  "access": [
+                    {
+                      "id": "ACCESS-1120",
+                      "venueId": "VENUE-SAM",
+                      "eventId": "EVENT-1120",
+                      "operatingDate": "2026-11-20",
+                      "activity": "street-promotion",
+                      "granted": true,
+                      "validFromMinute": 1200,
+                      "validThroughMinute": 1260,
+                      "source": "Fictional event organizer access record ACCESS-1120"
+                    }
+                  ],
+                  "spending": [
+                    {
+                      "id": "BUDGET-1120",
+                      "venueId": "VENUE-SAM",
+                      "operatingDate": "2026-11-20",
+                      "actorId": "Sam",
+                      "ceilingMinor": 40000,
+                      "validFromMinute": 1170,
+                      "validThroughMinute": 1260,
+                      "source": "Fictional delegated spending-limit record BUDGET-1120"
+                    }
+                  ],
+                  "resources": [],
+                  "bookings": []
+                },
+                "provenance": [
+                  {
+                    "source": "Fictional tutorial snapshot; review each current record before use."
+                  }
+                ]
+              }
+            },
+            "presentation": {
+              "schemaVersion": 1,
+              "provider": "native-commitment-planning",
+              "contract": "complete-a-commitment.assessment/1",
+              "views": []
+            },
+            "viewContracts": [],
+            "fields": [],
+            "reports": [],
+            "defaultReport": null,
+            "originWorkspaceId": null,
+            "createdAt": "2026-11-17T18:00:00.000Z",
+            "contentHash": "9efe886d3c4d8412a8ed76153ece3b95f7f1106a4e80e921f678290de9228daa"
+          },
+          "sourceProvenance": "supplied",
+          "contentHash": "ba657e7bc03db98f19178bff31263b31b7d033e77aeecef4092bb1cb38d8ad94"
+        },
+        "packageHash": "ba657e7bc03db98f19178bff31263b31b7d033e77aeecef4092bb1cb38d8ad94"
+      }
+    ],
+    "questions": [
+      {
+        "id": "staffing",
+        "path": "promotion.staffing",
+        "label": "Qualified staffing and operating scope",
+        "question": "Who remains available inside while the promotion team is away?",
+        "meaning": "Same venue, event and operating date. Count only staff qualified and available throughout the complete absence; unavailable staff are subtracted once.",
+        "role": "floor-lead",
+        "type": "object",
+        "required": true
+      },
+      {
+        "id": "timing",
+        "path": "promotion.timing",
+        "label": "Promotion timing",
+        "question": "Can the team reach departing event guests with enough time for them to visit the venue?",
+        "meaning": "Use local minutes from midnight on the operating date. Customer travel time assumes the guest accepts the offer; it does not predict acceptance.",
+        "role": "event-coordinator",
+        "type": "object",
+        "required": true
+      },
+      {
+        "id": "access",
+        "path": "promotion.access",
+        "label": "Recorded event access",
+        "question": "Do current event records permit this activity for the whole contact window?",
+        "meaning": "Record the venue, event, date, permitted activity, supporting source and valid time period. An empty list does not establish access permission.",
+        "role": "event-coordinator",
+        "type": "array",
+        "required": true
+      },
+      {
+        "id": "spending",
+        "path": "promotion.spending",
+        "label": "Promotion expense and spending authority",
+        "question": "What additional expense and recorded spending authority apply to this promotion?",
+        "meaning": "USD cents. Each plan quote includes its full additional expense. The spending limit and delegated permission are separate from approval of the chosen plan.",
+        "role": "venue-manager",
+        "type": "object",
+        "required": true
+      },
+      {
+        "id": "contribution",
+        "path": "promotion.contribution",
+        "label": "Venue contribution per additional guest",
+        "question": "How much contribution would the venue retain per additional guest under each offer?",
+        "meaning": "USD cents retained by the venue per additional guest after the offer and variable costs. Additional means a visit caused by the promotion; returning customers can count. A visit attributed to an offer is not necessarily additional. Unknown remains unknown; zero or negative contribution cannot cover a positive cost. Break-even counts cover the plan’s additional expense plus any separate existing-customer discount loss.",
+        "role": "finance-reviewer",
+        "type": "object",
+        "required": false
+      },
+      {
+        "id": "discount-loss",
+        "path": "promotion.discountLoss",
+        "label": "Separate discount loss on existing customers",
+        "question": "Would an offer reduce contribution from guests who would have come anyway?",
+        "meaning": "USD cents of additional contribution lost on guests who would have attended anyway. Include only loss not already counted in guest contribution or the plan’s expense. Break-even counts cover additional expense plus this separate loss. Unknown leaves the guest target unassessed.",
+        "role": "finance-reviewer",
+        "type": "object",
+        "required": false
+      }
+    ],
+    "steps": [
+      {
+        "id": "operations",
+        "title": "Review promotion plans",
+        "app": "operations",
+        "role": "venue-manager",
+        "dependsOn": [],
+        "requires": [
+          "staffing",
+          "timing",
+          "access",
+          "spending"
+        ],
+        "input": {
+          "id": "street-team-current",
+          "parameters": {
+            "op": "merge",
+            "args": [
+              {
+                "ref": "case.promotion.staffing"
+              },
+              {
+                "ref": "case.promotion.timing"
+              },
+              {
+                "expenseLimitMinor": {
+                  "ref": "case.promotion.spending.expenseLimitMinor"
+                }
+              }
+            ]
+          },
+          "tables": {
+            "options": {
+              "ref": "apps.operations.case.tables.options"
+            },
+            "scenarios": [
+              {
+                "id": "declared-evening"
+              }
+            ],
+            "access": {
+              "ref": "case.promotion.access"
+            },
+            "spending": {
+              "ref": "case.promotion.spending.permissions"
+            },
+            "resources": [],
+            "bookings": []
+          },
+          "provenance": [
+            {
+              "source": "Workflow inputs accepted for this review",
+              "meaning": "Inputs reviewed for the current operating assessment; planned activity is not evidence that work was performed."
+            }
+          ]
+        },
+        "output": {
+          "finding": {
+            "ref": "assessment.finding"
+          },
+          "coverage": {
+            "ref": "assessment.coverage"
+          },
+          "plans": {
+            "op": "map",
+            "as": "plan",
+            "args": [
+              {
+                "ref": "assessment.plans"
+              },
+              {
+                "id": {
+                  "ref": "vars.plan.id"
+                },
+                "deployment": {
+                  "ref": "vars.plan.choices.deployment"
+                },
+                "feasible": {
+                  "ref": "vars.plan.feasible"
+                },
+                "expenseMinor": {
+                  "ref": "vars.plan.expense"
+                },
+                "insideStaff": {
+                  "ref": "vars.plan.scenarios.0.derived.insideStaff"
+                },
+                "customerArrivalMinute": {
+                  "ref": "vars.plan.scenarios.0.derived.customerArrivalMinute"
+                },
+                "blockers": {
+                  "ref": "vars.plan.blockers"
+                }
+              }
+            ]
+          },
+          "feasibleDeployments": {
+            "op": "map",
+            "as": "eligible",
+            "args": [
+              {
+                "op": "filter",
+                "as": "passing",
+                "args": [
+                  {
+                    "ref": "assessment.plans"
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "ref": "vars.passing.feasible"
+                      },
+                      true
+                    ]
+                  }
+                ]
+              },
+              {
+                "ref": "vars.eligible.choices.deployment"
+              }
+            ]
+          }
+        },
+        "acceptWhen": {
+          "op": "and",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "assessment.status"
+                },
+                "complete"
+              ]
+            },
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "assessment.coverage.complete"
+                },
+                true
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "initialCase": {
+      "promotion": {
+        "staffing": {
+          "venueId": "VENUE-SAM",
+          "eventId": "EVENT-1120",
+          "operatingDate": "2026-11-20",
+          "actorId": "Sam",
+          "qualifiedStaff": 7,
+          "unavailableStaff": 0,
+          "minimumInside": 4
+        },
+        "timing": {
+          "reviewMinute": 1170,
+          "dispatchMinute": 1185,
+          "promotionStartMinute": 1200,
+          "eventExitMinute": 1215,
+          "contactEndMinute": 1245,
+          "staffReturnMinute": 1260,
+          "customerJourneyMinutes": 30,
+          "latestArrivalMinute": 1275
+        },
+        "access": [
+          {
+            "id": "ACCESS-1120",
+            "venueId": "VENUE-SAM",
+            "eventId": "EVENT-1120",
+            "operatingDate": "2026-11-20",
+            "activity": "street-promotion",
+            "granted": true,
+            "validFromMinute": 1200,
+            "validThroughMinute": 1260,
+            "source": "Fictional event organizer access record ACCESS-1120"
+          }
+        ],
+        "spending": {
+          "expenseLimitMinor": 40000,
+          "permissions": [
+            {
+              "id": "BUDGET-1120",
+              "venueId": "VENUE-SAM",
+              "operatingDate": "2026-11-20",
+              "actorId": "Sam",
+              "ceilingMinor": 40000,
+              "validFromMinute": 1170,
+              "validThroughMinute": 1260,
+              "source": "Fictional delegated spending-limit record BUDGET-1120"
+            }
+          ]
+        },
+        "contribution": {
+          "small-standard": 4000,
+          "large-standard": 4000,
+          "large-discount": 2500
+        },
+        "discountLoss": {
+          "small-standard": 0,
+          "large-standard": 0,
+          "large-discount": 0
+        }
+      }
+    },
+    "metadata": {
+      "qualification": "Calculated operating fit and break-even guest counts for the supplied scenario. These results do not predict customer response or establish authorization or completed activity.",
+      "presentation": {
+        "version": 1,
+        "questions": {
+          "staffing": {
+            "type": "object",
+            "label": "Qualified staffing and operating scope",
+            "fields": {
+              "venueId": {
+                "type": "string",
+                "label": "Venue"
+              },
+              "eventId": {
+                "type": "string",
+                "label": "Event"
+              },
+              "operatingDate": {
+                "type": "string",
+                "label": "Operating date"
+              },
+              "actorId": {
+                "type": "string",
+                "label": "Responsible manager"
+              },
+              "qualifiedStaff": {
+                "type": "number",
+                "label": "Qualified staff on the roster",
+                "integer": true,
+                "minimum": 0
+              },
+              "unavailableStaff": {
+                "type": "number",
+                "label": "Unavailable qualified staff",
+                "integer": true,
+                "minimum": 0
+              },
+              "minimumInside": {
+                "type": "number",
+                "label": "Required qualified staff inside",
+                "integer": true,
+                "minimum": 0
+              }
+            },
+            "help": "Same venue, event and operating date. Count only staff qualified and available throughout the complete absence; unavailable staff are subtracted once."
+          },
+          "timing": {
+            "type": "object",
+            "label": "Promotion timing",
+            "fields": {
+              "reviewMinute": {
+                "type": "number",
+                "label": "Review time",
+                "integer": true,
+                "minimum": 0,
+                "maximum": 1439
+              },
+              "dispatchMinute": {
+                "type": "number",
+                "label": "Dispatch decision cutoff",
+                "integer": true,
+                "minimum": 0,
+                "maximum": 1439
+              },
+              "promotionStartMinute": {
+                "type": "number",
+                "label": "Promotion starts",
+                "integer": true,
+                "minimum": 0,
+                "maximum": 1439
+              },
+              "eventExitMinute": {
+                "type": "number",
+                "label": "Event guests leave",
+                "integer": true,
+                "minimum": 0,
+                "maximum": 1439
+              },
+              "contactEndMinute": {
+                "type": "number",
+                "label": "Useful contact window closes",
+                "integer": true,
+                "minimum": 0,
+                "maximum": 1439
+              },
+              "staffReturnMinute": {
+                "type": "number",
+                "label": "Team returns",
+                "integer": true,
+                "minimum": 0,
+                "maximum": 1439
+              },
+              "customerJourneyMinutes": {
+                "type": "number",
+                "label": "Customer travel time if the offer is accepted (minutes)",
+                "integer": true,
+                "minimum": 0,
+                "maximum": 1439
+              },
+              "latestArrivalMinute": {
+                "type": "number",
+                "label": "Latest useful guest arrival",
+                "integer": true,
+                "minimum": 0,
+                "maximum": 1439
+              }
+            },
+            "help": "Use local minutes from midnight on the operating date. Customer travel time assumes the guest accepts the offer; it does not predict acceptance."
+          },
+          "access": {
+            "type": "array",
+            "label": "Recorded event access",
+            "items": {
+              "type": "object",
+              "label": "Access record",
+              "fields": {
+                "id": {
+                  "type": "string",
+                  "label": "Record reference"
+                },
+                "venueId": {
+                  "type": "string",
+                  "label": "Venue"
+                },
+                "eventId": {
+                  "type": "string",
+                  "label": "Event"
+                },
+                "operatingDate": {
+                  "type": "string",
+                  "label": "Operating date"
+                },
+                "activity": {
+                  "type": "string",
+                  "label": "Permitted activity"
+                },
+                "granted": {
+                  "type": "boolean",
+                  "label": "Access recorded as granted"
+                },
+                "validFromMinute": {
+                  "type": "number",
+                  "label": "Valid from (minute from midnight)",
+                  "integer": true,
+                  "minimum": 0,
+                  "maximum": 1439
+                },
+                "validThroughMinute": {
+                  "type": "number",
+                  "label": "Valid through (minute from midnight)",
+                  "integer": true,
+                  "minimum": 0,
+                  "maximum": 1439
+                },
+                "source": {
+                  "type": "string",
+                  "label": "Source reference"
+                }
+              }
+            },
+            "collapseRecords": true,
+            "summaryFields": [
+              "id",
+              "source"
+            ],
+            "help": "Record the venue, event, date, permitted activity, supporting source and valid time period. An empty list does not establish access permission."
+          },
+          "spending": {
+            "type": "object",
+            "label": "Promotion expense and spending authority",
+            "fields": {
+              "expenseLimitMinor": {
+                "type": "number",
+                "label": "Additional promotion expense limit (USD cents)",
+                "integer": true,
+                "minimum": 0
+              },
+              "permissions": {
+                "type": "array",
+                "label": "Recorded spending permissions",
+                "items": {
+                  "type": "object",
+                  "label": "Spending permission",
+                  "fields": {
+                    "id": {
+                      "type": "string",
+                      "label": "Record reference"
+                    },
+                    "venueId": {
+                      "type": "string",
+                      "label": "Venue"
+                    },
+                    "operatingDate": {
+                      "type": "string",
+                      "label": "Operating date"
+                    },
+                    "actorId": {
+                      "type": "string",
+                      "label": "Responsible manager"
+                    },
+                    "ceilingMinor": {
+                      "type": "number",
+                      "label": "Delegated spending ceiling (USD cents)",
+                      "integer": true,
+                      "minimum": 0
+                    },
+                    "validFromMinute": {
+                      "type": "number",
+                      "label": "Valid from (minute from midnight)",
+                      "integer": true,
+                      "minimum": 0,
+                      "maximum": 1439
+                    },
+                    "validThroughMinute": {
+                      "type": "number",
+                      "label": "Valid through (minute from midnight)",
+                      "integer": true,
+                      "minimum": 0,
+                      "maximum": 1439
+                    },
+                    "source": {
+                      "type": "string",
+                      "label": "Source reference"
+                    }
+                  }
+                },
+                "collapseRecords": true,
+                "summaryFields": [
+                  "id",
+                  "source"
+                ]
+              }
+            },
+            "help": "USD cents. Each plan quote includes its full additional expense. The spending limit and delegated permission are separate from approval of the chosen plan."
+          },
+          "contribution": {
+            "type": "object",
+            "label": "Venue contribution per additional guest",
+            "fields": {
+              "small-standard": {
+                "type": "number",
+                "label": "One-person promotion (USD cents)",
+                "integer": true,
+                "nullable": true
+              },
+              "large-standard": {
+                "type": "number",
+                "label": "Two-person promotion (USD cents)",
+                "integer": true,
+                "nullable": true
+              },
+              "large-discount": {
+                "type": "number",
+                "label": "Two-person discounted promotion (USD cents)",
+                "integer": true,
+                "nullable": true
+              }
+            },
+            "help": "USD cents retained by the venue per additional guest after the offer and variable costs. Additional means a visit caused by the promotion; returning customers can count. A visit attributed to an offer is not necessarily additional. Unknown remains unknown; zero or negative contribution cannot cover a positive cost. Break-even counts cover the plan’s additional expense plus any separate existing-customer discount loss."
+          },
+          "discount-loss": {
+            "type": "object",
+            "label": "Separate discount loss on existing customers",
+            "fields": {
+              "small-standard": {
+                "type": "number",
+                "label": "One-person promotion (USD cents)",
+                "integer": true,
+                "nullable": true,
+                "minimum": 0
+              },
+              "large-standard": {
+                "type": "number",
+                "label": "Two-person promotion (USD cents)",
+                "integer": true,
+                "nullable": true,
+                "minimum": 0
+              },
+              "large-discount": {
+                "type": "number",
+                "label": "Two-person discounted promotion (USD cents)",
+                "integer": true,
+                "nullable": true,
+                "minimum": 0
+              }
+            },
+            "help": "USD cents of additional contribution lost on guests who would have attended anyway. Include only loss not already counted in guest contribution or the plan’s expense. Break-even counts cover additional expense plus this separate loss. Unknown leaves the guest target unassessed."
+          }
+        },
+        "groups": [
+          {
+            "id": "basis",
+            "label": "Operating requirements",
+            "question": "Which promotion plans meet the operating requirements?",
+            "subtabs": [
+              {
+                "id": "people",
+                "label": "People and scope",
+                "questionIds": [
+                  "staffing"
+                ]
+              },
+              {
+                "id": "window",
+                "label": "Timing and access",
+                "questionIds": [
+                  "timing",
+                  "access"
+                ]
+              },
+              {
+                "id": "expense",
+                "label": "Spending limits",
+                "questionIds": [
+                  "spending"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "economics",
+            "label": "Break-even assumptions",
+            "question": "What expense and discount losses must the plan recover?",
+            "subtabs": [
+              {
+                "id": "contribution",
+                "label": "Contribution and discount loss",
+                "questionIds": [
+                  "contribution",
+                  "discount-loss"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "planning",
+            "label": "Calculations",
+            "kind": "evaluations",
+            "subtabs": [],
+            "question": "Which constraints and calculated findings determine the available options?"
+          },
+          {
+            "id": "next-action",
+            "label": "Decision summary",
+            "kind": "brief",
+            "subtabs": [],
+            "question": "Which promotion plans can we operate, and how many additional guests would cover their costs?"
+          }
+        ],
+        "display": {
+          "labels": {
+            "deployment": "Promotion plan",
+            "feasible": "Meets operating requirements",
+            "expenseMinor": "Additional promotion expense",
+            "insideStaff": "Qualified staff remaining inside",
+            "customerArrivalMinute": "Planned customer arrival",
+            "contributionMinor": "Venue contribution per additional guest",
+            "existingCustomerDiscountLossMinor": "Separate discount loss on existing customers",
+            "recoverableAmountMinor": "Amount to recover",
+            "breakEvenGuests": "Additional guests to break even",
+            "firstPositiveGuests": "Additional guests to exceed break-even",
+            "status": "Guest target status",
+            "blockers": "Unmet operating requirements",
+            "currentChoice": "Choice applies to the reviewed operating result",
+            "specificAuthorizationRecorded": "Approval applies to the chosen plan",
+            "customerResponse": "Customer response",
+            "assessmentRunHash": "Accepted assessment reference",
+            "evaluationId": "Saved assessment reference",
+            "operatingDate": "Operating date",
+            "venueId": "Venue",
+            "eventId": "Event",
+            "actorId": "Responsible manager",
+            "qualifiedStaff": "Qualified staff on the roster",
+            "unavailableStaff": "Unavailable qualified staff",
+            "minimumInside": "Required qualified staff inside",
+            "reviewMinute": "Review time",
+            "dispatchMinute": "Dispatch decision cutoff",
+            "promotionStartMinute": "Promotion starts",
+            "eventExitMinute": "Event guests leave",
+            "contactEndMinute": "Useful contact window closes",
+            "staffReturnMinute": "Team returns",
+            "customerJourneyMinutes": "Customer travel time if the offer is accepted (minutes)",
+            "latestArrivalMinute": "Latest useful guest arrival",
+            "expenseLimitMinor": "Additional promotion expense limit",
+            "selectedDeployment": "Chosen promotion plan",
+            "selectedExpenseMinor": "Chosen additional expense",
+            "selectedInsideStaff": "Qualified staff remaining inside"
+          },
+          "names": {
+            "hold": "Do not send a promotion team",
+            "small-standard": "One-person promotion",
+            "large-standard": "Two-person promotion",
+            "large-discount": "Two-person discounted promotion",
+            "calculated": "Break-even target calculated",
+            "not-applicable": "No team sent; guest target does not apply",
+            "not-recoverable": "Contribution cannot cover a positive cost",
+            "unassessed": "Contribution or discount loss is not supplied"
+          },
+          "roles": {
+            "floor-lead": "Floor lead",
+            "event-coordinator": "Event coordinator",
+            "finance-reviewer": "Finance owner",
+            "venue-manager": "Venue manager"
+          },
+          "currency": "USD",
+          "amountUnit": "cent",
+          "timeUnit": "minute",
+          "timeOrigin": "midnight on the recorded operating date",
+          "formats": {
+            "expenseMinor": "money",
+            "contributionMinor": "money",
+            "existingCustomerDiscountLossMinor": "money",
+            "recoverableAmountMinor": "money",
+            "amountMinor": "money",
+            "expenseLimitMinor": "money",
+            "selectedExpenseMinor": "money"
+          }
+        },
+        "report": {
+          "title": "Plan a street-team deployment — results",
+          "units": {
+            "currency": "USD",
+            "amount": "cent",
+            "time": "minute"
+          },
+          "tabs": [
+            {
+              "id": "deployments",
+              "kind": "routes",
+              "sectionId": "operating-options",
+              "label": "Promotion plans",
+              "question": "Which promotion plans meet the recorded requirements?",
+              "columns": [
+                {
+                  "key": "deployment",
+                  "label": "Promotion plan"
+                },
+                {
+                  "key": "feasible",
+                  "label": "Meets operating requirements"
+                },
+                {
+                  "key": "expenseMinor",
+                  "label": "Additional promotion expense"
+                },
+                {
+                  "key": "insideStaff",
+                  "label": "Qualified staff remaining inside"
+                },
+                {
+                  "key": "blockers",
+                  "label": "Unmet operating requirements"
+                }
+              ]
+            },
+            {
+              "id": "thresholds",
+              "kind": "records",
+              "sectionId": "guest-thresholds",
+              "label": "Expense recovery",
+              "question": "How many additional guests would cover this plan’s expense and discount losses?",
+              "viewId": "expense-recovery"
+            }
+          ],
+          "brief": {
+            "leadSectionIds": [
+              "guest-thresholds"
+            ],
+            "sectionOrder": [
+              "guest-thresholds",
+              "operating-options",
+              "qualification"
+            ]
+          },
+          "questionViews": [
+            {
+              "id": "expense-recovery",
+              "sectionId": "guest-thresholds",
+              "title": "Expense recovery",
+              "question": "How many additional guests would cover this plan’s expense and discount losses?",
+              "selection": {
+                "group": "deployment",
+                "keyField": "deployment",
+                "labelField": "deployment",
+                "defaultKey": "small-standard"
+              },
+              "summary": {
+                "title": "Break-even guests",
+                "question": "How many additional guests would cover this plan’s expense and discount losses?",
+                "fields": [
+                  {
+                    "key": "expenseMinor",
+                    "label": "Additional expense",
+                    "format": "money"
+                  },
+                  {
+                    "key": "contributionMinor",
+                    "label": "Venue contribution per additional guest",
+                    "format": "money"
+                  },
+                  {
+                    "key": "breakEvenGuests",
+                    "label": "Additional guests to break even",
+                    "format": "number"
+                  },
+                  {
+                    "key": "firstPositiveGuests",
+                    "label": "Additional guests to exceed break-even",
+                    "format": "number"
+                  }
+                ]
+              },
+              "comparison": {
+                "title": "Compare break-even guests",
+                "question": "How do expense and break-even guest counts differ across promotion plans?",
+                "columns": [
+                  {
+                    "key": "deployment",
+                    "label": "Promotion plan",
+                    "format": "name"
+                  },
+                  {
+                    "key": "expenseMinor",
+                    "label": "Additional expense",
+                    "format": "money"
+                  },
+                  {
+                    "key": "breakEvenGuests",
+                    "label": "Additional guests to break even",
+                    "format": "number"
+                  },
+                  {
+                    "key": "firstPositiveGuests",
+                    "label": "Additional guests to exceed break-even",
+                    "format": "number"
+                  }
+                ]
+              },
+              "contextFields": [
+                {
+                  "key": "feasible",
+                  "label": "Meets operating requirements",
+                  "format": "boolean"
+                },
+                {
+                  "key": "status",
+                  "label": "Guest target status",
+                  "format": "name"
+                },
+                {
+                  "key": "existingCustomerDiscountLossMinor",
+                  "label": "Separate discount loss on existing customers",
+                  "format": "money"
+                }
+              ],
+              "details": [
+                {
+                  "id": "assumptions",
+                  "title": "Contribution and separate losses",
+                  "question": "Which supplied contribution and discount-loss assumptions apply to this plan?",
+                  "fields": [
+                    {
+                      "key": "contributionMinor",
+                      "label": "Venue contribution per additional guest",
+                      "format": "money"
+                    },
+                    {
+                      "key": "existingCustomerDiscountLossMinor",
+                      "label": "Separate discount loss on existing customers",
+                      "format": "money"
+                    },
+                    {
+                      "key": "recoverableAmountMinor",
+                      "label": "Total amount to recover",
+                      "format": "money"
+                    },
+                    {
+                      "key": "meaning",
+                      "label": "What these guest targets mean"
+                    }
+                  ]
+                },
+                {
+                  "id": "calculation",
+                  "title": "Calculation and basis",
+                  "question": "Which recorded amounts determine the break-even guest counts?",
+                  "fields": [
+                    {
+                      "key": "expenseMinor",
+                      "label": "Additional promotion expense",
+                      "format": "money"
+                    },
+                    {
+                      "key": "existingCustomerDiscountLossMinor",
+                      "label": "Separate discount loss counted once",
+                      "format": "money"
+                    },
+                    {
+                      "key": "recoverableAmountMinor",
+                      "label": "Amount to recover",
+                      "format": "money"
+                    },
+                    {
+                      "key": "contributionMinor",
+                      "label": "Venue contribution per additional guest",
+                      "format": "money"
+                    },
+                    {
+                      "key": "breakEvenGuests",
+                      "label": "Additional guests to break even",
+                      "format": "number"
+                    },
+                    {
+                      "key": "firstPositiveGuests",
+                      "label": "Additional guests to exceed break-even",
+                      "format": "number"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "calculationSource": {
+        "definitionHash": "be34bfe68ca85991529421560d4ec06c9fff67080d0fc14b6e540e1317e85728",
+        "packageHash": "3cf39529ebddaf0491ca4a8a90287caa0009126b9bfed243b8bec3e76ee984f2",
+        "qualification": "Calculation from supplied scenario values. No answer or finding has been accepted by a reviewer."
+      }
+    },
+    "brief": {
+      "sections": [
+        {
+          "id": "operating-options",
+          "title": "Which promotion plans meet the recorded requirements?",
+          "value": {
+            "op": "if",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "ref": "steps.operations.status"
+                  },
+                  "complete"
+                ]
+              },
+              {
+                "ref": "steps.operations.output.plans"
+              },
+              []
+            ]
+          }
+        },
+        {
+          "id": "guest-thresholds",
+          "title": "How many additional guests would cover the promotion’s expense and discount losses?",
+          "value": {
+            "op": "if",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "ref": "steps.operations.status"
+                  },
+                  "complete"
+                ]
+              },
+              {
+                "op": "map",
+                "as": "economicPlan",
+                "args": [
+                  {
+                    "ref": "steps.operations.output.plans"
+                  },
+                  {
+                    "deployment": {
+                      "ref": "vars.economicPlan.deployment"
+                    },
+                    "feasible": {
+                      "ref": "vars.economicPlan.feasible"
+                    },
+                    "expenseMinor": {
+                      "ref": "vars.economicPlan.expenseMinor"
+                    },
+                    "contributionMinor": {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "ref": "answers.contribution.status"
+                                },
+                                "supplied"
+                              ]
+                            },
+                            {
+                              "op": "matchesSchema",
+                              "args": [
+                                {
+                                  "op": "get",
+                                  "args": [
+                                    {
+                                      "ref": "case.promotion.contribution"
+                                    },
+                                    {
+                                      "ref": "vars.economicPlan.deployment"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "literal": {
+                                    "type": "integer"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "get",
+                          "args": [
+                            {
+                              "ref": "case.promotion.contribution"
+                            },
+                            {
+                              "ref": "vars.economicPlan.deployment"
+                            }
+                          ]
+                        },
+                        null
+                      ]
+                    },
+                    "existingCustomerDiscountLossMinor": {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "ref": "answers.discount-loss.status"
+                                },
+                                "supplied"
+                              ]
+                            },
+                            {
+                              "op": "matchesSchema",
+                              "args": [
+                                {
+                                  "op": "get",
+                                  "args": [
+                                    {
+                                      "ref": "case.promotion.discountLoss"
+                                    },
+                                    {
+                                      "ref": "vars.economicPlan.deployment"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "literal": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "get",
+                          "args": [
+                            {
+                              "ref": "case.promotion.discountLoss"
+                            },
+                            {
+                              "ref": "vars.economicPlan.deployment"
+                            }
+                          ]
+                        },
+                        null
+                      ]
+                    },
+                    "status": {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "vars.economicPlan.deployment"
+                            },
+                            "hold"
+                          ]
+                        },
+                        "not-applicable",
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "op": "and",
+                              "args": [
+                                {
+                                  "op": "and",
+                                  "args": [
+                                    {
+                                      "op": "eq",
+                                      "args": [
+                                        {
+                                          "ref": "answers.contribution.status"
+                                        },
+                                        "supplied"
+                                      ]
+                                    },
+                                    {
+                                      "op": "matchesSchema",
+                                      "args": [
+                                        {
+                                          "op": "get",
+                                          "args": [
+                                            {
+                                              "ref": "case.promotion.contribution"
+                                            },
+                                            {
+                                              "ref": "vars.economicPlan.deployment"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "literal": {
+                                            "type": "integer"
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "op": "and",
+                                  "args": [
+                                    {
+                                      "op": "eq",
+                                      "args": [
+                                        {
+                                          "ref": "answers.discount-loss.status"
+                                        },
+                                        "supplied"
+                                      ]
+                                    },
+                                    {
+                                      "op": "matchesSchema",
+                                      "args": [
+                                        {
+                                          "op": "get",
+                                          "args": [
+                                            {
+                                              "ref": "case.promotion.discountLoss"
+                                            },
+                                            {
+                                              "ref": "vars.economicPlan.deployment"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "literal": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "if",
+                              "args": [
+                                {
+                                  "op": "gt",
+                                  "args": [
+                                    {
+                                      "op": "get",
+                                      "args": [
+                                        {
+                                          "ref": "case.promotion.contribution"
+                                        },
+                                        {
+                                          "ref": "vars.economicPlan.deployment"
+                                        }
+                                      ]
+                                    },
+                                    0
+                                  ]
+                                },
+                                "calculated",
+                                "not-recoverable"
+                              ]
+                            },
+                            "unassessed"
+                          ]
+                        }
+                      ]
+                    },
+                    "recoverableAmountMinor": {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "ne",
+                              "args": [
+                                {
+                                  "ref": "vars.economicPlan.deployment"
+                                },
+                                "hold"
+                              ]
+                            },
+                            {
+                              "op": "and",
+                              "args": [
+                                {
+                                  "op": "eq",
+                                  "args": [
+                                    {
+                                      "ref": "answers.contribution.status"
+                                    },
+                                    "supplied"
+                                  ]
+                                },
+                                {
+                                  "op": "matchesSchema",
+                                  "args": [
+                                    {
+                                      "op": "get",
+                                      "args": [
+                                        {
+                                          "ref": "case.promotion.contribution"
+                                        },
+                                        {
+                                          "ref": "vars.economicPlan.deployment"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "literal": {
+                                        "type": "integer"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "and",
+                              "args": [
+                                {
+                                  "op": "eq",
+                                  "args": [
+                                    {
+                                      "ref": "answers.discount-loss.status"
+                                    },
+                                    "supplied"
+                                  ]
+                                },
+                                {
+                                  "op": "matchesSchema",
+                                  "args": [
+                                    {
+                                      "op": "get",
+                                      "args": [
+                                        {
+                                          "ref": "case.promotion.discountLoss"
+                                        },
+                                        {
+                                          "ref": "vars.economicPlan.deployment"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "literal": {
+                                        "type": "integer",
+                                        "minimum": 0
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "gt",
+                              "args": [
+                                {
+                                  "op": "get",
+                                  "args": [
+                                    {
+                                      "ref": "case.promotion.contribution"
+                                    },
+                                    {
+                                      "ref": "vars.economicPlan.deployment"
+                                    }
+                                  ]
+                                },
+                                0
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "add",
+                          "args": [
+                            {
+                              "ref": "vars.economicPlan.expenseMinor"
+                            },
+                            {
+                              "op": "get",
+                              "args": [
+                                {
+                                  "ref": "case.promotion.discountLoss"
+                                },
+                                {
+                                  "ref": "vars.economicPlan.deployment"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        null
+                      ]
+                    },
+                    "breakEvenGuests": {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "ne",
+                              "args": [
+                                {
+                                  "ref": "vars.economicPlan.deployment"
+                                },
+                                "hold"
+                              ]
+                            },
+                            {
+                              "op": "and",
+                              "args": [
+                                {
+                                  "op": "eq",
+                                  "args": [
+                                    {
+                                      "ref": "answers.contribution.status"
+                                    },
+                                    "supplied"
+                                  ]
+                                },
+                                {
+                                  "op": "matchesSchema",
+                                  "args": [
+                                    {
+                                      "op": "get",
+                                      "args": [
+                                        {
+                                          "ref": "case.promotion.contribution"
+                                        },
+                                        {
+                                          "ref": "vars.economicPlan.deployment"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "literal": {
+                                        "type": "integer"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "and",
+                              "args": [
+                                {
+                                  "op": "eq",
+                                  "args": [
+                                    {
+                                      "ref": "answers.discount-loss.status"
+                                    },
+                                    "supplied"
+                                  ]
+                                },
+                                {
+                                  "op": "matchesSchema",
+                                  "args": [
+                                    {
+                                      "op": "get",
+                                      "args": [
+                                        {
+                                          "ref": "case.promotion.discountLoss"
+                                        },
+                                        {
+                                          "ref": "vars.economicPlan.deployment"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "literal": {
+                                        "type": "integer",
+                                        "minimum": 0
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "gt",
+                              "args": [
+                                {
+                                  "op": "get",
+                                  "args": [
+                                    {
+                                      "ref": "case.promotion.contribution"
+                                    },
+                                    {
+                                      "ref": "vars.economicPlan.deployment"
+                                    }
+                                  ]
+                                },
+                                0
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "ceilDivide",
+                          "args": [
+                            {
+                              "op": "add",
+                              "args": [
+                                {
+                                  "ref": "vars.economicPlan.expenseMinor"
+                                },
+                                {
+                                  "op": "get",
+                                  "args": [
+                                    {
+                                      "ref": "case.promotion.discountLoss"
+                                    },
+                                    {
+                                      "ref": "vars.economicPlan.deployment"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "get",
+                              "args": [
+                                {
+                                  "ref": "case.promotion.contribution"
+                                },
+                                {
+                                  "ref": "vars.economicPlan.deployment"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        null
+                      ]
+                    },
+                    "firstPositiveGuests": {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "ne",
+                              "args": [
+                                {
+                                  "ref": "vars.economicPlan.deployment"
+                                },
+                                "hold"
+                              ]
+                            },
+                            {
+                              "op": "and",
+                              "args": [
+                                {
+                                  "op": "eq",
+                                  "args": [
+                                    {
+                                      "ref": "answers.contribution.status"
+                                    },
+                                    "supplied"
+                                  ]
+                                },
+                                {
+                                  "op": "matchesSchema",
+                                  "args": [
+                                    {
+                                      "op": "get",
+                                      "args": [
+                                        {
+                                          "ref": "case.promotion.contribution"
+                                        },
+                                        {
+                                          "ref": "vars.economicPlan.deployment"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "literal": {
+                                        "type": "integer"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "and",
+                              "args": [
+                                {
+                                  "op": "eq",
+                                  "args": [
+                                    {
+                                      "ref": "answers.discount-loss.status"
+                                    },
+                                    "supplied"
+                                  ]
+                                },
+                                {
+                                  "op": "matchesSchema",
+                                  "args": [
+                                    {
+                                      "op": "get",
+                                      "args": [
+                                        {
+                                          "ref": "case.promotion.discountLoss"
+                                        },
+                                        {
+                                          "ref": "vars.economicPlan.deployment"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "literal": {
+                                        "type": "integer",
+                                        "minimum": 0
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "gt",
+                              "args": [
+                                {
+                                  "op": "get",
+                                  "args": [
+                                    {
+                                      "ref": "case.promotion.contribution"
+                                    },
+                                    {
+                                      "ref": "vars.economicPlan.deployment"
+                                    }
+                                  ]
+                                },
+                                0
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "add",
+                          "args": [
+                            {
+                              "op": "floorDivide",
+                              "args": [
+                                {
+                                  "op": "add",
+                                  "args": [
+                                    {
+                                      "ref": "vars.economicPlan.expenseMinor"
+                                    },
+                                    {
+                                      "op": "get",
+                                      "args": [
+                                        {
+                                          "ref": "case.promotion.discountLoss"
+                                        },
+                                        {
+                                          "ref": "vars.economicPlan.deployment"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "op": "get",
+                                  "args": [
+                                    {
+                                      "ref": "case.promotion.contribution"
+                                    },
+                                    {
+                                      "ref": "vars.economicPlan.deployment"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            1
+                          ]
+                        },
+                        null
+                      ]
+                    },
+                    "meaning": "Guest targets cover additional promotion expense plus any separate discount loss, using the venue’s contribution per additional guest. They do not predict attendance or demonstrate effectiveness."
+                  }
+                ]
+              },
+              []
+            ]
+          }
+        },
+        {
+          "id": "qualification",
+          "title": "Calculation scope",
+          "value": "Calculated operating fit and break-even guest counts for the supplied scenario. These results do not predict customer response or establish authorization or completed activity."
+        }
+      ],
+      "actions": [],
+      "completion": {
+        "op": "eq",
+        "args": [
+          {
+            "ref": "steps.operations.status"
+          },
+          "complete"
+        ]
+      }
+    },
+    "execution": {
+      "mode": "calculation"
+    },
+    "contentHash": "0d9923f13fbcd08975d8f4b6e49495d8e1ba5cf49f0fbf16457d0e9a9d53e463"
+  },
+  "catalog": {
+    "domain": {
+      "id": "venue-operations",
+      "label": "Venue operations"
+    },
+    "useCase": {
+      "id": "deploy-street-team",
+      "label": "Review a street-team deployment"
+    }
+  },
+  "publishedAt": "2026-11-19T18:00:00.000Z",
+  "contentHash": "66295e25f96c8d943642b59febd7d5d079755383e82e7b551f3f9d9f871503df"
+}

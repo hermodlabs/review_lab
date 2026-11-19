@@ -1,10 +1,10 @@
 {
   "format": "decision-lab-workflow/1",
   "id": "review-first-shipment",
-  "version": "1.1.0",
-  "title": "Review a first shipment",
+  "version": "1.2.0",
+  "title": "Compare first-shipment arrangements",
   "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
-  "description": "Review one delivery commitment, the actual transportation records and complete alternative arrangements. If a timely verification could change the choice, compare its feasible responses with reserving now. Finish with a reviewable proposal and its unresolved conditions.",
+  "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
   "metadata": {
     "profile": {
       "format": "first-shipment-review.profile/1",
@@ -372,7 +372,7 @@
         }
       },
       "report": {
-        "title": "Shipment decision reports",
+        "title": "Compare first-shipment arrangements — results",
         "units": {
           "currency": "USD",
           "amount": "cent",
@@ -618,7 +618,7 @@
             {
               "id": "verification",
               "label": "Further verification",
-              "question": "Should we compare another check, using which reviewed assumptions and offers?",
+              "question": "Should we compare another check, using which assumptions and offers?",
               "questionIds": [
                 "learning-requested",
                 "probabilities",
@@ -629,15 +629,15 @@
         },
         {
           "id": "planning",
-          "label": "Planning results",
-          "question": "Which complete arrangements meet the recorded requirements?",
+          "label": "Calculations",
+          "question": "Which constraints and calculated findings determine the available options?",
           "kind": "evaluations",
           "subtabs": []
         },
         {
           "id": "next-action",
-          "label": "Next action",
-          "question": "What can we propose, and what remains to be reviewed or approved?",
+          "label": "Decision summary",
+          "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
           "kind": "brief",
           "subtabs": []
         }
@@ -1234,20 +1234,8 @@
         },
         "probabilities": {
           "type": "object",
-          "label": "Separately reviewed probability assessment",
+          "label": "Probability assumptions and their basis",
           "fields": {
-            "status": {
-              "type": "string",
-              "label": "Finance assessment status",
-              "options": [
-                "awaiting-review",
-                "accepted"
-              ]
-            },
-            "role": {
-              "type": "string",
-              "label": "Responsible role"
-            },
             "weights": {
               "type": "object",
               "label": "Probability weights",
@@ -1306,7 +1294,7 @@
               },
               "observationModelId": {
                 "type": "string",
-                "label": "Reviewed report model",
+                "label": "Report likelihood model",
                 "options": [
                   "exact-registry-verification",
                   "noisy-registry-verification",
@@ -1319,7 +1307,12 @@
       }
     },
     "boundary": "One shipment, two complete arrangements, one verification purchase, followed by one selection. No external bookings, purchases or release are executed.",
-    "publicationTime": "2026-11-16T18:00:00.000Z"
+    "publicationTime": "2026-11-16T18:00:00.000Z",
+    "calculationSource": {
+      "definitionHash": "b35c516e650c62a0713ca154fe66c67fd76cdb79125a48fcb1f5b1d3e34e53e3",
+      "packageHash": "7b604c9eb23f2e60937d4e65bf6cef8fc63a6362ca43702f501bd60ed36da0e9",
+      "qualification": "Calculation from supplied scenario values. No answer or finding has been accepted by a reviewer."
+    }
   },
   "dependencies": [
     {
@@ -5242,7 +5235,7 @@
       "path": "scope",
       "type": "object",
       "label": "Shipment identity and units",
-      "question": "Which shipment, revision, ship points and units are being reviewed?",
+      "question": "Which shipment, revision, ship points and units does this calculation cover?",
       "meaning": "Pins the order revision, receiving location, date, profile, currency and time origin.",
       "role": "shipment-lead",
       "required": true
@@ -5312,7 +5305,7 @@
       "path": "planning.currentTime",
       "type": "number",
       "label": "Current time",
-      "question": "What is the current minute for this review?",
+      "question": "What is the current operating minute?",
       "meaning": "Relative to the declared time origin; also bounds which observations can already exist.",
       "role": "shipment-lead",
       "required": true
@@ -5462,7 +5455,7 @@
       "path": "learning.requested",
       "type": "boolean",
       "label": "Consider further verification",
-      "question": "Should this review consider another verification?",
+      "question": "Should the calculation compare another verification?",
       "meaning": "Learning is optional and only becomes relevant when unresolved registration could affect the choice.",
       "role": "shipment-lead",
       "required": true
@@ -5471,8 +5464,8 @@
       "id": "probabilities",
       "path": "learning.probabilityAssessment",
       "type": "object",
-      "label": "Reviewed probability assessment",
-      "question": "What probability assessment has finance accepted?",
+      "label": "Probability assumptions",
+      "question": "What probabilities should be used, and what is their basis?",
       "meaning": "Probability weights are independent of counts of evidence interpretations.",
       "role": "finance-reviewer",
       "required": true
@@ -5686,8 +5679,6 @@
     "learning": {
       "requested": true,
       "probabilityAssessment": {
-        "status": "accepted",
-        "role": "finance-reviewer",
         "weights": {
           "registered": 0.5,
           "not_registered": 0.5
@@ -5711,63 +5702,6 @@
           "observationModelId": "exact-registry-verification"
         }
       ]
-    },
-    "review": {
-      "roles": [
-        {
-          "id": "shipment-lead",
-          "responsibility": "Confirm the accepted shipment commitment, source scope and complete operating arrangements; review evidence and planning handoffs."
-        },
-        {
-          "id": "finance-reviewer",
-          "responsibility": "Supply and review probability, consequence, investigation expense and purchase-authority premises."
-        },
-        {
-          "id": "release-officer",
-          "responsibility": "Exercise separately recorded final release authority; model output does not execute release."
-        }
-      ],
-      "answerStates": [
-        "unanswered",
-        "unknown",
-        "awaiting-review",
-        "accepted"
-      ],
-      "sections": {
-        "commitment": {
-          "status": "accepted",
-          "role": "shipment-lead"
-        },
-        "arrangements": {
-          "status": "accepted",
-          "role": "shipment-lead"
-        },
-        "evidenceRecords": {
-          "status": "accepted",
-          "role": "shipment-lead"
-        },
-        "probabilityAssessment": {
-          "status": "accepted",
-          "role": "finance-reviewer"
-        }
-      },
-      "handoffs": {
-        "evidenceToPlanning": {
-          "status": "awaiting-review",
-          "role": "shipment-lead",
-          "acceptedResultHash": null
-        },
-        "planningToLearning": {
-          "status": "awaiting-review",
-          "role": "shipment-lead",
-          "acceptedResultHash": null
-        },
-        "learningToProposal": {
-          "status": "awaiting-review",
-          "role": "finance-reviewer",
-          "acceptedResultHash": null
-        }
-      }
     }
   },
   "steps": [
@@ -7210,27 +7144,18 @@
               {
                 "ref": "answers.probabilities.status"
               },
-              "accepted"
+              "supplied"
             ]
           },
           {
-            "op": "eq",
+            "op": "isSet",
             "args": [
               {
-                "ref": "case.learning.probabilityAssessment.status"
-              },
-              "accepted"
+                "ref": "case.learning.probabilityAssessment.weights"
+              }
             ]
           },
-          {
-            "op": "eq",
-            "args": [
-              {
-                "ref": "case.learning.probabilityAssessment.role"
-              },
-              "finance-reviewer"
-            ]
-          }
+          true
         ]
       },
       "input": {
@@ -8067,27 +7992,18 @@
               {
                 "ref": "answers.probabilities.status"
               },
-              "accepted"
+              "supplied"
             ]
           },
           {
-            "op": "eq",
+            "op": "isSet",
             "args": [
               {
-                "ref": "case.learning.probabilityAssessment.status"
-              },
-              "accepted"
+                "ref": "case.learning.probabilityAssessment.weights"
+              }
             ]
           },
-          {
-            "op": "eq",
-            "args": [
-              {
-                "ref": "case.learning.probabilityAssessment.role"
-              },
-              "finance-reviewer"
-            ]
-          }
+          true
         ]
       },
       "input": {
@@ -8914,27 +8830,18 @@
               {
                 "ref": "answers.probabilities.status"
               },
-              "accepted"
+              "supplied"
             ]
           },
           {
-            "op": "eq",
+            "op": "isSet",
             "args": [
               {
-                "ref": "case.learning.probabilityAssessment.status"
-              },
-              "accepted"
+                "ref": "case.learning.probabilityAssessment.weights"
+              }
             ]
           },
-          {
-            "op": "eq",
-            "args": [
-              {
-                "ref": "case.learning.probabilityAssessment.role"
-              },
-              "finance-reviewer"
-            ]
-          }
+          true
         ]
       },
       "input": {
@@ -18270,28 +18177,54 @@
           }
         },
         {
-          "id": "reviewed-probabilities",
-          "message": "A separate reviewed finance probability assessment is required.",
+          "id": "probability-premises",
+          "message": "Supply probability weights, their basis and a source reference.",
           "test": {
-            "op": "and",
+            "op": "matchesSchema",
             "args": [
               {
-                "op": "eq",
-                "args": [
-                  {
-                    "ref": "case.learning.probabilityAssessment.status"
-                  },
-                  "accepted"
-                ]
+                "ref": "case.learning.probabilityAssessment"
               },
               {
-                "op": "eq",
-                "args": [
-                  {
-                    "ref": "case.learning.probabilityAssessment.role"
+                "literal": {
+                  "type": "object",
+                  "required": [
+                    "weights",
+                    "basis",
+                    "sourceId"
+                  ],
+                  "properties": {
+                    "weights": {
+                      "type": "object",
+                      "required": [
+                        "registered",
+                        "not_registered"
+                      ],
+                      "properties": {
+                        "registered": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "not_registered": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "basis": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "sourceId": {
+                      "type": "string",
+                      "minLength": 1
+                    }
                   },
-                  "finance-reviewer"
-                ]
+                  "additionalProperties": false
+                }
               }
             ]
           }
@@ -18397,14 +18330,14 @@
                 {
                   "ref": "steps.evidence.status"
                 },
-                "accepted"
+                "complete"
               ]
             },
             {
               "ref": "steps.evidence.output"
             },
             {
-              "status": "Awaiting current evidence review"
+              "status": "Evidence calculation unavailable"
             }
           ]
         }
@@ -18421,7 +18354,7 @@
                 {
                   "ref": "steps.planning.status"
                 },
-                "accepted"
+                "complete"
               ]
             },
             {
@@ -18488,7 +18421,7 @@
               ]
             },
             {
-              "status": "Awaiting current planning review"
+              "status": "Planning calculation unavailable"
             }
           ]
         }
@@ -18505,14 +18438,14 @@
                 {
                   "ref": "steps.learning.status"
                 },
-                "accepted"
+                "complete"
               ]
             },
             {
               "ref": "steps.learning.output"
             },
             {
-              "status": "No accepted current learning assessment",
+              "status": "Learning calculation unavailable",
               "requested": {
                 "ref": "case.learning.requested"
               },
@@ -18543,7 +18476,7 @@
     "actions": [
       {
         "id": "review-records",
-        "label": "Review or resolve the current records",
+        "label": "Supply or resolve the operating records",
         "when": {
           "op": "not",
           "args": [
@@ -18553,7 +18486,7 @@
                 {
                   "ref": "steps.evidence.status"
                 },
-                "accepted"
+                "complete"
               ]
             }
           ]
@@ -18571,7 +18504,7 @@
                 {
                   "ref": "steps.evidence.status"
                 },
-                "accepted"
+                "complete"
               ]
             },
             {
@@ -18593,7 +18526,7 @@
       },
       {
         "id": "review-planning",
-        "label": "Review the complete arrangement assessment",
+        "label": "Calculate the complete shipment arrangements",
         "when": {
           "op": "and",
           "args": [
@@ -18603,7 +18536,7 @@
                 {
                   "ref": "steps.evidence.status"
                 },
-                "accepted"
+                "complete"
               ]
             },
             {
@@ -18615,7 +18548,7 @@
                     {
                       "ref": "steps.planning.status"
                     },
-                    "accepted"
+                    "complete"
                   ]
                 }
               ]
@@ -18635,7 +18568,7 @@
                 {
                   "ref": "steps.planning.status"
                 },
-                "accepted"
+                "complete"
               ]
             },
             {
@@ -18657,7 +18590,7 @@
       },
       {
         "id": "review-verification",
-        "label": "Evaluate and review timely verification",
+        "label": "Calculate timely verification value",
         "when": {
           "op": "and",
           "args": [
@@ -18670,7 +18603,7 @@
                     {
                       "ref": "steps.planning.status"
                     },
-                    "accepted"
+                    "complete"
                   ]
                 },
                 {
@@ -18749,27 +18682,18 @@
                     {
                       "ref": "answers.probabilities.status"
                     },
-                    "accepted"
+                    "supplied"
                   ]
                 },
                 {
-                  "op": "eq",
+                  "op": "isSet",
                   "args": [
                     {
-                      "ref": "case.learning.probabilityAssessment.status"
-                    },
-                    "accepted"
+                      "ref": "case.learning.probabilityAssessment.weights"
+                    }
                   ]
                 },
-                {
-                  "op": "eq",
-                  "args": [
-                    {
-                      "ref": "case.learning.probabilityAssessment.role"
-                    },
-                    "finance-reviewer"
-                  ]
-                }
+                true
               ]
             },
             {
@@ -18781,7 +18705,7 @@
                     {
                       "ref": "steps.learning.status"
                     },
-                    "accepted"
+                    "complete"
                   ]
                 }
               ]
@@ -18791,7 +18715,7 @@
       },
       {
         "id": "consider-probabilities",
-        "label": "Supply a reviewed probability assessment if verification should be compared",
+        "label": "Supply probability assumptions to compare verification",
         "when": {
           "op": "and",
           "args": [
@@ -18804,7 +18728,7 @@
                     {
                       "ref": "steps.planning.status"
                     },
-                    "accepted"
+                    "complete"
                   ]
                 },
                 {
@@ -18869,7 +18793,7 @@
                     {
                       "ref": "answers.probabilities.status"
                     },
-                    "accepted"
+                    "supplied"
                   ]
                 }
               ]
@@ -18879,7 +18803,7 @@
       },
       {
         "id": "propose-arrangement",
-        "label": "Propose a supported complete arrangement",
+        "label": "Compare the supported complete arrangements",
         "when": {
           "op": "and",
           "args": [
@@ -18889,7 +18813,7 @@
                 {
                   "ref": "steps.planning.status"
                 },
-                "accepted"
+                "complete"
               ]
             },
             {
@@ -18919,7 +18843,7 @@
       },
       {
         "id": "propose-reviewed-choice",
-        "label": "Propose the reviewed reservation or verification choice",
+        "label": "Compare reserving now with timely verification",
         "when": {
           "op": "and",
           "args": [
@@ -18932,7 +18856,7 @@
                     {
                       "ref": "steps.planning.status"
                     },
-                    "accepted"
+                    "complete"
                   ]
                 },
                 {
@@ -18957,7 +18881,7 @@
                 {
                   "ref": "steps.learning.status"
                 },
-                "accepted"
+                "complete"
               ]
             }
           ]
@@ -18986,7 +18910,7 @@
             {
               "ref": "steps.evidence.status"
             },
-            "accepted"
+            "complete"
           ]
         },
         {
@@ -18995,7 +18919,7 @@
             {
               "ref": "steps.planning.status"
             },
-            "accepted"
+            "complete"
           ]
         },
         {
@@ -19064,27 +18988,18 @@
                         {
                           "ref": "answers.probabilities.status"
                         },
-                        "accepted"
+                        "supplied"
                       ]
                     },
                     {
-                      "op": "eq",
+                      "op": "isSet",
                       "args": [
                         {
-                          "ref": "case.learning.probabilityAssessment.status"
-                        },
-                        "accepted"
+                          "ref": "case.learning.probabilityAssessment.weights"
+                        }
                       ]
                     },
-                    {
-                      "op": "eq",
-                      "args": [
-                        {
-                          "ref": "case.learning.probabilityAssessment.role"
-                        },
-                        "finance-reviewer"
-                      ]
-                    }
+                    true
                   ]
                 }
               ]
@@ -19095,7 +19010,7 @@
                 {
                   "ref": "steps.learning.status"
                 },
-                "accepted"
+                "complete"
               ]
             }
           ]
@@ -19103,5 +19018,8 @@
       ]
     }
   },
-  "contentHash": "b35c516e650c62a0713ca154fe66c67fd76cdb79125a48fcb1f5b1d3e34e53e3"
+  "execution": {
+    "mode": "calculation"
+  },
+  "contentHash": "4e82e54e0e341039c8e35f8c6f9473d8c3c9d12cbb440540d6f28204a6bab0d4"
 }

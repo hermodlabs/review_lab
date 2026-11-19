@@ -1046,6 +1046,448 @@
         "bytes": 280505,
         "sha256": "3a51c9f9043dd23c7e296e2c1ec31798ea97612b4255eb8adb4bedebd1f1b791"
       }
+    },
+    {
+      "id": "review-first-shipment",
+      "version": "1.2.0",
+      "name": "Compare first-shipment arrangements",
+      "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
+      "publishedAt": "2026-11-19T18:00:00.000Z",
+      "contentHash": "33f0db2995f8b6eeb8a25f76682ec7459e88316a40aed586134e2aedcc923e60",
+      "definitionHash": "4e82e54e0e341039c8e35f8c6f9473d8c3c9d12cbb440540d6f28204a6bab0d4",
+      "domain": {
+        "id": "order-fulfillment",
+        "label": "Order fulfillment",
+        "description": "Plan complete deliveries against accepted readiness, resource, permission, timing and financial constraints."
+      },
+      "useCase": {
+        "id": "review-first-shipment",
+        "label": "Review a first shipment",
+        "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review ship-point registration",
+          "appId": "shipment-review-evidence",
+          "version": 1,
+          "appContentHash": "719cebdc2595450d8d0b6cd961ad32b443576bcb630cf11912d678679a305bbe",
+          "packageHash": "4ad35aeb54988d9028723f9cb846cee9e71d253160706345b0c46b47886e3010"
+        },
+        {
+          "id": "planning",
+          "name": "Plan this shipment before reservation",
+          "appId": "shipment-review-planning",
+          "version": 1,
+          "appContentHash": "754ab18d5e8d34070b4a288bc5a37ade4b2610c4d97979bd82ef358c3f5f26b1",
+          "packageHash": "3a577546ebb9aabff8ebc0c77ff56c1c1a0db57232e33808c1daaf8c4b33f22a"
+        },
+        {
+          "id": "learning",
+          "name": "Choose verification before reserving this shipment",
+          "appId": "shipment-review-learning",
+          "version": 1,
+          "appContentHash": "073b250ac87b16326210c29fdf937f9dd51511efd542c623cca4d729b2b2d08f",
+          "packageHash": "cfcf967bf16ad3c18d38d1167c8131c8957fce0c037ebaace2ca5232a0a0d681"
+        }
+      ],
+      "package": {
+        "path": "workflows/review-first-shipment/1.2.0/workflow.workflow.json",
+        "bytes": 934052,
+        "sha256": "934b5f3a2b681bf7e676d515c4c4c41cd0084a31cf5016ff462673a716e0fc9b"
+      },
+      "workbook": {
+        "path": "workflows/review-first-shipment/1.2.0/inputs.workbook.json",
+        "bytes": 1025766,
+        "sha256": "4a925455efdf3096e489a9b7acdce1a7f37f45d8be60961f6b21aee9f8e83ced"
+      }
+    },
+    {
+      "id": "review-gift-kit-flexible",
+      "version": "2.1.0",
+      "name": "Plan a gift-kit commitment",
+      "description": "Compare complete gift-kit correction arrangements against the recorded configuration, work, handoff, capacity, permission and expense requirements.",
+      "publishedAt": "2026-11-19T18:00:00.000Z",
+      "contentHash": "aeaad1eee07ad5e50b9834031514878153e5bf3ac8598d6a2e0cf74209d16e42",
+      "definitionHash": "2113121d55cf2d1d847e752b0f700d07bcf9838a61523d2120f6fdeba88b7056",
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations",
+        "description": "Review gift-kit evidence, corrective work and preparation commitments."
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign",
+        "description": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits."
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review gift-kit records",
+          "appId": "review-gift-kit-flexible-evidence",
+          "version": 1,
+          "appContentHash": "fabab7360423d69c32e76c4affeaaecf86fd1ac0c298dc3b10b6dff05f08dd37",
+          "packageHash": "05392b3025e200154cd050ef8c1d34212d7d5f0f54e31bbf4c7e1157a87a4f1a"
+        },
+        {
+          "id": "planning",
+          "name": "Review a gift-kit commitment — complete arrangements",
+          "appId": "review-gift-kit-flexible-planning",
+          "version": 1,
+          "appContentHash": "d394fd9e7730501bc51244d84bc406c0db4bef1c204a2f6b16e9c6f532d21ebd",
+          "packageHash": "d99c58a18df7351840faa440806c8a62be6e56e03fcee4feb3d11561c9efdeac"
+        }
+      ],
+      "package": {
+        "path": "workflows/review-gift-kit-flexible/2.1.0/workflow.workflow.json",
+        "bytes": 538931,
+        "sha256": "1e86fd52eb283f3a6cc8f4191f41fecc3bd280449ff331c5981089ee36f0d3a1"
+      },
+      "workbook": {
+        "path": "workflows/review-gift-kit-flexible/2.1.0/inputs.workbook.json",
+        "bytes": 595892,
+        "sha256": "cb90340a1b5ef9b9103f6ada8ed464ea1d13347474d53cca543bdb1af8e3c2b1"
+      }
+    },
+    {
+      "id": "review-gift-kit-earliest",
+      "version": "2.1.0",
+      "name": "Plan the earliest gift-kit handoff",
+      "description": "Find the earliest complete gift-kit correction arrangement meeting the recorded configuration, work, capacity, permission and expense requirements.",
+      "publishedAt": "2026-11-19T18:00:00.000Z",
+      "contentHash": "297efc7d500c91e391e65a730fceca0fa516646acfd13b2ee9d2fd58f7c7be6a",
+      "definitionHash": "9a0c31a6292126fc1d528baf7c397ad416f240c02b3fd2e3ebd524aaded97a3b",
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations",
+        "description": "Review gift-kit evidence, corrective work and preparation commitments."
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign",
+        "description": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits."
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review gift-kit records",
+          "appId": "review-gift-kit-earliest-evidence",
+          "version": 1,
+          "appContentHash": "7c14517fdf36a4ffc3e00a50452c18e5c1ff9411a18506cad3504fc2105c4dc3",
+          "packageHash": "f5a4b195dc26b9d8ca24a312e8e464003d0338e8462260d9ecd9a4e1fa643b46"
+        },
+        {
+          "id": "planning",
+          "name": "Review gift kits with earliest handoff priority — complete arrangements",
+          "appId": "review-gift-kit-earliest-planning",
+          "version": 1,
+          "appContentHash": "5bc9b7c4eb79011e60feb6415a3060f9435b9a84461b4ed2ec1d8cb916f0f6b2",
+          "packageHash": "1fc3ad7559d0747fc61fa5b56be27a42c56dac653b28c255d44f3c321ed4c758"
+        }
+      ],
+      "package": {
+        "path": "workflows/review-gift-kit-earliest/2.1.0/workflow.workflow.json",
+        "bytes": 538974,
+        "sha256": "9d73deb4960da1d1b4d1876ff8bcff362ce0c79d5d759759f50e91715cdd5787"
+      },
+      "workbook": {
+        "path": "workflows/review-gift-kit-earliest/2.1.0/inputs.workbook.json",
+        "bytes": 595954,
+        "sha256": "1e121809b38bef3100901360616883c23461667e84a8286926f898dcebbb9488"
+      }
+    },
+    {
+      "id": "street-team-deployment",
+      "version": "1.3.0",
+      "name": "Plan a street-team deployment",
+      "description": "Calculate which promotion deployments meet staffing, timing, access and spending constraints, and the additional guests needed to recover their expense. Customer response is not forecast.",
+      "publishedAt": "2026-11-19T18:00:00.000Z",
+      "contentHash": "66295e25f96c8d943642b59febd7d5d079755383e82e7b551f3f9d9f871503df",
+      "definitionHash": "0d9923f13fbcd08975d8f4b6e49495d8e1ba5cf49f0fbf16457d0e9a9d53e463",
+      "domain": {
+        "id": "venue-operations",
+        "label": "Venue operations"
+      },
+      "useCase": {
+        "id": "deploy-street-team",
+        "label": "Review a street-team deployment"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "operations",
+          "name": "Review a street-team deployment",
+          "appId": "street-team-operating-review",
+          "version": 2,
+          "appContentHash": "9efe886d3c4d8412a8ed76153ece3b95f7f1106a4e80e921f678290de9228daa",
+          "packageHash": "ba657e7bc03db98f19178bff31263b31b7d033e77aeecef4092bb1cb38d8ad94"
+        }
+      ],
+      "package": {
+        "path": "workflows/street-team-deployment/1.3.0/workflow.workflow.json",
+        "bytes": 164418,
+        "sha256": "13e87ed9fbfba70d9636d24a78035c09b7e08ffc752dd9f377777cfb335484e7"
+      },
+      "workbook": {
+        "path": "workflows/street-team-deployment/1.3.0/inputs.workbook.json",
+        "bytes": 184727,
+        "sha256": "cf664cede469a8a34e1d0955a10e4344096854de97aa1e3c20eb6e9672c3da86"
+      }
+    },
+    {
+      "id": "walmart-first-order-standard",
+      "version": "1.3.0",
+      "name": "Plan a Walmart first-order shipment",
+      "description": "Compare complete current and EDI-recovery shipment arrangements against the supplied order, readiness, delivery, resource, permission and cash constraints. Calculate optional learning value only when its assumptions are supplied.",
+      "publishedAt": "2026-11-19T18:00:00.000Z",
+      "contentHash": "02591b945b635473532956a14f51d5fb5474ede3673e778cf3413b108e4c66a5",
+      "definitionHash": "8b059df78848b7b0bd12e05d5ebadf1a8c715f920e69c72042c8972f0fa98cb6",
+      "domain": {
+        "id": "walmart-supplier-operations",
+        "label": "Walmart Supplier Operations",
+        "description": "Review bounded supplier commitments, readiness records, complete recovery arrangements and optional learning."
+      },
+      "useCase": {
+        "id": "review-first-order",
+        "label": "Review a first order",
+        "description": "Review readiness, complete shipment and recovery arrangements, and optional further verification."
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review Walmart first-order readiness evidence",
+          "appId": "walmart-first-order-standard-evidence",
+          "version": 3,
+          "appContentHash": "0c78df256a05a2377984a6b1b19a45f1fdf3eefc0a38a4d5ca823afe266df7ba",
+          "packageHash": "ebf53680317187f1b8d07bbbc109e4139309c8f3da4db98e854c3687cb4090ef"
+        },
+        {
+          "id": "dispositions",
+          "name": "Review first-order source records",
+          "appId": "walmart-first-order-standard-dispositions",
+          "version": 3,
+          "appContentHash": "fa70ee111d702cf720a2008e943751834d19ef8d65ab49469211dd56a9e42ee6",
+          "packageHash": "b9a68b1247c3e50ed9b3e776a1b37de70cd561073bd6176e41a6f6d7f71d7288"
+        },
+        {
+          "id": "direct",
+          "name": "Current direct carrier service",
+          "appId": "walmart-first-order-standard-direct",
+          "version": 3,
+          "appContentHash": "eafffcc9e1eba3258f64a73f6aac05a88290ddb7f4b87108250056dbfaa761db",
+          "packageHash": "7a5aca3aa07b19de2cfb981ab1a6dbfe033890c9434da86f3c8c8110347c386e"
+        },
+        {
+          "id": "express",
+          "name": "Current express carrier service from the same origin",
+          "appId": "walmart-first-order-standard-express",
+          "version": 3,
+          "appContentHash": "417eca3f58ad4ff1dba27d2b9897db07418dbce4a9b3171517dc44d569f201ac",
+          "packageHash": "f96f9de7050c0fe89e56ec86aff850c4b147986c5d0ae29407737a7f12101117"
+        },
+        {
+          "id": "edi-recovery-direct",
+          "name": "Complete the EDI recovery package, then use direct freight",
+          "appId": "walmart-first-order-standard-edi-recovery-direct",
+          "version": 3,
+          "appContentHash": "aad579e07188e5ccf7af50709adc10d78c10e996ca9c8ec9d9ad7e4ffbe7dd3e",
+          "packageHash": "fbeed65f708ccfdbb1523fa84f38f66b372f7e9c426ad31b0a1d3c26852da22b"
+        },
+        {
+          "id": "edi-recovery-express",
+          "name": "Complete the EDI recovery package, then use express freight",
+          "appId": "walmart-first-order-standard-edi-recovery-express",
+          "version": 3,
+          "appContentHash": "6625b84ec84ad205757b8a8e8488b7ceadf26da899cc7329ac046d9fbc3502ea",
+          "packageHash": "91d3276dd227d3c0c70bb658c736cde3c9727252ca0c820f5f28ba89c194100d"
+        },
+        {
+          "id": "study-direct",
+          "name": "Current direct carrier service after a readiness review",
+          "appId": "walmart-first-order-standard-study-direct",
+          "version": 3,
+          "appContentHash": "8212a1668d8eab34d43060515891b70a59b8e1db9c5107caad11fd95a0d0716e",
+          "packageHash": "96c8b7c024f239aefd3b98ee34c21cbf12b6ff16ba99e80fac3f452ea292daae"
+        },
+        {
+          "id": "study-express",
+          "name": "Current express carrier service from the same origin after a readiness review",
+          "appId": "walmart-first-order-standard-study-express",
+          "version": 3,
+          "appContentHash": "134cfaf605410d913f11d57bcf594908341d568181959a78158e5780ddd0aa39",
+          "packageHash": "621811edb465f5621620c5f0e68057245c270a7d9f736e543c02d27951cce4e9"
+        },
+        {
+          "id": "study-edi-recovery-direct",
+          "name": "Complete the EDI recovery package, then use direct freight after a readiness review",
+          "appId": "walmart-first-order-standard-study-edi-recovery-direct",
+          "version": 3,
+          "appContentHash": "df1beee87fcc9972941c2920f93d8b7fefdbae060fc57d627fdd670262173d8b",
+          "packageHash": "a0eb639c246ab8c92cdaa1d09e862d8e1941e82bd0ced73e98a91842d6dc0d2e"
+        },
+        {
+          "id": "study-edi-recovery-express",
+          "name": "Complete the EDI recovery package, then use express freight after a readiness review",
+          "appId": "walmart-first-order-standard-study-edi-recovery-express",
+          "version": 3,
+          "appContentHash": "90740f31d16b4e23d286acb2b7707fee4f2bc31f2a1b968ee86fe9726288bbc8",
+          "packageHash": "0960cebaf283a1ca4780687f387461437d26b39136d268f4c9258478de3f0e4b"
+        },
+        {
+          "id": "learning",
+          "name": "Decide whether to buy a readiness review",
+          "appId": "walmart-first-order-standard-learning",
+          "version": 3,
+          "appContentHash": "c56af55232629265f114bb142e75a7b50cc009356b76e3cb7853bdf1b0ff5f34",
+          "packageHash": "209ccc12ad23873ea52cf96e8ca9faba6b3b9e33df13e89612734bb72da71b40"
+        }
+      ],
+      "package": {
+        "path": "workflows/walmart-first-order-standard/1.3.0/workflow.workflow.json",
+        "bytes": 8799890,
+        "sha256": "9ae6aae31111a77ddb0942631b7d672ca8df006403f3bba816e60faadd041188"
+      },
+      "workbook": {
+        "path": "workflows/walmart-first-order-standard/1.3.0/inputs.workbook.json",
+        "bytes": 9188791,
+        "sha256": "9cc783edf0e5f8a829c14028785641d93260d839f693411f22ecdc260e57058d"
+      }
+    },
+    {
+      "id": "walmart-first-order-staged",
+      "version": "1.3.0",
+      "name": "Plan a Walmart shipment with pallet staging",
+      "description": "Compare complete current and EDI-recovery shipment arrangements with pallet staging, delivery, resource, permission and cash constraints. Calculate optional learning value only when its assumptions are supplied.",
+      "publishedAt": "2026-11-19T18:00:00.000Z",
+      "contentHash": "77cb8e9beeb9cc413d3b543e0a84943282f90824ca6809ccd02733a522c185bb",
+      "definitionHash": "cb557e908c00baa627b52b506df5a506eebdc6474761168177e1279c239b9407",
+      "domain": {
+        "id": "walmart-supplier-operations",
+        "label": "Walmart Supplier Operations",
+        "description": "Review bounded supplier commitments, readiness records, complete recovery arrangements and optional learning."
+      },
+      "useCase": {
+        "id": "review-first-order-with-pallet-staging",
+        "label": "Review a first order with pallet staging",
+        "description": "Compare complete shipment and EDI-recovery arrangements with additional warehouse staging."
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review Walmart first-order readiness evidence",
+          "appId": "walmart-first-order-staged-evidence",
+          "version": 3,
+          "appContentHash": "d5d706ec3304665f642f6e840192c875790a722ce28ad7339603802cf524ad51",
+          "packageHash": "eed4fb6201e9d63984d693f5acc719911dc9c3bc485be9a9de441900064190cc"
+        },
+        {
+          "id": "dispositions",
+          "name": "Review first-order source records",
+          "appId": "walmart-first-order-staged-dispositions",
+          "version": 3,
+          "appContentHash": "246602f2c730c5060861885d4ed7d5e64a24f3dd921a29c5f4e24d56c7dbedb5",
+          "packageHash": "0cdc9ce2da15aac179622042e8368b18d8507f543c400405c379aef732e3f82a"
+        },
+        {
+          "id": "direct",
+          "name": "Current direct carrier service with pallet staging",
+          "appId": "walmart-first-order-staged-direct",
+          "version": 3,
+          "appContentHash": "33cee32cea28257d3a8d9901b91e1a0eefd0e505a672d46a814d2c588e63ba10",
+          "packageHash": "c57784cea44dd879fc6adb9803cf9107c6b15295fed99651c8d43d208efc3870"
+        },
+        {
+          "id": "express",
+          "name": "Current express carrier service from the same origin with pallet staging",
+          "appId": "walmart-first-order-staged-express",
+          "version": 3,
+          "appContentHash": "f58baa9e6dfc31ef64a17a81afc0db99d45bae24c5e15fcf88c1e14f01e8968f",
+          "packageHash": "2ded3d19d0093e749a680378519fe53879a4463c722d35a807289745a8dd9f8d"
+        },
+        {
+          "id": "edi-recovery-direct",
+          "name": "Complete the EDI recovery package, then use direct freight with pallet staging",
+          "appId": "walmart-first-order-staged-edi-recovery-direct",
+          "version": 3,
+          "appContentHash": "233a5a4540d3aa6ac36ba604e2f7ab18657cc6a110b08723ce48c1fbee0f5b84",
+          "packageHash": "88034ed00624ea9f5bb10ff52507b2483ab88d0556f0798feb56ed9561dfcff2"
+        },
+        {
+          "id": "edi-recovery-express",
+          "name": "Complete the EDI recovery package, then use express freight with pallet staging",
+          "appId": "walmart-first-order-staged-edi-recovery-express",
+          "version": 3,
+          "appContentHash": "853f534ac344cab5ed7274afd557f8958578c7ce9385a9019f9ff029733f6e1f",
+          "packageHash": "31a0dddb45ed4f287f1371e13f9da0d3dceae5a125298d59ddb9f418e3e5cb77"
+        },
+        {
+          "id": "study-direct",
+          "name": "Current direct carrier service with pallet staging after a readiness review",
+          "appId": "walmart-first-order-staged-study-direct",
+          "version": 3,
+          "appContentHash": "f1d823aa52d13023592fa940ca5de046bae642a10d3980123fc4bc9bfe05d532",
+          "packageHash": "9ae816af4de16f12963ba74f663fab49ff79348a8ef1c56868d3f3a50d2e332b"
+        },
+        {
+          "id": "study-express",
+          "name": "Current express carrier service from the same origin with pallet staging after a readiness review",
+          "appId": "walmart-first-order-staged-study-express",
+          "version": 3,
+          "appContentHash": "137dbd93902c0ebd86373e40f828baf64bc2cdf247a74b32b820df469ddcef31",
+          "packageHash": "09a78c7f4cd6dfe28b67310a370ad161ee17b2fb14d0330c548842242715ba92"
+        },
+        {
+          "id": "study-edi-recovery-direct",
+          "name": "Complete the EDI recovery package, then use direct freight with pallet staging after a readiness review",
+          "appId": "walmart-first-order-staged-study-edi-recovery-direct",
+          "version": 3,
+          "appContentHash": "efc8ad652a9e6a07761696d68d6e6e55f8946f5e0bf44e00b03e6b76a47c4fd7",
+          "packageHash": "2fe388bb308a636f61fec1d468376468275f7e4593e88dd6b5a0da2bdafeb608"
+        },
+        {
+          "id": "study-edi-recovery-express",
+          "name": "Complete the EDI recovery package, then use express freight with pallet staging after a readiness review",
+          "appId": "walmart-first-order-staged-study-edi-recovery-express",
+          "version": 3,
+          "appContentHash": "c87ff7724165d3c63da0fc362c4ff2c47432d7b413163f911f1b57e1d5fcabd8",
+          "packageHash": "4db6c8ef062d7257e66d27ff47b8881de89e6b76d1370a2e7a7a99d7e2d6fb60"
+        },
+        {
+          "id": "learning",
+          "name": "Decide whether to buy a readiness review",
+          "appId": "walmart-first-order-staged-learning",
+          "version": 3,
+          "appContentHash": "c49296d08954f7e155e19514f6aa0bd8d058d1b55072c6af446e00fa598c5af1",
+          "packageHash": "295a63218add2b00513524926830c60a10bc34caf6e24bac13d8d17e2a404f67"
+        }
+      ],
+      "package": {
+        "path": "workflows/walmart-first-order-staged/1.3.0/workflow.workflow.json",
+        "bytes": 8903184,
+        "sha256": "ff2ecf7cbe1687639306d771b423c225573d23d556766e3bc9709e48799361f2"
+      },
+      "workbook": {
+        "path": "workflows/walmart-first-order-staged/1.3.0/inputs.workbook.json",
+        "bytes": 9295163,
+        "sha256": "ff2da07db096c867b03fb5a6c8680b77895630d47b646bce8555066d06338e30"
+      }
     }
   ],
   "collections": [
@@ -1200,6 +1642,74 @@
         "path": "collections/decision-lab/venue-operations/1.1.0/collection.collection.json",
         "bytes": 1414,
         "sha256": "028772635ebd58b8041fe99d7da9f8b337eabffb188a508d42985c893365bc18"
+      }
+    },
+    {
+      "id": "order-fulfillment",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.2.0",
+      "title": "Order fulfillment",
+      "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+      "createdAt": "2026-11-19T18:00:00.000Z",
+      "contentHash": "95b0137327a63f72665bc74740ec496a7270fc6efdd85d9b839af13f4b9e7158",
+      "package": {
+        "path": "collections/decision-lab/order-fulfillment/1.2.0/collection.collection.json",
+        "bytes": 2014,
+        "sha256": "d69c03388eac7a4c647054165fe0e1e7d09505dc15c11832e4e3cbcfe61a3625"
+      }
+    },
+    {
+      "id": "gifting-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "2.1.0",
+      "title": "Gifting operations",
+      "description": "Gifting operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+      "createdAt": "2026-11-19T18:00:00.000Z",
+      "contentHash": "2ba350708a733e03ab8049839d95c025065484d82f632502de037ede275791ed",
+      "package": {
+        "path": "collections/decision-lab/gifting-operations/2.1.0/collection.collection.json",
+        "bytes": 3250,
+        "sha256": "c7c95d432660c3fda18ec0e481f9d523031b08ae4accfb9d73a1992d5ee43f67"
+      }
+    },
+    {
+      "id": "venue-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.2.0",
+      "title": "Venue operations",
+      "description": "Venue operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+      "createdAt": "2026-11-19T18:00:00.000Z",
+      "contentHash": "740d2581e3f2e26b287bbc35f03076cbe01734f02a7b475cbd67c3bc97879a97",
+      "package": {
+        "path": "collections/decision-lab/venue-operations/1.2.0/collection.collection.json",
+        "bytes": 1338,
+        "sha256": "016b12450031f77fb8e82e2af37b4e53901b8ee6167689d1ef17f4e6c7ea36bf"
+      }
+    },
+    {
+      "id": "walmart-supplier-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.1.0",
+      "title": "Walmart Supplier Operations",
+      "description": "Walmart Supplier Operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+      "createdAt": "2026-11-19T18:00:00.000Z",
+      "contentHash": "67931589f3f8ffe5b7ceb7c04d9f5785b1a37fe68ae43c2ff2079cea2ba3a4db",
+      "package": {
+        "path": "collections/decision-lab/walmart-supplier-operations/1.1.0/collection.collection.json",
+        "bytes": 2104,
+        "sha256": "a9086a288d640949575d9304351f16b31faf7cfaf941b47fd93d554e56d6d96a"
       }
     }
   ]

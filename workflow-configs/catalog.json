@@ -3,10 +3,10 @@
   "workflows": [
     {
       "id": "review-first-shipment",
-      "title": "Review a first shipment",
-      "description": "Review one delivery commitment, the actual transportation records and complete alternative arrangements. If a timely verification could change the choice, compare its feasible responses with reserving now. Finish with a reviewable proposal and its unresolved conditions.",
+      "title": "Compare first-shipment arrangements",
+      "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
       "definitionUrl": "first-shipment/workflow.definition.json",
-      "contentHash": "b35c516e650c62a0713ca154fe66c67fd76cdb79125a48fcb1f5b1d3e34e53e3"
+      "contentHash": "4e82e54e0e341039c8e35f8c6f9473d8c3c9d12cbb440540d6f28204a6bab0d4"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
-  "version": "bbee334e06eb517335c8",
+  "version": "db713f03462e3e776b6e",
   "appVersion": "0.2.0",
-  "totalBytes": 50523282,
+  "totalBytes": 91392460,
   "assets": [
     {
       "url": "app-configs/.nojekyll",
@@ -180,13 +180,13 @@
     },
     {
       "url": "app-configs/catalog.json",
-      "sha256": "2d729b7d0b0f2f64a9ce6bc84f727b35e79e62b392cb7725f3f6a0689fd8f47d",
-      "bytes": 54708
+      "sha256": "1c28c3171451c07fb13ce9ac9f1f7b702906ca7c24c65f107a77c3b8d4cad2d0",
+      "bytes": 79076
     },
     {
       "url": "app-configs/collection-definitions.json",
-      "sha256": "f4c59ee46413d7b75da4874f6f28e1905b4294fb03e447e6cf7050ab2ec825e2",
-      "bytes": 17356
+      "sha256": "82338348ae4cc9ccf5343593e927b6e8e670eec60b9dbdff6cf2cd7db87197e0",
+      "bytes": 26450
     },
     {
       "url": "app-configs/collections/decision-lab/canonical-examples/1.0.0/collection.collection.json",
@@ -204,6 +204,11 @@
       "bytes": 3366
     },
     {
+      "url": "app-configs/collections/decision-lab/gifting-operations/2.1.0/collection.collection.json",
+      "sha256": "c7c95d432660c3fda18ec0e481f9d523031b08ae4accfb9d73a1992d5ee43f67",
+      "bytes": 3250
+    },
+    {
       "url": "app-configs/collections/decision-lab/network-operations/1.0.0/collection.collection.json",
       "sha256": "e8645652ebe8a9de712a7c44b4de53baa8a56fa9696d5666a9a7fe68102cc954",
       "bytes": 1229
@@ -217,6 +222,11 @@
       "url": "app-configs/collections/decision-lab/order-fulfillment/1.1.0/collection.collection.json",
       "sha256": "86209f6254205f5646a621cee08af8b5f07617c488cbf54508253f03d9a6cd6f",
       "bytes": 2000
+    },
+    {
+      "url": "app-configs/collections/decision-lab/order-fulfillment/1.2.0/collection.collection.json",
+      "sha256": "d69c03388eac7a4c647054165fe0e1e7d09505dc15c11832e4e3cbcfe61a3625",
+      "bytes": 2014
     },
     {
       "url": "app-configs/collections/decision-lab/product-launches/1.0.0/collection.collection.json",
@@ -234,9 +244,19 @@
       "bytes": 1414
     },
     {
+      "url": "app-configs/collections/decision-lab/venue-operations/1.2.0/collection.collection.json",
+      "sha256": "016b12450031f77fb8e82e2af37b4e53901b8ee6167689d1ef17f4e6c7ea36bf",
+      "bytes": 1338
+    },
+    {
       "url": "app-configs/collections/decision-lab/walmart-supplier-operations/1.0.0/collection.collection.json",
       "sha256": "b766625c668364672889e943e3f3c9f47f1b3bb82fe102a34265c148767e4d9e",
       "bytes": 2081
+    },
+    {
+      "url": "app-configs/collections/decision-lab/walmart-supplier-operations/1.1.0/collection.collection.json",
+      "sha256": "a9086a288d640949575d9304351f16b31faf7cfaf941b47fd93d554e56d6d96a",
+      "bytes": 2104
     },
     {
       "url": "app-configs/examples/street-team-deployment/1.1.0/README.md",
@@ -265,8 +285,8 @@
     },
     {
       "url": "app-configs/workbook-definitions.json",
-      "sha256": "870f9d2f689b8cac953edbae6dfd562bf446bc4c76e4bc7cfe428b026ef1d790",
-      "bytes": 586
+      "sha256": "78ac812941c32c515043197cf114ba61b2daa059fffdf469f06a80d352dc4f05",
+      "bytes": 1102
     },
     {
       "url": "app-configs/workbook-mappings/review-gift-kit-earliest-2.0.0.mapping.json",
@@ -274,8 +294,18 @@
       "bytes": 24903
     },
     {
+      "url": "app-configs/workbook-mappings/review-gift-kit-earliest-2.1.0.mapping.json",
+      "sha256": "92c1947fae7f4f42b047207cac7ffdc6f3d04ec0c273506ee68ed9f375e0b63f",
+      "bytes": 24903
+    },
+    {
       "url": "app-configs/workbook-mappings/review-gift-kit-flexible-2.0.0.mapping.json",
       "sha256": "4a752ca6a0d728d88b8d75ee97a0264796046ee0573a4604615a78ce7b669a96",
+      "bytes": 24884
+    },
+    {
+      "url": "app-configs/workbook-mappings/review-gift-kit-flexible-2.1.0.mapping.json",
+      "sha256": "7192d43e9423bc3fc887e4207fd1e393cec45ab5214f2737801fd9fee7cfe7d0",
       "bytes": 24884
     },
     {
@@ -304,6 +334,16 @@
       "bytes": 936288
     },
     {
+      "url": "app-configs/workflows/review-first-shipment/1.2.0/inputs.workbook.json",
+      "sha256": "4a925455efdf3096e489a9b7acdce1a7f37f45d8be60961f6b21aee9f8e83ced",
+      "bytes": 1025766
+    },
+    {
+      "url": "app-configs/workflows/review-first-shipment/1.2.0/workflow.workflow.json",
+      "sha256": "934b5f3a2b681bf7e676d515c4c4c41cd0084a31cf5016ff462673a716e0fc9b",
+      "bytes": 934052
+    },
+    {
       "url": "app-configs/workflows/review-gift-kit-earliest/2.0.0/inputs.workbook.json",
       "sha256": "28b8cce53e7eb5b4118a140631cfc43648fca953b141321d8400d46f7b45a360",
       "bytes": 595640
@@ -314,6 +354,16 @@
       "bytes": 538676
     },
     {
+      "url": "app-configs/workflows/review-gift-kit-earliest/2.1.0/inputs.workbook.json",
+      "sha256": "1e121809b38bef3100901360616883c23461667e84a8286926f898dcebbb9488",
+      "bytes": 595954
+    },
+    {
+      "url": "app-configs/workflows/review-gift-kit-earliest/2.1.0/workflow.workflow.json",
+      "sha256": "9d73deb4960da1d1b4d1876ff8bcff362ce0c79d5d759759f50e91715cdd5787",
+      "bytes": 538974
+    },
+    {
       "url": "app-configs/workflows/review-gift-kit-flexible/2.0.0/inputs.workbook.json",
       "sha256": "d137231d350cc3c1e5c7a19c375ad7a2b150a3452fc4c07f954d77a26e69a0c4",
       "bytes": 595575
@@ -322,6 +372,16 @@
       "url": "app-configs/workflows/review-gift-kit-flexible/2.0.0/workflow.workflow.json",
       "sha256": "eea4c63f10c8486ee7f77ef89dc50ccfa0ceeb60ca5181bb104f33df2d8249ea",
       "bytes": 538630
+    },
+    {
+      "url": "app-configs/workflows/review-gift-kit-flexible/2.1.0/inputs.workbook.json",
+      "sha256": "cb90340a1b5ef9b9103f6ada8ed464ea1d13347474d53cca543bdb1af8e3c2b1",
+      "bytes": 595892
+    },
+    {
+      "url": "app-configs/workflows/review-gift-kit-flexible/2.1.0/workflow.workflow.json",
+      "sha256": "1e86fd52eb283f3a6cc8f4191f41fecc3bd280449ff331c5981089ee36f0d3a1",
+      "bytes": 538931
     },
     {
       "url": "app-configs/workflows/street-team-deployment/1.1.0/inputs.workbook.json",
@@ -344,6 +404,16 @@
       "bytes": 115293
     },
     {
+      "url": "app-configs/workflows/street-team-deployment/1.3.0/inputs.workbook.json",
+      "sha256": "cf664cede469a8a34e1d0955a10e4344096854de97aa1e3c20eb6e9672c3da86",
+      "bytes": 184727
+    },
+    {
+      "url": "app-configs/workflows/street-team-deployment/1.3.0/workflow.workflow.json",
+      "sha256": "13e87ed9fbfba70d9636d24a78035c09b7e08ffc752dd9f377777cfb335484e7",
+      "bytes": 164418
+    },
+    {
       "url": "app-configs/workflows/walmart-first-order-staged/1.2.0/inputs.workbook.json",
       "sha256": "a9fc3098ead80b0b0f048a804dd79098e8d645ac98c14f7ce4e080fe4a15b2b1",
       "bytes": 9297601
@@ -354,6 +424,16 @@
       "bytes": 3210785
     },
     {
+      "url": "app-configs/workflows/walmart-first-order-staged/1.3.0/inputs.workbook.json",
+      "sha256": "ff2da07db096c867b03fb5a6c8680b77895630d47b646bce8555066d06338e30",
+      "bytes": 9295163
+    },
+    {
+      "url": "app-configs/workflows/walmart-first-order-staged/1.3.0/workflow.workflow.json",
+      "sha256": "ff2ecf7cbe1687639306d771b423c225573d23d556766e3bc9709e48799361f2",
+      "bytes": 8903184
+    },
+    {
       "url": "app-configs/workflows/walmart-first-order-standard/1.2.0/inputs.workbook.json",
       "sha256": "f6e2fdc6685c496c30f1703ac5e5155baa5e7940d60f6ab1a3d5c49142b458fa",
       "bytes": 9191176
@@ -362,6 +442,16 @@
       "url": "app-configs/workflows/walmart-first-order-standard/1.2.0/workflow.workflow.json",
       "sha256": "a43c68108eafb882f5946b2b8d8dfc3af7b18f9c53eb053016086f6fd064e180",
       "bytes": 3163578
+    },
+    {
+      "url": "app-configs/workflows/walmart-first-order-standard/1.3.0/inputs.workbook.json",
+      "sha256": "9cc783edf0e5f8a829c14028785641d93260d839f693411f22ecdc260e57058d",
+      "bytes": 9188791
+    },
+    {
+      "url": "app-configs/workflows/walmart-first-order-standard/1.3.0/workflow.workflow.json",
+      "sha256": "9ae6aae31111a77ddb0942631b7d672ca8df006403f3bba816e60faadd041188",
+      "bytes": 8799890
     },
     {
       "url": "assets/clingo-Bbt-XjUT.js",
@@ -389,23 +479,23 @@
       "bytes": 50792
     },
     {
-      "url": "assets/exceljs.min-Cj1cYgtt.js",
-      "sha256": "b80223bb80b64fde86c6899f834fc740ae3399ecd922e899cc278555b3e6cb27",
+      "url": "assets/exceljs.min-C8FHDHnW.js",
+      "sha256": "45448ce961aa195b7a0e8540c3ad42a0c120259dc43cc2f347c6cb45375e24fb",
       "bytes": 929558
     },
     {
-      "url": "assets/index-DJMziUZY.js",
-      "sha256": "33bdfe41c8d68903e0cf5eda5b5341a3d74618ff08fb87dd8f034dcd68499dbf",
-      "bytes": 7264316
+      "url": "assets/index-BO8xGQfv.css",
+      "sha256": "12abdcf1bc0901020b96065c8d4e722f91f9a570040782a81a58b4777317a102",
+      "bytes": 270903
     },
     {
-      "url": "assets/index-DejXmPJE.css",
-      "sha256": "f90f8c985884b0eb89a2e66a27aebfd49ad983e4db49e7803a4f67749ce52acc",
-      "bytes": 270459
+      "url": "assets/index-CoAXcMo3.js",
+      "sha256": "face895ff49366d40ce4d723ad701646d4386687059286cad4c30333587db4d3",
+      "bytes": 7274837
     },
     {
-      "url": "assets/jszip.min-DHB50T1M.js",
-      "sha256": "4e45d51e7316c3b3ad50f5bfe97dea43ca463c53a52a7728bab075a5ad60bd55",
+      "url": "assets/jszip.min-DJ34ql-K.js",
+      "sha256": "c4ac134609e87968adc6309497094c974407ef05cb6476985dd3a629ec126f13",
       "bytes": 95949
     },
     {
@@ -445,7 +535,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "cd12fbe0ccfdb9ce5ecb548e68ce6aa07b63f266b3e53e74be13c237eafa975b",
+      "sha256": "9622e1e7aefdfb71408de8c73c4e805ecefbbb6bec33a6d62ac195baed82b618",
       "bytes": 1023
     },
     {
