@@ -1,0 +1,652 @@
+# Canonical assess-value-of-learning/1 model. No domain code or computed recommendation tables.
+format: assess-value-of-learning/1
+module:
+  id: marble-learning-value
+  version: "1.3.0"
+  title: Assess marble learning value
+  description: "Decide whether to buy another comparison before choosing a marble. Compare every permitted complete response policy with the best choice now, using an explicitly reviewed three-state E3 basis, assessed probabilities, payoffs, service likelihoods, fees and completion times. The same choices can be assessed under exact-identity or bag-only payoffs. The source record is retained for review; this app does not rerun the separate historical weighing-evidence calculation."
+  question: "Which comparison and complete response policy is worth buying before the choice expires?"
+  boundary: "Three reviewed admissible heavy identities in the red bag after E3; one optional study; one risk-neutral decision owner; deterministic completion times; stated monetary payoffs. Historical evidence admissibility is supplied by an upstream review. Prospective reliability and probability assessments are separate assumptions. A high expected payoff does not establish the heavy identity, guarantee a realized payment or authorize a physical action."
+  objective:
+    criterion: risk-neutral-expected-money
+    unit: hypothetical USD
+    timeUnit: day
+    beneficiary: One hypothetical marble-choice owner
+    horizon: "One choice from Day 0 through the Day-2 selection deadline; no later benefits"
+  attributes:
+    - id: heavyIdentity
+      label: Heavy marble identity
+      type: string
+    - id: containingBag
+      label: Containing bag
+      type: string
+  states:
+    - id: r1
+      label: "r1 is heavy; red bag"
+      attributes:
+        heavyIdentity: r1
+        containingBag: red
+    - id: r2
+      label: "r2 is heavy; red bag"
+      attributes:
+        heavyIdentity: r2
+        containingBag: red
+    - id: r3
+      label: "r3 is heavy; red bag"
+      attributes:
+        heavyIdentity: r3
+        containingBag: red
+  actions:
+    - id: choose-r1
+      label: "Choose r1 (red)"
+      description: "Choose this marble. Exact-identity payoffs reward choosing the heavy identity; bag-only sensitivity rewards its containing bag."
+    - id: choose-r2
+      label: "Choose r2 (red)"
+      description: "Choose this marble. Exact-identity payoffs reward choosing the heavy identity; bag-only sensitivity rewards its containing bag."
+    - id: choose-r3
+      label: "Choose r3 (red)"
+      description: "Choose this marble. Exact-identity payoffs reward choosing the heavy identity; bag-only sensitivity rewards its containing bag."
+    - id: decline
+      label: Decline
+      description: "Receive the declared decline payoff; remains available after the deadline."
+  studies:
+    - id: exact-fast
+      label: "Certified W1 comparison, fast"
+      description: "W1 compares r1 on the left with r2 on the right; certified reporting is a separately stipulated prospective premise."
+      reports:
+        - id: left
+          label: Left
+          kind: report
+        - id: right
+          label: Right
+          kind: report
+        - id: balance
+          label: Balance
+          kind: report
+    - id: binary-fast
+      label: "Reliable WN comparison, fast"
+      description: WN compares r1 with an independently declared known-normal reference n0. A balance result leaves r2 and r3 unresolved.
+      reports:
+        - id: left
+          label: Left
+          kind: report
+        - id: balance
+          label: Balance
+          kind: report
+    - id: noisy-fast
+      label: "Noisy W1 comparison, fast"
+      description: The service reports the physical W1 outcome with probability 4/5 and either other outcome with probability 1/10.
+      reports:
+        - id: left
+          label: Left
+          kind: report
+        - id: right
+          label: Right
+          kind: report
+        - id: balance
+          label: Balance
+          kind: report
+    - id: dropout-fast
+      label: Certified W1 with possible no report
+      description: The exact service returns no report with probability 1/10 independently of identity. A response is required for that outcome.
+      reports:
+        - id: left
+          label: Left
+          kind: report
+        - id: right
+          label: Right
+          kind: report
+        - id: balance
+          label: Balance
+          kind: report
+        - id: no-report
+          label: No report
+          kind: no-report
+    - id: exact-slow
+      label: "Certified W1 comparison, slow"
+      description: The reliable result arrives after the selection deadline. Only actions still available then may be used.
+      reports:
+        - id: left
+          label: Left
+          kind: report
+        - id: right
+          label: Right
+          kind: report
+        - id: balance
+          label: Balance
+          kind: report
+  assumptions: ["The reviewed E3 basis contains exactly r1, r2 and r3. It is not generated or authenticated by this economic evaluator.", "The current equal probability assessment is stipulated conditional on E3, not inferred by normalizing admissible-state counts.", "Historical E3 allows one incorrect report; that bounded-error premise supplies no future report-error frequency.", Future channels leave the heavy identity and underlying action payoffs unchanged. Missingness is explicitly modeled as an outcome., "Only decline remains available after Day 2. Early reservation, automatic fallback and reopening an expired opportunity are not offered.", "The bag-only sensitivity keeps the same physical choices but pays for choosing a marble in the correct bag, irrespective of exact identity."]
+  metadata:
+    catalog:
+      domain:
+        id: canonical-examples
+        label: Canonical examples
+        description: Reference problems for understanding and testing reusable evidence patterns.
+      useCase:
+        id: choose-marble-investigation
+        label: Choose a marble investigation
+        description: Compare the modeled value of another comparison with choosing now under exact-identity or containing-bag consequences.
+  presentation:
+    labels:
+      baseline: Choose now
+      study: Comparison service
+      action: Choice
+      state: Heavy identity
+      report: Comparison report
+    reports:
+      comparison:
+        title: Comparison value
+        question: "Should we buy a comparison or choose now?"
+      responses:
+        title: How to use each report
+        question: "What should we choose after every possible report?"
+      sensitivity:
+        title: "What changes the choice?"
+        question: "How do payoff, price and probability assumptions change the preferred option?"
+      inputs:
+        title: Basis and assumptions
+        question: "Which reviewed states and declared models support this calculation?"
+      history:
+        title: Case changes
+        question: "What changed in this decision assessment?"
+    views:
+      - id: option-value
+        component: economic-comparison
+        version: 1
+        dataset: economic-comparison
+        representations: [table, bar]
+        defaultRepresentation: bar
+        title: Value of the comparison options
+        question: "Which comparison improves the expected payoff after its fee, compared with choosing now?"
+        description: "Compare complete comparison-and-choice options under the same reviewed marble basis and supplied probabilities."
+        measure: netValue
+        labels:
+          label: Comparison option
+          fee: Comparison fee
+          grossValue: Expected payoff before comparison fee
+          netValue: Expected net payoff
+          incrementalValue: Gain over choosing now
+          available: Availability
+          axis: Expected net payoff
+      - id: report-timing
+        component: temporal-comparison
+        version: 1
+        dataset: study-timing
+        representations: [table, timeline]
+        defaultRepresentation: table
+        title: Comparison results and the choice deadline
+        question: "Which comparison returns while we can still choose a marble?"
+        description: "Each row is an alternative service. Completion times and choice deadlines are modeled premises, rather than recorded work or a plan to run every service together."
+        labels:
+          label: Comparison service
+          start: Assumed start day
+          end: Report ready at
+          duration: Comparison duration
+          available: Any response available
+          remainingActions: Choices still available
+          unavailableActions: Unavailable choices and reasons
+          deadline: Choice expires
+          axis: Decision day
+    basisGroups:
+      - id: scope
+        title: Choice scope
+        question: "Whose choice, inventory, payoff objective and decision horizon are being assessed?"
+        description: The identified decision and inventory set the scope of every value comparison.
+        sections: [scope]
+        recordTypeIds: [inventory]
+      - id: uncertainty
+        title: Marble evidence
+        question: "Which heavy identities remain in the reviewed E3 basis, and what probabilities and accepted facts are supplied?"
+        description: "The reviewed factual alternatives and separately assessed probabilities retain their different meanings."
+        sections: [uncertainty]
+        recordTypeIds: [historicalReport, basisReview]
+      - id: actions
+        title: Choices & prizes
+        question: "What can we choose now or after a report, with which prizes, losses and action deadlines?"
+        description: Complete consequences and availability define the choices that learning could improve.
+        sections: [actions]
+        recordTypeIds: []
+      - id: reviews
+        title: Comparison methods
+        question: "What can each comparison service report under each heavy identity, with which fee and completion time?"
+        description: "Prospective report likelihoods, including no report, are separate from the historical E3 error premise."
+        sections: [reviews]
+        recordTypeIds: []
+      - id: sources
+        title: Sources & mappings
+        question: "Which sources support the retained E3 record and the separate decision assumptions?"
+        description: "Source references support review; they are not new observations or automatically accepted assertions."
+        sections: []
+        recordTypeIds: [source]
+      - id: limits
+        title: Assumptions & limits
+        question: "Which assumptions and calculation boundaries qualify this expected-value comparison?"
+        description: "Declared premises, conclusion boundaries and calculation coverage qualify the recommendation."
+        sections: [assumptions, coverage]
+        recordTypeIds: [decisionAssumption]
+  recordTypes:
+    - id: inventory
+      label: Declared marble inventory
+      columns:
+        - id: id
+          label: Marble
+          type: string
+        - id: bag
+          label: Bag
+          type: string
+        - id: scope
+          label: Inventory scope
+          type: string
+    - id: historicalReport
+      label: Retained E3 record
+      columns:
+        - id: id
+          label: Observation
+          type: string
+        - id: setup
+          label: Setup
+          type: string
+        - id: reported
+          label: Reported outcome
+          type: string
+        - id: source
+          label: Source
+          type: string
+    - id: basisReview
+      label: Upstream admissibility review
+      columns:
+        - id: id
+          label: Review ID
+          type: string
+        - id: source
+          label: Evidence source
+          type: string
+        - id: assumptions
+          label: Assumptions
+          type: string
+        - id: conclusion
+          label: Supplied current basis
+          type: string
+        - id: status
+          label: Review status
+          type: string
+    - id: source
+      label: Source records
+      columns:
+        - id: id
+          label: Source ID
+          type: string
+        - id: label
+          label: Source
+          type: string
+        - id: file
+          label: File
+          type: string
+        - id: coverage
+          label: Coverage
+          type: string
+        - id: snapshot
+          label: Snapshot
+          type: string
+    - id: decisionAssumption
+      label: Decision-model assumptions
+      columns:
+        - id: id
+          label: Assumption ID
+          type: string
+        - id: label
+          label: Assumption
+          type: string
+        - id: source
+          label: Basis source
+          type: string
+        - id: meaning
+          label: Declared meaning
+          type: string
+case:
+  id: MARBLE-LEARNING-E3
+  scope: "Inventory N1; reviewed E3 state basis; prospective services apply to this same fixed heavy identity."
+  currentTime: 0
+  cashBudget: null
+  probabilityBasis:
+    source: "Stipulated teaching assessment conditional on E3; not inferred from the historical error bound or admissible-state count."
+    scope: "N1:E3:prospective-1"
+  priors:
+    - state: r1
+      probability: "1/3"
+    - state: r2
+      probability: "1/3"
+    - state: r3
+      probability: "1/3"
+  actions:
+    - action: choose-r1
+      deadline: 2
+      cash: 0
+    - action: choose-r2
+      deadline: 2
+      cash: 0
+    - action: choose-r3
+      deadline: 2
+      cash: 0
+    - action: decline
+      deadline: null
+      cash: 0
+  payoffs:
+    - action: choose-r1
+      state: r1
+      value: 90
+    - action: choose-r1
+      state: r2
+      value: -30
+    - action: choose-r1
+      state: r3
+      value: -30
+    - action: choose-r2
+      state: r1
+      value: -30
+    - action: choose-r2
+      state: r2
+      value: 90
+    - action: choose-r2
+      state: r3
+      value: -30
+    - action: choose-r3
+      state: r1
+      value: -30
+    - action: choose-r3
+      state: r2
+      value: -30
+    - action: choose-r3
+      state: r3
+      value: 90
+    - action: decline
+      state: r1
+      value: 0
+    - action: decline
+      state: r2
+      value: 0
+    - action: decline
+      state: r3
+      value: 0
+  studies:
+    - study: exact-fast
+      fee: 12
+      duration: 1
+      likelihoods:
+        - state: r1
+          report: left
+          probability: 1
+        - state: r1
+          report: right
+          probability: 0
+        - state: r1
+          report: balance
+          probability: 0
+        - state: r2
+          report: left
+          probability: 0
+        - state: r2
+          report: right
+          probability: 1
+        - state: r2
+          report: balance
+          probability: 0
+        - state: r3
+          report: left
+          probability: 0
+        - state: r3
+          report: right
+          probability: 0
+        - state: r3
+          report: balance
+          probability: 1
+    - study: binary-fast
+      fee: 6
+      duration: 1
+      likelihoods:
+        - state: r1
+          report: left
+          probability: 1
+        - state: r1
+          report: balance
+          probability: 0
+        - state: r2
+          report: left
+          probability: 0
+        - state: r2
+          report: balance
+          probability: 1
+        - state: r3
+          report: left
+          probability: 0
+        - state: r3
+          report: balance
+          probability: 1
+    - study: noisy-fast
+      fee: 4
+      duration: 1
+      likelihoods:
+        - state: r1
+          report: left
+          probability: "4/5"
+        - state: r1
+          report: right
+          probability: "1/10"
+        - state: r1
+          report: balance
+          probability: "1/10"
+        - state: r2
+          report: left
+          probability: "1/10"
+        - state: r2
+          report: right
+          probability: "4/5"
+        - state: r2
+          report: balance
+          probability: "1/10"
+        - state: r3
+          report: left
+          probability: "1/10"
+        - state: r3
+          report: right
+          probability: "1/10"
+        - state: r3
+          report: balance
+          probability: "4/5"
+    - study: dropout-fast
+      fee: 12
+      duration: 1
+      likelihoods:
+        - state: r1
+          report: left
+          probability: "9/10"
+        - state: r1
+          report: right
+          probability: 0
+        - state: r1
+          report: balance
+          probability: 0
+        - state: r1
+          report: no-report
+          probability: "1/10"
+        - state: r2
+          report: left
+          probability: 0
+        - state: r2
+          report: right
+          probability: "9/10"
+        - state: r2
+          report: balance
+          probability: 0
+        - state: r2
+          report: no-report
+          probability: "1/10"
+        - state: r3
+          report: left
+          probability: 0
+        - state: r3
+          report: right
+          probability: 0
+        - state: r3
+          report: balance
+          probability: "9/10"
+        - state: r3
+          report: no-report
+          probability: "1/10"
+    - study: exact-slow
+      fee: 5
+      duration: 3
+      likelihoods:
+        - state: r1
+          report: left
+          probability: 1
+        - state: r1
+          report: right
+          probability: 0
+        - state: r1
+          report: balance
+          probability: 0
+        - state: r2
+          report: left
+          probability: 0
+        - state: r2
+          report: right
+          probability: 1
+        - state: r2
+          report: balance
+          probability: 0
+        - state: r3
+          report: left
+          probability: 0
+        - state: r3
+          report: right
+          probability: 0
+        - state: r3
+          report: balance
+          probability: 1
+  acceptedFacts:
+    - id: E3-BAG
+      attribute: containingBag
+      value: red
+      source: "REVIEW-E3: supplied upstream evidence finding, not newly measured here"
+  sensitivity:
+    - id: bag-only
+      label: Reward the containing bag rather than exact identity
+      payoffs:
+        - action: choose-r1
+          state: r1
+          value: 90
+        - action: choose-r1
+          state: r2
+          value: 90
+        - action: choose-r1
+          state: r3
+          value: 90
+        - action: choose-r2
+          state: r1
+          value: 90
+        - action: choose-r2
+          state: r2
+          value: 90
+        - action: choose-r2
+          state: r3
+          value: 90
+        - action: choose-r3
+          state: r1
+          value: 90
+        - action: choose-r3
+          state: r2
+          value: 90
+        - action: choose-r3
+          state: r3
+          value: 90
+        - action: decline
+          state: r1
+          value: 0
+        - action: decline
+          state: r2
+          value: 0
+        - action: decline
+          state: r3
+          value: 0
+    - id: concentrated-prior
+      label: Assess r1 at 95 percent before buying a study
+      priors:
+        - state: r1
+          probability: "19/20"
+        - state: r2
+          probability: "1/40"
+        - state: r3
+          probability: "1/40"
+    - id: exact-fast-price-tie
+      label: Raise certified fast fee to 20
+      fees:
+        - study: exact-fast
+          fee: 20
+  records:
+    inventory:
+      - id: r1
+        bag: red
+        scope: N1
+      - id: r2
+        bag: red
+        scope: N1
+      - id: r3
+        bag: red
+        scope: N1
+      - id: b1
+        bag: blue
+        scope: N1
+      - id: b2
+        bag: blue
+        scope: N1
+      - id: b3
+        bag: blue
+        scope: N1
+      - id: g1
+        bag: gold
+        scope: N1
+      - id: g2
+        bag: gold
+        scope: N1
+      - id: g3
+        bag: gold
+        scope: N1
+    historicalReport:
+      - id: O1
+        setup: "W0:red-left/blue-right"
+        reported: left
+        source: "What Is a Question Worth?; hypothetical E3 record"
+      - id: O2
+        setup: "W0:red-left/blue-right"
+        reported: right
+        source: "What Is a Question Worth?; hypothetical E3 record"
+      - id: O3
+        setup: "W0:red-left/blue-right"
+        reported: left
+        source: "What Is a Question Worth?; hypothetical E3 record"
+    basisReview:
+      - id: REVIEW-E3
+        source: "Review marble evidence; separate evidence-review/1 example"
+        assumptions: "Exactly one heavy marble; fixed bags; equal normal masses; at most one wrong report globally in E3."
+        conclusion: "Reviewed admitted identities r1,r2,r3; containing bag red; exact identity unresolved."
+        status: "Supplied teaching premise; historical constraints are not executed by this app."
+    source:
+      - id: MARBLE-PAPER
+        label: "What Is a Question Worth?"
+        file: marble-learning-paper
+        coverage: Hypothetical teaching example
+        snapshot: E3
+    decisionAssumption:
+      - id: P-MARBLE
+        label: Current state distribution
+        source: MARBLE-PAPER
+        meaning: "Positive assessed weights 1/3 each, separate from logical admissibility."
+      - id: CHANNEL-MARBLE
+        label: Prospective service performance
+        source: MARBLE-PAPER
+        meaning: "Exact, binary, noisy and independent-dropout likelihoods are stipulated; no empirical certification is claimed."
+      - id: PAYOFF-MARBLE
+        label: Consequences and decision horizon
+        source: MARBLE-PAPER
+        meaning: "One owner maximizes risk-neutral hypothetical monetary payoff; selection expires at Day 2."

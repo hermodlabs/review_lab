@@ -1,0 +1,54 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "order-fulfillment",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "version": "1.0.0",
+    "title": "Order fulfillment",
+    "description": "Plan complete deliveries against accepted readiness, resource, permission, timing and financial constraints.",
+    "useCases": [
+      {
+        "id": "complete-first-shipment",
+        "label": "Complete the first shipment",
+        "description": "Compare complete shipment plans that must meet every mandatory obligation across the declared readiness and travel scenarios."
+      },
+      {
+        "id": "review-first-shipment",
+        "label": "Review a first shipment",
+        "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+      }
+    ],
+    "members": [
+      {
+        "type": "app",
+        "id": "complete-first-shipment",
+        "version": 2,
+        "packageHash": "a452ab9f1b4812ebc593b56a1381cd18475368516df1ad12543c6e0d23b6e1d5",
+        "useCaseId": "complete-first-shipment",
+        "artifact": {
+          "path": "apps/complete-first-shipment/2/app.app.json",
+          "bytes": 115537,
+          "sha256": "1606ac4cdf4308f2aa2d495691d0d1ea3715b1e2f8fffc2c5d0ae12611520f22"
+        }
+      },
+      {
+        "type": "workflow",
+        "id": "review-first-shipment",
+        "version": "1.0.0",
+        "packageHash": "a26b11ba366c7493cfc1c4901fc8f80d23e1d31315cc8354636b1ffe16b617c5",
+        "useCaseId": "review-first-shipment",
+        "artifact": {
+          "path": "workflows/review-first-shipment/1.0.0/workflow.workflow.json",
+          "bytes": 926168,
+          "sha256": "57edec2aea6e721f284a8ca77abdd5b044071a2a5431d7c41df62fa841fa31da"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-16T18:00:00.000Z",
+  "contentHash": "b496c5bd229d41b09dae7142712916ec5c72101f2587b80ee863b8a4cac649a9"
+}

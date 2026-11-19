@@ -1,0 +1,909 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "First shipment review — Excel case inputs",
+  "description": "Author-reviewed input declarations for the bounded first-shipment profile. Money is whole USD cents, times are whole minutes from the recorded time origin, and quantities are cases. The workflow owns which questions may change. Native evidence, planning and learning admission remains authoritative; workbook edits cannot accept answers, findings or reviews. Other saved context remains outside the worksheets.",
+  "type": "object",
+  "properties": {
+    "scope": {
+      "type": "object",
+      "title": "Shipment identity and units",
+      "properties": {
+        "orderId": {
+          "type": "string",
+          "title": "Order reference"
+        },
+        "orderRevision": {
+          "type": "string",
+          "title": "Order revision"
+        },
+        "recipient": {
+          "type": "string",
+          "title": "Receiving location"
+        },
+        "shipDate": {
+          "type": "string",
+          "title": "Planned ship date"
+        },
+        "profileVersion": {
+          "type": "string",
+          "title": "Reviewed profile version",
+          "enum": [
+            "1.0.0"
+          ]
+        },
+        "directShipPointId": {
+          "type": "string",
+          "title": "Direct ship point reference"
+        },
+        "backupShipPointId": {
+          "type": "string",
+          "title": "Backup ship point reference"
+        },
+        "currency": {
+          "type": "string",
+          "title": "Currency",
+          "enum": [
+            "USD"
+          ]
+        },
+        "amountUnit": {
+          "type": "string",
+          "title": "Money unit",
+          "enum": [
+            "cent"
+          ]
+        },
+        "timeUnit": {
+          "type": "string",
+          "title": "Time unit",
+          "enum": [
+            "minute"
+          ]
+        },
+        "timeOrigin": {
+          "type": "string",
+          "title": "Minute zero — date and time with UTC offset"
+        }
+      },
+      "required": [
+        "orderId",
+        "orderRevision",
+        "recipient",
+        "shipDate",
+        "profileVersion",
+        "directShipPointId",
+        "backupShipPointId",
+        "currency",
+        "amountUnit",
+        "timeUnit",
+        "timeOrigin"
+      ],
+      "additionalProperties": false
+    },
+    "commitment": {
+      "type": "object",
+      "title": "Delivery commitment",
+      "properties": {
+        "receiveAt": {
+          "type": "string",
+          "title": "Required receiving location"
+        },
+        "reserveBy": {
+          "type": "string",
+          "title": "Reservation cutoff — date and time with UTC offset"
+        },
+        "receiveBy": {
+          "type": "string",
+          "title": "Required receipt — date and time with UTC offset"
+        },
+        "responseMinutes": {
+          "type": "integer",
+          "title": "Report review and response duration (minutes)",
+          "minimum": 0
+        },
+        "quantity": {
+          "type": "integer",
+          "title": "Complete committed quantity (cases)",
+          "minimum": 1
+        },
+        "quantityUnit": {
+          "type": "string",
+          "title": "Quantity unit",
+          "enum": [
+            "case"
+          ]
+        }
+      },
+      "required": [
+        "receiveAt",
+        "reserveBy",
+        "receiveBy",
+        "responseMinutes",
+        "quantity",
+        "quantityUnit"
+      ],
+      "additionalProperties": false
+    },
+    "planning": {
+      "type": "object",
+      "title": "Preparation and operating timing",
+      "properties": {
+        "currentTime": {
+          "type": "integer",
+          "title": "Current minute from time origin",
+          "minimum": 0
+        },
+        "preparationMinutes": {
+          "type": "integer",
+          "title": "Complete packing duration (minutes)",
+          "minimum": 1
+        },
+        "releaseMinutes": {
+          "type": "integer",
+          "title": "Release review duration (minutes)",
+          "minimum": 1
+        },
+        "packActor": {
+          "type": "string",
+          "title": "Assigned packing worker reference"
+        },
+        "releaseActor": {
+          "type": "string",
+          "title": "Assigned release worker reference"
+        },
+        "receiptOpen": {
+          "type": "integer",
+          "title": "Receiving window opens (minute)",
+          "minimum": 0
+        },
+        "receiptClose": {
+          "type": "integer",
+          "title": "Receiving window closes — exclusive (minute)",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "currentTime",
+        "preparationMinutes",
+        "releaseMinutes",
+        "packActor",
+        "releaseActor",
+        "receiptOpen",
+        "receiptClose"
+      ],
+      "additionalProperties": false
+    },
+    "arrangements": {
+      "type": "array",
+      "title": "Complete shipment arrangements",
+      "items": {
+        "type": "object",
+        "title": "Complete shipment arrangements",
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Arrangement reference"
+          },
+          "shipPointId": {
+            "type": "string",
+            "title": "Ship point reference"
+          },
+          "costMinor": {
+            "type": "integer",
+            "title": "Complete arrangement quote (USD cents)",
+            "minimum": 0
+          },
+          "departureMinute": {
+            "type": "integer",
+            "title": "Carrier departure (minute)",
+            "minimum": 0
+          },
+          "travelMinutes": {
+            "type": "integer",
+            "title": "Complete travel duration (minutes)",
+            "minimum": 0
+          },
+          "arrivalAt": {
+            "type": "string",
+            "title": "Offered receipt — date and time with UTC offset"
+          },
+          "capacity": {
+            "type": "integer",
+            "title": "Offered capacity (cases)",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "id",
+          "shipPointId",
+          "costMinor",
+          "departureMinute",
+          "travelMinutes",
+          "arrivalAt",
+          "capacity"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "authority": {
+      "type": "object",
+      "title": "Recorded budgets and purchase authority",
+      "properties": {
+        "budgetMinor": {
+          "type": "integer",
+          "title": "Total expense ceiling (USD cents)",
+          "minimum": 0
+        },
+        "cashLimitMinor": {
+          "type": "integer",
+          "title": "Available cash (USD cents)",
+          "minimum": 0
+        },
+        "studyPurchaseCapMinor": {
+          "type": "integer",
+          "title": "Verification purchase cap (USD cents)",
+          "minimum": 0
+        },
+        "studyPurchaseGrant": {
+          "type": "object",
+          "title": "Issued verification purchase grant",
+          "properties": {
+            "id": {
+              "type": "string",
+              "title": "Issued grant reference"
+            },
+            "actor": {
+              "type": "string",
+              "title": "Authorized purchaser reference"
+            },
+            "orderId": {
+              "type": "string",
+              "title": "Order reference"
+            },
+            "orderRevision": {
+              "type": "string",
+              "title": "Order revision"
+            },
+            "recipient": {
+              "type": "string",
+              "title": "Receiving location"
+            },
+            "shipDate": {
+              "type": "string",
+              "title": "Planned ship date"
+            },
+            "profileVersion": {
+              "type": "string",
+              "title": "Reviewed profile version",
+              "enum": [
+                "1.0.0"
+              ]
+            },
+            "action": {
+              "type": "string",
+              "title": "Authorized action",
+              "enum": [
+                "purchase-verification"
+              ]
+            },
+            "validFrom": {
+              "type": "integer",
+              "title": "Grant valid from (minute)",
+              "minimum": 0
+            },
+            "validUntil": {
+              "type": "integer",
+              "title": "Grant valid until — exclusive (minute)",
+              "minimum": 0
+            },
+            "ceilingMinor": {
+              "type": "integer",
+              "title": "Issued grant ceiling (USD cents)",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "id",
+            "actor",
+            "orderId",
+            "orderRevision",
+            "recipient",
+            "shipDate",
+            "profileVersion",
+            "action",
+            "validFrom",
+            "validUntil",
+            "ceilingMinor"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "budgetMinor",
+        "cashLimitMinor",
+        "studyPurchaseCapMinor",
+        "studyPurchaseGrant"
+      ],
+      "additionalProperties": false
+    },
+    "operations": {
+      "type": "object",
+      "title": "Recorded operating resources and permissions",
+      "properties": {
+        "capabilities": {
+          "type": "array",
+          "title": "Worker capabilities",
+          "items": {
+            "type": "object",
+            "title": "Worker capabilities",
+            "properties": {
+              "actor": {
+                "type": "string",
+                "title": "Worker reference"
+              },
+              "action": {
+                "type": "string",
+                "title": "Operating action"
+              }
+            },
+            "required": [
+              "actor",
+              "action"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "calendars": {
+          "type": "array",
+          "title": "Worker availability",
+          "items": {
+            "type": "object",
+            "title": "Worker availability",
+            "properties": {
+              "actor": {
+                "type": "string",
+                "title": "Worker reference"
+              },
+              "start": {
+                "type": "integer",
+                "title": "Available from (minute)",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "title": "Available until — exclusive (minute)",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "actor",
+              "start",
+              "end"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "resources": {
+          "type": "array",
+          "title": "Resource capacities",
+          "items": {
+            "type": "object",
+            "title": "Resource capacities",
+            "properties": {
+              "id": {
+                "type": "string",
+                "title": "Resource reference"
+              },
+              "capacity": {
+                "type": "integer",
+                "title": "Simultaneous capacity (units)",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "id",
+              "capacity"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "bookings": {
+          "type": "array",
+          "title": "Existing resource bookings",
+          "items": {
+            "type": "object",
+            "title": "Existing resource bookings",
+            "properties": {
+              "id": {
+                "type": "string",
+                "title": "Booking reference"
+              },
+              "resource": {
+                "type": "string",
+                "title": "Resource reference"
+              },
+              "start": {
+                "type": "integer",
+                "title": "Booking starts (minute)",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "title": "Booking ends — exclusive (minute)",
+                "minimum": 0
+              },
+              "amount": {
+                "type": "integer",
+                "title": "Capacity already booked (units)",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "id",
+              "resource",
+              "start",
+              "end",
+              "amount"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "releaseGrants": {
+          "type": "array",
+          "title": "Issued final release grants",
+          "items": {
+            "type": "object",
+            "title": "Issued final release grants",
+            "properties": {
+              "id": {
+                "type": "string",
+                "title": "Issued grant reference"
+              },
+              "actor": {
+                "type": "string",
+                "title": "Authorized release worker reference"
+              },
+              "action": {
+                "type": "string",
+                "title": "Authorized action"
+              },
+              "arrangement": {
+                "type": "string",
+                "title": "Arrangement reference"
+              },
+              "shipPoint": {
+                "type": "string",
+                "title": "Ship point reference"
+              },
+              "orderId": {
+                "type": "string",
+                "title": "Order reference"
+              },
+              "orderRevision": {
+                "type": "string",
+                "title": "Order revision"
+              },
+              "recipient": {
+                "type": "string",
+                "title": "Receiving location"
+              },
+              "shipDate": {
+                "type": "string",
+                "title": "Planned ship date"
+              },
+              "profileVersion": {
+                "type": "string",
+                "title": "Reviewed profile version",
+                "enum": [
+                  "1.0.0"
+                ]
+              },
+              "start": {
+                "type": "integer",
+                "title": "Grant valid from (minute)",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "title": "Grant valid until — exclusive (minute)",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "id",
+              "actor",
+              "action",
+              "arrangement",
+              "shipPoint",
+              "orderId",
+              "orderRevision",
+              "recipient",
+              "shipDate",
+              "profileVersion",
+              "start",
+              "end"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "arrangementAuthorities": {
+          "type": "array",
+          "title": "Issued arrangement authorities",
+          "items": {
+            "type": "object",
+            "title": "Issued arrangement authorities",
+            "properties": {
+              "arrangement": {
+                "type": "string",
+                "title": "Arrangement reference"
+              },
+              "orderId": {
+                "type": "string",
+                "title": "Order reference"
+              },
+              "orderRevision": {
+                "type": "string",
+                "title": "Order revision"
+              },
+              "recipient": {
+                "type": "string",
+                "title": "Receiving location"
+              },
+              "shipDate": {
+                "type": "string",
+                "title": "Planned ship date"
+              },
+              "profileVersion": {
+                "type": "string",
+                "title": "Reviewed profile version",
+                "enum": [
+                  "1.0.0"
+                ]
+              },
+              "start": {
+                "type": "integer",
+                "title": "Authority valid from (minute)",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "title": "Authority valid until — exclusive (minute)",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "arrangement",
+              "orderId",
+              "orderRevision",
+              "recipient",
+              "shipDate",
+              "profileVersion",
+              "start",
+              "end"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "capabilities",
+        "calendars",
+        "resources",
+        "bookings",
+        "releaseGrants",
+        "arrangementAuthorities"
+      ],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "title": "Actual shipment records",
+      "properties": {
+        "scopeId": {
+          "type": "string",
+          "title": "Record scope reference"
+        },
+        "scopeBasis": {
+          "type": "object",
+          "title": "Recorded shipment scope",
+          "properties": {
+            "orderId": {
+              "type": "string",
+              "title": "Order reference"
+            },
+            "orderRevision": {
+              "type": "string",
+              "title": "Order revision"
+            },
+            "recipient": {
+              "type": "string",
+              "title": "Receiving location"
+            },
+            "shipDate": {
+              "type": "string",
+              "title": "Planned ship date"
+            },
+            "profileVersion": {
+              "type": "string",
+              "title": "Reviewed profile version",
+              "enum": [
+                "1.0.0"
+              ]
+            },
+            "shipPoint": {
+              "type": "string",
+              "title": "Direct ship point reference"
+            }
+          },
+          "required": [
+            "orderId",
+            "orderRevision",
+            "recipient",
+            "shipDate",
+            "profileVersion",
+            "shipPoint"
+          ],
+          "additionalProperties": false
+        },
+        "questionId": {
+          "type": "string",
+          "title": "Authored factual question reference",
+          "enum": [
+            "transport-registration"
+          ]
+        },
+        "observations": {
+          "type": "array",
+          "title": "Actual observations",
+          "items": {
+            "type": "object",
+            "title": "Actual observations",
+            "properties": {
+              "id": {
+                "type": "string",
+                "title": "Observation reference"
+              },
+              "shipPointId": {
+                "type": "string",
+                "title": "Observed ship point reference"
+              },
+              "field": {
+                "type": "string",
+                "title": "What was observed",
+                "enum": [
+                  "portal_listed",
+                  "transport_registered"
+                ]
+              },
+              "value": {
+                "type": "boolean",
+                "title": "Observed yes or no"
+              },
+              "sourceId": {
+                "type": "string",
+                "title": "Supporting source reference"
+              },
+              "observedAtMinute": {
+                "type": "integer",
+                "title": "Observed at (minute)",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "id",
+              "shipPointId",
+              "field",
+              "value",
+              "sourceId",
+              "observedAtMinute"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "sources": {
+          "type": "array",
+          "title": "Record sources",
+          "items": {
+            "type": "object",
+            "title": "Record sources",
+            "properties": {
+              "id": {
+                "type": "string",
+                "title": "Source reference"
+              },
+              "scope": {
+                "type": "string",
+                "title": "Record scope reference"
+              },
+              "kind": {
+                "type": "string",
+                "title": "Source kind"
+              },
+              "observedAt": {
+                "type": "integer",
+                "title": "Observed at (minute)",
+                "minimum": 0
+              },
+              "description": {
+                "type": "string",
+                "title": "Source description"
+              }
+            },
+            "required": [
+              "id",
+              "scope",
+              "kind",
+              "observedAt",
+              "description"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "incurredVerificationFees": {
+          "type": "array",
+          "title": "Verification already purchased",
+          "items": {
+            "type": "object",
+            "title": "Verification already purchased",
+            "properties": {
+              "id": {
+                "type": "string",
+                "title": "Actual purchase reference"
+              },
+              "amountMinor": {
+                "type": "integer",
+                "title": "Fee already incurred (USD cents)",
+                "minimum": 0
+              },
+              "paidAtMinute": {
+                "type": "integer",
+                "title": "Fee paid at (minute)",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "id",
+              "amountMinor",
+              "paidAtMinute"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "scopeId",
+        "scopeBasis",
+        "questionId",
+        "observations",
+        "sources",
+        "incurredVerificationFees"
+      ],
+      "additionalProperties": false
+    },
+    "learning": {
+      "type": "object",
+      "title": "Optional verification inputs",
+      "properties": {
+        "requested": {
+          "type": "boolean",
+          "title": "Consider further verification"
+        },
+        "probabilityAssessment": {
+          "type": "object",
+          "title": "Supplied probability assessment",
+          "properties": {
+            "status": {
+              "type": "string",
+              "title": "Source assessment review state"
+            },
+            "role": {
+              "type": "string",
+              "title": "Responsible source-review role"
+            },
+            "weights": {
+              "type": "object",
+              "title": "Assessed transportation probabilities",
+              "properties": {
+                "registered": {
+                  "type": "number",
+                  "title": "Registered probability (0 to 1)",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "not_registered": {
+                  "type": "number",
+                  "title": "Not registered probability (0 to 1)",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "registered",
+                "not_registered"
+              ],
+              "additionalProperties": false
+            },
+            "basis": {
+              "type": "string",
+              "title": "Probability assessment basis"
+            },
+            "sourceId": {
+              "type": "string",
+              "title": "Assessment source reference"
+            }
+          },
+          "required": [
+            "status",
+            "role",
+            "weights",
+            "basis",
+            "sourceId"
+          ],
+          "additionalProperties": false
+        },
+        "investigations": {
+          "type": "array",
+          "title": "Available verification offers",
+          "items": {
+            "type": "object",
+            "title": "Available verification offers",
+            "properties": {
+              "id": {
+                "type": "string",
+                "title": "Investigation reference"
+              },
+              "feeMinor": {
+                "type": "integer",
+                "title": "Prospective verification fee (USD cents)",
+                "minimum": 0
+              },
+              "reportAvailableAt": {
+                "type": "string",
+                "title": "Report available — date and time with UTC offset"
+              },
+              "reportMinute": {
+                "type": "integer",
+                "title": "Report available (minute)",
+                "minimum": 0
+              },
+              "observationModelId": {
+                "type": "string",
+                "title": "Reviewed report-performance model",
+                "enum": [
+                  "exact-registry-verification",
+                  "noisy-registry-verification",
+                  "missing-registry-verification"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "feeMinor",
+              "reportAvailableAt",
+              "reportMinute",
+              "observationModelId"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "requested",
+        "probabilityAssessment",
+        "investigations"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "scope",
+    "commitment",
+    "planning",
+    "arrangements",
+    "authority",
+    "operations",
+    "evidence",
+    "learning"
+  ],
+  "additionalProperties": true
+}

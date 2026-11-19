@@ -6,7 +6,7 @@
       "title": "Review a first shipment",
       "description": "Review one delivery commitment, the actual transportation records and complete alternative arrangements. If a timely verification could change the choice, compare its feasible responses with reserving now. Finish with a reviewable proposal and its unresolved conditions.",
       "definitionUrl": "first-shipment/workflow.definition.json",
-      "contentHash": "15e1b4f5b266253280f8eca828fa1e38dd69eecfaabd0c6ef7682e1e53000fdb"
+      "contentHash": "b35c516e650c62a0713ca154fe66c67fd76cdb79125a48fcb1f5b1d3e34e53e3"
     }
   ]
 }

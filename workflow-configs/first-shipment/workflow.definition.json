@@ -1,7 +1,7 @@
 {
   "format": "decision-lab-workflow/1",
   "id": "review-first-shipment",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "Review a first shipment",
   "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
   "description": "Review one delivery commitment, the actual transportation records and complete alternative arrangements. If a timely verification could change the choice, compare its feasible responses with reserving now. Finish with a reviewable proposal and its unresolved conditions.",
@@ -327,6 +327,203 @@
     },
     "presentation": {
       "version": 1,
+      "display": {
+        "currency": "USD",
+        "amountUnit": "cent",
+        "timeUnit": "minute",
+        "timeOrigin": "2026-11-17T00:00:00-06:00",
+        "labels": {
+          "constraintId": "Unmet condition",
+          "requirement": "Required check",
+          "scenarioId": "Possible situation",
+          "situation": "Possible situation",
+          "arrivalMinute": "Customer receipt",
+          "departureMinute": "Carrier departure",
+          "shipPoint": "Ship point"
+        },
+        "names": {
+          "direct": "Direct arrangement",
+          "backup": "Backup arrangement",
+          "registered": "Transportation registered",
+          "not_registered": "Transportation not registered",
+          "capacity-for-complete-order": "Capacity must cover the complete order",
+          "scoped-transportation-registration": "Ship point registration must cover this shipment",
+          "pack-capability": "Assigned packer must have the packing capability",
+          "pack-availability": "Assigned packer must be available for the complete activity",
+          "release-capability": "Assigned release worker must have the release capability",
+          "release-availability": "Assigned release worker must be available for the complete activity",
+          "combined-resource-capacity": "People and packing resources must cover overlapping work",
+          "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
+          "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
+          "selection-not-in-the-past": "Selection cannot be in the past",
+          "verification-fee-before-response": "Verification must be paid before using its report",
+          "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
+          "preparation-before-departure": "Packing and release must finish before departure",
+          "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
+          "receipt-within-access-window": "Customer receipt must fit the receiving window",
+          "total-expense-limit": "Complete expense must fit the expense limit",
+          "peak-cash-limit": "Peak cash needed must fit available cash",
+          "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
+        },
+        "formats": {
+          "expense": "money",
+          "arrivalMinute": "time",
+          "departureMinute": "time"
+        }
+      },
+      "report": {
+        "title": "Shipment decision reports",
+        "units": {
+          "currency": "USD",
+          "amount": "cent",
+          "time": "minute"
+        },
+        "questionViews": [
+          {
+            "id": "shipment-arrangements",
+            "sectionId": "arrangements",
+            "rowsPath": "comparisonRows",
+            "title": "Shipment arrangements",
+            "question": "Which complete arrangements meet this delivery commitment?",
+            "selection": {
+              "group": "arrangement",
+              "keyField": "arrangement",
+              "labelField": "arrangement",
+              "defaultKey": "backup"
+            },
+            "summary": {
+              "title": "The arrangement and commitment",
+              "question": "What would this arrangement cost, and which deadlines apply?",
+              "fields": [
+                {
+                  "key": "expense",
+                  "label": "Complete arrangement expense",
+                  "format": "money"
+                },
+                {
+                  "key": "receiveBy",
+                  "label": "Required customer receipt"
+                },
+                {
+                  "key": "reserveBy",
+                  "label": "Reservation cutoff"
+                }
+              ]
+            },
+            "comparison": {
+              "title": "Compare complete arrangements",
+              "question": "How do operating fit, expense and blockers differ?",
+              "columns": [
+                {
+                  "key": "arrangement",
+                  "label": "Arrangement",
+                  "format": "name"
+                },
+                {
+                  "key": "feasible",
+                  "label": "Meets recorded requirements",
+                  "format": "boolean"
+                },
+                {
+                  "key": "expense",
+                  "label": "Complete expense",
+                  "format": "money"
+                },
+                {
+                  "key": "blockers",
+                  "label": "Unmet conditions"
+                }
+              ]
+            },
+            "contextFields": [
+              {
+                "key": "feasible",
+                "label": "Meets recorded requirements",
+                "format": "boolean"
+              },
+              {
+                "key": "blockers",
+                "label": "Unmet conditions"
+              }
+            ],
+            "details": [
+              {
+                "id": "delivery",
+                "title": "Delivery in each possible situation",
+                "question": "When would each admitted situation reach the customer?",
+                "fields": [
+                  {
+                    "key": "delivery",
+                    "label": "Delivery times and ship points by situation"
+                  }
+                ]
+              },
+              {
+                "id": "scope",
+                "title": "Shipment and timing basis",
+                "question": "Which shipment and deadlines does this assessment cover?",
+                "fields": [
+                  {
+                    "key": "scope",
+                    "label": "Shipment scope and units"
+                  },
+                  {
+                    "key": "reserveBy",
+                    "label": "Reservation cutoff"
+                  },
+                  {
+                    "key": "receiveBy",
+                    "label": "Required customer receipt"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "tabs": [
+          {
+            "id": "arrangements",
+            "kind": "records",
+            "sectionId": "arrangements",
+            "viewId": "shipment-arrangements",
+            "label": "Arrangements",
+            "question": "Which complete arrangements meet this delivery commitment?"
+          },
+          {
+            "id": "schedules",
+            "kind": "schedules",
+            "label": "Work and timing",
+            "question": "Can preparation, release and delivery fit the required windows?",
+            "stepIds": [
+              "planning",
+              "planning-fast",
+              "planning-slow"
+            ]
+          },
+          {
+            "id": "learning",
+            "kind": "learning",
+            "sectionId": "verification",
+            "label": "Further verification",
+            "question": "Would a timely check improve the arrangement choice?",
+            "stepIds": [
+              "learning"
+            ]
+          }
+        ],
+        "brief": {
+          "leadSectionIds": [
+            "arrangements"
+          ],
+          "sectionOrder": [
+            "arrangements",
+            "records",
+            "verification",
+            "commitment",
+            "approvals"
+          ]
+        }
+      },
       "groups": [
         {
           "id": "commitment",
@@ -18228,7 +18425,67 @@
               ]
             },
             {
-              "ref": "steps.planning.output"
+              "op": "merge",
+              "args": [
+                {
+                  "ref": "steps.planning.output"
+                },
+                {
+                  "comparisonRows": {
+                    "op": "map",
+                    "args": [
+                      {
+                        "ref": "steps.planning.output.plans"
+                      },
+                      {
+                        "arrangement": {
+                          "ref": "item.choices.arrangement"
+                        },
+                        "feasible": {
+                          "ref": "item.feasible"
+                        },
+                        "expense": {
+                          "ref": "item.expense"
+                        },
+                        "blockers": {
+                          "ref": "item.blockers"
+                        },
+                        "delivery": {
+                          "op": "map",
+                          "args": [
+                            {
+                              "ref": "item.scenarios"
+                            },
+                            {
+                              "situation": {
+                                "ref": "item.id"
+                              },
+                              "arrivalMinute": {
+                                "ref": "item.derived.arrival"
+                              },
+                              "departureMinute": {
+                                "ref": "item.derived.departure"
+                              },
+                              "shipPoint": {
+                                "ref": "item.derived.shipPoint"
+                              }
+                            }
+                          ]
+                        },
+                        "reserveBy": {
+                          "ref": "case.commitment.reserveBy"
+                        },
+                        "receiveBy": {
+                          "ref": "case.commitment.receiveBy"
+                        },
+                        "scope": {
+                          "ref": "case.scope"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
             },
             {
               "status": "Awaiting current planning review"
@@ -18846,5 +19103,5 @@
       ]
     }
   },
-  "contentHash": "15e1b4f5b266253280f8eca828fa1e38dd69eecfaabd0c6ef7682e1e53000fdb"
+  "contentHash": "b35c516e650c62a0713ca154fe66c67fd76cdb79125a48fcb1f5b1d3e34e53e3"
 }

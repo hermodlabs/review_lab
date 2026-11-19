@@ -1,0 +1,17 @@
+{
+  "format": "decision-lab-workbook-sources/1",
+  "products": [
+    {
+      "target": "workflows/review-first-shipment/1.1.0/workflow.workflow.json",
+      "schema": "workbook-schemas/first-shipment-review.schema.json"
+    },
+    {
+      "target": "workflows/review-gift-kit-flexible/2.0.0/workflow.workflow.json",
+      "mapping": "workbook-mappings/review-gift-kit-flexible-2.0.0.mapping.json"
+    },
+    {
+      "target": "workflows/review-gift-kit-earliest/2.0.0/workflow.workflow.json",
+      "mapping": "workbook-mappings/review-gift-kit-earliest-2.0.0.mapping.json"
+    }
+  ]
+}
