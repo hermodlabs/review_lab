@@ -1,0 +1,54 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "order-fulfillment",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "version": "1.2.1",
+    "title": "Order fulfillment",
+    "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+    "useCases": [
+      {
+        "id": "complete-first-shipment",
+        "label": "Complete the first shipment",
+        "description": "Compare complete shipment plans that must meet every mandatory obligation across the declared readiness and travel scenarios."
+      },
+      {
+        "id": "review-first-shipment",
+        "label": "Review a first shipment",
+        "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+      }
+    ],
+    "members": [
+      {
+        "type": "app",
+        "id": "complete-first-shipment",
+        "version": 2,
+        "packageHash": "a452ab9f1b4812ebc593b56a1381cd18475368516df1ad12543c6e0d23b6e1d5",
+        "useCaseId": "complete-first-shipment",
+        "artifact": {
+          "path": "apps/complete-first-shipment/2/app.app.json",
+          "bytes": 115537,
+          "sha256": "1606ac4cdf4308f2aa2d495691d0d1ea3715b1e2f8fffc2c5d0ae12611520f22"
+        }
+      },
+      {
+        "type": "workflow",
+        "id": "review-first-shipment",
+        "version": "1.2.1",
+        "packageHash": "5703c06f6e98ecd4ebe737d9105bdc788062a0c370726bc567a49fd4a2b5d359",
+        "useCaseId": "review-first-shipment",
+        "artifact": {
+          "path": "workflows/review-first-shipment/1.2.1/workflow.workflow.json",
+          "bytes": 950270,
+          "sha256": "fb64f27b79d9167cd8ca15bdc52c5ec478ee8d142bc9122e229aa7f781494225"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-20T00:00:00.000Z",
+  "contentHash": "f8703c8796d7a8e5d31ce50d9134d4348093c3cf526bb806f15f9422f323d484"
+}

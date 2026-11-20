@@ -1,0 +1,54 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "order-fulfillment",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "version": "1.3.0",
+    "title": "Order fulfillment",
+    "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+    "useCases": [
+      {
+        "id": "complete-first-shipment",
+        "label": "Complete the first shipment",
+        "description": "Compare complete shipment plans that must meet every mandatory obligation across the declared readiness and travel scenarios."
+      },
+      {
+        "id": "review-first-shipment",
+        "label": "Review a first shipment",
+        "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+      }
+    ],
+    "members": [
+      {
+        "type": "app",
+        "id": "complete-first-shipment",
+        "version": 2,
+        "packageHash": "a452ab9f1b4812ebc593b56a1381cd18475368516df1ad12543c6e0d23b6e1d5",
+        "useCaseId": "complete-first-shipment",
+        "artifact": {
+          "path": "apps/complete-first-shipment/2/app.app.json",
+          "bytes": 115537,
+          "sha256": "1606ac4cdf4308f2aa2d495691d0d1ea3715b1e2f8fffc2c5d0ae12611520f22"
+        }
+      },
+      {
+        "type": "workflow",
+        "id": "review-first-shipment",
+        "version": "1.3.0",
+        "packageHash": "850c7f72889e531bb658c6969e66582069990b316035375c1df112a41088ffd1",
+        "useCaseId": "review-first-shipment",
+        "artifact": {
+          "path": "workflows/review-first-shipment/1.3.0/workflow.workflow.json",
+          "bytes": 954221,
+          "sha256": "1f803642dd40c23eb93d47a4c23da2820867497fd387c27292535ca68077e1c7"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-20T12:00:00.000Z",
+  "contentHash": "0d18d3f885500ebd518d97f501fac10094c01fb4830f51d74b22f6dc3d33961f"
+}

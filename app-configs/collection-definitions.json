@@ -653,6 +653,672 @@
         "format": "decision-lab-collection-definition/1"
       },
       "createdAt": "2026-11-19T18:00:00.000Z"
+    },
+    {
+      "definition": {
+        "id": "order-fulfillment",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "version": "1.2.1",
+        "title": "Order fulfillment",
+        "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+        "useCases": [
+          {
+            "id": "complete-first-shipment",
+            "label": "Complete the first shipment",
+            "description": "Compare complete shipment plans that must meet every mandatory obligation across the declared readiness and travel scenarios."
+          },
+          {
+            "id": "review-first-shipment",
+            "label": "Review a first shipment",
+            "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+          }
+        ],
+        "members": [
+          {
+            "type": "app",
+            "id": "complete-first-shipment",
+            "version": 2,
+            "packageHash": "a452ab9f1b4812ebc593b56a1381cd18475368516df1ad12543c6e0d23b6e1d5",
+            "useCaseId": "complete-first-shipment",
+            "artifact": {
+              "path": "apps/complete-first-shipment/2/app.app.json",
+              "bytes": 115537,
+              "sha256": "1606ac4cdf4308f2aa2d495691d0d1ea3715b1e2f8fffc2c5d0ae12611520f22"
+            }
+          },
+          {
+            "type": "workflow",
+            "id": "review-first-shipment",
+            "version": "1.2.1",
+            "packageHash": "5703c06f6e98ecd4ebe737d9105bdc788062a0c370726bc567a49fd4a2b5d359",
+            "useCaseId": "review-first-shipment",
+            "artifact": {
+              "path": "workflows/review-first-shipment/1.2.1/workflow.workflow.json",
+              "bytes": 950270,
+              "sha256": "fb64f27b79d9167cd8ca15bdc52c5ec478ee8d142bc9122e229aa7f781494225"
+            }
+          }
+        ],
+        "format": "decision-lab-collection-definition/1"
+      },
+      "createdAt": "2026-11-20T00:00:00.000Z"
+    },
+    {
+      "definition": {
+        "format": "decision-lab-collection-definition/1",
+        "id": "gifting-operations",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "version": "2.1.1",
+        "title": "Gifting operations",
+        "description": "Gifting operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+        "useCases": [
+          {
+            "id": "prepare-gift-kit-campaign",
+            "label": "Prepare a gift-kit campaign",
+            "description": "Establish the required corrections and compare complete arrangements before committing the gift kits."
+          }
+        ],
+        "members": [
+          {
+            "type": "workflow",
+            "id": "review-gift-kit-flexible",
+            "version": "2.1.1",
+            "packageHash": "2969d7f85cf8671a1e73af089825d0710d8134d3dd36f08422c226b0056de980",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "workflows/review-gift-kit-flexible/2.1.1/workflow.workflow.json",
+              "bytes": 540823,
+              "sha256": "a1be930011343e1d539c25974fe7ffc09ed36fccc4ca1a7df7af93057bdd2454"
+            }
+          },
+          {
+            "type": "app",
+            "id": "review-gift-kit-flexible-evidence",
+            "version": 1,
+            "packageHash": "05392b3025e200154cd050ef8c1d34212d7d5f0f54e31bbf4c7e1157a87a4f1a",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "apps/review-gift-kit-flexible-evidence/1/app.app.json",
+              "bytes": 140627,
+              "sha256": "623248977077a6a3ae2dcd30337191f4455da8f332979648c8106def7f4f43a2"
+            }
+          },
+          {
+            "type": "app",
+            "id": "review-gift-kit-flexible-planning",
+            "version": 1,
+            "packageHash": "d99c58a18df7351840faa440806c8a62be6e56e03fcee4feb3d11561c9efdeac",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "apps/review-gift-kit-flexible-planning/1/app.app.json",
+              "bytes": 124691,
+              "sha256": "2f20ba5f63075d2e6853320835e512f1205407a14c967968269192df0ff6cec5"
+            }
+          },
+          {
+            "type": "workflow",
+            "id": "review-gift-kit-earliest",
+            "version": "2.1.1",
+            "packageHash": "1fc6e24beeeb30107bb638146a9999cb4fcd54f96f766abb1078e1889d5e3b9e",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "workflows/review-gift-kit-earliest/2.1.1/workflow.workflow.json",
+              "bytes": 540866,
+              "sha256": "28d237bade24d9461612127408fbe6b02dd97d03299ff10531a23eedfab07b9a"
+            }
+          },
+          {
+            "type": "app",
+            "id": "review-gift-kit-earliest-planning",
+            "version": 1,
+            "packageHash": "1fc3ad7559d0747fc61fa5b56be27a42c56dac653b28c255d44f3c321ed4c758",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "apps/review-gift-kit-earliest-planning/1/app.app.json",
+              "bytes": 124710,
+              "sha256": "7f93033c507b26ceead2fff7346f27a525a73c54208352644092f6887791c150"
+            }
+          }
+        ]
+      },
+      "createdAt": "2026-11-20T00:00:00.000Z"
+    },
+    {
+      "definition": {
+        "id": "walmart-supplier-operations",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "version": "1.1.1",
+        "title": "Walmart Supplier Operations",
+        "description": "Walmart Supplier Operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+        "useCases": [
+          {
+            "id": "review-first-order",
+            "label": "Review a first order",
+            "description": "Review readiness, complete shipment and recovery arrangements, and optional further verification."
+          },
+          {
+            "id": "review-first-order-with-pallet-staging",
+            "label": "Review a first order with pallet staging",
+            "description": "Compare complete shipment and EDI-recovery arrangements with additional warehouse staging."
+          }
+        ],
+        "members": [
+          {
+            "type": "workflow",
+            "id": "walmart-first-order-standard",
+            "version": "1.3.1",
+            "packageHash": "3c30c5620cfaca6d3b53eb224674e6626f8d5bd1794f0aedfb3ae08168a865a2",
+            "useCaseId": "review-first-order",
+            "artifact": {
+              "path": "workflows/walmart-first-order-standard/1.3.1/workflow.workflow.json",
+              "bytes": 8817453,
+              "sha256": "2900df49a926b467547107d5404117c390d727216d5d8d037733dc68f9b44be1"
+            }
+          },
+          {
+            "type": "workflow",
+            "id": "walmart-first-order-staged",
+            "version": "1.3.1",
+            "packageHash": "72f416b35530680f2253f03a3a0d9e173b00546311a23f6956277fc9fe861b30",
+            "useCaseId": "review-first-order-with-pallet-staging",
+            "artifact": {
+              "path": "workflows/walmart-first-order-staged/1.3.1/workflow.workflow.json",
+              "bytes": 8920987,
+              "sha256": "7fc6dd06517c66d1e77bf3125d742dbcd708a69d8b914f801bcd06e553e4849e"
+            }
+          }
+        ],
+        "format": "decision-lab-collection-definition/1"
+      },
+      "createdAt": "2026-11-20T00:00:00.000Z"
+    },
+    {
+      "definition": {
+        "id": "venue-operations",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "version": "1.2.1",
+        "title": "Venue operations",
+        "description": "Venue operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+        "useCases": [
+          {
+            "id": "deploy-street-team",
+            "label": "Review a street-team deployment",
+            "description": "Compare promotion plans, review conditional break-even guest counts, and record a manager’s choice and scoped approval."
+          }
+        ],
+        "members": [
+          {
+            "type": "workflow",
+            "id": "street-team-deployment",
+            "version": "1.3.1",
+            "packageHash": "512e7a2ac3b70e6f49502f88de764394464feaa4b4c63fa8e15334862feeb3f1",
+            "useCaseId": "deploy-street-team",
+            "artifact": {
+              "path": "workflows/street-team-deployment/1.3.1/workflow.workflow.json",
+              "bytes": 165446,
+              "sha256": "fc027a86241419b1d019c1d9be0205a42c63cc7a5866d0648a805aa3ec0cddcc"
+            }
+          }
+        ],
+        "format": "decision-lab-collection-definition/1"
+      },
+      "createdAt": "2026-11-20T00:00:00.000Z"
+    },
+    {
+      "definition": {
+        "id": "order-fulfillment",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "version": "1.3.0",
+        "title": "Order fulfillment",
+        "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+        "useCases": [
+          {
+            "id": "complete-first-shipment",
+            "label": "Complete the first shipment",
+            "description": "Compare complete shipment plans that must meet every mandatory obligation across the declared readiness and travel scenarios."
+          },
+          {
+            "id": "review-first-shipment",
+            "label": "Review a first shipment",
+            "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+          }
+        ],
+        "members": [
+          {
+            "type": "app",
+            "id": "complete-first-shipment",
+            "version": 2,
+            "packageHash": "a452ab9f1b4812ebc593b56a1381cd18475368516df1ad12543c6e0d23b6e1d5",
+            "useCaseId": "complete-first-shipment",
+            "artifact": {
+              "path": "apps/complete-first-shipment/2/app.app.json",
+              "bytes": 115537,
+              "sha256": "1606ac4cdf4308f2aa2d495691d0d1ea3715b1e2f8fffc2c5d0ae12611520f22"
+            }
+          },
+          {
+            "type": "workflow",
+            "id": "review-first-shipment",
+            "version": "1.3.0",
+            "packageHash": "850c7f72889e531bb658c6969e66582069990b316035375c1df112a41088ffd1",
+            "useCaseId": "review-first-shipment",
+            "artifact": {
+              "path": "workflows/review-first-shipment/1.3.0/workflow.workflow.json",
+              "bytes": 954221,
+              "sha256": "1f803642dd40c23eb93d47a4c23da2820867497fd387c27292535ca68077e1c7"
+            }
+          }
+        ],
+        "format": "decision-lab-collection-definition/1"
+      },
+      "createdAt": "2026-11-20T12:00:00.000Z"
+    },
+    {
+      "definition": {
+        "format": "decision-lab-collection-definition/1",
+        "id": "gifting-operations",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "version": "2.2.0",
+        "title": "Gifting operations",
+        "description": "Gifting operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+        "useCases": [
+          {
+            "id": "prepare-gift-kit-campaign",
+            "label": "Prepare a gift-kit campaign",
+            "description": "Establish the required corrections and compare complete arrangements before committing the gift kits."
+          }
+        ],
+        "members": [
+          {
+            "type": "workflow",
+            "id": "review-gift-kit-flexible",
+            "version": "2.2.0",
+            "packageHash": "6d6d8d3e7bdce6b124219217f9a096ddc40ac19d41f9ef7cbcdf9c78ef93df49",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "workflows/review-gift-kit-flexible/2.2.0/workflow.workflow.json",
+              "bytes": 539761,
+              "sha256": "c029299df7446c3a262791ea38cf2eb74c781634b719fddab993a0b8e673f760"
+            }
+          },
+          {
+            "type": "app",
+            "id": "review-gift-kit-flexible-evidence",
+            "version": 1,
+            "packageHash": "05392b3025e200154cd050ef8c1d34212d7d5f0f54e31bbf4c7e1157a87a4f1a",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "apps/review-gift-kit-flexible-evidence/1/app.app.json",
+              "bytes": 140627,
+              "sha256": "623248977077a6a3ae2dcd30337191f4455da8f332979648c8106def7f4f43a2"
+            }
+          },
+          {
+            "type": "app",
+            "id": "review-gift-kit-flexible-planning",
+            "version": 1,
+            "packageHash": "d99c58a18df7351840faa440806c8a62be6e56e03fcee4feb3d11561c9efdeac",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "apps/review-gift-kit-flexible-planning/1/app.app.json",
+              "bytes": 124691,
+              "sha256": "2f20ba5f63075d2e6853320835e512f1205407a14c967968269192df0ff6cec5"
+            }
+          },
+          {
+            "type": "workflow",
+            "id": "review-gift-kit-earliest",
+            "version": "2.2.0",
+            "packageHash": "5baac6eb89b89a18644a25af6b634afd313db29f1e9568203840b1eec9f8c126",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "workflows/review-gift-kit-earliest/2.2.0/workflow.workflow.json",
+              "bytes": 539804,
+              "sha256": "7d2839e0845a802f73f9ab547ad14760862100473eb8df2a3b78ea93a6b88f2c"
+            }
+          },
+          {
+            "type": "app",
+            "id": "review-gift-kit-earliest-planning",
+            "version": 1,
+            "packageHash": "1fc3ad7559d0747fc61fa5b56be27a42c56dac653b28c255d44f3c321ed4c758",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "apps/review-gift-kit-earliest-planning/1/app.app.json",
+              "bytes": 124710,
+              "sha256": "7f93033c507b26ceead2fff7346f27a525a73c54208352644092f6887791c150"
+            }
+          }
+        ]
+      },
+      "createdAt": "2026-11-20T12:00:00.000Z"
+    },
+    {
+      "definition": {
+        "id": "walmart-supplier-operations",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "version": "1.2.0",
+        "title": "Walmart Supplier Operations",
+        "description": "Walmart Supplier Operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+        "useCases": [
+          {
+            "id": "review-first-order",
+            "label": "Review a first order",
+            "description": "Review readiness, complete shipment and recovery arrangements, and optional further verification."
+          },
+          {
+            "id": "review-first-order-with-pallet-staging",
+            "label": "Review a first order with pallet staging",
+            "description": "Compare complete shipment and EDI-recovery arrangements with additional warehouse staging."
+          }
+        ],
+        "members": [
+          {
+            "type": "workflow",
+            "id": "walmart-first-order-standard",
+            "version": "1.4.0",
+            "packageHash": "4ea64578de02b4d4de063e855216e27fbd6f385c366e9a5a4d180f4591197535",
+            "useCaseId": "review-first-order",
+            "artifact": {
+              "path": "workflows/walmart-first-order-standard/1.4.0/workflow.workflow.json",
+              "bytes": 8771869,
+              "sha256": "c262b8caa3f42e3a20b7bc8f2f12ae12605cfc349d8d096df45998c32605ce28"
+            }
+          },
+          {
+            "type": "workflow",
+            "id": "walmart-first-order-staged",
+            "version": "1.4.0",
+            "packageHash": "8e24d894200830c4a1c124523d97c33043b9fbb1d330f0d74ea773d670c9e5ab",
+            "useCaseId": "review-first-order-with-pallet-staging",
+            "artifact": {
+              "path": "workflows/walmart-first-order-staged/1.4.0/workflow.workflow.json",
+              "bytes": 8875211,
+              "sha256": "e497688c512b8aa5e5a9e2dade6852fa6dd1aed8451f659819ae14b9a7a35fb0"
+            }
+          }
+        ],
+        "format": "decision-lab-collection-definition/1"
+      },
+      "createdAt": "2026-11-20T12:00:00.000Z"
+    },
+    {
+      "definition": {
+        "id": "venue-operations",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "version": "1.3.0",
+        "title": "Venue operations",
+        "description": "Venue operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+        "useCases": [
+          {
+            "id": "deploy-street-team",
+            "label": "Review a street-team deployment",
+            "description": "Compare promotion plans, review conditional break-even guest counts, and record a manager’s choice and scoped approval."
+          }
+        ],
+        "members": [
+          {
+            "type": "workflow",
+            "id": "street-team-deployment",
+            "version": "1.4.0",
+            "packageHash": "180fa443975f11df4a44884af44ea168a1148900619cb75d1864fb70d8a7c484",
+            "useCaseId": "deploy-street-team",
+            "artifact": {
+              "path": "workflows/street-team-deployment/1.4.0/workflow.workflow.json",
+              "bytes": 174831,
+              "sha256": "07f09645cbb179dbf4835e7360dc72ad8676625d0559d853882d2e28a3573e91"
+            }
+          }
+        ],
+        "format": "decision-lab-collection-definition/1"
+      },
+      "createdAt": "2026-11-20T12:00:00.000Z"
+    },
+    {
+      "definition": {
+        "id": "order-fulfillment",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "version": "1.4.0",
+        "title": "Order fulfillment",
+        "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+        "useCases": [
+          {
+            "id": "complete-first-shipment",
+            "label": "Complete the first shipment",
+            "description": "Compare complete shipment plans that must meet every mandatory obligation across the declared readiness and travel scenarios."
+          },
+          {
+            "id": "review-first-shipment",
+            "label": "Review a first shipment",
+            "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+          }
+        ],
+        "members": [
+          {
+            "type": "app",
+            "id": "complete-first-shipment",
+            "version": 2,
+            "packageHash": "a452ab9f1b4812ebc593b56a1381cd18475368516df1ad12543c6e0d23b6e1d5",
+            "useCaseId": "complete-first-shipment",
+            "artifact": {
+              "path": "apps/complete-first-shipment/2/app.app.json",
+              "bytes": 115537,
+              "sha256": "1606ac4cdf4308f2aa2d495691d0d1ea3715b1e2f8fffc2c5d0ae12611520f22"
+            }
+          },
+          {
+            "type": "workflow",
+            "id": "review-first-shipment",
+            "version": "1.4.0",
+            "packageHash": "576fc1df319695ea85f72aaa49a30a90ae36860ce503fb02dac1dc3350e0fb34",
+            "useCaseId": "review-first-shipment",
+            "artifact": {
+              "path": "workflows/review-first-shipment/1.4.0/workflow.workflow.json",
+              "bytes": 1016063,
+              "sha256": "708e54ecb095002432cafea35c0e0cb16378e1aa79ee152f1f7d3cf342bffdbb"
+            }
+          }
+        ],
+        "format": "decision-lab-collection-definition/1"
+      },
+      "createdAt": "2026-11-20T18:00:00.000Z"
+    },
+    {
+      "definition": {
+        "format": "decision-lab-collection-definition/1",
+        "id": "gifting-operations",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "version": "2.3.0",
+        "title": "Gifting operations",
+        "description": "Gifting operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+        "useCases": [
+          {
+            "id": "prepare-gift-kit-campaign",
+            "label": "Prepare a gift-kit campaign",
+            "description": "Establish the required corrections and compare complete arrangements before committing the gift kits."
+          }
+        ],
+        "members": [
+          {
+            "type": "workflow",
+            "id": "review-gift-kit-flexible",
+            "version": "2.3.0",
+            "packageHash": "8230d835f2d1e69606c13b659e3600604d01619c8c063a1d7e5b82d9ef9836de",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "workflows/review-gift-kit-flexible/2.3.0/workflow.workflow.json",
+              "bytes": 554545,
+              "sha256": "5331653a0a2fa60fae78f2ab5cc358d407ad600147b539394fe66dcfc5200cda"
+            }
+          },
+          {
+            "type": "app",
+            "id": "review-gift-kit-flexible-evidence",
+            "version": 1,
+            "packageHash": "05392b3025e200154cd050ef8c1d34212d7d5f0f54e31bbf4c7e1157a87a4f1a",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "apps/review-gift-kit-flexible-evidence/1/app.app.json",
+              "bytes": 140627,
+              "sha256": "623248977077a6a3ae2dcd30337191f4455da8f332979648c8106def7f4f43a2"
+            }
+          },
+          {
+            "type": "app",
+            "id": "review-gift-kit-flexible-planning",
+            "version": 1,
+            "packageHash": "d99c58a18df7351840faa440806c8a62be6e56e03fcee4feb3d11561c9efdeac",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "apps/review-gift-kit-flexible-planning/1/app.app.json",
+              "bytes": 124691,
+              "sha256": "2f20ba5f63075d2e6853320835e512f1205407a14c967968269192df0ff6cec5"
+            }
+          },
+          {
+            "type": "workflow",
+            "id": "review-gift-kit-earliest",
+            "version": "2.3.0",
+            "packageHash": "1945f18ef9fceadd6752af9acc4818c920ff1553bb097db528e3c9524487c81b",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "workflows/review-gift-kit-earliest/2.3.0/workflow.workflow.json",
+              "bytes": 554582,
+              "sha256": "661dd1a529dc21617fcc596df9bfdffe77926b82bf4d236a8c326323ef547591"
+            }
+          },
+          {
+            "type": "app",
+            "id": "review-gift-kit-earliest-planning",
+            "version": 1,
+            "packageHash": "1fc3ad7559d0747fc61fa5b56be27a42c56dac653b28c255d44f3c321ed4c758",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "apps/review-gift-kit-earliest-planning/1/app.app.json",
+              "bytes": 124710,
+              "sha256": "7f93033c507b26ceead2fff7346f27a525a73c54208352644092f6887791c150"
+            }
+          }
+        ]
+      },
+      "createdAt": "2026-11-20T18:00:00.000Z"
+    },
+    {
+      "definition": {
+        "id": "walmart-supplier-operations",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "version": "1.3.0",
+        "title": "Walmart Supplier Operations",
+        "description": "Walmart Supplier Operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+        "useCases": [
+          {
+            "id": "review-first-order",
+            "label": "Review a first order",
+            "description": "Review readiness, complete shipment and recovery arrangements, and optional further verification."
+          },
+          {
+            "id": "review-first-order-with-pallet-staging",
+            "label": "Review a first order with pallet staging",
+            "description": "Compare complete shipment and EDI-recovery arrangements with additional warehouse staging."
+          }
+        ],
+        "members": [
+          {
+            "type": "workflow",
+            "id": "walmart-first-order-standard",
+            "version": "1.5.0",
+            "packageHash": "579bcd295cc0349c97ddb9230f659fdc4495adfada660d15d4bd1bbb89aeeebc",
+            "useCaseId": "review-first-order",
+            "artifact": {
+              "path": "workflows/walmart-first-order-standard/1.5.0/workflow.workflow.json",
+              "bytes": 9117334,
+              "sha256": "70a1f8cafbe0418a822d4ae14e62ebd9dadf1122ee709ce485786de6438f87c2"
+            }
+          },
+          {
+            "type": "workflow",
+            "id": "walmart-first-order-staged",
+            "version": "1.5.0",
+            "packageHash": "643bb4b15e6c9ae4fe6fdd8c5416ba9b973d932dfe16539234624dd38f50af52",
+            "useCaseId": "review-first-order-with-pallet-staging",
+            "artifact": {
+              "path": "workflows/walmart-first-order-staged/1.5.0/workflow.workflow.json",
+              "bytes": 9242948,
+              "sha256": "bf0820b73efba1e131213e32011d2daa579cc5a91f33e61da8ef4b3ba807ff17"
+            }
+          }
+        ],
+        "format": "decision-lab-collection-definition/1"
+      },
+      "createdAt": "2026-11-20T18:00:00.000Z"
+    },
+    {
+      "definition": {
+        "id": "venue-operations",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "version": "1.4.0",
+        "title": "Venue operations",
+        "description": "Venue operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+        "useCases": [
+          {
+            "id": "deploy-street-team",
+            "label": "Review a street-team deployment",
+            "description": "Compare promotion plans, review conditional break-even guest counts, and record a manager’s choice and scoped approval."
+          }
+        ],
+        "members": [
+          {
+            "type": "workflow",
+            "id": "street-team-deployment",
+            "version": "1.5.0",
+            "packageHash": "c49e9179b5336e933dab00f9184fef02b4c08a3a3e6547d32971617cee6989f0",
+            "useCaseId": "deploy-street-team",
+            "artifact": {
+              "path": "workflows/street-team-deployment/1.5.0/workflow.workflow.json",
+              "bytes": 246073,
+              "sha256": "4b550137bcb2c1635295f29f30806f4385547b20fbd870593d034b22c7a7d259"
+            }
+          }
+        ],
+        "format": "decision-lab-collection-definition/1"
+      },
+      "createdAt": "2026-11-20T18:00:00.000Z"
     }
   ]
 }

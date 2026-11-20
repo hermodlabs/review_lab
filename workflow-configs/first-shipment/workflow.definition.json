@@ -1,7 +1,7 @@
 {
   "format": "decision-lab-workflow/1",
   "id": "review-first-shipment",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "title": "Compare first-shipment arrangements",
   "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
   "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
@@ -369,6 +369,10 @@
           "expense": "money",
           "arrivalMinute": "time",
           "departureMinute": "time"
+        },
+        "timeOriginSource": {
+          "questionId": "scope",
+          "fieldPath": "timeOrigin"
         }
       },
       "report": {
@@ -509,6 +513,55 @@
             "stepIds": [
               "learning"
             ]
+          },
+          {
+            "id": "conditions",
+            "label": "Requirements",
+            "kind": "records",
+            "sectionId": "decision-requirements",
+            "columns": [
+              {
+                "key": "arrangement",
+                "label": "Arrangement"
+              },
+              {
+                "key": "condition",
+                "label": "Unmet condition"
+              },
+              {
+                "key": "situation",
+                "label": "Operating situation"
+              },
+              {
+                "key": "requirement",
+                "label": "Requirement"
+              }
+            ],
+            "question": "What prevents a listed arrangement from meeting the commitment?"
+          },
+          {
+            "id": "records",
+            "label": "Evidence",
+            "kind": "records",
+            "sectionId": "records",
+            "columns": [
+              {
+                "key": "label",
+                "label": "Operating question"
+              },
+              {
+                "key": "status",
+                "label": "Finding",
+                "format": "name"
+              },
+              {
+                "key": "answer",
+                "label": "Established answer",
+                "format": "name"
+              }
+            ],
+            "question": "What do the operating records establish?",
+            "rowsPath": "queries"
           }
         ],
         "brief": {
@@ -521,6 +574,82 @@
             "verification",
             "commitment",
             "approvals"
+          ]
+        },
+        "decisionSummary": {
+          "format": "workflow-decision-summary/1",
+          "sectionId": "decision-summary",
+          "sourceStepIds": [
+            "evidence"
+          ],
+          "title": "Decision summary",
+          "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
+          "comparison": {
+            "title": "Compare complete alternatives",
+            "keyField": "id",
+            "labelField": "label",
+            "rowsPath": "rows",
+            "sourceStepIds": [
+              "planning"
+            ],
+            "columns": [
+              {
+                "key": "label",
+                "label": "Arrangement"
+              },
+              {
+                "key": "standing",
+                "label": "Calculated fit"
+              },
+              {
+                "key": "expense",
+                "label": "Complete expense",
+                "format": "money"
+              },
+              {
+                "key": "arrivalMinute",
+                "label": "Latest customer receipt",
+                "format": {
+                  "type": "time",
+                  "unit": "minute",
+                  "timeZone": "America/Chicago"
+                }
+              },
+              {
+                "key": "condition",
+                "label": "Decisive condition"
+              }
+            ],
+            "tabId": "arrangements",
+            "inspectionKeyField": "inspectionKey"
+          },
+          "actionGroups": [
+            {
+              "id": "shipment-response",
+              "presentation": "actions"
+            },
+            {
+              "id": "information-response",
+              "presentation": "actions"
+            }
+          ],
+          "links": [
+            {
+              "tabId": "arrangements",
+              "label": "Inspect complete arrangements"
+            },
+            {
+              "tabId": "conditions",
+              "label": "Inspect unmet requirements"
+            },
+            {
+              "tabId": "schedules",
+              "label": "Inspect work and timing"
+            },
+            {
+              "tabId": "learning",
+              "label": "Compare further verification"
+            }
           ]
         }
       },
@@ -629,8 +758,8 @@
         },
         {
           "id": "planning",
-          "label": "Calculations",
-          "question": "Which constraints and calculated findings determine the available options?",
+          "label": "Calculation dependencies",
+          "question": "Which calculations support this decision process?",
           "kind": "evaluations",
           "subtabs": []
         },
@@ -1304,6 +1433,343 @@
             }
           }
         }
+      },
+      "workflowMap": {
+        "title": "How the shipment answer is calculated",
+        "description": "Recorded transportation facts constrain the arrangements available now. An optional verification comparison also checks the complete response to each report before estimating its value.",
+        "steps": {
+          "evidence": {
+            "label": "Establish ship-point registration",
+            "description": "Use the shipment-scoped transportation records to identify the registration situations still possible."
+          },
+          "planning": {
+            "label": "Compare arrangements available now",
+            "description": "Check complete shipment arrangements against the remaining situations, delivery windows, resources, permissions and expense limits."
+          },
+          "planning-fast": {
+            "label": "Plan responses after fast verification",
+            "description": "Check what could actually be reserved and delivered after each fast-verification report.",
+            "inactiveReasons": [
+              {
+                "id": "not-requested",
+                "label": "Further verification was not requested.",
+                "when": {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "case.learning.requested"
+                    },
+                    false
+                  ]
+                }
+              },
+              {
+                "id": "unknown-probabilities",
+                "label": "Probability assumptions are unknown. Shipment feasibility can still be calculated.",
+                "when": {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "answers.probabilities.status"
+                    },
+                    "unknown"
+                  ]
+                }
+              },
+              {
+                "id": "missing-probabilities",
+                "label": "Supply probability assumptions before comparing verification value.",
+                "when": {
+                  "op": "and",
+                  "args": [
+                    {
+                      "ref": "conditions.verification-requested"
+                    },
+                    {
+                      "op": "ne",
+                      "args": [
+                        {
+                          "ref": "answers.probabilities.status"
+                        },
+                        "supplied"
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "registration-established",
+                "label": "The supplied records already determine registration for this shipment.",
+                "when": {
+                  "op": "and",
+                  "args": [
+                    {
+                      "ref": "conditions.records-current"
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "op": "length",
+                          "args": [
+                            {
+                              "ref": "steps.evidence.output.stateIds"
+                            }
+                          ]
+                        },
+                        1
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "no-current-arrangement",
+                "label": "No listed arrangement is feasible now. This verification comparison requires an available arrangement.",
+                "when": {
+                  "ref": "conditions.offer-revise-commitment"
+                }
+              },
+              {
+                "id": "verification-fee-recorded",
+                "label": "Verification has already incurred a fee; this optional comparison is for a new purchase.",
+                "when": {
+                  "op": "gt",
+                  "args": [
+                    {
+                      "op": "length",
+                      "args": [
+                        {
+                          "ref": "case.evidence.incurredVerificationFees"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              }
+            ]
+          },
+          "planning-slow": {
+            "label": "Plan responses after slow verification",
+            "description": "Check whether each slow-verification response can still meet reservation and delivery cutoffs.",
+            "inactiveReasons": [
+              {
+                "id": "not-requested",
+                "label": "Further verification was not requested.",
+                "when": {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "case.learning.requested"
+                    },
+                    false
+                  ]
+                }
+              },
+              {
+                "id": "unknown-probabilities",
+                "label": "Probability assumptions are unknown. Shipment feasibility can still be calculated.",
+                "when": {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "answers.probabilities.status"
+                    },
+                    "unknown"
+                  ]
+                }
+              },
+              {
+                "id": "missing-probabilities",
+                "label": "Supply probability assumptions before comparing verification value.",
+                "when": {
+                  "op": "and",
+                  "args": [
+                    {
+                      "ref": "conditions.verification-requested"
+                    },
+                    {
+                      "op": "ne",
+                      "args": [
+                        {
+                          "ref": "answers.probabilities.status"
+                        },
+                        "supplied"
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "registration-established",
+                "label": "The supplied records already determine registration for this shipment.",
+                "when": {
+                  "op": "and",
+                  "args": [
+                    {
+                      "ref": "conditions.records-current"
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "op": "length",
+                          "args": [
+                            {
+                              "ref": "steps.evidence.output.stateIds"
+                            }
+                          ]
+                        },
+                        1
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "no-current-arrangement",
+                "label": "No listed arrangement is feasible now. This verification comparison requires an available arrangement.",
+                "when": {
+                  "ref": "conditions.offer-revise-commitment"
+                }
+              },
+              {
+                "id": "verification-fee-recorded",
+                "label": "Verification has already incurred a fee; this optional comparison is for a new purchase.",
+                "when": {
+                  "op": "gt",
+                  "args": [
+                    {
+                      "op": "length",
+                      "args": [
+                        {
+                          "ref": "case.evidence.incurredVerificationFees"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              }
+            ]
+          },
+          "learning": {
+            "label": "Compare verification with reserving now",
+            "description": "Use the current arrangements, report-contingent responses, probabilities and fees to compare expected consequences.",
+            "inactiveReasons": [
+              {
+                "id": "not-requested",
+                "label": "Further verification was not requested.",
+                "when": {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "case.learning.requested"
+                    },
+                    false
+                  ]
+                }
+              },
+              {
+                "id": "unknown-probabilities",
+                "label": "Probability assumptions are unknown. Shipment feasibility can still be calculated.",
+                "when": {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "answers.probabilities.status"
+                    },
+                    "unknown"
+                  ]
+                }
+              },
+              {
+                "id": "missing-probabilities",
+                "label": "Supply probability assumptions before comparing verification value.",
+                "when": {
+                  "op": "and",
+                  "args": [
+                    {
+                      "ref": "conditions.verification-requested"
+                    },
+                    {
+                      "op": "ne",
+                      "args": [
+                        {
+                          "ref": "answers.probabilities.status"
+                        },
+                        "supplied"
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "registration-established",
+                "label": "The supplied records already determine registration for this shipment.",
+                "when": {
+                  "op": "and",
+                  "args": [
+                    {
+                      "ref": "conditions.records-current"
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "op": "length",
+                          "args": [
+                            {
+                              "ref": "steps.evidence.output.stateIds"
+                            }
+                          ]
+                        },
+                        1
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "no-current-arrangement",
+                "label": "No listed arrangement is feasible now. This verification comparison requires an available arrangement.",
+                "when": {
+                  "ref": "conditions.offer-revise-commitment"
+                }
+              },
+              {
+                "id": "verification-fee-recorded",
+                "label": "Verification has already incurred a fee; this optional comparison is for a new purchase.",
+                "when": {
+                  "op": "gt",
+                  "args": [
+                    {
+                      "op": "length",
+                      "args": [
+                        {
+                          "ref": "case.evidence.incurredVerificationFees"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "groups": [
+          {
+            "id": "verification-responses",
+            "label": "Responses after verification",
+            "description": "Two separate planning calculations check fast and slow reports. These are hypothetical responses, not records that verification or freight booking happened.",
+            "stepIds": [
+              "planning-fast",
+              "planning-slow"
+            ]
+          }
+        ]
       }
     },
     "boundary": "One shipment, two complete arrangements, one verification purchase, followed by one selection. No external bookings, purchases or release are executed.",
@@ -7085,78 +7551,7 @@
         "investigations"
       ],
       "when": {
-        "op": "and",
-        "args": [
-          {
-            "op": "eq",
-            "args": [
-              {
-                "ref": "case.learning.requested"
-              },
-              true
-            ]
-          },
-          {
-            "op": "gt",
-            "args": [
-              {
-                "op": "length",
-                "args": [
-                  {
-                    "ref": "steps.evidence.output.stateIds"
-                  }
-                ]
-              },
-              1
-            ]
-          },
-          {
-            "op": "gt",
-            "args": [
-              {
-                "op": "length",
-                "args": [
-                  {
-                    "ref": "steps.planning.output.feasiblePlans"
-                  }
-                ]
-              },
-              0
-            ]
-          },
-          {
-            "op": "eq",
-            "args": [
-              {
-                "op": "length",
-                "args": [
-                  {
-                    "ref": "case.evidence.incurredVerificationFees"
-                  }
-                ]
-              },
-              0
-            ]
-          },
-          {
-            "op": "eq",
-            "args": [
-              {
-                "ref": "answers.probabilities.status"
-              },
-              "supplied"
-            ]
-          },
-          {
-            "op": "isSet",
-            "args": [
-              {
-                "ref": "case.learning.probabilityAssessment.weights"
-              }
-            ]
-          },
-          true
-        ]
+        "ref": "conditions.verification-applicable"
       },
       "input": {
         "op": "merge",
@@ -7933,78 +8328,7 @@
         "investigations"
       ],
       "when": {
-        "op": "and",
-        "args": [
-          {
-            "op": "eq",
-            "args": [
-              {
-                "ref": "case.learning.requested"
-              },
-              true
-            ]
-          },
-          {
-            "op": "gt",
-            "args": [
-              {
-                "op": "length",
-                "args": [
-                  {
-                    "ref": "steps.evidence.output.stateIds"
-                  }
-                ]
-              },
-              1
-            ]
-          },
-          {
-            "op": "gt",
-            "args": [
-              {
-                "op": "length",
-                "args": [
-                  {
-                    "ref": "steps.planning.output.feasiblePlans"
-                  }
-                ]
-              },
-              0
-            ]
-          },
-          {
-            "op": "eq",
-            "args": [
-              {
-                "op": "length",
-                "args": [
-                  {
-                    "ref": "case.evidence.incurredVerificationFees"
-                  }
-                ]
-              },
-              0
-            ]
-          },
-          {
-            "op": "eq",
-            "args": [
-              {
-                "ref": "answers.probabilities.status"
-              },
-              "supplied"
-            ]
-          },
-          {
-            "op": "isSet",
-            "args": [
-              {
-                "ref": "case.learning.probabilityAssessment.weights"
-              }
-            ]
-          },
-          true
-        ]
+        "ref": "conditions.verification-applicable"
       },
       "input": {
         "op": "merge",
@@ -8771,78 +9095,7 @@
         "investigations"
       ],
       "when": {
-        "op": "and",
-        "args": [
-          {
-            "op": "eq",
-            "args": [
-              {
-                "ref": "case.learning.requested"
-              },
-              true
-            ]
-          },
-          {
-            "op": "gt",
-            "args": [
-              {
-                "op": "length",
-                "args": [
-                  {
-                    "ref": "steps.evidence.output.stateIds"
-                  }
-                ]
-              },
-              1
-            ]
-          },
-          {
-            "op": "gt",
-            "args": [
-              {
-                "op": "length",
-                "args": [
-                  {
-                    "ref": "steps.planning.output.feasiblePlans"
-                  }
-                ]
-              },
-              0
-            ]
-          },
-          {
-            "op": "eq",
-            "args": [
-              {
-                "op": "length",
-                "args": [
-                  {
-                    "ref": "case.evidence.incurredVerificationFees"
-                  }
-                ]
-              },
-              0
-            ]
-          },
-          {
-            "op": "eq",
-            "args": [
-              {
-                "ref": "answers.probabilities.status"
-              },
-              "supplied"
-            ]
-          },
-          {
-            "op": "isSet",
-            "args": [
-              {
-                "ref": "case.learning.probabilityAssessment.weights"
-              }
-            ]
-          },
-          true
-        ]
+        "ref": "conditions.verification-applicable"
       },
       "input": {
         "op": "merge",
@@ -18325,13 +18578,7 @@
           "op": "if",
           "args": [
             {
-              "op": "eq",
-              "args": [
-                {
-                  "ref": "steps.evidence.status"
-                },
-                "complete"
-              ]
+              "ref": "conditions.records-current"
             },
             {
               "ref": "steps.evidence.output"
@@ -18349,13 +18596,7 @@
           "op": "if",
           "args": [
             {
-              "op": "eq",
-              "args": [
-                {
-                  "ref": "steps.planning.status"
-                },
-                "complete"
-              ]
+              "ref": "conditions.arrangements-current"
             },
             {
               "op": "merge",
@@ -18433,13 +18674,7 @@
           "op": "if",
           "args": [
             {
-              "op": "eq",
-              "args": [
-                {
-                  "ref": "steps.learning.status"
-                },
-                "complete"
-              ]
+              "ref": "conditions.learning-current"
             },
             {
               "ref": "steps.learning.output"
@@ -18471,6 +18706,966 @@
           },
           "qualification": "The accepted brief is a proposal. Final booking, study purchase, release and delivery remain separate recorded actions."
         }
+      },
+      {
+        "id": "decision-summary",
+        "title": "Decision summary",
+        "value": {
+          "op": "if",
+          "args": [
+            {
+              "ref": "conditions.arrangements-current"
+            },
+            {
+              "status": {
+                "op": "if",
+                "args": [
+                  {
+                    "ref": "conditions.has-feasible-arrangements"
+                  },
+                  {
+                    "op": "if",
+                    "args": [
+                      {
+                        "op": "gt",
+                        "args": [
+                          {
+                            "op": "length",
+                            "args": [
+                              {
+                                "ref": "steps.planning.output.recommendation.tiedPlanIds"
+                              }
+                            ]
+                          },
+                          1
+                        ]
+                      },
+                      "choice",
+                      "supported"
+                    ]
+                  },
+                  "blocked"
+                ]
+              },
+              "heading": {
+                "op": "if",
+                "args": [
+                  {
+                    "ref": "conditions.has-feasible-arrangements"
+                  },
+                  {
+                    "op": "if",
+                    "args": [
+                      {
+                        "op": "gt",
+                        "args": [
+                          {
+                            "op": "length",
+                            "args": [
+                              {
+                                "ref": "steps.planning.output.recommendation.tiedPlanIds"
+                              }
+                            ]
+                          },
+                          1
+                        ]
+                      },
+                      "Several shipment arrangements share the preferred result.",
+                      {
+                        "op": "stringConcat",
+                        "args": [
+                          {
+                            "op": "if",
+                            "args": [
+                              {
+                                "op": "isSet",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "literal": {
+                                          "direct": "Direct arrangement",
+                                          "backup": "Backup arrangement",
+                                          "registered": "Transportation registered",
+                                          "not_registered": "Transportation not registered",
+                                          "capacity-for-complete-order": "Capacity must cover the complete order",
+                                          "scoped-transportation-registration": "Ship point registration must cover this shipment",
+                                          "pack-capability": "Assigned packer must have the packing capability",
+                                          "pack-availability": "Assigned packer must be available for the complete activity",
+                                          "release-capability": "Assigned release worker must have the release capability",
+                                          "release-availability": "Assigned release worker must be available for the complete activity",
+                                          "combined-resource-capacity": "People and packing resources must cover overlapping work",
+                                          "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
+                                          "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
+                                          "selection-not-in-the-past": "Selection cannot be in the past",
+                                          "verification-fee-before-response": "Verification must be paid before using its report",
+                                          "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
+                                          "preparation-before-departure": "Packing and release must finish before departure",
+                                          "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
+                                          "receipt-within-access-window": "Customer receipt must fit the receiving window",
+                                          "total-expense-limit": "Complete expense must fit the expense limit",
+                                          "peak-cash-limit": "Peak cash needed must fit available cash",
+                                          "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
+                                        }
+                                      },
+                                      {
+                                        "ref": "steps.planning.output.preferredPlan.choices.arrangement"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "literal": {
+                                      "direct": "Direct arrangement",
+                                      "backup": "Backup arrangement",
+                                      "registered": "Transportation registered",
+                                      "not_registered": "Transportation not registered",
+                                      "capacity-for-complete-order": "Capacity must cover the complete order",
+                                      "scoped-transportation-registration": "Ship point registration must cover this shipment",
+                                      "pack-capability": "Assigned packer must have the packing capability",
+                                      "pack-availability": "Assigned packer must be available for the complete activity",
+                                      "release-capability": "Assigned release worker must have the release capability",
+                                      "release-availability": "Assigned release worker must be available for the complete activity",
+                                      "combined-resource-capacity": "People and packing resources must cover overlapping work",
+                                      "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
+                                      "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
+                                      "selection-not-in-the-past": "Selection cannot be in the past",
+                                      "verification-fee-before-response": "Verification must be paid before using its report",
+                                      "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
+                                      "preparation-before-departure": "Packing and release must finish before departure",
+                                      "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
+                                      "receipt-within-access-window": "Customer receipt must fit the receiving window",
+                                      "total-expense-limit": "Complete expense must fit the expense limit",
+                                      "peak-cash-limit": "Peak cash needed must fit available cash",
+                                      "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
+                                    }
+                                  },
+                                  {
+                                    "ref": "steps.planning.output.preferredPlan.choices.arrangement"
+                                  }
+                                ]
+                              },
+                              {
+                                "ref": "steps.planning.output.preferredPlan.choices.arrangement"
+                              }
+                            ]
+                          },
+                          " is the lowest-expense supported arrangement."
+                        ]
+                      }
+                    ]
+                  },
+                  "No listed shipment arrangement meets the recorded requirements."
+                ]
+              },
+              "detail": "Compare complete arrangements for the admitted operating situations. Arrival is the latest calculated receipt across those situations.",
+              "priorityLabel": "Lowest complete expense among the listed feasible arrangements",
+              "rows": {
+                "op": "map",
+                "args": [
+                  {
+                    "ref": "steps.planning.output.plans"
+                  },
+                  {
+                    "id": {
+                      "ref": "vars.plan.id"
+                    },
+                    "label": {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "isSet",
+                          "args": [
+                            {
+                              "op": "get",
+                              "args": [
+                                {
+                                  "literal": {
+                                    "direct": "Direct arrangement",
+                                    "backup": "Backup arrangement",
+                                    "registered": "Transportation registered",
+                                    "not_registered": "Transportation not registered",
+                                    "capacity-for-complete-order": "Capacity must cover the complete order",
+                                    "scoped-transportation-registration": "Ship point registration must cover this shipment",
+                                    "pack-capability": "Assigned packer must have the packing capability",
+                                    "pack-availability": "Assigned packer must be available for the complete activity",
+                                    "release-capability": "Assigned release worker must have the release capability",
+                                    "release-availability": "Assigned release worker must be available for the complete activity",
+                                    "combined-resource-capacity": "People and packing resources must cover overlapping work",
+                                    "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
+                                    "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
+                                    "selection-not-in-the-past": "Selection cannot be in the past",
+                                    "verification-fee-before-response": "Verification must be paid before using its report",
+                                    "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
+                                    "preparation-before-departure": "Packing and release must finish before departure",
+                                    "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
+                                    "receipt-within-access-window": "Customer receipt must fit the receiving window",
+                                    "total-expense-limit": "Complete expense must fit the expense limit",
+                                    "peak-cash-limit": "Peak cash needed must fit available cash",
+                                    "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
+                                  }
+                                },
+                                {
+                                  "ref": "vars.plan.choices.arrangement"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "get",
+                          "args": [
+                            {
+                              "literal": {
+                                "direct": "Direct arrangement",
+                                "backup": "Backup arrangement",
+                                "registered": "Transportation registered",
+                                "not_registered": "Transportation not registered",
+                                "capacity-for-complete-order": "Capacity must cover the complete order",
+                                "scoped-transportation-registration": "Ship point registration must cover this shipment",
+                                "pack-capability": "Assigned packer must have the packing capability",
+                                "pack-availability": "Assigned packer must be available for the complete activity",
+                                "release-capability": "Assigned release worker must have the release capability",
+                                "release-availability": "Assigned release worker must be available for the complete activity",
+                                "combined-resource-capacity": "People and packing resources must cover overlapping work",
+                                "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
+                                "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
+                                "selection-not-in-the-past": "Selection cannot be in the past",
+                                "verification-fee-before-response": "Verification must be paid before using its report",
+                                "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
+                                "preparation-before-departure": "Packing and release must finish before departure",
+                                "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
+                                "receipt-within-access-window": "Customer receipt must fit the receiving window",
+                                "total-expense-limit": "Complete expense must fit the expense limit",
+                                "peak-cash-limit": "Peak cash needed must fit available cash",
+                                "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
+                              }
+                            },
+                            {
+                              "ref": "vars.plan.choices.arrangement"
+                            }
+                          ]
+                        },
+                        {
+                          "ref": "vars.plan.choices.arrangement"
+                        }
+                      ]
+                    },
+                    "inspectionKey": {
+                      "ref": "vars.plan.choices.arrangement"
+                    },
+                    "standing": {
+                      "op": "if",
+                      "args": [
+                        {
+                          "ref": "vars.plan.feasible"
+                        },
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "op": "any",
+                              "args": [
+                                {
+                                  "ref": "steps.planning.output.recommendation.tiedPlanIds"
+                                },
+                                {
+                                  "op": "eq",
+                                  "args": [
+                                    {
+                                      "ref": "vars.preferredId"
+                                    },
+                                    {
+                                      "ref": "vars.plan.id"
+                                    }
+                                  ]
+                                }
+                              ],
+                              "as": "preferredId"
+                            },
+                            "Preferred",
+                            "Meets requirements"
+                          ]
+                        },
+                        "Blocked"
+                      ]
+                    },
+                    "expense": {
+                      "ref": "vars.plan.expense"
+                    },
+                    "arrivalMinute": {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "gt",
+                          "args": [
+                            {
+                              "op": "length",
+                              "args": [
+                                {
+                                  "ref": "vars.plan.scenarios"
+                                }
+                              ]
+                            },
+                            0
+                          ]
+                        },
+                        {
+                          "op": "get",
+                          "args": [
+                            {
+                              "op": "sort",
+                              "args": [
+                                {
+                                  "op": "map",
+                                  "args": [
+                                    {
+                                      "ref": "vars.plan.scenarios"
+                                    },
+                                    {
+                                      "ref": "vars.arrivalScenario.derived.arrival"
+                                    }
+                                  ],
+                                  "as": "arrivalScenario"
+                                }
+                              ]
+                            },
+                            {
+                              "op": "subtract",
+                              "args": [
+                                {
+                                  "op": "length",
+                                  "args": [
+                                    {
+                                      "ref": "vars.plan.scenarios"
+                                    }
+                                  ]
+                                },
+                                1
+                              ]
+                            }
+                          ]
+                        },
+                        null
+                      ]
+                    },
+                    "condition": {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "op": "length",
+                              "args": [
+                                {
+                                  "ref": "vars.plan.blockers"
+                                }
+                              ]
+                            },
+                            1
+                          ]
+                        },
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "op": "isSet",
+                              "args": [
+                                {
+                                  "op": "get",
+                                  "args": [
+                                    {
+                                      "literal": {
+                                        "direct": "Direct arrangement",
+                                        "backup": "Backup arrangement",
+                                        "registered": "Transportation registered",
+                                        "not_registered": "Transportation not registered",
+                                        "capacity-for-complete-order": "Capacity must cover the complete order",
+                                        "scoped-transportation-registration": "Ship point registration must cover this shipment",
+                                        "pack-capability": "Assigned packer must have the packing capability",
+                                        "pack-availability": "Assigned packer must be available for the complete activity",
+                                        "release-capability": "Assigned release worker must have the release capability",
+                                        "release-availability": "Assigned release worker must be available for the complete activity",
+                                        "combined-resource-capacity": "People and packing resources must cover overlapping work",
+                                        "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
+                                        "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
+                                        "selection-not-in-the-past": "Selection cannot be in the past",
+                                        "verification-fee-before-response": "Verification must be paid before using its report",
+                                        "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
+                                        "preparation-before-departure": "Packing and release must finish before departure",
+                                        "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
+                                        "receipt-within-access-window": "Customer receipt must fit the receiving window",
+                                        "total-expense-limit": "Complete expense must fit the expense limit",
+                                        "peak-cash-limit": "Peak cash needed must fit available cash",
+                                        "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
+                                      }
+                                    },
+                                    {
+                                      "op": "get",
+                                      "args": [
+                                        {
+                                          "op": "get",
+                                          "args": [
+                                            {
+                                              "ref": "vars.plan.blockers"
+                                            },
+                                            0
+                                          ]
+                                        },
+                                        "constraintId"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "get",
+                              "args": [
+                                {
+                                  "literal": {
+                                    "direct": "Direct arrangement",
+                                    "backup": "Backup arrangement",
+                                    "registered": "Transportation registered",
+                                    "not_registered": "Transportation not registered",
+                                    "capacity-for-complete-order": "Capacity must cover the complete order",
+                                    "scoped-transportation-registration": "Ship point registration must cover this shipment",
+                                    "pack-capability": "Assigned packer must have the packing capability",
+                                    "pack-availability": "Assigned packer must be available for the complete activity",
+                                    "release-capability": "Assigned release worker must have the release capability",
+                                    "release-availability": "Assigned release worker must be available for the complete activity",
+                                    "combined-resource-capacity": "People and packing resources must cover overlapping work",
+                                    "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
+                                    "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
+                                    "selection-not-in-the-past": "Selection cannot be in the past",
+                                    "verification-fee-before-response": "Verification must be paid before using its report",
+                                    "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
+                                    "preparation-before-departure": "Packing and release must finish before departure",
+                                    "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
+                                    "receipt-within-access-window": "Customer receipt must fit the receiving window",
+                                    "total-expense-limit": "Complete expense must fit the expense limit",
+                                    "peak-cash-limit": "Peak cash needed must fit available cash",
+                                    "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
+                                  }
+                                },
+                                {
+                                  "op": "get",
+                                  "args": [
+                                    {
+                                      "op": "get",
+                                      "args": [
+                                        {
+                                          "ref": "vars.plan.blockers"
+                                        },
+                                        0
+                                      ]
+                                    },
+                                    "constraintId"
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "get",
+                              "args": [
+                                {
+                                  "op": "get",
+                                  "args": [
+                                    {
+                                      "ref": "vars.plan.blockers"
+                                    },
+                                    0
+                                  ]
+                                },
+                                "constraintId"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "op": "gt",
+                              "args": [
+                                {
+                                  "op": "length",
+                                  "args": [
+                                    {
+                                      "ref": "vars.plan.blockers"
+                                    }
+                                  ]
+                                },
+                                1
+                              ]
+                            },
+                            {
+                              "op": "stringConcat",
+                              "args": [
+                                {
+                                  "op": "stringify",
+                                  "args": [
+                                    {
+                                      "op": "length",
+                                      "args": [
+                                        {
+                                          "ref": "vars.plan.blockers"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                " unmet requirements; inspect Requirements"
+                              ]
+                            },
+                            "None"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "as": "plan"
+              },
+              "metrics": {
+                "op": "concat",
+                "args": [
+                  [
+                    {
+                      "id": "reservation-cutoff",
+                      "label": "Reservation cutoff",
+                      "value": {
+                        "ref": "case.commitment.reserveBy"
+                      },
+                      "format": {
+                        "type": "time",
+                        "unit": "minute",
+                        "timeZone": "America/Chicago"
+                      }
+                    }
+                  ],
+                  {
+                    "op": "if",
+                    "args": [
+                      {
+                        "ref": "conditions.learning-current"
+                      },
+                      [
+                        {
+                          "id": "verification-expected-expense",
+                          "label": "Expected expense with the preferred information policy",
+                          "value": {
+                            "ref": "steps.learning.output.expectedCost"
+                          },
+                          "format": "money"
+                        },
+                        {
+                          "id": "verification-improvement",
+                          "label": "Expected improvement over reserving now",
+                          "value": {
+                            "ref": "steps.learning.output.recommendation.incrementalValue"
+                          },
+                          "format": "money"
+                        }
+                      ],
+                      []
+                    ]
+                  }
+                ]
+              },
+              "conditions": {
+                "op": "concat",
+                "args": [
+                  {
+                    "op": "if",
+                    "args": [
+                      {
+                        "ref": "conditions.registration-unresolved"
+                      },
+                      [
+                        {
+                          "id": "registration-unresolved",
+                          "label": "Direct shipment depends on unresolved registration",
+                          "detail": "The direct arrangement must remain usable in every admitted operating situation; a portal listing alone does not establish transportation registration.",
+                          "tabId": "records"
+                        }
+                      ],
+                      []
+                    ]
+                  },
+                  {
+                    "op": "if",
+                    "args": [
+                      {
+                        "ref": "conditions.learning-current"
+                      },
+                      [
+                        {
+                          "id": "learning-basis",
+                          "label": "The information comparison uses supplied probability and report assumptions",
+                          "detail": "Expected expense includes the check and its possible responses. It is a comparison of policies, not a guaranteed shipment price.",
+                          "tabId": "learning"
+                        }
+                      ],
+                      []
+                    ]
+                  },
+                  {
+                    "op": "if",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "ref": "conditions.verification-requested"
+                          },
+                          {
+                            "op": "not",
+                            "args": [
+                              {
+                                "ref": "conditions.learning-current"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      [
+                        {
+                          "id": "learning-unavailable",
+                          "label": "Further verification value has not been calculated",
+                          "detail": "The arrangement comparison remains usable. Supply defensible learning assumptions only if comparing another check could change the choice.",
+                          "tabId": "learning"
+                        }
+                      ],
+                      []
+                    ]
+                  }
+                ]
+              },
+              "qualification": "Results cover the listed complete arrangements and supplied operating assumptions. A calculated arrangement does not reserve freight or establish completed delivery."
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "ref": "conditions.records-current"
+                    },
+                    {
+                      "op": "not",
+                      "args": [
+                        {
+                          "ref": "conditions.records-compatible"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "status": "unavailable",
+                  "heading": "Resolve the conflicting operating records before comparing shipment arrangements.",
+                  "rows": [],
+                  "metrics": [],
+                  "conditions": []
+                },
+                {
+                  "status": "unavailable",
+                  "heading": "Calculate the complete arrangements before choosing a shipment.",
+                  "rows": [],
+                  "metrics": [],
+                  "conditions": []
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "decision-requirements",
+        "title": "Unmet shipment requirements",
+        "value": {
+          "op": "if",
+          "args": [
+            {
+              "ref": "conditions.arrangements-current"
+            },
+            {
+              "op": "flatMap",
+              "args": [
+                {
+                  "ref": "steps.planning.output.plans"
+                },
+                {
+                  "op": "map",
+                  "args": [
+                    {
+                      "ref": "vars.plan.blockers"
+                    },
+                    {
+                      "arrangement": {
+                        "op": "if",
+                        "args": [
+                          {
+                            "op": "isSet",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "literal": {
+                                      "direct": "Direct arrangement",
+                                      "backup": "Backup arrangement",
+                                      "registered": "Transportation registered",
+                                      "not_registered": "Transportation not registered",
+                                      "capacity-for-complete-order": "Capacity must cover the complete order",
+                                      "scoped-transportation-registration": "Ship point registration must cover this shipment",
+                                      "pack-capability": "Assigned packer must have the packing capability",
+                                      "pack-availability": "Assigned packer must be available for the complete activity",
+                                      "release-capability": "Assigned release worker must have the release capability",
+                                      "release-availability": "Assigned release worker must be available for the complete activity",
+                                      "combined-resource-capacity": "People and packing resources must cover overlapping work",
+                                      "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
+                                      "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
+                                      "selection-not-in-the-past": "Selection cannot be in the past",
+                                      "verification-fee-before-response": "Verification must be paid before using its report",
+                                      "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
+                                      "preparation-before-departure": "Packing and release must finish before departure",
+                                      "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
+                                      "receipt-within-access-window": "Customer receipt must fit the receiving window",
+                                      "total-expense-limit": "Complete expense must fit the expense limit",
+                                      "peak-cash-limit": "Peak cash needed must fit available cash",
+                                      "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
+                                    }
+                                  },
+                                  {
+                                    "ref": "vars.plan.choices.arrangement"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "literal": {
+                                  "direct": "Direct arrangement",
+                                  "backup": "Backup arrangement",
+                                  "registered": "Transportation registered",
+                                  "not_registered": "Transportation not registered",
+                                  "capacity-for-complete-order": "Capacity must cover the complete order",
+                                  "scoped-transportation-registration": "Ship point registration must cover this shipment",
+                                  "pack-capability": "Assigned packer must have the packing capability",
+                                  "pack-availability": "Assigned packer must be available for the complete activity",
+                                  "release-capability": "Assigned release worker must have the release capability",
+                                  "release-availability": "Assigned release worker must be available for the complete activity",
+                                  "combined-resource-capacity": "People and packing resources must cover overlapping work",
+                                  "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
+                                  "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
+                                  "selection-not-in-the-past": "Selection cannot be in the past",
+                                  "verification-fee-before-response": "Verification must be paid before using its report",
+                                  "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
+                                  "preparation-before-departure": "Packing and release must finish before departure",
+                                  "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
+                                  "receipt-within-access-window": "Customer receipt must fit the receiving window",
+                                  "total-expense-limit": "Complete expense must fit the expense limit",
+                                  "peak-cash-limit": "Peak cash needed must fit available cash",
+                                  "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
+                                }
+                              },
+                              {
+                                "ref": "vars.plan.choices.arrangement"
+                              }
+                            ]
+                          },
+                          {
+                            "ref": "vars.plan.choices.arrangement"
+                          }
+                        ]
+                      },
+                      "condition": {
+                        "op": "if",
+                        "args": [
+                          {
+                            "op": "isSet",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "literal": {
+                                      "direct": "Direct arrangement",
+                                      "backup": "Backup arrangement",
+                                      "registered": "Transportation registered",
+                                      "not_registered": "Transportation not registered",
+                                      "capacity-for-complete-order": "Capacity must cover the complete order",
+                                      "scoped-transportation-registration": "Ship point registration must cover this shipment",
+                                      "pack-capability": "Assigned packer must have the packing capability",
+                                      "pack-availability": "Assigned packer must be available for the complete activity",
+                                      "release-capability": "Assigned release worker must have the release capability",
+                                      "release-availability": "Assigned release worker must be available for the complete activity",
+                                      "combined-resource-capacity": "People and packing resources must cover overlapping work",
+                                      "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
+                                      "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
+                                      "selection-not-in-the-past": "Selection cannot be in the past",
+                                      "verification-fee-before-response": "Verification must be paid before using its report",
+                                      "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
+                                      "preparation-before-departure": "Packing and release must finish before departure",
+                                      "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
+                                      "receipt-within-access-window": "Customer receipt must fit the receiving window",
+                                      "total-expense-limit": "Complete expense must fit the expense limit",
+                                      "peak-cash-limit": "Peak cash needed must fit available cash",
+                                      "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
+                                    }
+                                  },
+                                  {
+                                    "ref": "vars.blocker.constraintId"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "literal": {
+                                  "direct": "Direct arrangement",
+                                  "backup": "Backup arrangement",
+                                  "registered": "Transportation registered",
+                                  "not_registered": "Transportation not registered",
+                                  "capacity-for-complete-order": "Capacity must cover the complete order",
+                                  "scoped-transportation-registration": "Ship point registration must cover this shipment",
+                                  "pack-capability": "Assigned packer must have the packing capability",
+                                  "pack-availability": "Assigned packer must be available for the complete activity",
+                                  "release-capability": "Assigned release worker must have the release capability",
+                                  "release-availability": "Assigned release worker must be available for the complete activity",
+                                  "combined-resource-capacity": "People and packing resources must cover overlapping work",
+                                  "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
+                                  "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
+                                  "selection-not-in-the-past": "Selection cannot be in the past",
+                                  "verification-fee-before-response": "Verification must be paid before using its report",
+                                  "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
+                                  "preparation-before-departure": "Packing and release must finish before departure",
+                                  "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
+                                  "receipt-within-access-window": "Customer receipt must fit the receiving window",
+                                  "total-expense-limit": "Complete expense must fit the expense limit",
+                                  "peak-cash-limit": "Peak cash needed must fit available cash",
+                                  "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
+                                }
+                              },
+                              {
+                                "ref": "vars.blocker.constraintId"
+                              }
+                            ]
+                          },
+                          {
+                            "ref": "vars.blocker.constraintId"
+                          }
+                        ]
+                      },
+                      "situation": {
+                        "op": "if",
+                        "args": [
+                          {
+                            "op": "isSet",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "literal": {
+                                      "direct": "Direct arrangement",
+                                      "backup": "Backup arrangement",
+                                      "registered": "Transportation registered",
+                                      "not_registered": "Transportation not registered",
+                                      "capacity-for-complete-order": "Capacity must cover the complete order",
+                                      "scoped-transportation-registration": "Ship point registration must cover this shipment",
+                                      "pack-capability": "Assigned packer must have the packing capability",
+                                      "pack-availability": "Assigned packer must be available for the complete activity",
+                                      "release-capability": "Assigned release worker must have the release capability",
+                                      "release-availability": "Assigned release worker must be available for the complete activity",
+                                      "combined-resource-capacity": "People and packing resources must cover overlapping work",
+                                      "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
+                                      "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
+                                      "selection-not-in-the-past": "Selection cannot be in the past",
+                                      "verification-fee-before-response": "Verification must be paid before using its report",
+                                      "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
+                                      "preparation-before-departure": "Packing and release must finish before departure",
+                                      "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
+                                      "receipt-within-access-window": "Customer receipt must fit the receiving window",
+                                      "total-expense-limit": "Complete expense must fit the expense limit",
+                                      "peak-cash-limit": "Peak cash needed must fit available cash",
+                                      "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
+                                    }
+                                  },
+                                  {
+                                    "ref": "vars.blocker.scenarioId"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "literal": {
+                                  "direct": "Direct arrangement",
+                                  "backup": "Backup arrangement",
+                                  "registered": "Transportation registered",
+                                  "not_registered": "Transportation not registered",
+                                  "capacity-for-complete-order": "Capacity must cover the complete order",
+                                  "scoped-transportation-registration": "Ship point registration must cover this shipment",
+                                  "pack-capability": "Assigned packer must have the packing capability",
+                                  "pack-availability": "Assigned packer must be available for the complete activity",
+                                  "release-capability": "Assigned release worker must have the release capability",
+                                  "release-availability": "Assigned release worker must be available for the complete activity",
+                                  "combined-resource-capacity": "People and packing resources must cover overlapping work",
+                                  "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
+                                  "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
+                                  "selection-not-in-the-past": "Selection cannot be in the past",
+                                  "verification-fee-before-response": "Verification must be paid before using its report",
+                                  "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
+                                  "preparation-before-departure": "Packing and release must finish before departure",
+                                  "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
+                                  "receipt-within-access-window": "Customer receipt must fit the receiving window",
+                                  "total-expense-limit": "Complete expense must fit the expense limit",
+                                  "peak-cash-limit": "Peak cash needed must fit available cash",
+                                  "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
+                                }
+                              },
+                              {
+                                "ref": "vars.blocker.scenarioId"
+                              }
+                            ]
+                          },
+                          {
+                            "ref": "vars.blocker.scenarioId"
+                          }
+                        ]
+                      },
+                      "requirement": {
+                        "ref": "vars.blocker.requirement"
+                      }
+                    }
+                  ],
+                  "as": "blocker"
+                }
+              ],
+              "as": "plan"
+            },
+            []
+          ]
+        }
       }
     ],
     "actions": [
@@ -18478,359 +19673,49 @@
         "id": "review-records",
         "label": "Supply or resolve the operating records",
         "when": {
-          "op": "not",
-          "args": [
-            {
-              "op": "eq",
-              "args": [
-                {
-                  "ref": "steps.evidence.status"
-                },
-                "complete"
-              ]
-            }
-          ]
+          "ref": "conditions.offer-review-records"
         }
       },
       {
         "id": "resolve-record-conflict",
         "label": "Resolve the conflicting records before choosing an arrangement",
         "when": {
-          "op": "and",
-          "args": [
-            {
-              "op": "eq",
-              "args": [
-                {
-                  "ref": "steps.evidence.status"
-                },
-                "complete"
-              ]
-            },
-            {
-              "op": "eq",
-              "args": [
-                {
-                  "op": "length",
-                  "args": [
-                    {
-                      "ref": "steps.evidence.output.stateIds"
-                    }
-                  ]
-                },
-                0
-              ]
-            }
-          ]
+          "ref": "conditions.offer-resolve-record-conflict"
         }
       },
       {
         "id": "review-planning",
         "label": "Calculate the complete shipment arrangements",
         "when": {
-          "op": "and",
-          "args": [
-            {
-              "op": "eq",
-              "args": [
-                {
-                  "ref": "steps.evidence.status"
-                },
-                "complete"
-              ]
-            },
-            {
-              "op": "not",
-              "args": [
-                {
-                  "op": "eq",
-                  "args": [
-                    {
-                      "ref": "steps.planning.status"
-                    },
-                    "complete"
-                  ]
-                }
-              ]
-            }
-          ]
+          "ref": "conditions.offer-review-planning"
         }
       },
       {
         "id": "revise-commitment",
         "label": "Revise the commitment or available arrangements",
         "when": {
-          "op": "and",
-          "args": [
-            {
-              "op": "eq",
-              "args": [
-                {
-                  "ref": "steps.planning.status"
-                },
-                "complete"
-              ]
-            },
-            {
-              "op": "eq",
-              "args": [
-                {
-                  "op": "length",
-                  "args": [
-                    {
-                      "ref": "steps.planning.output.feasiblePlans"
-                    }
-                  ]
-                },
-                0
-              ]
-            }
-          ]
+          "ref": "conditions.offer-revise-commitment"
         }
       },
       {
         "id": "review-verification",
-        "label": "Calculate timely verification value",
+        "label": "Calculate whether timely verification improves the choice",
         "when": {
-          "op": "and",
-          "args": [
-            {
-              "op": "and",
-              "args": [
-                {
-                  "op": "eq",
-                  "args": [
-                    {
-                      "ref": "steps.planning.status"
-                    },
-                    "complete"
-                  ]
-                },
-                {
-                  "op": "gt",
-                  "args": [
-                    {
-                      "op": "length",
-                      "args": [
-                        {
-                          "ref": "steps.planning.output.feasiblePlans"
-                        }
-                      ]
-                    },
-                    0
-                  ]
-                }
-              ]
-            },
-            {
-              "op": "and",
-              "args": [
-                {
-                  "op": "eq",
-                  "args": [
-                    {
-                      "ref": "case.learning.requested"
-                    },
-                    true
-                  ]
-                },
-                {
-                  "op": "gt",
-                  "args": [
-                    {
-                      "op": "length",
-                      "args": [
-                        {
-                          "ref": "steps.evidence.output.stateIds"
-                        }
-                      ]
-                    },
-                    1
-                  ]
-                },
-                {
-                  "op": "gt",
-                  "args": [
-                    {
-                      "op": "length",
-                      "args": [
-                        {
-                          "ref": "steps.planning.output.feasiblePlans"
-                        }
-                      ]
-                    },
-                    0
-                  ]
-                },
-                {
-                  "op": "eq",
-                  "args": [
-                    {
-                      "op": "length",
-                      "args": [
-                        {
-                          "ref": "case.evidence.incurredVerificationFees"
-                        }
-                      ]
-                    },
-                    0
-                  ]
-                },
-                {
-                  "op": "eq",
-                  "args": [
-                    {
-                      "ref": "answers.probabilities.status"
-                    },
-                    "supplied"
-                  ]
-                },
-                {
-                  "op": "isSet",
-                  "args": [
-                    {
-                      "ref": "case.learning.probabilityAssessment.weights"
-                    }
-                  ]
-                },
-                true
-              ]
-            },
-            {
-              "op": "not",
-              "args": [
-                {
-                  "op": "eq",
-                  "args": [
-                    {
-                      "ref": "steps.learning.status"
-                    },
-                    "complete"
-                  ]
-                }
-              ]
-            }
-          ]
+          "ref": "conditions.offer-review-verification"
         }
       },
       {
         "id": "consider-probabilities",
-        "label": "Supply probability assumptions to compare verification",
+        "label": "Supply probability assumptions if another check could change the choice",
         "when": {
-          "op": "and",
-          "args": [
-            {
-              "op": "and",
-              "args": [
-                {
-                  "op": "eq",
-                  "args": [
-                    {
-                      "ref": "steps.planning.status"
-                    },
-                    "complete"
-                  ]
-                },
-                {
-                  "op": "gt",
-                  "args": [
-                    {
-                      "op": "length",
-                      "args": [
-                        {
-                          "ref": "steps.planning.output.feasiblePlans"
-                        }
-                      ]
-                    },
-                    0
-                  ]
-                }
-              ]
-            },
-            {
-              "op": "eq",
-              "args": [
-                {
-                  "ref": "case.learning.requested"
-                },
-                true
-              ]
-            },
-            {
-              "op": "gt",
-              "args": [
-                {
-                  "op": "length",
-                  "args": [
-                    {
-                      "ref": "steps.evidence.output.stateIds"
-                    }
-                  ]
-                },
-                1
-              ]
-            },
-            {
-              "op": "eq",
-              "args": [
-                {
-                  "op": "length",
-                  "args": [
-                    {
-                      "ref": "case.evidence.incurredVerificationFees"
-                    }
-                  ]
-                },
-                0
-              ]
-            },
-            {
-              "op": "not",
-              "args": [
-                {
-                  "op": "eq",
-                  "args": [
-                    {
-                      "ref": "answers.probabilities.status"
-                    },
-                    "supplied"
-                  ]
-                }
-              ]
-            }
-          ]
+          "ref": "conditions.offer-consider-probabilities"
         }
       },
       {
         "id": "propose-arrangement",
-        "label": "Compare the supported complete arrangements",
+        "label": "Choose among the supported shipment arrangements",
         "when": {
-          "op": "and",
-          "args": [
-            {
-              "op": "eq",
-              "args": [
-                {
-                  "ref": "steps.planning.status"
-                },
-                "complete"
-              ]
-            },
-            {
-              "op": "gt",
-              "args": [
-                {
-                  "op": "length",
-                  "args": [
-                    {
-                      "ref": "steps.planning.output.feasiblePlans"
-                    }
-                  ]
-                },
-                0
-              ]
-            }
-          ]
+          "ref": "conditions.offer-propose-arrangement"
         },
         "value": {
           "preferredPlan": {
@@ -18843,48 +19728,9 @@
       },
       {
         "id": "propose-reviewed-choice",
-        "label": "Compare reserving now with timely verification",
+        "label": "Choose whether to reserve now or obtain timely verification",
         "when": {
-          "op": "and",
-          "args": [
-            {
-              "op": "and",
-              "args": [
-                {
-                  "op": "eq",
-                  "args": [
-                    {
-                      "ref": "steps.planning.status"
-                    },
-                    "complete"
-                  ]
-                },
-                {
-                  "op": "gt",
-                  "args": [
-                    {
-                      "op": "length",
-                      "args": [
-                        {
-                          "ref": "steps.planning.output.feasiblePlans"
-                        }
-                      ]
-                    },
-                    0
-                  ]
-                }
-              ]
-            },
-            {
-              "op": "eq",
-              "args": [
-                {
-                  "ref": "steps.learning.status"
-                },
-                "complete"
-              ]
-            }
-          ]
+          "ref": "conditions.offer-propose-reviewed-choice"
         },
         "value": {
           "op": "merge",
@@ -18905,22 +19751,10 @@
       "op": "and",
       "args": [
         {
-          "op": "eq",
-          "args": [
-            {
-              "ref": "steps.evidence.status"
-            },
-            "complete"
-          ]
+          "ref": "conditions.records-current"
         },
         {
-          "op": "eq",
-          "args": [
-            {
-              "ref": "steps.planning.status"
-            },
-            "complete"
-          ]
+          "ref": "conditions.arrangements-current"
         },
         {
           "op": "or",
@@ -18929,89 +19763,12 @@
               "op": "not",
               "args": [
                 {
-                  "op": "and",
-                  "args": [
-                    {
-                      "op": "eq",
-                      "args": [
-                        {
-                          "ref": "case.learning.requested"
-                        },
-                        true
-                      ]
-                    },
-                    {
-                      "op": "gt",
-                      "args": [
-                        {
-                          "op": "length",
-                          "args": [
-                            {
-                              "ref": "steps.evidence.output.stateIds"
-                            }
-                          ]
-                        },
-                        1
-                      ]
-                    },
-                    {
-                      "op": "gt",
-                      "args": [
-                        {
-                          "op": "length",
-                          "args": [
-                            {
-                              "ref": "steps.planning.output.feasiblePlans"
-                            }
-                          ]
-                        },
-                        0
-                      ]
-                    },
-                    {
-                      "op": "eq",
-                      "args": [
-                        {
-                          "op": "length",
-                          "args": [
-                            {
-                              "ref": "case.evidence.incurredVerificationFees"
-                            }
-                          ]
-                        },
-                        0
-                      ]
-                    },
-                    {
-                      "op": "eq",
-                      "args": [
-                        {
-                          "ref": "answers.probabilities.status"
-                        },
-                        "supplied"
-                      ]
-                    },
-                    {
-                      "op": "isSet",
-                      "args": [
-                        {
-                          "ref": "case.learning.probabilityAssessment.weights"
-                        }
-                      ]
-                    },
-                    true
-                  ]
+                  "ref": "conditions.verification-applicable"
                 }
               ]
             },
             {
-              "op": "eq",
-              "args": [
-                {
-                  "ref": "steps.learning.status"
-                },
-                "complete"
-              ]
+              "ref": "conditions.learning-current"
             }
           ]
         }
@@ -19021,5 +19778,831 @@
   "execution": {
     "mode": "calculation"
   },
-  "contentHash": "4e82e54e0e341039c8e35f8c6f9473d8c3c9d12cbb440540d6f28204a6bab0d4"
+  "conditions": [
+    {
+      "id": "records-current",
+      "label": "Transportation records have been calculated",
+      "test": {
+        "op": "eq",
+        "args": [
+          {
+            "ref": "steps.evidence.status"
+          },
+          "complete"
+        ]
+      }
+    },
+    {
+      "id": "arrangements-current",
+      "label": "Complete shipment arrangements have been calculated",
+      "test": {
+        "op": "eq",
+        "args": [
+          {
+            "ref": "steps.planning.status"
+          },
+          "complete"
+        ]
+      }
+    },
+    {
+      "id": "learning-current",
+      "label": "Verification value has been calculated",
+      "test": {
+        "op": "eq",
+        "args": [
+          {
+            "ref": "steps.learning.status"
+          },
+          "complete"
+        ]
+      }
+    },
+    {
+      "id": "records-compatible",
+      "label": "The records permit at least one registration situation",
+      "test": {
+        "op": "gt",
+        "args": [
+          {
+            "op": "length",
+            "args": [
+              {
+                "ref": "steps.evidence.output.stateIds"
+              }
+            ]
+          },
+          0
+        ]
+      }
+    },
+    {
+      "id": "registration-unresolved",
+      "label": "More than one registration situation remains",
+      "test": {
+        "op": "gt",
+        "args": [
+          {
+            "op": "length",
+            "args": [
+              {
+                "ref": "steps.evidence.output.stateIds"
+              }
+            ]
+          },
+          1
+        ]
+      }
+    },
+    {
+      "id": "has-feasible-arrangements",
+      "label": "At least one complete arrangement is feasible",
+      "test": {
+        "op": "gt",
+        "args": [
+          {
+            "op": "length",
+            "args": [
+              {
+                "ref": "steps.planning.output.feasiblePlans"
+              }
+            ]
+          },
+          0
+        ]
+      }
+    },
+    {
+      "id": "verification-requested",
+      "label": "A further verification comparison is requested",
+      "requires": [
+        "learning-requested"
+      ],
+      "test": {
+        "op": "eq",
+        "args": [
+          {
+            "ref": "case.learning.requested"
+          },
+          true
+        ]
+      }
+    },
+    {
+      "id": "probabilities-supplied",
+      "label": "Probability assumptions have been supplied",
+      "test": {
+        "op": "eq",
+        "args": [
+          {
+            "ref": "answers.probabilities.status"
+          },
+          "supplied"
+        ]
+      }
+    },
+    {
+      "id": "probability-weights-available",
+      "label": "Probability weights are available",
+      "requires": [
+        "probabilities"
+      ],
+      "test": {
+        "op": "isSet",
+        "args": [
+          {
+            "ref": "case.learning.probabilityAssessment.weights"
+          }
+        ]
+      }
+    },
+    {
+      "id": "verification-not-yet-purchased",
+      "label": "No verification fee has already been incurred",
+      "requires": [
+        "incurred-fees"
+      ],
+      "test": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "length",
+            "args": [
+              {
+                "ref": "case.evidence.incurredVerificationFees"
+              }
+            ]
+          },
+          0
+        ]
+      }
+    },
+    {
+      "id": "verification-applicable",
+      "label": "A new verification comparison can inform an available arrangement",
+      "test": {
+        "op": "and",
+        "args": [
+          {
+            "ref": "conditions.verification-requested"
+          },
+          {
+            "ref": "conditions.registration-unresolved"
+          },
+          {
+            "ref": "conditions.has-feasible-arrangements"
+          },
+          {
+            "ref": "conditions.verification-not-yet-purchased"
+          },
+          {
+            "ref": "conditions.probabilities-supplied"
+          },
+          {
+            "ref": "conditions.probability-weights-available"
+          },
+          true
+        ]
+      }
+    },
+    {
+      "id": "offer-review-records",
+      "label": "Supply or resolve the operating records",
+      "test": {
+        "op": "not",
+        "args": [
+          {
+            "ref": "conditions.records-current"
+          }
+        ]
+      }
+    },
+    {
+      "id": "offer-resolve-record-conflict",
+      "label": "Resolve the conflicting records before choosing an arrangement",
+      "test": {
+        "op": "and",
+        "args": [
+          {
+            "ref": "conditions.records-current"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "length",
+                "args": [
+                  {
+                    "ref": "steps.evidence.output.stateIds"
+                  }
+                ]
+              },
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "offer-review-planning",
+      "label": "Calculate the complete shipment arrangements",
+      "test": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "ref": "conditions.records-current"
+              },
+              {
+                "op": "not",
+                "args": [
+                  {
+                    "ref": "conditions.arrangements-current"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "ref": "conditions.records-compatible"
+          }
+        ]
+      }
+    },
+    {
+      "id": "offer-revise-commitment",
+      "label": "Revise the commitment or available arrangements",
+      "test": {
+        "op": "and",
+        "args": [
+          {
+            "ref": "conditions.arrangements-current"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "length",
+                "args": [
+                  {
+                    "ref": "steps.planning.output.feasiblePlans"
+                  }
+                ]
+              },
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "offer-review-verification",
+      "label": "Calculate timely verification value",
+      "test": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "ref": "conditions.arrangements-current"
+              },
+              {
+                "ref": "conditions.has-feasible-arrangements"
+              }
+            ]
+          },
+          {
+            "ref": "conditions.verification-applicable"
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "ref": "conditions.learning-current"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "offer-consider-probabilities",
+      "label": "Supply probability assumptions to compare verification",
+      "test": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "ref": "conditions.arrangements-current"
+              },
+              {
+                "ref": "conditions.has-feasible-arrangements"
+              }
+            ]
+          },
+          {
+            "ref": "conditions.verification-requested"
+          },
+          {
+            "ref": "conditions.registration-unresolved"
+          },
+          {
+            "ref": "conditions.verification-not-yet-purchased"
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "ref": "conditions.probabilities-supplied"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "offer-propose-arrangement",
+      "label": "Compare the supported complete arrangements",
+      "test": {
+        "op": "and",
+        "args": [
+          {
+            "ref": "conditions.arrangements-current"
+          },
+          {
+            "ref": "conditions.has-feasible-arrangements"
+          }
+        ]
+      }
+    },
+    {
+      "id": "offer-propose-reviewed-choice",
+      "label": "Compare reserving now with timely verification",
+      "test": {
+        "op": "and",
+        "args": [
+          {
+            "ref": "conditions.offer-propose-arrangement"
+          },
+          {
+            "ref": "conditions.learning-current"
+          }
+        ]
+      }
+    },
+    {
+      "id": "learning-has-positive-increment",
+      "label": "Further information has positive expected incremental value",
+      "test": {
+        "op": "gt",
+        "args": [
+          {
+            "ref": "steps.learning.output.recommendation.incrementalValue"
+          },
+          0
+        ]
+      }
+    }
+  ],
+  "decisionProcess": {
+    "title": "Decide how to meet the shipment commitment",
+    "description": "Establish the transportation facts, compare complete arrangements, and optionally compare buying timely verification. Several next actions can be available together. Booking, verification purchase and delivery remain separate operating actions.",
+    "entryNodeIds": [
+      "define-shipment"
+    ],
+    "nodes": [
+      {
+        "id": "define-shipment",
+        "kind": "stage",
+        "label": "Define the shipment commitment",
+        "questionIds": [
+          "scope",
+          "receive-at",
+          "reservation-cutoff",
+          "receipt-deadline",
+          "quantity",
+          "arrangements"
+        ]
+      },
+      {
+        "id": "establish-registration",
+        "kind": "stage",
+        "label": "Establish ship-point registration",
+        "stepIds": [
+          "evidence"
+        ],
+        "questionIds": [
+          "observations",
+          "sources"
+        ]
+      },
+      {
+        "id": "registration-compatible",
+        "kind": "decision",
+        "label": "Do the records support a consistent registration situation?",
+        "conditionId": "records-compatible"
+      },
+      {
+        "id": "compare-arrangements",
+        "kind": "stage",
+        "label": "Compare complete shipment arrangements",
+        "stepIds": [
+          "planning"
+        ],
+        "sectionIds": [
+          "arrangements"
+        ]
+      },
+      {
+        "id": "arrangements-feasible",
+        "kind": "decision",
+        "label": "Does any complete arrangement meet the requirements?",
+        "conditionId": "has-feasible-arrangements"
+      },
+      {
+        "id": "verification-request",
+        "kind": "decision",
+        "label": "Should further verification be compared?",
+        "conditionId": "verification-requested"
+      },
+      {
+        "id": "verification-assumptions",
+        "kind": "decision",
+        "label": "Are the probability assumptions supplied?",
+        "conditionId": "probabilities-supplied"
+      },
+      {
+        "id": "calculate-verification",
+        "kind": "stage",
+        "label": "Check complete responses and verification value",
+        "stepIds": [
+          "planning-fast",
+          "planning-slow",
+          "learning"
+        ],
+        "questionIds": [
+          "probabilities",
+          "investigations"
+        ],
+        "sectionIds": [
+          "verification"
+        ]
+      },
+      {
+        "id": "action-review-records",
+        "kind": "action",
+        "label": "Supply or resolve the operating records",
+        "actionId": "review-records"
+      },
+      {
+        "id": "action-resolve-record-conflict",
+        "kind": "action",
+        "label": "Resolve the conflicting records before choosing an arrangement",
+        "actionId": "resolve-record-conflict"
+      },
+      {
+        "id": "action-review-planning",
+        "kind": "action",
+        "label": "Calculate the complete shipment arrangements",
+        "actionId": "review-planning"
+      },
+      {
+        "id": "action-revise-commitment",
+        "kind": "action",
+        "label": "Revise the commitment or available arrangements",
+        "actionId": "revise-commitment"
+      },
+      {
+        "id": "action-review-verification",
+        "kind": "action",
+        "label": "Calculate timely verification value",
+        "actionId": "review-verification"
+      },
+      {
+        "id": "action-consider-probabilities",
+        "kind": "action",
+        "label": "Supply probability assumptions to compare verification",
+        "actionId": "consider-probabilities"
+      },
+      {
+        "id": "action-propose-arrangement",
+        "kind": "action",
+        "label": "Compare the supported complete arrangements",
+        "actionId": "propose-arrangement"
+      },
+      {
+        "id": "action-propose-reviewed-choice",
+        "kind": "action",
+        "label": "Compare reserving now with timely verification",
+        "actionId": "propose-reviewed-choice"
+      },
+      {
+        "id": "current-arrangements-only",
+        "kind": "outcome",
+        "label": "Use the current complete-arrangement comparison",
+        "description": "Further verification was not requested. Its value has not been calculated.",
+        "sectionIds": [
+          "arrangements"
+        ]
+      },
+      {
+        "id": "learning-improves-choice",
+        "kind": "decision",
+        "label": "Does timely verification improve the expected choice?",
+        "conditionId": "learning-has-positive-increment"
+      },
+      {
+        "id": "positive-learning-value",
+        "kind": "outcome",
+        "label": "Compare the favorable timely-verification option",
+        "description": "The supplied probabilities, consequences, report model, costs and timing establish positive expected improvement. This does not purchase the check or authorize an operating action.",
+        "sectionIds": [
+          "verification"
+        ]
+      },
+      {
+        "id": "no-positive-learning-value",
+        "kind": "outcome",
+        "label": "No positive expected improvement over acting now",
+        "description": "Use the current comparison under these assumptions. This result does not prove that information can never help in another situation.",
+        "sectionIds": [
+          "verification"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "id": "define-shipment-to-establish-registration",
+        "from": "define-shipment",
+        "to": "establish-registration",
+        "label": "Use shipment-scoped records"
+      },
+      {
+        "id": "establish-registration-to-registration-compatible",
+        "from": "establish-registration",
+        "to": "registration-compatible",
+        "label": "Use the evidence finding"
+      },
+      {
+        "id": "registration-compatible-to-compare-arrangements-true",
+        "from": "registration-compatible",
+        "to": "compare-arrangements",
+        "label": "Records are consistent",
+        "outcome": "true"
+      },
+      {
+        "id": "registration-compatible-to-action-resolve-record-conflict-false",
+        "from": "registration-compatible",
+        "to": "action-resolve-record-conflict",
+        "label": "Records conflict",
+        "outcome": "false"
+      },
+      {
+        "id": "registration-compatible-to-action-review-records-unknown",
+        "from": "registration-compatible",
+        "to": "action-review-records",
+        "label": "Supply or calculate the records",
+        "outcome": "unknown"
+      },
+      {
+        "id": "compare-arrangements-to-arrangements-feasible",
+        "from": "compare-arrangements",
+        "to": "arrangements-feasible",
+        "label": "Use the complete-plan finding"
+      },
+      {
+        "id": "arrangements-feasible-to-action-propose-arrangement-true",
+        "from": "arrangements-feasible",
+        "to": "action-propose-arrangement",
+        "label": "At least one arrangement fits",
+        "outcome": "true"
+      },
+      {
+        "id": "arrangements-feasible-to-action-revise-commitment-false",
+        "from": "arrangements-feasible",
+        "to": "action-revise-commitment",
+        "label": "No listed arrangement fits",
+        "outcome": "false"
+      },
+      {
+        "id": "arrangements-feasible-to-action-review-planning-unknown",
+        "from": "arrangements-feasible",
+        "to": "action-review-planning",
+        "label": "Calculate current arrangements",
+        "outcome": "unknown"
+      },
+      {
+        "id": "action-propose-arrangement-to-verification-request",
+        "from": "action-propose-arrangement",
+        "to": "verification-request",
+        "label": "Optionally examine further verification"
+      },
+      {
+        "id": "verification-request-to-verification-assumptions-true",
+        "from": "verification-request",
+        "to": "verification-assumptions",
+        "label": "Comparison requested",
+        "outcome": "true"
+      },
+      {
+        "id": "verification-assumptions-to-calculate-verification-true",
+        "from": "verification-assumptions",
+        "to": "calculate-verification",
+        "label": "Assumptions supplied",
+        "outcome": "true"
+      },
+      {
+        "id": "verification-assumptions-to-action-consider-probabilities-false",
+        "from": "verification-assumptions",
+        "to": "action-consider-probabilities",
+        "label": "Assumptions missing or unknown",
+        "outcome": "false"
+      },
+      {
+        "id": "verification-assumptions-to-action-consider-probabilities-unknown",
+        "from": "verification-assumptions",
+        "to": "action-consider-probabilities",
+        "label": "Assumptions not available",
+        "outcome": "unknown"
+      },
+      {
+        "id": "calculate-verification-to-action-propose-reviewed-choice",
+        "from": "calculate-verification",
+        "to": "action-propose-reviewed-choice",
+        "label": "Use the current verification comparison"
+      },
+      {
+        "id": "action-review-verification-to-calculate-verification",
+        "from": "action-review-verification",
+        "to": "calculate-verification",
+        "label": "Calculate the applicable comparison"
+      },
+      {
+        "id": "action-resolve-record-conflict-to-establish-registration",
+        "from": "action-resolve-record-conflict",
+        "to": "establish-registration",
+        "label": "Reassess corrected records",
+        "kind": "reassessment"
+      },
+      {
+        "id": "action-revise-commitment-to-define-shipment",
+        "from": "action-revise-commitment",
+        "to": "define-shipment",
+        "label": "Reassess changed requirements or arrangements",
+        "kind": "reassessment"
+      },
+      {
+        "id": "verification-request-to-current-arrangements-only-false",
+        "from": "verification-request",
+        "to": "current-arrangements-only",
+        "label": "Verification comparison not requested",
+        "outcome": "false"
+      },
+      {
+        "id": "verification-assumptions-to-action-review-verification-true",
+        "from": "verification-assumptions",
+        "to": "action-review-verification",
+        "label": "Calculate the applicable comparison when needed",
+        "outcome": "true"
+      },
+      {
+        "id": "registration-compatible-to-action-review-records-not-calculated",
+        "from": "registration-compatible",
+        "to": "action-review-records",
+        "label": "Calculate the supplied records",
+        "outcome": "not-calculated"
+      },
+      {
+        "id": "arrangements-feasible-to-action-review-planning-not-calculated",
+        "from": "arrangements-feasible",
+        "to": "action-review-planning",
+        "label": "Calculate the supplied arrangements",
+        "outcome": "not-calculated"
+      },
+      {
+        "id": "registration-compatible-to-action-review-records-stale",
+        "from": "registration-compatible",
+        "to": "action-review-records",
+        "label": "Recalculate the changed records",
+        "outcome": "stale"
+      },
+      {
+        "id": "arrangements-feasible-to-action-review-planning-stale",
+        "from": "arrangements-feasible",
+        "to": "action-review-planning",
+        "label": "Recalculate the changed arrangements",
+        "outcome": "stale"
+      },
+      {
+        "id": "registration-compatible-to-action-review-records-error",
+        "from": "registration-compatible",
+        "to": "action-review-records",
+        "label": "Resolve the record calculation error",
+        "outcome": "error"
+      },
+      {
+        "id": "arrangements-feasible-to-action-review-planning-error",
+        "from": "arrangements-feasible",
+        "to": "action-review-planning",
+        "label": "Resolve the arrangement calculation error",
+        "outcome": "error"
+      },
+      {
+        "id": "calculate-verification-to-learning-improves-choice",
+        "from": "calculate-verification",
+        "to": "learning-improves-choice",
+        "label": "Use the current expected-value result"
+      },
+      {
+        "id": "learning-improves-choice-to-positive-learning-value-true",
+        "from": "learning-improves-choice",
+        "to": "positive-learning-value",
+        "label": "Positive expected improvement",
+        "outcome": "true"
+      },
+      {
+        "id": "learning-improves-choice-to-no-positive-learning-value-false",
+        "from": "learning-improves-choice",
+        "to": "no-positive-learning-value",
+        "label": "No positive expected improvement",
+        "outcome": "false"
+      }
+    ],
+    "groups": [
+      {
+        "id": "shipment-commitment",
+        "label": "1. Define the commitment",
+        "nodeIds": [
+          "define-shipment"
+        ]
+      },
+      {
+        "id": "transportation-facts",
+        "label": "2. Establish the transportation facts",
+        "nodeIds": [
+          "establish-registration",
+          "registration-compatible",
+          "action-review-records",
+          "action-resolve-record-conflict"
+        ]
+      },
+      {
+        "id": "available-arrangements",
+        "label": "3. Compare the complete arrangements",
+        "nodeIds": [
+          "compare-arrangements",
+          "arrangements-feasible",
+          "action-review-planning",
+          "action-revise-commitment",
+          "action-propose-arrangement"
+        ]
+      },
+      {
+        "id": "optional-verification",
+        "label": "4. Decide whether further verification helps",
+        "nodeIds": [
+          "verification-request",
+          "verification-assumptions",
+          "calculate-verification",
+          "action-review-verification",
+          "action-consider-probabilities",
+          "action-propose-reviewed-choice",
+          "current-arrangements-only",
+          "learning-improves-choice",
+          "positive-learning-value",
+          "no-positive-learning-value"
+        ]
+      }
+    ],
+    "actionGroups": [
+      {
+        "id": "shipment-response",
+        "label": "Shipment choice",
+        "selection": "all-matching",
+        "actionIds": [
+          "review-records",
+          "resolve-record-conflict",
+          "review-planning",
+          "revise-commitment",
+          "propose-arrangement"
+        ]
+      },
+      {
+        "id": "information-response",
+        "label": "Further information",
+        "selection": "all-matching",
+        "actionIds": [
+          "review-verification",
+          "consider-probabilities",
+          "propose-reviewed-choice"
+        ]
+      }
+    ]
+  },
+  "contentHash": "a1d8e38e564ab73ec1c2bcc88a89ac9a8b7775f4eea443e3668789633c2849e5"
 }
