@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "kind": "decision-lab-app-catalog",
   "title": "Decision Lab marketplace",
-  "description": "Current shipment, gifting and venue operating calculations, organized into collections.",
-  "exportedAt": "2026-11-20T18:00:00.000Z",
+  "description": "Operational calculations organized into collections and use cases.",
+  "exportedAt": "2026-11-20T20:00:00.000Z",
   "scope": "current-product",
   "apps": [
     {
@@ -456,6 +456,62 @@
         "bytes": 269676,
         "sha256": "84f704212ac9dac3919769faa78dd7305fef81cdaac6f622d7b8c5e2e9829dbb"
       }
+    },
+    {
+      "id": "repair-published-restaurant-roster",
+      "version": "1.0.0",
+      "name": "Repair a published restaurant roster",
+      "description": "Compare complete repairs to a disrupted published restaurant roster across every remaining service. Check coverage, qualifications, availability, capacity, rest, hours and remaining payroll; optionally compare passing repairs by stability or payroll. The calculation compares supplied proposals and does not generate or publish a roster.",
+      "publishedAt": "2026-11-20T20:00:00.000Z",
+      "contentHash": "841b01ecae6f59618817856baa3738cbdf4399bc110067f889b8f5f60cebb354",
+      "definitionHash": "6cd12b1410a71d4a928aae6c2e33923ba842adb66fff95729ceddf2e267e3d53",
+      "domain": {
+        "id": "restaurant-operations",
+        "label": "Restaurant operations"
+      },
+      "useCase": {
+        "id": "repair-published-roster",
+        "label": "Repair a published roster"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "feasibility",
+          "name": "Repair a published restaurant roster",
+          "appId": "roster-repair-feasibility",
+          "version": 1,
+          "appContentHash": "2bc15e6ff9027b17ff3a9c2551d9c6cf7298f5fe94433d67d5d875fd13126eeb",
+          "packageHash": "81c15b280bbaed072ad420e8bcd81c270fc4c31942013941c1226e368eeec9e4"
+        },
+        {
+          "id": "stability",
+          "name": "Repair a published restaurant roster",
+          "appId": "roster-repair-stability",
+          "version": 1,
+          "appContentHash": "da734a8d5b9e5ca24ea728426c156f264364fa43ae0f7cacbe94c3f4137516ef",
+          "packageHash": "ec3bf5532079eaaa269868603c5a099b60b789e74f929e8ea691f001c2577dba"
+        },
+        {
+          "id": "cost",
+          "name": "Repair a published restaurant roster",
+          "appId": "roster-repair-cost",
+          "version": 1,
+          "appContentHash": "fe8c1d46c62c15651ebeaeb436c8e93897fc89a3ebbe2c13bedb3fbc826b02f1",
+          "packageHash": "5f42a6d960eacf94400152eab859e15daa871910144a95ba83d871231b83c8e6"
+        }
+      ],
+      "package": {
+        "path": "workflows/repair-published-restaurant-roster/1.0.0/workflow.workflow.json",
+        "bytes": 1636227,
+        "sha256": "9a3fa19055b79e5da0c68af56bc187f4873456fbebce085104bec9d1dabcb405"
+      },
+      "workbook": {
+        "path": "workflows/repair-published-restaurant-roster/1.0.0/inputs.workbook.json",
+        "bytes": 1709591,
+        "sha256": "9d57ea35e3e8c30811183bb011f36f83496184d2c37dba425d3dc3cb752ad178"
+      }
     }
   ],
   "collections": [
@@ -508,6 +564,23 @@
         "path": "collections/decision-lab/venue-operations/1.4.0/collection.collection.json",
         "bytes": 1338,
         "sha256": "6d3b20c3ed23170be6e1d6430af0660d9464150fc89ec7cbf95db16f80e69831"
+      }
+    },
+    {
+      "id": "restaurant-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.0.0",
+      "title": "Restaurant operations",
+      "description": "Operational calculations for restaurant staffing and service commitments.",
+      "createdAt": "2026-11-20T20:00:00.000Z",
+      "contentHash": "55000f13abcdaa77b479094b8c66b35759d4ad6dcf9f2b8e1998bb4d525beaf9",
+      "package": {
+        "path": "collections/decision-lab/restaurant-operations/1.0.0/collection.collection.json",
+        "bytes": 1361,
+        "sha256": "f772477f0af7136d682382c6aad9847b0ce6fcb61b6548d162ae54185246e0cb"
       }
     }
   ]

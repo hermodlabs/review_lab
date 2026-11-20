@@ -9,13 +9,15 @@ CURRENT INVENTORY
   Gifting operations: cost-first and earliest-handoff workflows 2.3.0,
     with their four exact supporting evidence/planning apps
   Venue operations: street-team deployment workflow 1.5.0
+  Restaurant operations: published roster repair workflow 1.0.0
 
-There are three collections, four workflows and five standalone apps. All nine
+There are four collections, five workflows and five standalone apps. All ten
 products include prefilled Excel inputs. Only the current releases are served.
 Older releases retained by an installed case are not rewritten or deleted.
 
-The restaurant roster repair example is a dedicated SDK application on the
-public website. It is separate from this marketplace distribution.
+The roster workflow embeds feasibility-only, stability-first and cost-first
+apps using the same operating requirements. The original public website's
+retained SDK examples keep their own exact release pins.
 
 FILES
 

@@ -1,12 +1,12 @@
 {
-  "version": "619264e6c9e2fdf24b19",
+  "version": "ff57ab0f1effd2e6b608",
   "appVersion": "0.2.0",
-  "totalBytes": 10316019,
+  "totalBytes": 13688751,
   "assets": [
     {
       "url": "app-configs/README.txt",
-      "sha256": "c2997a08cf5a59dc3da3d7a3f3fd0231af5409fbc8293f11c7d0e1cf8b8b0215",
-      "bytes": 3292
+      "sha256": "9983e7f75e07a42a3e5b2c863255fa25821277c875961a5b378bddbdceca0eb3",
+      "bytes": 3419
     },
     {
       "url": "app-configs/apps/complete-first-shipment/2/app.app.json",
@@ -110,13 +110,13 @@
     },
     {
       "url": "app-configs/catalog.json",
-      "sha256": "f518bde8e1712a66d837b01d3ac489ce1f5551f67ff26a9264a020a9ee038375",
-      "bytes": 21620
+      "sha256": "c5d73801e311728c6f41de0d7c1b6528c0ea1b7bc3e123a5223b528663aa2aef",
+      "bytes": 24898
     },
     {
       "url": "app-configs/collection-definitions.json",
-      "sha256": "8209ea35479a62b8326e60561e66c93068a8af88e4e86d6d7f14351be4ecf757",
-      "bytes": 6983
+      "sha256": "c8660a492085723cbf639b5fbe37acff588d6505451401358a2e023292540db7",
+      "bytes": 8359
     },
     {
       "url": "app-configs/collections/decision-lab/gifting-operations/2.3.0/collection.collection.json",
@@ -127,6 +127,11 @@
       "url": "app-configs/collections/decision-lab/order-fulfillment/1.4.0/collection.collection.json",
       "sha256": "4338e55d708ceba69bd08a765813b48475c152f8a2c33795b7ec38261fd6b3bd",
       "bytes": 2015
+    },
+    {
+      "url": "app-configs/collections/decision-lab/restaurant-operations/1.0.0/collection.collection.json",
+      "sha256": "f772477f0af7136d682382c6aad9847b0ce6fcb61b6548d162ae54185246e0cb",
+      "bytes": 1361
     },
     {
       "url": "app-configs/collections/decision-lab/venue-operations/1.4.0/collection.collection.json",
@@ -140,8 +145,23 @@
     },
     {
       "url": "app-configs/workbook-definitions.json",
-      "sha256": "40782dfd771345676f5140cfa6e8c36443fb7e4ca6b680a9c970b9639cf36545",
-      "bytes": 1574
+      "sha256": "123c7a3e23a586f591a9805996c621b8c0034c7dc72c548c09380877e5198db1",
+      "bytes": 1770
+    },
+    {
+      "url": "app-configs/workflows/repair-published-restaurant-roster/1.0.0/inputs.mapping.json",
+      "sha256": "7fb9f56aff68a9296996227dfd4115b4fa54f6391847a28ce45d95e273a2304e",
+      "bytes": 15350
+    },
+    {
+      "url": "app-configs/workflows/repair-published-restaurant-roster/1.0.0/inputs.workbook.json",
+      "sha256": "9d57ea35e3e8c30811183bb011f36f83496184d2c37dba425d3dc3cb752ad178",
+      "bytes": 1709591
+    },
+    {
+      "url": "app-configs/workflows/repair-published-restaurant-roster/1.0.0/workflow.workflow.json",
+      "sha256": "9a3fa19055b79e5da0c68af56bc187f4873456fbebce085104bec9d1dabcb405",
+      "bytes": 1636227
     },
     {
       "url": "app-configs/workflows/review-first-shipment/1.4.0/inputs.mapping.json",
@@ -204,23 +224,23 @@
       "bytes": 246073
     },
     {
-      "url": "assets/exceljs.min-DDCSi4mX.js",
-      "sha256": "cb978661525b4f7f5f7e38c72d4746a7b588aca216321107e89fa24d96ef28b3",
+      "url": "assets/exceljs.min-CYBCbM1V.js",
+      "sha256": "f7d38090b8788f1a7e9fd6283d055f48e8b996555825315370fc6cea22121612",
       "bytes": 929558
     },
     {
-      "url": "assets/index-BXHFdu6x.css",
-      "sha256": "7c2959b0dce9c1c4b70f8f22200aa116a15d6643c636bc1e193f105db5a6da69",
-      "bytes": 199432
+      "url": "assets/index-BR5V-AmN.css",
+      "sha256": "ef978ac8433155b8909f25826d3c6766ae5935b9c5487dd53bf08a3632bd06d7",
+      "bytes": 199597
     },
     {
-      "url": "assets/index-DcBpRuF-.js",
-      "sha256": "0417b1544e4ba62a700d327a6fa972d777d1566beeb6f8797595b3e886d95781",
-      "bytes": 1759895
+      "url": "assets/index-CVhm622n.js",
+      "sha256": "386d8bb069b11c6207132b100db5fa63adede50d4fd53bfc39ec1fc1cd29b5f6",
+      "bytes": 1764956
     },
     {
-      "url": "assets/jszip.min-NeXYBX4l.js",
-      "sha256": "ff413c00549c1167a49353460fa02e1bf1090499b92d39479c1f2810a6e3c2ff",
+      "url": "assets/jszip.min-CeaEczxq.js",
+      "sha256": "05e24fd61474f5c0b852a2c80a993c4581a6274b19eb9c95e0e0fd246a39630d",
       "bytes": 95949
     },
     {
@@ -255,7 +275,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "f0b7002eb5d2264a1f4c7a978aeb866d3aeba0116f74dcd979537aa403a1c777",
+      "sha256": "ce5cf8c846589b41dd14c06e336eda1382e9cf3c3113a25106970e82a3e38cae",
       "bytes": 1023
     },
     {

@@ -36,6 +36,10 @@
     {
       "target": "workflows/street-team-deployment/1.5.0/workflow.workflow.json",
       "mapping": "workflows/street-team-deployment/1.5.0/inputs.mapping.json"
+    },
+    {
+      "target": "workflows/repair-published-restaurant-roster/1.0.0/workflow.workflow.json",
+      "mapping": "workflows/repair-published-restaurant-roster/1.0.0/inputs.mapping.json"
     }
   ]
 }
