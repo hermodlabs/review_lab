@@ -2,64 +2,40 @@
   "format": "decision-lab-workbook-sources/1",
   "products": [
     {
-      "target": "workflows/review-first-shipment/1.1.0/workflow.workflow.json",
-      "schema": "workbook-schemas/first-shipment-review.schema.json"
+      "target": "apps/complete-first-shipment/2/app.app.json",
+      "mapping": "apps/complete-first-shipment/2/inputs.mapping.json"
     },
     {
-      "target": "workflows/review-gift-kit-flexible/2.0.0/workflow.workflow.json",
-      "mapping": "workbook-mappings/review-gift-kit-flexible-2.0.0.mapping.json"
+      "target": "apps/review-gift-kit-flexible-evidence/1/app.app.json",
+      "mapping": "apps/review-gift-kit-flexible-evidence/1/inputs.mapping.json"
     },
     {
-      "target": "workflows/review-gift-kit-earliest/2.0.0/workflow.workflow.json",
-      "mapping": "workbook-mappings/review-gift-kit-earliest-2.0.0.mapping.json"
+      "target": "apps/review-gift-kit-flexible-planning/1/app.app.json",
+      "mapping": "apps/review-gift-kit-flexible-planning/1/inputs.mapping.json"
     },
     {
-      "target": "workflows/review-first-shipment/1.2.0/workflow.workflow.json",
-      "schema": "workbook-schemas/first-shipment-review.schema.json"
+      "target": "apps/review-gift-kit-earliest-evidence/1/app.app.json",
+      "mapping": "apps/review-gift-kit-earliest-evidence/1/inputs.mapping.json"
     },
     {
-      "target": "workflows/review-gift-kit-flexible/2.1.0/workflow.workflow.json",
-      "mapping": "workbook-mappings/review-gift-kit-flexible-2.1.0.mapping.json"
-    },
-    {
-      "target": "workflows/review-gift-kit-earliest/2.1.0/workflow.workflow.json",
-      "mapping": "workbook-mappings/review-gift-kit-earliest-2.1.0.mapping.json"
-    },
-    {
-      "target": "workflows/review-first-shipment/1.2.1/workflow.workflow.json",
-      "schema": "workbook-schemas/first-shipment-review.schema.json"
-    },
-    {
-      "target": "workflows/review-gift-kit-flexible/2.1.1/workflow.workflow.json",
-      "mapping": "workbook-mappings/review-gift-kit-flexible-2.1.1.mapping.json"
-    },
-    {
-      "target": "workflows/review-gift-kit-earliest/2.1.1/workflow.workflow.json",
-      "mapping": "workbook-mappings/review-gift-kit-earliest-2.1.1.mapping.json"
-    },
-    {
-      "target": "workflows/review-first-shipment/1.3.0/workflow.workflow.json",
-      "schema": "workbook-schemas/first-shipment-review.schema.json"
-    },
-    {
-      "target": "workflows/review-gift-kit-flexible/2.2.0/workflow.workflow.json",
-      "mapping": "workbook-mappings/review-gift-kit-flexible-2.2.0.mapping.json"
-    },
-    {
-      "target": "workflows/review-gift-kit-earliest/2.2.0/workflow.workflow.json",
-      "mapping": "workbook-mappings/review-gift-kit-earliest-2.2.0.mapping.json"
+      "target": "apps/review-gift-kit-earliest-planning/1/app.app.json",
+      "mapping": "apps/review-gift-kit-earliest-planning/1/inputs.mapping.json"
     },
     {
       "target": "workflows/review-first-shipment/1.4.0/workflow.workflow.json",
-      "schema": "workbook-schemas/first-shipment-review.schema.json"
+      "mapping": "workflows/review-first-shipment/1.4.0/inputs.mapping.json"
     },
     {
       "target": "workflows/review-gift-kit-flexible/2.3.0/workflow.workflow.json",
-      "mapping": "workbook-mappings/review-gift-kit-flexible-2.3.0.mapping.json"
+      "mapping": "workflows/review-gift-kit-flexible/2.3.0/inputs.mapping.json"
     },
     {
       "target": "workflows/review-gift-kit-earliest/2.3.0/workflow.workflow.json",
-      "mapping": "workbook-mappings/review-gift-kit-earliest-2.3.0.mapping.json"
+      "mapping": "workflows/review-gift-kit-earliest/2.3.0/inputs.mapping.json"
+    },
+    {
+      "target": "workflows/street-team-deployment/1.5.0/workflow.workflow.json",
+      "mapping": "workflows/street-team-deployment/1.5.0/inputs.mapping.json"
     }
   ]
 }
