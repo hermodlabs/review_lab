@@ -6,7 +6,7 @@
       "id": "decision-lab",
       "label": "Decision Lab"
     },
-    "version": "1.5.0",
+    "version": "1.6.0",
     "title": "Order fulfillment",
     "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
     "useCases": [
@@ -25,13 +25,13 @@
       {
         "type": "app",
         "id": "complete-first-shipment",
-        "version": 3,
-        "packageHash": "5964c41138e9cb01f0e5efe890e78261c825430e1b48ef387ba8528a464ed6d1",
+        "version": 4,
+        "packageHash": "0496376269c944437657fb84121c18020824816dccab2420dd498964b17b6ddf",
         "useCaseId": "complete-first-shipment",
         "artifact": {
-          "path": "apps/complete-first-shipment/3/app.app.json",
-          "bytes": 117740,
-          "sha256": "9d93f2ca510944c6854b3d4254840491d75541d822c01f758c48cbef44d46541"
+          "path": "apps/complete-first-shipment/4/app.app.json",
+          "bytes": 121462,
+          "sha256": "d82d5fcd3053a2bd57764c055f630bc537468eb60c257b2577bfdd72b2ac1498"
         }
       },
       {
@@ -49,6 +49,6 @@
     ],
     "format": "decision-lab-collection-definition/1"
   },
-  "createdAt": "2026-11-20T22:00:00.000Z",
-  "contentHash": "01696af9113235730d1229191cc3576eca0211e5a8d26596417054dca3533236"
+  "createdAt": "2026-11-20T23:00:00.000Z",
+  "contentHash": "fc240e085488c8936cdcc1431d4499c7de72e3f3fc34a33b716845dd9c976767"
 }

@@ -1,16 +1,16 @@
 {
   "format": "decision-lab-case-workbook-mapping/1",
   "id": "workbook-c5ce30bfdb3f780a6db38d4e",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "title": "Plan the first shipment — Excel inputs",
   "description": "Edit the named worksheets. Other inputs remain in the saved case.",
   "target": {
     "type": "app",
     "id": "complete-first-shipment",
-    "release": 3,
+    "release": 4,
     "pattern": "complete-a-commitment/1",
-    "packageHash": "5964c41138e9cb01f0e5efe890e78261c825430e1b48ef387ba8528a464ed6d1",
-    "moduleHash": "ef392215efbff5c05b48be268eebbe7a3c594e8f8d903d639fdc0e068af61b8d"
+    "packageHash": "0496376269c944437657fb84121c18020824816dccab2420dd498964b17b6ddf",
+    "moduleHash": "3fb3d71e477588637735429a28428da3072b9bb7637bde583e5e5f938deb1a58"
   },
   "managedPaths": [
     "/parameters/lotAChoices",
@@ -1370,5 +1370,5 @@
     "coercion": "none",
     "missingMetadata": "reject"
   },
-  "contentHash": "d473965c330ce61955ae1a7e2730e056e51227ad32b8e9e167e8ea36b3920c08"
+  "contentHash": "88f31b88c3857cd434d757f8857d03b029d198c359ad2dbbffb8345b53b464af"
 }

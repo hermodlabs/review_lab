@@ -3,7 +3,7 @@
   "workflow": {
     "format": "decision-lab-workflow/1",
     "id": "street-team-deployment",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "title": "Plan a street-team deployment",
     "question": "Which promotion plans can we operate, and how many additional guests would cover their costs?",
     "description": "Calculate which promotion deployments meet staffing, timing, access and spending constraints, and the additional guests needed to recover their expense. Customer response is not forecast.",
@@ -1692,6 +1692,18 @@
                 },
                 "blockers": {
                   "ref": "vars.plan.blockers"
+                },
+                "qualifiedStaff": {
+                  "ref": "input.parameters.qualifiedStaff"
+                },
+                "unavailableStaff": {
+                  "ref": "input.parameters.unavailableStaff"
+                },
+                "minimumInside": {
+                  "ref": "input.parameters.minimumInside"
+                },
+                "promoters": {
+                  "ref": "vars.plan.scenarios.0.derived.promoters"
                 }
               }
             ]
@@ -2278,21 +2290,8 @@
               "label": "Requirements",
               "kind": "records",
               "sectionId": "decision-requirements",
-              "columns": [
-                {
-                  "key": "deployment",
-                  "label": "Deployment"
-                },
-                {
-                  "key": "condition",
-                  "label": "Unmet requirement"
-                },
-                {
-                  "key": "requirement",
-                  "label": "Requirement"
-                }
-              ],
-              "question": "Which staffing, timing, access or expense requirements prevent a deployment?"
+              "question": "Why can this deployment operate, or which requirements block it?",
+              "viewId": "operating-requirements"
             }
           ],
           "brief": {
@@ -2451,6 +2450,89 @@
                   ]
                 }
               ]
+            },
+            {
+              "id": "operating-requirements",
+              "sectionId": "decision-requirements",
+              "title": "Operating requirements",
+              "question": "Why can this deployment operate, or which requirements block it?",
+              "selection": {
+                "group": "deployment",
+                "keyField": "deployment",
+                "labelField": "deployment",
+                "defaultKey": "small-standard"
+              },
+              "summary": {
+                "title": "Operating finding",
+                "fields": [
+                  {
+                    "key": "operatingResult",
+                    "label": "Operating result"
+                  },
+                  {
+                    "key": "unmetRequirements",
+                    "label": "Unmet operating requirements"
+                  },
+                  {
+                    "key": "insideStaff",
+                    "label": "Qualified staff remaining inside",
+                    "format": "number"
+                  },
+                  {
+                    "key": "minimumInside",
+                    "label": "Required qualified staff inside",
+                    "format": "number"
+                  }
+                ]
+              },
+              "comparison": {
+                "title": "Compare operating requirements",
+                "columns": [
+                  {
+                    "key": "deployment",
+                    "label": "Deployment",
+                    "format": "name"
+                  },
+                  {
+                    "key": "feasible",
+                    "label": "Meets operating requirements",
+                    "format": "boolean"
+                  },
+                  {
+                    "key": "insideStaff",
+                    "label": "Qualified staff remaining inside",
+                    "format": "number"
+                  },
+                  {
+                    "key": "minimumInside",
+                    "label": "Required inside",
+                    "format": "number"
+                  }
+                ]
+              },
+              "details": [
+                {
+                  "id": "staffing",
+                  "title": "Recorded staffing basis",
+                  "fields": [
+                    {
+                      "key": "qualifiedStaff",
+                      "label": "Qualified staff on the roster",
+                      "format": "number"
+                    },
+                    {
+                      "key": "unavailableStaff",
+                      "label": "Unavailable qualified staff",
+                      "format": "number"
+                    },
+                    {
+                      "key": "promoters",
+                      "label": "Staff sent outside",
+                      "format": "number"
+                    }
+                  ]
+                }
+              ]
             }
           ],
           "decisionSummary": {
@@ -2498,8 +2580,27 @@
                   "label": "Financial condition"
                 }
               ],
-              "tabId": "thresholds",
-              "inspectionKeyField": "inspectionKey"
+              "inspectionKeyField": "inspectionKey",
+              "rowActions": [
+                {
+                  "id": "why-blocked",
+                  "label": "Why blocked?",
+                  "tabId": "conditions",
+                  "availableField": "isBlocked"
+                },
+                {
+                  "id": "operating-requirements",
+                  "label": "Operating requirements",
+                  "tabId": "conditions",
+                  "availableField": "canOperate"
+                },
+                {
+                  "id": "expense-recovery",
+                  "label": "Expense-recovery details",
+                  "tabId": "thresholds",
+                  "availableField": "hasExpenseRecovery"
+                }
+              ]
             },
             "actionGroups": [
               {
@@ -3217,35 +3318,60 @@
                   "op": "if",
                   "args": [
                     {
-                      "ref": "conditions.has-feasible-deployments"
+                      "ref": "conditions.has-active-deployments"
                     },
                     "choice",
-                    "blocked"
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "ref": "conditions.hold-only-feasible"
+                        },
+                        "supported",
+                        "blocked"
+                      ]
+                    }
                   ]
                 },
                 "heading": {
                   "op": "if",
                   "args": [
                     {
-                      "ref": "conditions.has-feasible-deployments"
+                      "ref": "conditions.has-active-deployments"
                     },
                     {
                       "op": "if",
                       "args": [
                         {
-                          "op": "gt",
+                          "op": "eq",
                           "args": [
                             {
                               "op": "length",
                               "args": [
                                 {
-                                  "ref": "steps.operations.output.feasibleDeployments"
+                                  "op": "filter",
+                                  "args": [
+                                    {
+                                      "ref": "steps.operations.output.feasibleDeployments"
+                                    },
+                                    {
+                                      "op": "ne",
+                                      "args": [
+                                        {
+                                          "ref": "vars.deployment"
+                                        },
+                                        "hold"
+                                      ]
+                                    }
+                                  ],
+                                  "as": "deployment"
                                 }
                               ]
                             },
                             1
                           ]
                         },
+                        "One active promotion meets the operating requirements.",
                         {
                           "op": "stringConcat",
                           "args": [
@@ -3256,118 +3382,63 @@
                                   "op": "length",
                                   "args": [
                                     {
-                                      "ref": "steps.operations.output.feasibleDeployments"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            " listed deployments meet the operating requirements."
-                          ]
-                        },
-                        {
-                          "op": "stringConcat",
-                          "args": [
-                            {
-                              "op": "if",
-                              "args": [
-                                {
-                                  "op": "isSet",
-                                  "args": [
-                                    {
-                                      "op": "get",
-                                      "args": [
-                                        {
-                                          "literal": {
-                                            "published-option-structure": "Use one of the four listed promotion plans",
-                                            "staffing-coverage": "Keep the required qualified staff inside throughout the team’s absence",
-                                            "staffing-register": "Keep the unavailable staff count within the qualified roster",
-                                            "event-access": "Record permission for this event, date and promotion window",
-                                            "spending-permission": "Record spending authority covering the responsible manager, operating date and full cost",
-                                            "dispatch-timing": "Complete the review before team departure and the promotion start",
-                                            "contact-window": "Reach departing event guests before the contact window closes",
-                                            "useful-arrival": "Allow enough travel time for interested guests to arrive within the useful window",
-                                            "staff-return": "Keep staffing covered until the team returns after the contact window",
-                                            "expense-limit": "Keep the plan’s full additional expense within the spending limit",
-                                            "hold": "Do not send a promotion team",
-                                            "small-standard": "One-person promotion",
-                                            "large-standard": "Two-person promotion",
-                                            "large-discount": "Two-person discounted promotion",
-                                            "calculated": "Break-even target calculated",
-                                            "not-applicable": "No team sent; guest target does not apply",
-                                            "not-recoverable": "Contribution cannot cover a positive cost",
-                                            "unassessed": "Contribution or discount loss is not supplied"
-                                          }
-                                        },
-                                        {
-                                          "op": "get",
-                                          "args": [
-                                            {
-                                              "ref": "steps.operations.output.feasibleDeployments"
-                                            },
-                                            0
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                },
-                                {
-                                  "op": "get",
-                                  "args": [
-                                    {
-                                      "literal": {
-                                        "published-option-structure": "Use one of the four listed promotion plans",
-                                        "staffing-coverage": "Keep the required qualified staff inside throughout the team’s absence",
-                                        "staffing-register": "Keep the unavailable staff count within the qualified roster",
-                                        "event-access": "Record permission for this event, date and promotion window",
-                                        "spending-permission": "Record spending authority covering the responsible manager, operating date and full cost",
-                                        "dispatch-timing": "Complete the review before team departure and the promotion start",
-                                        "contact-window": "Reach departing event guests before the contact window closes",
-                                        "useful-arrival": "Allow enough travel time for interested guests to arrive within the useful window",
-                                        "staff-return": "Keep staffing covered until the team returns after the contact window",
-                                        "expense-limit": "Keep the plan’s full additional expense within the spending limit",
-                                        "hold": "Do not send a promotion team",
-                                        "small-standard": "One-person promotion",
-                                        "large-standard": "Two-person promotion",
-                                        "large-discount": "Two-person discounted promotion",
-                                        "calculated": "Break-even target calculated",
-                                        "not-applicable": "No team sent; guest target does not apply",
-                                        "not-recoverable": "Contribution cannot cover a positive cost",
-                                        "unassessed": "Contribution or discount loss is not supplied"
-                                      }
-                                    },
-                                    {
-                                      "op": "get",
+                                      "op": "filter",
                                       "args": [
                                         {
                                           "ref": "steps.operations.output.feasibleDeployments"
                                         },
-                                        0
-                                      ]
+                                        {
+                                          "op": "ne",
+                                          "args": [
+                                            {
+                                              "ref": "vars.deployment"
+                                            },
+                                            "hold"
+                                          ]
+                                        }
+                                      ],
+                                      "as": "deployment"
                                     }
-                                  ]
-                                },
-                                {
-                                  "op": "get",
-                                  "args": [
-                                    {
-                                      "ref": "steps.operations.output.feasibleDeployments"
-                                    },
-                                    0
                                   ]
                                 }
                               ]
                             },
-                            " is the only listed option that meets the operating requirements."
+                            " active promotions meet the operating requirements."
                           ]
                         }
                       ]
                     },
-                    "No listed deployment meets the operating requirements."
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "ref": "conditions.hold-only-feasible"
+                        },
+                        "Do not send a promotion team; it is the only listed option that meets the operating requirements.",
+                        "No listed option meets the operating requirements, including keeping the team inside."
+                      ]
+                    }
                   ]
                 },
-                "detail": "Operating fit determines which deployments can run. The guest thresholds show the conditional financial hurdle for each deployment.",
+                "detail": {
+                  "op": "if",
+                  "args": [
+                    {
+                      "ref": "conditions.has-active-deployments"
+                    },
+                    "Compare the operating alternatives first. Expense-recovery guest counts are conditional financial hurdles, not forecasts of customer response.",
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "ref": "conditions.hold-only-feasible"
+                        },
+                        "No active promotion meets every recorded requirement. Inspect the blockers before changing the operating inputs and recalculating.",
+                        "Resolve the unmet operating requirements or revise the operating plan. Keeping staff inside alone does not establish that the venue can operate."
+                      ]
+                    }
+                  ]
+                },
                 "priorityLabel": "Operating feasibility only; no attendance or profit ranking is established",
                 "rows": {
                   "op": "map",
@@ -4188,6 +4259,27 @@
                             ]
                           }
                         ]
+                      },
+                      "canOperate": {
+                        "ref": "vars.threshold.feasible"
+                      },
+                      "isBlocked": {
+                        "op": "ne",
+                        "args": [
+                          {
+                            "ref": "vars.threshold.feasible"
+                          },
+                          true
+                        ]
+                      },
+                      "hasExpenseRecovery": {
+                        "op": "ne",
+                        "args": [
+                          {
+                            "ref": "vars.threshold.deployment"
+                          },
+                          "hold"
+                        ]
                       }
                     }
                   ],
@@ -4225,7 +4317,7 @@
         },
         {
           "id": "decision-requirements",
-          "title": "Unmet operating requirements",
+          "title": "Operating requirements by deployment",
           "value": {
             "op": "if",
             "args": [
@@ -4233,170 +4325,238 @@
                 "ref": "conditions.operations-current"
               },
               {
-                "op": "flatMap",
+                "op": "map",
                 "args": [
                   {
                     "ref": "steps.operations.output.plans"
                   },
                   {
-                    "op": "map",
-                    "args": [
-                      {
-                        "ref": "vars.plan.blockers"
-                      },
-                      {
-                        "deployment": {
-                          "op": "if",
-                          "args": [
-                            {
-                              "op": "isSet",
-                              "args": [
-                                {
-                                  "op": "get",
-                                  "args": [
-                                    {
-                                      "literal": {
-                                        "published-option-structure": "Use one of the four listed promotion plans",
-                                        "staffing-coverage": "Keep the required qualified staff inside throughout the team’s absence",
-                                        "staffing-register": "Keep the unavailable staff count within the qualified roster",
-                                        "event-access": "Record permission for this event, date and promotion window",
-                                        "spending-permission": "Record spending authority covering the responsible manager, operating date and full cost",
-                                        "dispatch-timing": "Complete the review before team departure and the promotion start",
-                                        "contact-window": "Reach departing event guests before the contact window closes",
-                                        "useful-arrival": "Allow enough travel time for interested guests to arrive within the useful window",
-                                        "staff-return": "Keep staffing covered until the team returns after the contact window",
-                                        "expense-limit": "Keep the plan’s full additional expense within the spending limit",
-                                        "hold": "Do not send a promotion team",
-                                        "small-standard": "One-person promotion",
-                                        "large-standard": "Two-person promotion",
-                                        "large-discount": "Two-person discounted promotion",
-                                        "calculated": "Break-even target calculated",
-                                        "not-applicable": "No team sent; guest target does not apply",
-                                        "not-recoverable": "Contribution cannot cover a positive cost",
-                                        "unassessed": "Contribution or discount loss is not supplied"
-                                      }
-                                    },
-                                    {
-                                      "ref": "vars.plan.deployment"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "op": "get",
-                              "args": [
-                                {
-                                  "literal": {
-                                    "published-option-structure": "Use one of the four listed promotion plans",
-                                    "staffing-coverage": "Keep the required qualified staff inside throughout the team’s absence",
-                                    "staffing-register": "Keep the unavailable staff count within the qualified roster",
-                                    "event-access": "Record permission for this event, date and promotion window",
-                                    "spending-permission": "Record spending authority covering the responsible manager, operating date and full cost",
-                                    "dispatch-timing": "Complete the review before team departure and the promotion start",
-                                    "contact-window": "Reach departing event guests before the contact window closes",
-                                    "useful-arrival": "Allow enough travel time for interested guests to arrive within the useful window",
-                                    "staff-return": "Keep staffing covered until the team returns after the contact window",
-                                    "expense-limit": "Keep the plan’s full additional expense within the spending limit",
-                                    "hold": "Do not send a promotion team",
-                                    "small-standard": "One-person promotion",
-                                    "large-standard": "Two-person promotion",
-                                    "large-discount": "Two-person discounted promotion",
-                                    "calculated": "Break-even target calculated",
-                                    "not-applicable": "No team sent; guest target does not apply",
-                                    "not-recoverable": "Contribution cannot cover a positive cost",
-                                    "unassessed": "Contribution or discount loss is not supplied"
-                                  }
-                                },
-                                {
-                                  "ref": "vars.plan.deployment"
-                                }
-                              ]
-                            },
-                            {
-                              "ref": "vars.plan.deployment"
-                            }
-                          ]
+                    "deployment": {
+                      "ref": "vars.plan.deployment"
+                    },
+                    "feasible": {
+                      "ref": "vars.plan.feasible"
+                    },
+                    "operatingResult": {
+                      "op": "if",
+                      "args": [
+                        {
+                          "ref": "vars.plan.feasible"
                         },
-                        "condition": {
-                          "op": "if",
-                          "args": [
-                            {
-                              "op": "isSet",
-                              "args": [
-                                {
-                                  "op": "get",
-                                  "args": [
-                                    {
-                                      "literal": {
-                                        "published-option-structure": "Use one of the four listed promotion plans",
-                                        "staffing-coverage": "Keep the required qualified staff inside throughout the team’s absence",
-                                        "staffing-register": "Keep the unavailable staff count within the qualified roster",
-                                        "event-access": "Record permission for this event, date and promotion window",
-                                        "spending-permission": "Record spending authority covering the responsible manager, operating date and full cost",
-                                        "dispatch-timing": "Complete the review before team departure and the promotion start",
-                                        "contact-window": "Reach departing event guests before the contact window closes",
-                                        "useful-arrival": "Allow enough travel time for interested guests to arrive within the useful window",
-                                        "staff-return": "Keep staffing covered until the team returns after the contact window",
-                                        "expense-limit": "Keep the plan’s full additional expense within the spending limit",
-                                        "hold": "Do not send a promotion team",
-                                        "small-standard": "One-person promotion",
-                                        "large-standard": "Two-person promotion",
-                                        "large-discount": "Two-person discounted promotion",
-                                        "calculated": "Break-even target calculated",
-                                        "not-applicable": "No team sent; guest target does not apply",
-                                        "not-recoverable": "Contribution cannot cover a positive cost",
-                                        "unassessed": "Contribution or discount loss is not supplied"
-                                      }
-                                    },
-                                    {
-                                      "ref": "vars.blocker.constraintId"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "op": "get",
-                              "args": [
-                                {
-                                  "literal": {
-                                    "published-option-structure": "Use one of the four listed promotion plans",
-                                    "staffing-coverage": "Keep the required qualified staff inside throughout the team’s absence",
-                                    "staffing-register": "Keep the unavailable staff count within the qualified roster",
-                                    "event-access": "Record permission for this event, date and promotion window",
-                                    "spending-permission": "Record spending authority covering the responsible manager, operating date and full cost",
-                                    "dispatch-timing": "Complete the review before team departure and the promotion start",
-                                    "contact-window": "Reach departing event guests before the contact window closes",
-                                    "useful-arrival": "Allow enough travel time for interested guests to arrive within the useful window",
-                                    "staff-return": "Keep staffing covered until the team returns after the contact window",
-                                    "expense-limit": "Keep the plan’s full additional expense within the spending limit",
-                                    "hold": "Do not send a promotion team",
-                                    "small-standard": "One-person promotion",
-                                    "large-standard": "Two-person promotion",
-                                    "large-discount": "Two-person discounted promotion",
-                                    "calculated": "Break-even target calculated",
-                                    "not-applicable": "No team sent; guest target does not apply",
-                                    "not-recoverable": "Contribution cannot cover a positive cost",
-                                    "unassessed": "Contribution or discount loss is not supplied"
-                                  }
-                                },
-                                {
-                                  "ref": "vars.blocker.constraintId"
-                                }
-                              ]
-                            },
-                            {
-                              "ref": "vars.blocker.constraintId"
-                            }
-                          ]
+                        "Meets every recorded operating requirement",
+                        "Blocked by the unmet operating requirements below"
+                      ]
+                    },
+                    "insideStaff": {
+                      "ref": "vars.plan.insideStaff"
+                    },
+                    "minimumInside": {
+                      "ref": "vars.plan.minimumInside"
+                    },
+                    "qualifiedStaff": {
+                      "ref": "vars.plan.qualifiedStaff"
+                    },
+                    "unavailableStaff": {
+                      "ref": "vars.plan.unavailableStaff"
+                    },
+                    "promoters": {
+                      "ref": "vars.plan.promoters"
+                    },
+                    "unmetRequirements": {
+                      "op": "map",
+                      "args": [
+                        {
+                          "ref": "vars.plan.blockers"
                         },
-                        "requirement": {
-                          "ref": "vars.blocker.requirement"
+                        {
+                          "condition": {
+                            "op": "if",
+                            "args": [
+                              {
+                                "op": "isSet",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "ref": "apps.operations.module.labels"
+                                      },
+                                      {
+                                        "op": "stringConcat",
+                                        "args": [
+                                          "constraint.",
+                                          {
+                                            "ref": "vars.blocker.constraintId"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "ref": "apps.operations.module.labels"
+                                  },
+                                  {
+                                    "op": "stringConcat",
+                                    "args": [
+                                      "constraint.",
+                                      {
+                                        "ref": "vars.blocker.constraintId"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "if",
+                                "args": [
+                                  {
+                                    "op": "isSet",
+                                    "args": [
+                                      {
+                                        "op": "get",
+                                        "args": [
+                                          {
+                                            "op": "find",
+                                            "args": [
+                                              {
+                                                "ref": "apps.operations.module.constraints"
+                                              },
+                                              {
+                                                "op": "eq",
+                                                "args": [
+                                                  {
+                                                    "ref": "vars.constraint.id"
+                                                  },
+                                                  {
+                                                    "ref": "vars.blocker.constraintId"
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "as": "constraint"
+                                          },
+                                          "label"
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "op": "find",
+                                        "args": [
+                                          {
+                                            "ref": "apps.operations.module.constraints"
+                                          },
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "ref": "vars.constraint.id"
+                                              },
+                                              {
+                                                "ref": "vars.blocker.constraintId"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "as": "constraint"
+                                      },
+                                      "label"
+                                    ]
+                                  },
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "op": "find",
+                                        "args": [
+                                          {
+                                            "ref": "apps.operations.module.requirements"
+                                          },
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "ref": "vars.requirement.id"
+                                              },
+                                              {
+                                                "ref": "vars.blocker.requirement"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "as": "requirement"
+                                      },
+                                      "meaning"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "requirement": {
+                            "op": "get",
+                            "args": [
+                              {
+                                "op": "find",
+                                "args": [
+                                  {
+                                    "ref": "apps.operations.module.requirements"
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "ref": "vars.requirement.id"
+                                      },
+                                      {
+                                        "ref": "vars.blocker.requirement"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "as": "requirement"
+                              },
+                              "label"
+                            ]
+                          },
+                          "meaning": {
+                            "op": "get",
+                            "args": [
+                              {
+                                "op": "find",
+                                "args": [
+                                  {
+                                    "ref": "apps.operations.module.requirements"
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "ref": "vars.requirement.id"
+                                      },
+                                      {
+                                        "ref": "vars.blocker.requirement"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "as": "requirement"
+                              },
+                              "meaning"
+                            ]
+                          }
                         }
-                      }
-                    ],
-                    "as": "blocker"
+                      ],
+                      "as": "blocker"
+                    }
                   }
                 ],
                 "as": "plan"
@@ -4432,7 +4592,7 @@
       "actions": [
         {
           "id": "compare-deployments",
-          "label": "Choose whether to run a deployment that meets the operating requirements",
+          "label": "Compare the active promotion plans that meet the operating requirements",
           "when": {
             "ref": "conditions.offer-compare-deployments"
           },
@@ -4473,6 +4633,19 @@
               "meaning": "These conditional guest thresholds do not predict attendance or prove promotion effectiveness. A supplied nonpositive contribution can make expense recovery impossible."
             }
           ]
+        },
+        {
+          "id": "hold-deployment",
+          "label": "Keep the team inside under the current operating requirements",
+          "when": {
+            "ref": "conditions.offer-hold-deployment"
+          },
+          "value": {
+            "operatingOptions": {
+              "ref": "steps.operations.output.plans"
+            },
+            "nextAction": "Inspect the blockers, then reassess staffing, timing, access or spending before sending staff."
+          }
         }
       ],
       "completion": {
@@ -4511,6 +4684,77 @@
               ]
             },
             0
+          ]
+        }
+      },
+      {
+        "id": "has-active-deployments",
+        "label": "At least one active promotion meets the operating requirements",
+        "test": {
+          "op": "gt",
+          "args": [
+            {
+              "op": "length",
+              "args": [
+                {
+                  "op": "filter",
+                  "args": [
+                    {
+                      "ref": "steps.operations.output.feasibleDeployments"
+                    },
+                    {
+                      "op": "ne",
+                      "args": [
+                        {
+                          "ref": "vars.deployment"
+                        },
+                        "hold"
+                      ]
+                    }
+                  ],
+                  "as": "deployment"
+                }
+              ]
+            },
+            0
+          ]
+        }
+      },
+      {
+        "id": "hold-only-feasible",
+        "label": "Only keeping the team inside meets the operating requirements",
+        "test": {
+          "op": "and",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "op": "length",
+                  "args": [
+                    {
+                      "ref": "steps.operations.output.feasibleDeployments"
+                    }
+                  ]
+                },
+                1
+              ]
+            },
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "op": "get",
+                  "args": [
+                    {
+                      "ref": "steps.operations.output.feasibleDeployments"
+                    },
+                    0
+                  ]
+                },
+                "hold"
+              ]
+            }
           ]
         }
       },
@@ -4583,7 +4827,7 @@
               "ref": "conditions.operations-current"
             },
             {
-              "ref": "conditions.has-feasible-deployments"
+              "ref": "conditions.has-active-deployments"
             }
           ]
         }
@@ -4613,6 +4857,9 @@
               "ref": "conditions.operations-current"
             },
             {
+              "ref": "conditions.has-active-deployments"
+            },
+            {
               "op": "not",
               "args": [
                 {
@@ -4633,7 +4880,25 @@
               "ref": "conditions.operations-current"
             },
             {
+              "ref": "conditions.has-active-deployments"
+            },
+            {
               "ref": "conditions.financial-assumptions-supplied"
+            }
+          ]
+        }
+      },
+      {
+        "id": "offer-hold-deployment",
+        "label": "Keep staff inside because no active promotion meets the requirements",
+        "test": {
+          "op": "and",
+          "args": [
+            {
+              "ref": "conditions.operations-current"
+            },
+            {
+              "ref": "conditions.hold-only-feasible"
             }
           ]
         }
@@ -4671,8 +4936,8 @@
         {
           "id": "deployments-feasible",
           "kind": "decision",
-          "label": "Does any complete deployment meet the operating requirements?",
-          "conditionId": "has-feasible-deployments"
+          "label": "Does any active promotion meet all operating requirements?",
+          "conditionId": "has-active-deployments"
         },
         {
           "id": "financial-assumptions",
@@ -4696,7 +4961,7 @@
         {
           "id": "action-compare-deployments",
           "kind": "action",
-          "label": "Compare the deployments meeting the operating requirements",
+          "label": "Compare the active promotion plans that meet the operating requirements",
           "actionId": "compare-deployments"
         },
         {
@@ -4716,6 +4981,19 @@
           "kind": "action",
           "label": "Inspect the expense-recovery guest thresholds",
           "actionId": "inspect-guest-thresholds"
+        },
+        {
+          "id": "hold-only",
+          "kind": "decision",
+          "label": "Does keeping the team inside meet the operating requirements?",
+          "conditionId": "hold-only-feasible"
+        },
+        {
+          "id": "action-hold-deployment",
+          "kind": "action",
+          "label": "Keep the team inside under the current operating requirements",
+          "actionId": "hold-deployment",
+          "description": "No active promotion meets every recorded requirement. Inspect the unmet checks before changing the operating plan and recalculating."
         }
       ],
       "edges": [
@@ -4735,21 +5013,15 @@
           "id": "deployments-feasible-to-action-compare-deployments-true",
           "from": "deployments-feasible",
           "to": "action-compare-deployments",
-          "label": "At least one deployment fits",
+          "label": "An active promotion meets every requirement",
           "outcome": "true"
         },
         {
-          "id": "deployments-feasible-to-action-revise-deployment-false",
+          "id": "active-promotions-to-hold-only-false",
           "from": "deployments-feasible",
-          "to": "action-revise-deployment",
-          "label": "No deployment fits",
+          "to": "hold-only",
+          "label": "No active promotion meets every requirement",
           "outcome": "false"
-        },
-        {
-          "id": "calculate-deployments-to-financial-assumptions",
-          "from": "calculate-deployments",
-          "to": "financial-assumptions",
-          "label": "Inspect the separate economic hurdle"
         },
         {
           "id": "financial-assumptions-to-calculate-guest-thresholds-true",
@@ -4784,6 +5056,66 @@
           "to": "define-deployment",
           "label": "Reassess revised operating facts",
           "kind": "reassessment"
+        },
+        {
+          "id": "active-promotions-to-financial-assumptions",
+          "from": "deployments-feasible",
+          "to": "financial-assumptions",
+          "outcome": "true",
+          "label": "Compare the separate financial hurdle for operating promotions"
+        },
+        {
+          "id": "hold-only-to-keep-staff",
+          "from": "hold-only",
+          "to": "action-hold-deployment",
+          "outcome": "true",
+          "label": "Only keeping the team inside fits"
+        },
+        {
+          "id": "hold-only-to-revise",
+          "from": "hold-only",
+          "to": "action-revise-deployment",
+          "outcome": "false",
+          "label": "No listed option fits, including keeping staff inside"
+        },
+        {
+          "id": "hold-to-reassess",
+          "from": "action-hold-deployment",
+          "to": "define-deployment",
+          "kind": "reassessment",
+          "label": "Reassess the operating inputs before sending staff"
+        },
+        {
+          "id": "active-promotions-unknown",
+          "from": "deployments-feasible",
+          "to": "define-deployment",
+          "outcome": "unknown",
+          "label": "Required inputs remain unknown — supply the operating facts",
+          "kind": "reassessment"
+        },
+        {
+          "id": "active-promotions-not-calculated",
+          "from": "deployments-feasible",
+          "to": "calculate-deployments",
+          "outcome": "not-calculated",
+          "label": "No current result — calculate the supplied inputs",
+          "kind": "reassessment"
+        },
+        {
+          "id": "active-promotions-stale",
+          "from": "deployments-feasible",
+          "to": "calculate-deployments",
+          "outcome": "stale",
+          "label": "Inputs changed — recalculate before choosing",
+          "kind": "reassessment"
+        },
+        {
+          "id": "active-promotions-error",
+          "from": "deployments-feasible",
+          "to": "define-deployment",
+          "outcome": "error",
+          "label": "Calculation unavailable — correct the inputs and retry",
+          "kind": "reassessment"
         }
       ],
       "groups": [
@@ -4800,7 +5132,9 @@
           "nodeIds": [
             "calculate-deployments",
             "deployments-feasible",
-            "action-revise-deployment"
+            "action-revise-deployment",
+            "hold-only",
+            "action-hold-deployment"
           ]
         },
         {
@@ -4825,9 +5159,10 @@
         {
           "id": "deployment-response",
           "label": "Operating choice",
-          "selection": "all-matching",
+          "selection": "exclusive",
           "actionIds": [
             "compare-deployments",
+            "hold-deployment",
             "revise-deployment"
           ]
         },
@@ -4849,7 +5184,7 @@
         }
       ]
     },
-    "contentHash": "0fac50d7042ebe55827c675a2923698a6a9b4fc884d7fb48d8edabc7eeaa992a"
+    "contentHash": "dc84e647e35ac9b1a6a5f9920d400ca173f55874ee2d8b2f26a867bc3a493373"
   },
   "catalog": {
     "domain": {
@@ -4861,6 +5196,6 @@
       "label": "Review a street-team deployment"
     }
   },
-  "publishedAt": "2026-11-20T22:00:00.000Z",
-  "contentHash": "8fdf285d869be4cd764d90ed2cc6011be0ce6e25f9649124d5019b7336245562"
+  "publishedAt": "2026-11-20T23:00:00.000Z",
+  "contentHash": "9976cc5a1a10680f7516ea69eae54bf8276092238d9940d2384ebd74c377e584"
 }

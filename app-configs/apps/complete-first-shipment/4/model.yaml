@@ -1015,7 +1015,20 @@ module:
     arrival: Receipt at destination
     timeUnit: Day
     moneyUnit: Hypothetical USD
-  version: "1.1.0"
+    choice.lotA: Lot for first order line
+    choice.lotB: Lot for second order line
+    choice.packWorker: Packing worker
+    choice.recordWorker: Record-preparation worker
+    choice.packStart: Packing starts
+    choice.recordStart: Record preparation starts
+    choice.releaseStart: Release starts
+    choice.service: Carrier service
+    choice.departure: Carrier departure
+    choice.packWorker.A: Worker A
+    choice.packWorker.B: Worker B
+    choice.recordWorker.A: Worker A
+    choice.recordWorker.B: Worker B
+  version: "1.2.0"
   metadata:
     decisionPresentation:
       format: decision-presentation/1
@@ -1039,6 +1052,39 @@ module:
             suffix: hypothetical
       alternativeLabel:
         columnIds: [service, departure]
+      comparisonFields:
+        - id: packing-start
+          source: "choice:packStart"
+          label: Packing starts
+          format:
+            kind: time
+            suffix: synthetic day
+        - id: records-start
+          source: "choice:recordStart"
+          label: Record preparation starts
+          format:
+            kind: time
+            suffix: synthetic day
+        - id: release-start
+          source: "choice:releaseStart"
+          label: Release starts
+          format:
+            kind: time
+            suffix: synthetic day
+        - id: carrier-departure
+          source: "choice:departure"
+          label: Carrier departure
+          format:
+            kind: time
+            suffix: synthetic day
+        - id: peak-cash
+          source: cash
+          label: Peak cash needed
+          format:
+            kind: money
+            currency: USD
+            divisor: 1
+            suffix: hypothetical
     catalog:
       domain:
         id: order-fulfillment

@@ -3,19 +3,19 @@
   "kind": "decision-lab-app-catalog",
   "title": "Decision Lab marketplace",
   "description": "Operational calculations organized into collections and use cases.",
-  "exportedAt": "2026-11-20T22:00:00.000Z",
+  "exportedAt": "2026-11-20T23:00:00.000Z",
   "scope": "current-product",
   "apps": [
     {
       "id": "complete-first-shipment",
-      "version": 3,
+      "version": 4,
       "name": "Plan the first shipment",
       "description": "Generate complete, static shipment plans from selectable lots, workers, preparation times, release time, carrier and departure. Check each whole plan against every declared readiness and travel scenario before comparing incremental expense. This synthetic operating snapshot does not infer readiness from business records or reserve stock, staff, authority or carrier capacity.",
-      "publishedAt": "2026-11-20T22:00:00.000Z",
-      "contentHash": "19756244a944f299c2e610c066dacfd35455f4a3965651d1b4825ead391efe1e",
+      "publishedAt": "2026-11-20T23:00:00.000Z",
+      "contentHash": "151f445550aa909deb20faa56c6d45ee6d058b25cf959630455625110a0c8c2c",
       "module": {
         "id": "plan-first-shipment",
-        "version": "1.1.0"
+        "version": "1.2.0"
       },
       "domain": {
         "id": "order-fulfillment",
@@ -42,19 +42,19 @@
         "presentationContract": "complete-a-commitment.assessment/1"
       },
       "package": {
-        "path": "apps/complete-first-shipment/3/app.app.json",
-        "bytes": 117740,
-        "sha256": "9d93f2ca510944c6854b3d4254840491d75541d822c01f758c48cbef44d46541"
+        "path": "apps/complete-first-shipment/4/app.app.json",
+        "bytes": 121462,
+        "sha256": "d82d5fcd3053a2bd57764c055f630bc537468eb60c257b2577bfdd72b2ac1498"
       },
       "source": {
-        "path": "apps/complete-first-shipment/3/model.yaml",
-        "bytes": 34548,
-        "sha256": "1f4637f6bf16b1a781e56b1893214691297d5c15a53e24c285fb5c4255f9b69f"
+        "path": "apps/complete-first-shipment/4/model.yaml",
+        "bytes": 36005,
+        "sha256": "4203402758257b90ad37316f4028a4808a33d7209cef6b46b1ca383ddcdf1544"
       },
       "workbook": {
-        "path": "apps/complete-first-shipment/3/inputs.workbook.json",
-        "bytes": 171294,
-        "sha256": "dfc76e7defca64ea3e68e1d1a62ee64cdbce6345eba77f6ef558e03fb6fac248"
+        "path": "apps/complete-first-shipment/4/inputs.workbook.json",
+        "bytes": 175140,
+        "sha256": "c8ee7d1728f09e496d1e8305e70a105d7e8ec52309def3b4af1c59b7177e22dc"
       },
       "experience": {
         "inputModes": [
@@ -500,12 +500,12 @@
     },
     {
       "id": "street-team-deployment",
-      "version": "1.6.0",
+      "version": "1.7.0",
       "name": "Plan a street-team deployment",
       "description": "Calculate which promotion deployments meet staffing, timing, access and spending constraints, and the additional guests needed to recover their expense. Customer response is not forecast.",
-      "publishedAt": "2026-11-20T22:00:00.000Z",
-      "contentHash": "8fdf285d869be4cd764d90ed2cc6011be0ce6e25f9649124d5019b7336245562",
-      "definitionHash": "0fac50d7042ebe55827c675a2923698a6a9b4fc884d7fb48d8edabc7eeaa992a",
+      "publishedAt": "2026-11-20T23:00:00.000Z",
+      "contentHash": "9976cc5a1a10680f7516ea69eae54bf8276092238d9940d2384ebd74c377e584",
+      "definitionHash": "dc84e647e35ac9b1a6a5f9920d400ca173f55874ee2d8b2f26a867bc3a493373",
       "domain": {
         "id": "venue-operations",
         "label": "Venue operations"
@@ -539,14 +539,14 @@
         "supportsOwnData": true
       },
       "package": {
-        "path": "workflows/street-team-deployment/1.6.0/workflow.workflow.json",
-        "bytes": 248057,
-        "sha256": "e58c4e3a44fa25acdf5ad0ac94555d945429840a3de0e3cbf48d5897a88c0c38"
+        "path": "workflows/street-team-deployment/1.7.0/workflow.workflow.json",
+        "bytes": 253065,
+        "sha256": "973ef1410500ea8f94e0bdca2a9b95bbe464dc999557d7be0cedee7e271954f0"
       },
       "workbook": {
-        "path": "workflows/street-team-deployment/1.6.0/inputs.workbook.json",
-        "bytes": 278003,
-        "sha256": "5ef3b49818d264de635266057d5f98bb6d6cdbf7f2eeb28c05a11aade4bbaadb"
+        "path": "workflows/street-team-deployment/1.7.0/inputs.workbook.json",
+        "bytes": 283681,
+        "sha256": "2b5bbf98df198aa007926a3d45761f37e92c0979dc610b2851dca8add6a9fbcb"
       }
     },
     {
@@ -624,15 +624,15 @@
         "id": "decision-lab",
         "label": "Decision Lab"
       },
-      "version": "1.5.0",
+      "version": "1.6.0",
       "title": "Order fulfillment",
       "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
-      "createdAt": "2026-11-20T22:00:00.000Z",
-      "contentHash": "01696af9113235730d1229191cc3576eca0211e5a8d26596417054dca3533236",
+      "createdAt": "2026-11-20T23:00:00.000Z",
+      "contentHash": "fc240e085488c8936cdcc1431d4499c7de72e3f3fc34a33b716845dd9c976767",
       "package": {
-        "path": "collections/decision-lab/order-fulfillment/1.5.0/collection.collection.json",
+        "path": "collections/decision-lab/order-fulfillment/1.6.0/collection.collection.json",
         "bytes": 2015,
-        "sha256": "4fa069d6bc49b247cbf500eef4aa8c97ee3ea1d18c8670a5e98173b65cc5398f"
+        "sha256": "edaf8a76daa8dbb4b6d85e875efc57fa7c1eef0323fbd79c6703af3585dbd093"
       }
     },
     {
@@ -658,15 +658,15 @@
         "id": "decision-lab",
         "label": "Decision Lab"
       },
-      "version": "1.5.0",
+      "version": "1.6.0",
       "title": "Venue operations",
       "description": "Venue operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
-      "createdAt": "2026-11-20T22:00:00.000Z",
-      "contentHash": "b26ea9d2ebf9ffd9c9b199fc2bb9b1e9381a76fce5e1bb42e0763a92b71cb6cb",
+      "createdAt": "2026-11-20T23:00:00.000Z",
+      "contentHash": "221b7c9134d9178dcf06876773d3a1f41ffadf2dcc1d2dd48f157c00b408ca87",
       "package": {
-        "path": "collections/decision-lab/venue-operations/1.5.0/collection.collection.json",
+        "path": "collections/decision-lab/venue-operations/1.6.0/collection.collection.json",
         "bytes": 1338,
-        "sha256": "8e3b926d09877209dd4bb71338fe4786c530f2a8ca4c453c21df8d2ca4e96f17"
+        "sha256": "05b058578f16adc01ff03c71484e5ac9bd094655c8210b1dfc7a53d2ffc5d113"
       }
     },
     {

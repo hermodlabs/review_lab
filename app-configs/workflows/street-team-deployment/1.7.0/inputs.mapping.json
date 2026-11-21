@@ -1,15 +1,15 @@
 {
   "format": "decision-lab-case-workbook-mapping/1",
   "id": "workbook-86c18027027f7c98cc77a249",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "title": "Plan a street-team deployment — Excel inputs",
   "description": "Edit the named worksheets. Other inputs remain in the saved case. Inputs retained outside this workbook: Recorded event access, Promotion expense and spending authority: Permissions.",
   "target": {
     "type": "workflow",
     "id": "street-team-deployment",
-    "version": "1.6.0",
-    "packageHash": "8fdf285d869be4cd764d90ed2cc6011be0ce6e25f9649124d5019b7336245562",
-    "definitionHash": "0fac50d7042ebe55827c675a2923698a6a9b4fc884d7fb48d8edabc7eeaa992a"
+    "version": "1.7.0",
+    "packageHash": "9976cc5a1a10680f7516ea69eae54bf8276092238d9940d2384ebd74c377e584",
+    "definitionHash": "dc84e647e35ac9b1a6a5f9920d400ca173f55874ee2d8b2f26a867bc3a493373"
   },
   "managedPaths": [
     "/promotion/staffing/venueId",
@@ -480,5 +480,5 @@
     "coercion": "none",
     "missingMetadata": "reject"
   },
-  "contentHash": "69911602b087b9f328b50c98b2fb12889c38413aa0025bf121d35a790bf876e1"
+  "contentHash": "e0482b53e6b0a8b9826ce86f4b64d4d81ec0354d782e3ef6ad821994d3dc1c7c"
 }
