@@ -1,0 +1,37 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "venue-operations",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "version": "1.5.0",
+    "title": "Venue operations",
+    "description": "Venue operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+    "useCases": [
+      {
+        "id": "deploy-street-team",
+        "label": "Review a street-team deployment",
+        "description": "Compare promotion plans, review conditional break-even guest counts, and record a manager’s choice and scoped approval."
+      }
+    ],
+    "members": [
+      {
+        "type": "workflow",
+        "id": "street-team-deployment",
+        "version": "1.6.0",
+        "packageHash": "8fdf285d869be4cd764d90ed2cc6011be0ce6e25f9649124d5019b7336245562",
+        "useCaseId": "deploy-street-team",
+        "artifact": {
+          "path": "workflows/street-team-deployment/1.6.0/workflow.workflow.json",
+          "bytes": 248057,
+          "sha256": "e58c4e3a44fa25acdf5ad0ac94555d945429840a3de0e3cbf48d5897a88c0c38"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-20T22:00:00.000Z",
+  "contentHash": "b26ea9d2ebf9ffd9c9b199fc2bb9b1e9381a76fce5e1bb42e0763a92b71cb6cb"
+}

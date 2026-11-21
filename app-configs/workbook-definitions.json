@@ -2,44 +2,44 @@
   "format": "decision-lab-workbook-sources/1",
   "products": [
     {
-      "target": "apps/complete-first-shipment/2/app.app.json",
-      "mapping": "apps/complete-first-shipment/2/inputs.mapping.json"
+      "target": "apps/complete-first-shipment/3/app.app.json",
+      "mapping": "apps/complete-first-shipment/3/inputs.mapping.json"
     },
     {
-      "target": "apps/review-gift-kit-flexible-evidence/1/app.app.json",
-      "mapping": "apps/review-gift-kit-flexible-evidence/1/inputs.mapping.json"
+      "target": "apps/review-gift-kit-flexible-evidence/2/app.app.json",
+      "mapping": "apps/review-gift-kit-flexible-evidence/2/inputs.mapping.json"
     },
     {
-      "target": "apps/review-gift-kit-flexible-planning/1/app.app.json",
-      "mapping": "apps/review-gift-kit-flexible-planning/1/inputs.mapping.json"
+      "target": "apps/review-gift-kit-flexible-planning/2/app.app.json",
+      "mapping": "apps/review-gift-kit-flexible-planning/2/inputs.mapping.json"
     },
     {
-      "target": "apps/review-gift-kit-earliest-evidence/1/app.app.json",
-      "mapping": "apps/review-gift-kit-earliest-evidence/1/inputs.mapping.json"
+      "target": "apps/review-gift-kit-earliest-evidence/2/app.app.json",
+      "mapping": "apps/review-gift-kit-earliest-evidence/2/inputs.mapping.json"
     },
     {
-      "target": "apps/review-gift-kit-earliest-planning/1/app.app.json",
-      "mapping": "apps/review-gift-kit-earliest-planning/1/inputs.mapping.json"
+      "target": "apps/review-gift-kit-earliest-planning/2/app.app.json",
+      "mapping": "apps/review-gift-kit-earliest-planning/2/inputs.mapping.json"
     },
     {
-      "target": "workflows/review-first-shipment/1.4.0/workflow.workflow.json",
-      "mapping": "workflows/review-first-shipment/1.4.0/inputs.mapping.json"
+      "target": "workflows/review-first-shipment/1.5.0/workflow.workflow.json",
+      "mapping": "workflows/review-first-shipment/1.5.0/inputs.mapping.json"
     },
     {
-      "target": "workflows/review-gift-kit-flexible/2.3.0/workflow.workflow.json",
-      "mapping": "workflows/review-gift-kit-flexible/2.3.0/inputs.mapping.json"
+      "target": "workflows/review-gift-kit-flexible/2.4.0/workflow.workflow.json",
+      "mapping": "workflows/review-gift-kit-flexible/2.4.0/inputs.mapping.json"
     },
     {
-      "target": "workflows/review-gift-kit-earliest/2.3.0/workflow.workflow.json",
-      "mapping": "workflows/review-gift-kit-earliest/2.3.0/inputs.mapping.json"
+      "target": "workflows/review-gift-kit-earliest/2.4.0/workflow.workflow.json",
+      "mapping": "workflows/review-gift-kit-earliest/2.4.0/inputs.mapping.json"
     },
     {
-      "target": "workflows/street-team-deployment/1.5.0/workflow.workflow.json",
-      "mapping": "workflows/street-team-deployment/1.5.0/inputs.mapping.json"
+      "target": "workflows/street-team-deployment/1.6.0/workflow.workflow.json",
+      "mapping": "workflows/street-team-deployment/1.6.0/inputs.mapping.json"
     },
     {
-      "target": "workflows/repair-published-restaurant-roster/1.0.0/workflow.workflow.json",
-      "mapping": "workflows/repair-published-restaurant-roster/1.0.0/inputs.mapping.json"
+      "target": "workflows/repair-published-restaurant-roster/1.1.0/workflow.workflow.json",
+      "mapping": "workflows/repair-published-restaurant-roster/1.1.0/inputs.mapping.json"
     }
   ]
 }

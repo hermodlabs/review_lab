@@ -3,19 +3,19 @@
   "kind": "decision-lab-app-catalog",
   "title": "Decision Lab marketplace",
   "description": "Operational calculations organized into collections and use cases.",
-  "exportedAt": "2026-11-20T20:00:00.000Z",
+  "exportedAt": "2026-11-20T22:00:00.000Z",
   "scope": "current-product",
   "apps": [
     {
       "id": "complete-first-shipment",
-      "version": 2,
+      "version": 3,
       "name": "Plan the first shipment",
       "description": "Generate complete, static shipment plans from selectable lots, workers, preparation times, release time, carrier and departure. Check each whole plan against every declared readiness and travel scenario before comparing incremental expense. This synthetic operating snapshot does not infer readiness from business records or reserve stock, staff, authority or carrier capacity.",
-      "publishedAt": "2026-11-16T18:00:00.000Z",
-      "contentHash": "7d9cea7e635e7e37d085c6ef20294c8ba2512533272e6b355f57d862e7814ab6",
+      "publishedAt": "2026-11-20T22:00:00.000Z",
+      "contentHash": "19756244a944f299c2e610c066dacfd35455f4a3965651d1b4825ead391efe1e",
       "module": {
         "id": "plan-first-shipment",
-        "version": "1.0.0"
+        "version": "1.1.0"
       },
       "domain": {
         "id": "order-fulfillment",
@@ -42,28 +42,38 @@
         "presentationContract": "complete-a-commitment.assessment/1"
       },
       "package": {
-        "path": "apps/complete-first-shipment/2/app.app.json",
-        "bytes": 115537,
-        "sha256": "1606ac4cdf4308f2aa2d495691d0d1ea3715b1e2f8fffc2c5d0ae12611520f22"
+        "path": "apps/complete-first-shipment/3/app.app.json",
+        "bytes": 117740,
+        "sha256": "9d93f2ca510944c6854b3d4254840491d75541d822c01f758c48cbef44d46541"
       },
       "source": {
-        "path": "apps/complete-first-shipment/2/model.yaml",
-        "bytes": 33749,
-        "sha256": "3b03f9d45f8836432eee8ad4410fde18cddad3068466efe6fa09f0cd7c97a777"
+        "path": "apps/complete-first-shipment/3/model.yaml",
+        "bytes": 34548,
+        "sha256": "1f4637f6bf16b1a781e56b1893214691297d5c15a53e24c285fb5c4255f9b69f"
       },
       "workbook": {
-        "path": "apps/complete-first-shipment/2/inputs.workbook.json",
-        "bytes": 162485,
-        "sha256": "4fdc71ff391cce4d09eebd9bf4bb6cd114985f9b6d4089dc45468e192f5ed5fd"
+        "path": "apps/complete-first-shipment/3/inputs.workbook.json",
+        "bytes": 171294,
+        "sha256": "dfc76e7defca64ea3e68e1d1a62ee64cdbce6345eba77f6ef558e03fb6fac248"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "Can we deliver the complete accepted order within its receipt, expense and cash limits?",
+        "scope": "A synthetic shipment with fixed lots, workers, preparation choices and carrier services. Times are synthetic days. Adapt the model for different operating catalogs.",
+        "supportsOwnData": false
       }
     },
     {
       "id": "review-gift-kit-flexible-evidence",
-      "version": 1,
+      "version": 2,
       "name": "Review gift-kit records",
       "description": "A fictional campaign review: interpret scoped checks, compare complete corrective arrangements, and finish before the handoff cutoff.",
-      "publishedAt": "2026-11-18T02:00:00.000Z",
-      "contentHash": "fabab7360423d69c32e76c4affeaaecf86fd1ac0c298dc3b10b6dff05f08dd37",
+      "publishedAt": "2026-11-20T22:00:00.000Z",
+      "contentHash": "898cc5fa6bd9b3d0dab1f09b4225ce0bd2dfb2f630f27ca6bf1b65a860b8f23d",
       "module": {
         "id": "review-gift-kit-flexible-evidence",
         "version": "2.0.0"
@@ -93,28 +103,38 @@
         "presentationContract": "evidence-assessment/1"
       },
       "package": {
-        "path": "apps/review-gift-kit-flexible-evidence/1/app.app.json",
-        "bytes": 140627,
-        "sha256": "623248977077a6a3ae2dcd30337191f4455da8f332979648c8106def7f4f43a2"
+        "path": "apps/review-gift-kit-flexible-evidence/2/app.app.json",
+        "bytes": 140626,
+        "sha256": "538f7f58a83a50f862463fb7368b20aa1911ad37c395a9ec5d5b9f7024fb99c6"
       },
       "source": {
-        "path": "apps/review-gift-kit-flexible-evidence/1/model.yaml",
+        "path": "apps/review-gift-kit-flexible-evidence/2/model.yaml",
         "bytes": 43386,
         "sha256": "d08a35933811290733c30f5ea5770a152f7bb2776493f230dea5479cc604fdcf"
       },
       "workbook": {
-        "path": "apps/review-gift-kit-flexible-evidence/1/inputs.workbook.json",
-        "bytes": 172835,
-        "sha256": "581d1e92028aff5a4d7704a950b357c6ce5bd4875f9482aaf2d54e75d9603bbf"
+        "path": "apps/review-gift-kit-flexible-evidence/2/inputs.workbook.json",
+        "bytes": 177006,
+        "sha256": "beea9002c3981c745a10e57fadcf889508fae72fd4d02d088ace2774a460b8af"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "What corrections do these gift-kit checks establish?",
+        "scope": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits.",
+        "supportsOwnData": false
       }
     },
     {
       "id": "review-gift-kit-flexible-planning",
-      "version": 1,
+      "version": 2,
       "name": "Review a gift-kit commitment — complete arrangements",
       "description": "Compare one authored correction package across every remaining fault configuration, including simultaneous faults. Prospective correction is distinct from completed work.",
-      "publishedAt": "2026-11-18T02:00:00.000Z",
-      "contentHash": "d394fd9e7730501bc51244d84bc406c0db4bef1c204a2f6b16e9c6f532d21ebd",
+      "publishedAt": "2026-11-20T22:00:00.000Z",
+      "contentHash": "63ca485bd0aa43b7575d86a9f363aa51137767e84f6f4c89e4a285c1670ed6b2",
       "module": {
         "id": "review-gift-kit-flexible-planning",
         "version": "2.0.0"
@@ -142,28 +162,37 @@
         "presentationContract": "complete-a-commitment.assessment/1"
       },
       "package": {
-        "path": "apps/review-gift-kit-flexible-planning/1/app.app.json",
-        "bytes": 124691,
-        "sha256": "2f20ba5f63075d2e6853320835e512f1205407a14c967968269192df0ff6cec5"
+        "path": "apps/review-gift-kit-flexible-planning/2/app.app.json",
+        "bytes": 124690,
+        "sha256": "a0042522a0872839a2c81c2d7d7f2d6c8a9828f7d934e9ad22788a1751b68ec8"
       },
       "source": {
-        "path": "apps/review-gift-kit-flexible-planning/1/model.yaml",
+        "path": "apps/review-gift-kit-flexible-planning/2/model.yaml",
         "bytes": 36895,
         "sha256": "cf44dec307c7adae7977c022bbfd21dfd5de293f324c7af3eb1962a9013bff2d"
       },
       "workbook": {
-        "path": "apps/review-gift-kit-flexible-planning/1/inputs.workbook.json",
-        "bytes": 158256,
-        "sha256": "cabab5e4e93d9068632c495a5b077a6fb3650433fbbc73acaad60d3040bcf206"
+        "path": "apps/review-gift-kit-flexible-planning/2/inputs.workbook.json",
+        "bytes": 162079,
+        "sha256": "ce0e9e7802b1f062823a40921797c52da685937c89eb041cb6a685cfddef582b"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "Which complete correction package addresses every remaining explanation and can finish before we commit the gift kits?",
+        "supportsOwnData": false
       }
     },
     {
       "id": "review-gift-kit-earliest-evidence",
-      "version": 1,
+      "version": 2,
       "name": "Review gift-kit records",
       "description": "A fictional campaign review: interpret scoped checks, compare complete corrective arrangements, and finish before the handoff cutoff.",
-      "publishedAt": "2026-11-18T02:00:00.000Z",
-      "contentHash": "7c14517fdf36a4ffc3e00a50452c18e5c1ff9411a18506cad3504fc2105c4dc3",
+      "publishedAt": "2026-11-20T22:00:00.000Z",
+      "contentHash": "4dd944e52bbbe24734b7ae891e470a4d3c32ba407f03d3bf1553f6c9766adfc8",
       "module": {
         "id": "review-gift-kit-earliest-evidence",
         "version": "2.0.0"
@@ -193,28 +222,38 @@
         "presentationContract": "evidence-assessment/1"
       },
       "package": {
-        "path": "apps/review-gift-kit-earliest-evidence/1/app.app.json",
-        "bytes": 140627,
-        "sha256": "4232268bc2ed41f52c18b69936fd7dc6de91bd6714531d46f7ec8ae499a349b9"
+        "path": "apps/review-gift-kit-earliest-evidence/2/app.app.json",
+        "bytes": 140626,
+        "sha256": "6107a73c004fc8fe30b4528251aba7e19eec5cda0aee972c4114d55223228461"
       },
       "source": {
-        "path": "apps/review-gift-kit-earliest-evidence/1/model.yaml",
+        "path": "apps/review-gift-kit-earliest-evidence/2/model.yaml",
         "bytes": 43386,
         "sha256": "37c67954c4d1d199af2670488941d7df3820c71fe6a307c8bd2f508eb5dc302d"
       },
       "workbook": {
-        "path": "apps/review-gift-kit-earliest-evidence/1/inputs.workbook.json",
-        "bytes": 172835,
-        "sha256": "5d66f683b62c69e7cedda985246a520b5705f931ece10eed23a4ffdc60c38f8a"
+        "path": "apps/review-gift-kit-earliest-evidence/2/inputs.workbook.json",
+        "bytes": 177006,
+        "sha256": "0f86325177008dd05842275ee8acbfbb1b3c6428a0ef77083f920f9ea2431f27"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "What corrections do these gift-kit checks establish?",
+        "scope": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits.",
+        "supportsOwnData": false
       }
     },
     {
       "id": "review-gift-kit-earliest-planning",
-      "version": 1,
+      "version": 2,
       "name": "Review gift kits with earliest handoff priority — complete arrangements",
       "description": "Compare one authored correction package across every remaining fault configuration, including simultaneous faults. Prospective correction is distinct from completed work.",
-      "publishedAt": "2026-11-18T02:00:00.000Z",
-      "contentHash": "5bc9b7c4eb79011e60feb6415a3060f9435b9a84461b4ed2ec1d8cb916f0f6b2",
+      "publishedAt": "2026-11-20T22:00:00.000Z",
+      "contentHash": "5f7791f906c810f34a302c77c94012f98a09def9801d235a2f9338d3ae205e2a",
       "module": {
         "id": "review-gift-kit-earliest-planning",
         "version": "2.0.0"
@@ -242,31 +281,40 @@
         "presentationContract": "complete-a-commitment.assessment/1"
       },
       "package": {
-        "path": "apps/review-gift-kit-earliest-planning/1/app.app.json",
-        "bytes": 124710,
-        "sha256": "7f93033c507b26ceead2fff7346f27a525a73c54208352644092f6887791c150"
+        "path": "apps/review-gift-kit-earliest-planning/2/app.app.json",
+        "bytes": 124709,
+        "sha256": "61fdfcfb0f38f4a59d9638366545b11791c0fcb02d83a191cce79acf5551fb10"
       },
       "source": {
-        "path": "apps/review-gift-kit-earliest-planning/1/model.yaml",
+        "path": "apps/review-gift-kit-earliest-planning/2/model.yaml",
         "bytes": 36895,
         "sha256": "2485ccdc55fd328c17ba84093350ad8ee92d6abbe89766981dd26384dbac239a"
       },
       "workbook": {
-        "path": "apps/review-gift-kit-earliest-planning/1/inputs.workbook.json",
-        "bytes": 158294,
-        "sha256": "05a6b59865a6553430a370c8e5a6ce95250d2b975e6c469f8e595ae5b598d5be"
+        "path": "apps/review-gift-kit-earliest-planning/2/inputs.workbook.json",
+        "bytes": 162117,
+        "sha256": "b0e673cc7ecd7d5162182adab4eed2fd80d987201f737acbf78c23f8d6d1494a"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "Which complete correction package addresses every remaining explanation and can finish before we commit the gift kits?",
+        "supportsOwnData": false
       }
     }
   ],
   "workflows": [
     {
       "id": "review-first-shipment",
-      "version": "1.4.0",
+      "version": "1.5.0",
       "name": "Compare first-shipment arrangements",
       "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
-      "publishedAt": "2026-11-20T18:00:00.000Z",
-      "contentHash": "576fc1df319695ea85f72aaa49a30a90ae36860ce503fb02dac1dc3350e0fb34",
-      "definitionHash": "a1d8e38e564ab73ec1c2bcc88a89ac9a8b7775f4eea443e3668789633c2849e5",
+      "publishedAt": "2026-11-20T22:00:00.000Z",
+      "contentHash": "1dfcce033c879e1782f1df06415bd09935ee6ad7bad5a3ddfb5eed6ad8726ee2",
+      "definitionHash": "3b35f026e377646390ad311dcde238313cbafbdababb7457d1713f17bdc7f616",
       "domain": {
         "id": "order-fulfillment",
         "label": "Order fulfillment",
@@ -306,25 +354,36 @@
           "packageHash": "cfcf967bf16ad3c18d38d1167c8131c8957fce0c037ebaace2ca5232a0a0d681"
         }
       ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
+        "scope": "One shipment with the authored direct and backup arrangements, scoped registration evidence and optional timely verification. Other readiness requirements or arrangement types require adaptation.",
+        "supportsOwnData": true
+      },
       "package": {
-        "path": "workflows/review-first-shipment/1.4.0/workflow.workflow.json",
-        "bytes": 1016063,
-        "sha256": "708e54ecb095002432cafea35c0e0cb16378e1aa79ee152f1f7d3cf342bffdbb"
+        "path": "workflows/review-first-shipment/1.5.0/workflow.workflow.json",
+        "bytes": 1030600,
+        "sha256": "1ed1c75f9ceedde91d316df20ccb08ce33ab9f0eaa192666e20bf3bffad34129"
       },
       "workbook": {
-        "path": "workflows/review-first-shipment/1.4.0/inputs.workbook.json",
-        "bytes": 1110943,
-        "sha256": "bb23f0cf25de5cd08f740c81d84586a4bb9b3ae787f6009e32beae7ecb64e449"
+        "path": "workflows/review-first-shipment/1.5.0/inputs.workbook.json",
+        "bytes": 1134320,
+        "sha256": "26a662abfe4740f547c698c3a14620c02779540332b95eac7a0c20438b53e8d7"
       }
     },
     {
       "id": "review-gift-kit-flexible",
-      "version": "2.3.0",
+      "version": "2.4.0",
       "name": "Plan a gift-kit commitment",
       "description": "Compare complete gift-kit correction arrangements against the recorded configuration, work, handoff, capacity, permission and expense requirements.",
-      "publishedAt": "2026-11-20T18:00:00.000Z",
-      "contentHash": "8230d835f2d1e69606c13b659e3600604d01619c8c063a1d7e5b82d9ef9836de",
-      "definitionHash": "d3fe8c5ac5ab3bb9209034c29dace8079db0577e608758597dfee90461ec25d5",
+      "publishedAt": "2026-11-20T22:00:00.000Z",
+      "contentHash": "5daf887dc3a670e6f7d49b74c252cfeb860cca40ae6f6dea3b901cda81562f19",
+      "definitionHash": "dbc70169ff46df071a5b5cb4c0cdaccbdc023420566162436628d1c65d0c7d18",
       "domain": {
         "id": "gifting-operations",
         "label": "Gifting operations",
@@ -343,38 +402,49 @@
           "id": "evidence",
           "name": "Review gift-kit records",
           "appId": "review-gift-kit-flexible-evidence",
-          "version": 1,
-          "appContentHash": "fabab7360423d69c32e76c4affeaaecf86fd1ac0c298dc3b10b6dff05f08dd37",
-          "packageHash": "05392b3025e200154cd050ef8c1d34212d7d5f0f54e31bbf4c7e1157a87a4f1a"
+          "version": 2,
+          "appContentHash": "898cc5fa6bd9b3d0dab1f09b4225ce0bd2dfb2f630f27ca6bf1b65a860b8f23d",
+          "packageHash": "c94c8112c1806c5be2e6a92dadcb023dd404134e6c5f0d0ee32fef2057811c75"
         },
         {
           "id": "planning",
           "name": "Review a gift-kit commitment — complete arrangements",
           "appId": "review-gift-kit-flexible-planning",
-          "version": 1,
-          "appContentHash": "d394fd9e7730501bc51244d84bc406c0db4bef1c204a2f6b16e9c6f532d21ebd",
-          "packageHash": "d99c58a18df7351840faa440806c8a62be6e56e03fcee4feb3d11561c9efdeac"
+          "version": 2,
+          "appContentHash": "63ca485bd0aa43b7575d86a9f363aa51137767e84f6f4c89e4a285c1670ed6b2",
+          "packageHash": "481493801d327fc1acccb11ea77bffb621eaf493a379c06313ea98de42f64b5a"
         }
       ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "What must we verify or correct, and can we finish before committing these gift kits?",
+        "scope": "The authored gift-kit checks and preparation arrangements within one handoff window. Supply campaign records and operating inputs; a different preparation method or rule requires adaptation.",
+        "supportsOwnData": true
+      },
       "package": {
-        "path": "workflows/review-gift-kit-flexible/2.3.0/workflow.workflow.json",
-        "bytes": 554545,
-        "sha256": "5331653a0a2fa60fae78f2ab5cc358d407ad600147b539394fe66dcfc5200cda"
+        "path": "workflows/review-gift-kit-flexible/2.4.0/workflow.workflow.json",
+        "bytes": 556848,
+        "sha256": "c32f7af3bf3cf8b23acb903802103717a455fa4616752e4cccba44810bfb3a7c"
       },
       "workbook": {
-        "path": "workflows/review-gift-kit-flexible/2.3.0/inputs.workbook.json",
-        "bytes": 612522,
-        "sha256": "d549d75b96113430cc71dc4b1e9876f08abdb5829f8a82d8e357d6a2a3b0ca9f"
+        "path": "workflows/review-gift-kit-flexible/2.4.0/inputs.workbook.json",
+        "bytes": 620167,
+        "sha256": "2cdb0a4449a6adc4ba684f7b4176a1a24a968170532aeddc9f212a1ff3ba6c52"
       }
     },
     {
       "id": "review-gift-kit-earliest",
-      "version": "2.3.0",
+      "version": "2.4.0",
       "name": "Plan the earliest gift-kit handoff",
       "description": "Find the earliest complete gift-kit correction arrangement meeting the recorded configuration, work, capacity, permission and expense requirements.",
-      "publishedAt": "2026-11-20T18:00:00.000Z",
-      "contentHash": "1945f18ef9fceadd6752af9acc4818c920ff1553bb097db528e3c9524487c81b",
-      "definitionHash": "92f748e0799face332ede89b9e5aae0bec0c497a3189ae3d04fca50349cd7056",
+      "publishedAt": "2026-11-20T22:00:00.000Z",
+      "contentHash": "297be7f3dab61f268be837eb954cc88cfc879094915c8ff639a8f07479bcee8d",
+      "definitionHash": "cf4f5d5b28588e18733ffdf3a127aa2262864a6aa2d366148931b867d6529f97",
       "domain": {
         "id": "gifting-operations",
         "label": "Gifting operations",
@@ -393,38 +463,49 @@
           "id": "evidence",
           "name": "Review gift-kit records",
           "appId": "review-gift-kit-earliest-evidence",
-          "version": 1,
-          "appContentHash": "7c14517fdf36a4ffc3e00a50452c18e5c1ff9411a18506cad3504fc2105c4dc3",
-          "packageHash": "f5a4b195dc26b9d8ca24a312e8e464003d0338e8462260d9ecd9a4e1fa643b46"
+          "version": 2,
+          "appContentHash": "4dd944e52bbbe24734b7ae891e470a4d3c32ba407f03d3bf1553f6c9766adfc8",
+          "packageHash": "03a71ee7768e86e974075e733f6bc083050eca92a77d8bfc8d0f24c2daef5597"
         },
         {
           "id": "planning",
           "name": "Review gift kits with earliest handoff priority — complete arrangements",
           "appId": "review-gift-kit-earliest-planning",
-          "version": 1,
-          "appContentHash": "5bc9b7c4eb79011e60feb6415a3060f9435b9a84461b4ed2ec1d8cb916f0f6b2",
-          "packageHash": "1fc3ad7559d0747fc61fa5b56be27a42c56dac653b28c255d44f3c321ed4c758"
+          "version": 2,
+          "appContentHash": "5f7791f906c810f34a302c77c94012f98a09def9801d235a2f9338d3ae205e2a",
+          "packageHash": "45bb91e6146fc20cc34c2eb1aed65a79f8b9a92c730dcfb7d8c011ee41da2014"
         }
       ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "What must we verify or correct, and can we finish before committing these gift kits?",
+        "scope": "The authored gift-kit checks and preparation arrangements, comparing earliest readiness within one handoff window. A different preparation method or rule requires adaptation.",
+        "supportsOwnData": true
+      },
       "package": {
-        "path": "workflows/review-gift-kit-earliest/2.3.0/workflow.workflow.json",
-        "bytes": 554582,
-        "sha256": "661dd1a529dc21617fcc596df9bfdffe77926b82bf4d236a8c326323ef547591"
+        "path": "workflows/review-gift-kit-earliest/2.4.0/workflow.workflow.json",
+        "bytes": 556869,
+        "sha256": "9e20b343c0cbfeae346d2f1eaf5af169ccae910345ff89a1c3461850592be746"
       },
       "workbook": {
-        "path": "workflows/review-gift-kit-earliest/2.3.0/inputs.workbook.json",
-        "bytes": 612578,
-        "sha256": "8258f3c25772770832692f7f86b9af5d70eb35d06628cf7d6b6a7753c22c4213"
+        "path": "workflows/review-gift-kit-earliest/2.4.0/inputs.workbook.json",
+        "bytes": 620191,
+        "sha256": "b7ef92f81f4295e08adaba0d709cd670153705ddd880c3d7bc5db0bbbff6ab72"
       }
     },
     {
       "id": "street-team-deployment",
-      "version": "1.5.0",
+      "version": "1.6.0",
       "name": "Plan a street-team deployment",
       "description": "Calculate which promotion deployments meet staffing, timing, access and spending constraints, and the additional guests needed to recover their expense. Customer response is not forecast.",
-      "publishedAt": "2026-11-20T18:00:00.000Z",
-      "contentHash": "c49e9179b5336e933dab00f9184fef02b4c08a3a3e6547d32971617cee6989f0",
-      "definitionHash": "f0ddf31cee30299f860ff6d758c01aa137039f15643b13e6eb7258aaebd32073",
+      "publishedAt": "2026-11-20T22:00:00.000Z",
+      "contentHash": "8fdf285d869be4cd764d90ed2cc6011be0ce6e25f9649124d5019b7336245562",
+      "definitionHash": "0fac50d7042ebe55827c675a2923698a6a9b4fc884d7fb48d8edabc7eeaa992a",
       "domain": {
         "id": "venue-operations",
         "label": "Venue operations"
@@ -446,25 +527,36 @@
           "packageHash": "ba657e7bc03db98f19178bff31263b31b7d033e77aeecef4092bb1cb38d8ad94"
         }
       ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which promotion plans can we operate, and how many additional guests would cover their costs?",
+        "scope": "The authored street-team deployments with fixed deployment charges and same-day timing. Supply venue staffing, access, spending and contribution inputs; customer response is not forecast.",
+        "supportsOwnData": true
+      },
       "package": {
-        "path": "workflows/street-team-deployment/1.5.0/workflow.workflow.json",
-        "bytes": 246073,
-        "sha256": "4b550137bcb2c1635295f29f30806f4385547b20fbd870593d034b22c7a7d259"
+        "path": "workflows/street-team-deployment/1.6.0/workflow.workflow.json",
+        "bytes": 248057,
+        "sha256": "e58c4e3a44fa25acdf5ad0ac94555d945429840a3de0e3cbf48d5897a88c0c38"
       },
       "workbook": {
-        "path": "workflows/street-team-deployment/1.5.0/inputs.workbook.json",
-        "bytes": 269676,
-        "sha256": "84f704212ac9dac3919769faa78dd7305fef81cdaac6f622d7b8c5e2e9829dbb"
+        "path": "workflows/street-team-deployment/1.6.0/inputs.workbook.json",
+        "bytes": 278003,
+        "sha256": "5ef3b49818d264de635266057d5f98bb6d6cdbf7f2eeb28c05a11aade4bbaadb"
       }
     },
     {
       "id": "repair-published-restaurant-roster",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "name": "Repair a published restaurant roster",
       "description": "Compare complete repairs to a disrupted published restaurant roster across every remaining service. Check coverage, qualifications, availability, capacity, rest, hours and remaining payroll; optionally compare passing repairs by stability or payroll. The calculation compares supplied proposals and does not generate or publish a roster.",
-      "publishedAt": "2026-11-20T20:00:00.000Z",
-      "contentHash": "841b01ecae6f59618817856baa3738cbdf4399bc110067f889b8f5f60cebb354",
-      "definitionHash": "6cd12b1410a71d4a928aae6c2e33923ba842adb66fff95729ceddf2e267e3d53",
+      "publishedAt": "2026-11-20T22:00:00.000Z",
+      "contentHash": "0fd1e15fecb304d7bbd990ce0be69871bc06a61010c70cae788cd1f7c66da9a4",
+      "definitionHash": "283bcbb83dfe373ed48571db09ae00f710cbd3144114b7891d5c7dd296625094",
       "domain": {
         "id": "restaurant-operations",
         "label": "Restaurant operations"
@@ -502,15 +594,26 @@
           "packageHash": "5f42a6d960eacf94400152eab859e15daa871910144a95ba83d871231b83c8e6"
         }
       ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which supplied complete repairs cover every remaining service, and which fit the chosen priority?",
+        "scope": "The configured employees, service positions and four complete repair proposals. Change availability, payroll or comparison priority here; a different restaurant roster needs an adapted author profile.",
+        "supportsOwnData": false
+      },
       "package": {
-        "path": "workflows/repair-published-restaurant-roster/1.0.0/workflow.workflow.json",
-        "bytes": 1636227,
-        "sha256": "9a3fa19055b79e5da0c68af56bc187f4873456fbebce085104bec9d1dabcb405"
+        "path": "workflows/repair-published-restaurant-roster/1.1.0/workflow.workflow.json",
+        "bytes": 1637850,
+        "sha256": "82a2b7a9d0502282abf6f85565aa0cc36964e8b70a50410463d546c9b63ab342"
       },
       "workbook": {
-        "path": "workflows/repair-published-restaurant-roster/1.0.0/inputs.workbook.json",
-        "bytes": 1709591,
-        "sha256": "9d57ea35e3e8c30811183bb011f36f83496184d2c37dba425d3dc3cb752ad178"
+        "path": "workflows/repair-published-restaurant-roster/1.1.0/inputs.workbook.json",
+        "bytes": 1716014,
+        "sha256": "a6f078a1053874227fb64cb3216520b2994e9e6e002bd10229f23d30239d1a66"
       }
     }
   ],
@@ -521,15 +624,15 @@
         "id": "decision-lab",
         "label": "Decision Lab"
       },
-      "version": "1.4.0",
+      "version": "1.5.0",
       "title": "Order fulfillment",
       "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
-      "createdAt": "2026-11-20T18:00:00.000Z",
-      "contentHash": "d201f05710f746dc4a2d61ec5e162e276358de5d31d9a725fb233acec34b30c6",
+      "createdAt": "2026-11-20T22:00:00.000Z",
+      "contentHash": "01696af9113235730d1229191cc3576eca0211e5a8d26596417054dca3533236",
       "package": {
-        "path": "collections/decision-lab/order-fulfillment/1.4.0/collection.collection.json",
+        "path": "collections/decision-lab/order-fulfillment/1.5.0/collection.collection.json",
         "bytes": 2015,
-        "sha256": "4338e55d708ceba69bd08a765813b48475c152f8a2c33795b7ec38261fd6b3bd"
+        "sha256": "4fa069d6bc49b247cbf500eef4aa8c97ee3ea1d18c8670a5e98173b65cc5398f"
       }
     },
     {
@@ -538,15 +641,15 @@
         "id": "decision-lab",
         "label": "Decision Lab"
       },
-      "version": "2.3.0",
+      "version": "2.4.0",
       "title": "Gifting operations",
       "description": "Gifting operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
-      "createdAt": "2026-11-20T18:00:00.000Z",
-      "contentHash": "12f902948421f979c9222e383d13d65a6cf7fca963c75d9edbf33ede7b830158",
+      "createdAt": "2026-11-20T22:00:00.000Z",
+      "contentHash": "31923ec914eb435a05cd336f2d8beb907b3ff645c8da43c20c9c32f5b1123e32",
       "package": {
-        "path": "collections/decision-lab/gifting-operations/2.3.0/collection.collection.json",
+        "path": "collections/decision-lab/gifting-operations/2.4.0/collection.collection.json",
         "bytes": 3250,
-        "sha256": "6a754c36e33ab6872b6abc7a3bbc833cbbbc03437ae20226de62c1a1ccab6d20"
+        "sha256": "0fbe4d6ac6b8fba5d4dddfd013473cb64ae7383902f24835e988596db449c664"
       }
     },
     {
@@ -555,15 +658,15 @@
         "id": "decision-lab",
         "label": "Decision Lab"
       },
-      "version": "1.4.0",
+      "version": "1.5.0",
       "title": "Venue operations",
       "description": "Venue operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
-      "createdAt": "2026-11-20T18:00:00.000Z",
-      "contentHash": "cbd9085db1d87eec6f5a7851972ebf12e679f885a64520440302b7f1d7265a29",
+      "createdAt": "2026-11-20T22:00:00.000Z",
+      "contentHash": "b26ea9d2ebf9ffd9c9b199fc2bb9b1e9381a76fce5e1bb42e0763a92b71cb6cb",
       "package": {
-        "path": "collections/decision-lab/venue-operations/1.4.0/collection.collection.json",
+        "path": "collections/decision-lab/venue-operations/1.5.0/collection.collection.json",
         "bytes": 1338,
-        "sha256": "6d3b20c3ed23170be6e1d6430af0660d9464150fc89ec7cbf95db16f80e69831"
+        "sha256": "8e3b926d09877209dd4bb71338fe4786c530f2a8ca4c453c21df8d2ca4e96f17"
       }
     },
     {
@@ -572,15 +675,15 @@
         "id": "decision-lab",
         "label": "Decision Lab"
       },
-      "version": "1.0.0",
+      "version": "1.1.0",
       "title": "Restaurant operations",
       "description": "Operational calculations for restaurant staffing and service commitments.",
-      "createdAt": "2026-11-20T20:00:00.000Z",
-      "contentHash": "55000f13abcdaa77b479094b8c66b35759d4ad6dcf9f2b8e1998bb4d525beaf9",
+      "createdAt": "2026-11-20T22:00:00.000Z",
+      "contentHash": "6edd638cc9fb3521ff03a9d6443fc5d91dabf442a1d2a96de6af59831f304d71",
       "package": {
-        "path": "collections/decision-lab/restaurant-operations/1.0.0/collection.collection.json",
+        "path": "collections/decision-lab/restaurant-operations/1.1.0/collection.collection.json",
         "bytes": 1361,
-        "sha256": "f772477f0af7136d682382c6aad9847b0ce6fcb61b6548d162ae54185246e0cb"
+        "sha256": "470fb2284373778aea2672223179a670141301e2a2c7f0b56c3da4fcea11e982"
       }
     }
   ]
