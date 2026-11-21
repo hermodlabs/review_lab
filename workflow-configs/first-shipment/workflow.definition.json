@@ -1,7 +1,7 @@
 {
   "format": "decision-lab-workflow/1",
   "id": "review-first-shipment",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "title": "Compare first-shipment arrangements",
   "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
   "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
@@ -397,20 +397,22 @@
             },
             "summary": {
               "title": "The arrangement and commitment",
-              "question": "What would this arrangement cost, and which deadlines apply?",
               "fields": [
                 {
                   "key": "expense",
                   "label": "Complete arrangement expense",
-                  "format": "money"
+                  "format": "money",
+                  "presentation": "metric"
                 },
                 {
                   "key": "receiveBy",
-                  "label": "Required customer receipt"
+                  "label": "Required customer receipt",
+                  "presentation": "text"
                 },
                 {
                   "key": "reserveBy",
-                  "label": "Reservation cutoff"
+                  "label": "Reservation cutoff",
+                  "presentation": "text"
                 }
               ]
             },
@@ -421,21 +423,25 @@
                 {
                   "key": "arrangement",
                   "label": "Arrangement",
-                  "format": "name"
+                  "format": "name",
+                  "presentation": "text"
                 },
                 {
                   "key": "feasible",
                   "label": "Meets recorded requirements",
-                  "format": "boolean"
+                  "format": "boolean",
+                  "presentation": "text"
                 },
                 {
                   "key": "expense",
                   "label": "Complete expense",
-                  "format": "money"
+                  "format": "money",
+                  "presentation": "text"
                 },
                 {
                   "key": "blockers",
-                  "label": "Unmet conditions"
+                  "label": "Unmet conditions",
+                  "presentation": "records"
                 }
               ]
             },
@@ -443,11 +449,13 @@
               {
                 "key": "feasible",
                 "label": "Meets recorded requirements",
-                "format": "boolean"
+                "format": "boolean",
+                "presentation": "text"
               },
               {
                 "key": "blockers",
-                "label": "Unmet conditions"
+                "label": "Unmet conditions",
+                "presentation": "records"
               }
             ],
             "details": [
@@ -458,7 +466,8 @@
                 "fields": [
                   {
                     "key": "delivery",
-                    "label": "Delivery times and ship points by situation"
+                    "label": "Delivery times and ship points by situation",
+                    "presentation": "records"
                   }
                 ]
               },
@@ -469,19 +478,23 @@
                 "fields": [
                   {
                     "key": "scope",
-                    "label": "Shipment scope and units"
+                    "label": "Shipment scope and units",
+                    "presentation": "records"
                   },
                   {
                     "key": "reserveBy",
-                    "label": "Reservation cutoff"
+                    "label": "Reservation cutoff",
+                    "presentation": "text"
                   },
                   {
                     "key": "receiveBy",
-                    "label": "Required customer receipt"
+                    "label": "Required customer receipt",
+                    "presentation": "text"
                   }
                 ]
               }
-            ]
+            ],
+            "selectorLabel": "Shipment arrangement"
           }
         ],
         "tabs": [
@@ -490,7 +503,7 @@
             "kind": "records",
             "sectionId": "arrangements",
             "viewId": "shipment-arrangements",
-            "label": "Arrangements",
+            "label": "Arrangement choice",
             "question": "Which complete arrangements meet this delivery commitment?"
           },
           {
@@ -503,6 +516,30 @@
               "planning-fast",
               "planning-slow"
             ]
+          },
+          {
+            "id": "records",
+            "label": "Evidence",
+            "kind": "records",
+            "sectionId": "records",
+            "columns": [
+              {
+                "key": "label",
+                "label": "Operating question"
+              },
+              {
+                "key": "status",
+                "label": "Finding",
+                "format": "name"
+              },
+              {
+                "key": "answer",
+                "label": "Established answer",
+                "format": "name"
+              }
+            ],
+            "question": "What do the operating records establish?",
+            "rowsPath": "queries"
           },
           {
             "id": "learning",
@@ -537,31 +574,8 @@
                 "label": "Requirement"
               }
             ],
-            "question": "What prevents a listed arrangement from meeting the commitment?"
-          },
-          {
-            "id": "records",
-            "label": "Evidence",
-            "kind": "records",
-            "sectionId": "records",
-            "columns": [
-              {
-                "key": "label",
-                "label": "Operating question"
-              },
-              {
-                "key": "status",
-                "label": "Finding",
-                "format": "name"
-              },
-              {
-                "key": "answer",
-                "label": "Established answer",
-                "format": "name"
-              }
-            ],
-            "question": "What do the operating records establish?",
-            "rowsPath": "queries"
+            "question": "What prevents a listed arrangement from meeting the commitment?",
+            "navigation": "advanced"
           }
         ],
         "brief": {
@@ -585,7 +599,7 @@
           "title": "Decision summary",
           "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
           "comparison": {
-            "title": "Compare complete alternatives",
+            "title": "Compare shipment arrangements",
             "keyField": "id",
             "labelField": "label",
             "rowsPath": "rows",
@@ -614,10 +628,6 @@
                   "unit": "minute",
                   "timeZone": "America/Chicago"
                 }
-              },
-              {
-                "key": "condition",
-                "label": "Decisive condition"
               }
             ],
             "tabId": "arrangements",
@@ -633,28 +643,11 @@
               "presentation": "actions"
             }
           ],
-          "links": [
-            {
-              "tabId": "arrangements",
-              "label": "Inspect complete arrangements"
-            },
-            {
-              "tabId": "conditions",
-              "label": "Inspect unmet requirements"
-            },
-            {
-              "tabId": "schedules",
-              "label": "Inspect work and timing"
-            },
-            {
-              "tabId": "learning",
-              "label": "Compare further verification"
-            }
-          ],
+          "links": [],
           "panels": [
             {
               "id": "learning",
-              "title": "Would timely verification improve the choice?",
+              "title": "Further verification: expected value and assumptions",
               "sectionId": "learning-decision",
               "sourceStepIds": [
                 "planning"
@@ -665,7 +658,8 @@
                   "conditionId": "verification-applicable"
                 }
               ],
-              "tabId": "learning"
+              "tabId": "learning",
+              "presentation": "disclosure"
             }
           ]
         },
@@ -18781,196 +18775,32 @@
                     "ref": "conditions.has-feasible-arrangements"
                   },
                   {
-                    "op": "stringConcat",
+                    "op": "if",
                     "args": [
-                      "Best supported arrangement now: ",
                       {
-                        "op": "if",
+                        "op": "gt",
                         "args": [
                           {
-                            "ref": "conditions.has-feasible-arrangements"
+                            "op": "length",
+                            "args": [
+                              {
+                                "ref": "steps.planning.output.recommendation.tiedPlanIds"
+                              }
+                            ]
                           },
+                          1
+                        ]
+                      },
+                      "Several shipment arrangements share the preferred result.",
+                      {
+                        "op": "stringConcat",
+                        "args": [
                           {
                             "op": "if",
                             "args": [
                               {
-                                "op": "gt",
+                                "op": "isSet",
                                 "args": [
-                                  {
-                                    "op": "length",
-                                    "args": [
-                                      {
-                                        "ref": "steps.planning.output.recommendation.tiedPlanIds"
-                                      }
-                                    ]
-                                  },
-                                  1
-                                ]
-                              },
-                              "Several shipment arrangements share the preferred result.",
-                              {
-                                "op": "stringConcat",
-                                "args": [
-                                  {
-                                    "op": "if",
-                                    "args": [
-                                      {
-                                        "op": "isSet",
-                                        "args": [
-                                          {
-                                            "op": "get",
-                                            "args": [
-                                              {
-                                                "literal": {
-                                                  "direct": "Direct arrangement",
-                                                  "backup": "Backup arrangement",
-                                                  "registered": "Transportation registered",
-                                                  "not_registered": "Transportation not registered",
-                                                  "capacity-for-complete-order": "Capacity must cover the complete order",
-                                                  "scoped-transportation-registration": "Ship point registration must cover this shipment",
-                                                  "pack-capability": "Assigned packer must have the packing capability",
-                                                  "pack-availability": "Assigned packer must be available for the complete activity",
-                                                  "release-capability": "Assigned release worker must have the release capability",
-                                                  "release-availability": "Assigned release worker must be available for the complete activity",
-                                                  "combined-resource-capacity": "People and packing resources must cover overlapping work",
-                                                  "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
-                                                  "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
-                                                  "selection-not-in-the-past": "Selection cannot be in the past",
-                                                  "verification-fee-before-response": "Verification must be paid before using its report",
-                                                  "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
-                                                  "preparation-before-departure": "Packing and release must finish before departure",
-                                                  "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
-                                                  "receipt-within-access-window": "Customer receipt must fit the receiving window",
-                                                  "total-expense-limit": "Complete expense must fit the expense limit",
-                                                  "peak-cash-limit": "Peak cash needed must fit available cash",
-                                                  "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
-                                                }
-                                              },
-                                              {
-                                                "ref": "steps.planning.output.preferredPlan.choices.arrangement"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "op": "get",
-                                        "args": [
-                                          {
-                                            "literal": {
-                                              "direct": "Direct arrangement",
-                                              "backup": "Backup arrangement",
-                                              "registered": "Transportation registered",
-                                              "not_registered": "Transportation not registered",
-                                              "capacity-for-complete-order": "Capacity must cover the complete order",
-                                              "scoped-transportation-registration": "Ship point registration must cover this shipment",
-                                              "pack-capability": "Assigned packer must have the packing capability",
-                                              "pack-availability": "Assigned packer must be available for the complete activity",
-                                              "release-capability": "Assigned release worker must have the release capability",
-                                              "release-availability": "Assigned release worker must be available for the complete activity",
-                                              "combined-resource-capacity": "People and packing resources must cover overlapping work",
-                                              "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
-                                              "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
-                                              "selection-not-in-the-past": "Selection cannot be in the past",
-                                              "verification-fee-before-response": "Verification must be paid before using its report",
-                                              "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
-                                              "preparation-before-departure": "Packing and release must finish before departure",
-                                              "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
-                                              "receipt-within-access-window": "Customer receipt must fit the receiving window",
-                                              "total-expense-limit": "Complete expense must fit the expense limit",
-                                              "peak-cash-limit": "Peak cash needed must fit available cash",
-                                              "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
-                                            }
-                                          },
-                                          {
-                                            "ref": "steps.planning.output.preferredPlan.choices.arrangement"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "ref": "steps.planning.output.preferredPlan.choices.arrangement"
-                                      }
-                                    ]
-                                  },
-                                  " is the lowest-expense supported arrangement."
-                                ]
-                              }
-                            ]
-                          },
-                          "No listed shipment arrangement meets the recorded requirements."
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "op": "if",
-                    "args": [
-                      {
-                        "ref": "conditions.has-feasible-arrangements"
-                      },
-                      {
-                        "op": "if",
-                        "args": [
-                          {
-                            "op": "gt",
-                            "args": [
-                              {
-                                "op": "length",
-                                "args": [
-                                  {
-                                    "ref": "steps.planning.output.recommendation.tiedPlanIds"
-                                  }
-                                ]
-                              },
-                              1
-                            ]
-                          },
-                          "Several shipment arrangements share the preferred result.",
-                          {
-                            "op": "stringConcat",
-                            "args": [
-                              {
-                                "op": "if",
-                                "args": [
-                                  {
-                                    "op": "isSet",
-                                    "args": [
-                                      {
-                                        "op": "get",
-                                        "args": [
-                                          {
-                                            "literal": {
-                                              "direct": "Direct arrangement",
-                                              "backup": "Backup arrangement",
-                                              "registered": "Transportation registered",
-                                              "not_registered": "Transportation not registered",
-                                              "capacity-for-complete-order": "Capacity must cover the complete order",
-                                              "scoped-transportation-registration": "Ship point registration must cover this shipment",
-                                              "pack-capability": "Assigned packer must have the packing capability",
-                                              "pack-availability": "Assigned packer must be available for the complete activity",
-                                              "release-capability": "Assigned release worker must have the release capability",
-                                              "release-availability": "Assigned release worker must be available for the complete activity",
-                                              "combined-resource-capacity": "People and packing resources must cover overlapping work",
-                                              "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
-                                              "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
-                                              "selection-not-in-the-past": "Selection cannot be in the past",
-                                              "verification-fee-before-response": "Verification must be paid before using its report",
-                                              "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
-                                              "preparation-before-departure": "Packing and release must finish before departure",
-                                              "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
-                                              "receipt-within-access-window": "Customer receipt must fit the receiving window",
-                                              "total-expense-limit": "Complete expense must fit the expense limit",
-                                              "peak-cash-limit": "Peak cash needed must fit available cash",
-                                              "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
-                                            }
-                                          },
-                                          {
-                                            "ref": "steps.planning.output.preferredPlan.choices.arrangement"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
                                   {
                                     "op": "get",
                                     "args": [
@@ -19004,20 +18834,54 @@
                                         "ref": "steps.planning.output.preferredPlan.choices.arrangement"
                                       }
                                     ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "literal": {
+                                      "direct": "Direct arrangement",
+                                      "backup": "Backup arrangement",
+                                      "registered": "Transportation registered",
+                                      "not_registered": "Transportation not registered",
+                                      "capacity-for-complete-order": "Capacity must cover the complete order",
+                                      "scoped-transportation-registration": "Ship point registration must cover this shipment",
+                                      "pack-capability": "Assigned packer must have the packing capability",
+                                      "pack-availability": "Assigned packer must be available for the complete activity",
+                                      "release-capability": "Assigned release worker must have the release capability",
+                                      "release-availability": "Assigned release worker must be available for the complete activity",
+                                      "combined-resource-capacity": "People and packing resources must cover overlapping work",
+                                      "arrangement-selection-authority": "Selection permission must cover this arrangement and decision time",
+                                      "scoped-final-release-grant": "Release authority must cover this shipment, arrangement and release activity",
+                                      "selection-not-in-the-past": "Selection cannot be in the past",
+                                      "verification-fee-before-response": "Verification must be paid before using its report",
+                                      "reserve-before-cutoff": "The arrangement must be selected before the reservation cutoff",
+                                      "preparation-before-departure": "Packing and release must finish before departure",
+                                      "receipt-by-required-time": "Customer receipt must meet the delivery deadline",
+                                      "receipt-within-access-window": "Customer receipt must fit the receiving window",
+                                      "total-expense-limit": "Complete expense must fit the expense limit",
+                                      "peak-cash-limit": "Peak cash needed must fit available cash",
+                                      "scoped-verification-purchase-grant": "Verification purchase needs its own scoped authority"
+                                    }
                                   },
                                   {
                                     "ref": "steps.planning.output.preferredPlan.choices.arrangement"
                                   }
                                 ]
                               },
-                              " is the lowest-expense supported arrangement."
+                              {
+                                "ref": "steps.planning.output.preferredPlan.choices.arrangement"
+                              }
                             ]
-                          }
+                          },
+                          " is the lowest-expense supported arrangement."
                         ]
-                      },
-                      "No listed shipment arrangement meets the recorded requirements."
+                      }
                     ]
-                  }
+                  },
+                  "No listed shipment arrangement meets the recorded requirements."
                 ]
               },
               "detail": "Compare complete arrangements for the admitted operating situations. Arrival is the latest calculated receipt across those situations.",
@@ -19438,7 +19302,7 @@
                   []
                 ]
               },
-              "qualification": "Results cover the listed complete arrangements and supplied operating assumptions. A calculated arrangement does not reserve freight or establish completed delivery."
+              "qualification": "Fit is calculated for the listed operating situations; freight is not reserved."
             },
             {
               "op": "if",
@@ -20840,5 +20704,5 @@
       }
     ]
   },
-  "contentHash": "3b35f026e377646390ad311dcde238313cbafbdababb7457d1713f17bdc7f616"
+  "contentHash": "639d615fb3e7f706658577482554cc6cbbc93a4873681b0526c3d5628d0e5a71"
 }

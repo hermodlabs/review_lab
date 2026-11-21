@@ -1,0 +1,1193 @@
+format: complete-a-commitment/1
+module:
+  id: review-gift-kit-flexible-planning
+  version: "2.0.1"
+  title: Prepare gift kits before commitment
+  template:
+    id: complete-a-commitment
+    version: 1
+  question: "Which complete correction package addresses every remaining explanation and can finish before we commit the gift kits?"
+  description: "Compare one authored correction package across every remaining fault configuration, including simultaneous faults. Prospective correction is distinct from completed work."
+  metadata:
+    decisionPresentation:
+      format: decision-presentation/1
+      title: Complete gift-kit arrangements
+      priorityLabel: "Lowest complete package cost, then earliest handoff"
+      moneyFormat:
+        currency: USD
+        divisor: 100
+      columns:
+        - id: plan
+          label: Complete arrangement
+        - id: status
+          label: Operating result
+        - id: handoff
+          source:
+            kind: activity
+            id: handoff
+            field: end
+          label: Handoff complete
+          format:
+            kind: time
+            suffix: minutes after the declared origin
+        - id: expense
+          label: Complete package cost
+        - id: blockers
+          label: Conditions needing attention
+      comparisonFields:
+        - id: package
+          source: "choice:packageId"
+          label: Package
+          valueLabels:
+            rehearse-unchanged: "Prepare, rehearse and hand off unchanged kits"
+            reprint: Replace the printed inserts
+            repair-journey: Correct the destination and checkout
+            replace-and-repair: Replace inserts and repair the journey
+            external-replace-and-repair: External replacement and journey repair
+        - id: start
+          source: "choice:startMinute"
+          label: Start
+          format:
+            kind: time
+            suffix: minutes after the declared origin
+      alternativeLabel:
+        columnIds: [package, start]
+    catalog:
+      domain:
+        id: gifting-operations
+        label: Gifting operations
+      useCase:
+        id: prepare-gift-kit-campaign
+        label: Prepare a gift-kit campaign
+    gifting:
+      profileId: gift-kit-readiness
+      profileVersion: "1.0.0"
+      packages:
+        - id: rehearse-unchanged
+          label: "Prepare, rehearse and hand off unchanged kits"
+          corrects: []
+          requiresConfirmation: false
+        - id: reprint
+          label: Replace the printed inserts
+          corrects: [replace-insert]
+          requiresConfirmation: false
+        - id: repair-journey
+          label: Correct the destination and checkout
+          corrects: [correct-destination, fix-checkout]
+          requiresConfirmation: false
+        - id: replace-and-repair
+          label: Replace inserts and repair the journey
+          corrects: [replace-insert, correct-destination, fix-checkout]
+          requiresConfirmation: false
+        - id: external-replace-and-repair
+          label: External replacement and journey repair
+          corrects: [replace-insert, correct-destination, fix-checkout]
+          requiresConfirmation: true
+      checks:
+        - id: declared-fault-state
+          requirement: COVERAGE
+          label: Use an admitted configuration from the published fault catalog
+          evidence: A current scoped evidence assessment admitting this fault configuration.
+        - id: published-package-effects
+          requirement: COVERAGE
+          label: Retain the published correction effects of the selected package
+          evidence: The author-fixed correction effects from this exact published package version.
+        - id: correct-fault-0
+          requirement: SUFFICIENCY
+          label: Address The printed code cannot be read whenever it remains possible
+          evidence: "A complete package addressing The printed code cannot be read, or scoped evidence excluding that fault."
+        - id: correct-fault-1
+          requirement: SUFFICIENCY
+          label: Address The code leads to the wrong destination whenever it remains possible
+          evidence: "A complete package addressing The code leads to the wrong destination, or scoped evidence excluding that fault."
+        - id: correct-fault-2
+          requirement: SUFFICIENCY
+          label: Address The intended checkout is restricted whenever it remains possible
+          evidence: "A complete package addressing The intended checkout is restricted, or scoped evidence excluding that fault."
+        - id: known-owner
+          requirement: ACCESS
+          label: Assign the complete work to a recorded responsible person
+          evidence: A recorded person responsible for this complete correction package.
+        - id: scoped-package-permission
+          requirement: ACCESS
+          label: "Hold recorded authority for this package, person, exact configuration, and whole working interval"
+          evidence: "A sourced permission for the selected package and person, matching all six scope fields and covering correction through handoff."
+        - id: resource-calendar
+          requirement: ACCESS
+          label: "Keep the full correction, rehearsal, and handoff within resource availability"
+          evidence: An availability interval covering the complete proposed work.
+        - id: resource-capacity
+          requirement: ACCESS
+          label: Keep all proposed work within recorded resource capacity
+          evidence: Enough recorded resource capacity throughout the proposed work.
+        - id: not-in-past
+          requirement: TIME
+          label: Start correction at or after the current review time
+          evidence: A current proposed start time.
+        - id: handoff-by-cutoff
+          requirement: TIME
+          label: "Finish correction, scoped rehearsal, and handoff before the kit commitment cutoff"
+          evidence: "Durations and resource availability that fit the cutoff, or a revised commitment."
+        - id: package-within-budget
+          requirement: COST
+          label: Keep the complete proposed package within the recorded spending ceiling
+          evidence: "A current package quote within the spending ceiling, or an approved revised ceiling."
+        - id: quoted-quantity
+          requirement: SUFFICIENCY
+          label: Use a complete-package quote for the current kit quantity
+          evidence: A current complete-package quote and duration explicitly covering the stated kit quantity.
+        - id: minimum-rehearsal
+          requirement: SUFFICIENCY
+          label: Allow at least the published minimum duration for the scoped rehearsal
+          evidence: "A proposed scoped rehearsal duration meeting the published minimum. This remains a plan, not evidence that rehearsal passed."
+        - id: scoped-package-confirmation
+          requirement: CONFIRMATION
+          label: Confirm the selected arrangement for this exact gift-kit configuration
+          evidence: "A sourced positive package confirmation, recorded by a named person, for this exact batch, insert, destination, checkout, device and account, effective at the planned start and valid through handoff."
+  units:
+    time: minute
+    timeOrigin: Start of this gift-kit preparation review
+    money: USD cent
+    count: unit of resource capacity
+    quantity: gift kit
+  assumptions: ["The module author declares the complete fault catalog and the deterministic prospective correction effects of each package. These are reviewed modeling premises, not evidence that correction finished.", One static complete package must work across all admitted configurations. This model does not synthesize sequential investigations or choose a different package for each possible fault configuration., Quoted repair cost is the complete prospective package charge in this bounded profile. Rehearsal and handoff have recorded durations and no separate monetary charge., "The supplied permission registry is complete. An empty registry supplies no permission; evaluating a plan grants no authority.", "The same recorded person and production resource perform correction, scoped rehearsal, and handoff in that order. Resource intervals are half-open; permission valid-through includes the endpoint.", "Quantity scopes this review but does not scale time or expense automatically. Each complete-package quote must explicitly match the stated kit quantity; changing quantity requires a matching quote and duration.", An unchanged-kit package may have a positive preparation duration and no correction effects or monetary charge. Its preparation is not a repair or evidence of a successful rehearsal.]
+  inputs:
+    parameters:
+      batchId:
+        type: string
+      insertRevision:
+        type: string
+      destinationRevision:
+        type: string
+      checkoutRevision:
+        type: string
+      deviceScope:
+        type: string
+      accountScope:
+        type: string
+      actorId:
+        type: string
+      quantity:
+        type: integer
+        unit: quantity
+        minimum: 1
+      nowMinute:
+        type: integer
+        unit: time
+        minimum: 0
+      handoffDeadlineMinute:
+        type: integer
+        unit: time
+        minimum: 0
+      budgetMinor:
+        type: integer
+        unit: money
+        minimum: 0
+      rehearsalMinutes:
+        type: integer
+        unit: time
+        minimum: 1
+      handoffMinutes:
+        type: integer
+        unit: time
+        minimum: 1
+      startOptions:
+        type: array
+        items:
+          type: integer
+          unit: time
+          minimum: 0
+    tables:
+      packages:
+        key: [id]
+        columns:
+          id:
+            type: string
+          quantity:
+            type: integer
+            unit: quantity
+            minimum: 1
+          repairMinutes:
+            type: integer
+            unit: time
+            minimum: 1
+          repairCostMinor:
+            type: integer
+            unit: money
+            minimum: 0
+          fixes0:
+            type: boolean
+          fixes1:
+            type: boolean
+          fixes2:
+            type: boolean
+      scenarios:
+        key: [id]
+        columns:
+          id:
+            type: string
+          fault0:
+            type: boolean
+          fault1:
+            type: boolean
+          fault2:
+            type: boolean
+      people:
+        key: [id]
+        columns:
+          id:
+            type: string
+          name:
+            type: string
+          role:
+            type: string
+      permissions:
+        key: [id]
+        columns:
+          batchId:
+            type: string
+          insertRevision:
+            type: string
+          destinationRevision:
+            type: string
+          checkoutRevision:
+            type: string
+          deviceScope:
+            type: string
+          accountScope:
+            type: string
+          id:
+            type: string
+          packageId:
+            type: string
+          actorId:
+            type: string
+          validFrom:
+            type: integer
+            unit: time
+            minimum: 0
+          validThrough:
+            type: integer
+            unit: time
+            minimum: 0
+          source:
+            type: string
+      resources:
+        key: [id]
+        columns:
+          id:
+            type: string
+          capacity:
+            type: integer
+            unit: count
+            minimum: 0
+      calendars:
+        key: [resource, start, end]
+        columns:
+          resource:
+            type: string
+          start:
+            type: integer
+            unit: time
+            minimum: 0
+          end:
+            type: integer
+            unit: time
+            minimum: 0
+      bookings:
+        key: [id]
+        columns:
+          id:
+            type: string
+          resource:
+            type: string
+          start:
+            type: integer
+            unit: time
+            minimum: 0
+          end:
+            type: integer
+            unit: time
+            minimum: 0
+          amount:
+            type: integer
+            unit: count
+            minimum: 1
+      confirmations:
+        key: [id]
+        columns:
+          id:
+            type: string
+          packageId:
+            type: string
+          batchId:
+            type: string
+          insertRevision:
+            type: string
+          destinationRevision:
+            type: string
+          checkoutRevision:
+            type: string
+          deviceScope:
+            type: string
+          accountScope:
+            type: string
+          confirmed:
+            type: boolean
+          validFrom:
+            type: integer
+            unit: time
+            minimum: 0
+          validThrough:
+            type: integer
+            unit: time
+            minimum: 0
+          recordedAt:
+            type: integer
+            unit: time
+            minimum: 0
+          source:
+            type: string
+          recordedBy:
+            type: string
+  choices:
+    - id: packageId
+      domain:
+        values: [rehearse-unchanged, reprint, repair-journey, replace-and-repair, external-replace-and-repair]
+    - id: startMinute
+      domain:
+        parameter: startOptions
+  scenarioDomain:
+    table: scenarios
+  derived: []
+  activities:
+    - id: correct
+      actor:
+        ref: parameter.actorId
+      start:
+        ref: choice.startMinute
+      duration:
+        op: lookup
+        table: packages
+        where:
+          id:
+            ref: choice.packageId
+        column: repairMinutes
+      resources:
+        - resource:
+            literal: production-team
+          amount:
+            literal: 1
+    - id: rehearse
+      actor:
+        ref: parameter.actorId
+      start:
+        ref: activity.correct.end
+      duration:
+        ref: parameter.rehearsalMinutes
+      resources:
+        - resource:
+            literal: production-team
+          amount:
+            literal: 1
+    - id: handoff
+      actor:
+        ref: parameter.actorId
+      start:
+        ref: activity.rehearse.end
+      duration:
+        ref: parameter.handoffMinutes
+      resources:
+        - resource:
+            literal: production-team
+          amount:
+            literal: 1
+  resources:
+    definitions:
+      table: resources
+      idColumn: id
+      capacityColumn: capacity
+    bookings:
+      table: bookings
+      resourceColumn: resource
+      startColumn: start
+      endColumn: end
+      amountColumn: amount
+  requirements:
+    - id: SUFFICIENCY
+      label: Complete correction
+      meaning: The selected complete package addresses each fault in every remaining explanation.
+      waivable: false
+    - id: COVERAGE
+      label: Remaining explanations
+      meaning: Every scenario comes from the author-declared fault catalog and the engine checks the whole admitted relation.
+      waivable: false
+    - id: ACCESS
+      label: "People, resources, and permissions"
+      meaning: "The proposed work has a known owner, resource capacity and availability, and recorded exact-scope permission."
+      waivable: false
+    - id: TIME
+      label: Commitment cutoff
+      meaning: The complete prospective work fits between now and the kit commitment cutoff.
+      waivable: false
+    - id: COST
+      label: Spending ceiling
+      meaning: The complete package cost fits the recorded spending ceiling.
+      waivable: false
+    - id: CONFIRMATION
+      label: Confirm the selected arrangement for this exact gift-kit configuration
+      meaning: "For any author-designated package, retain a named, sourced positive confirmation matching its package and all six configuration fields, recorded by the current review time, effective when correction starts, and valid through handoff."
+      waivable: false
+  constraints:
+    - id: declared-fault-state
+      requirement: COVERAGE
+      kind: predicate
+      predicate:
+        op: or
+        args:
+          - op: and
+            args:
+              - op: eq
+                args:
+                  - ref: scenario.id
+                  - literal: none
+              - op: eq
+                args:
+                  - ref: scenario.fault0
+                  - literal: false
+              - op: eq
+                args:
+                  - ref: scenario.fault1
+                  - literal: false
+              - op: eq
+                args:
+                  - ref: scenario.fault2
+                  - literal: false
+          - op: and
+            args:
+              - op: eq
+                args:
+                  - ref: scenario.id
+                  - literal: print
+              - op: eq
+                args:
+                  - ref: scenario.fault0
+                  - literal: true
+              - op: eq
+                args:
+                  - ref: scenario.fault1
+                  - literal: false
+              - op: eq
+                args:
+                  - ref: scenario.fault2
+                  - literal: false
+          - op: and
+            args:
+              - op: eq
+                args:
+                  - ref: scenario.id
+                  - literal: destination
+              - op: eq
+                args:
+                  - ref: scenario.fault0
+                  - literal: false
+              - op: eq
+                args:
+                  - ref: scenario.fault1
+                  - literal: true
+              - op: eq
+                args:
+                  - ref: scenario.fault2
+                  - literal: false
+          - op: and
+            args:
+              - op: eq
+                args:
+                  - ref: scenario.id
+                  - literal: print-destination
+              - op: eq
+                args:
+                  - ref: scenario.fault0
+                  - literal: true
+              - op: eq
+                args:
+                  - ref: scenario.fault1
+                  - literal: true
+              - op: eq
+                args:
+                  - ref: scenario.fault2
+                  - literal: false
+          - op: and
+            args:
+              - op: eq
+                args:
+                  - ref: scenario.id
+                  - literal: checkout
+              - op: eq
+                args:
+                  - ref: scenario.fault0
+                  - literal: false
+              - op: eq
+                args:
+                  - ref: scenario.fault1
+                  - literal: false
+              - op: eq
+                args:
+                  - ref: scenario.fault2
+                  - literal: true
+          - op: and
+            args:
+              - op: eq
+                args:
+                  - ref: scenario.id
+                  - literal: print-checkout
+              - op: eq
+                args:
+                  - ref: scenario.fault0
+                  - literal: true
+              - op: eq
+                args:
+                  - ref: scenario.fault1
+                  - literal: false
+              - op: eq
+                args:
+                  - ref: scenario.fault2
+                  - literal: true
+          - op: and
+            args:
+              - op: eq
+                args:
+                  - ref: scenario.id
+                  - literal: destination-checkout
+              - op: eq
+                args:
+                  - ref: scenario.fault0
+                  - literal: false
+              - op: eq
+                args:
+                  - ref: scenario.fault1
+                  - literal: true
+              - op: eq
+                args:
+                  - ref: scenario.fault2
+                  - literal: true
+          - op: and
+            args:
+              - op: eq
+                args:
+                  - ref: scenario.id
+                  - literal: print-destination-checkout
+              - op: eq
+                args:
+                  - ref: scenario.fault0
+                  - literal: true
+              - op: eq
+                args:
+                  - ref: scenario.fault1
+                  - literal: true
+              - op: eq
+                args:
+                  - ref: scenario.fault2
+                  - literal: true
+    - id: published-package-effects
+      requirement: COVERAGE
+      kind: predicate
+      predicate:
+        op: or
+        args:
+          - op: and
+            args:
+              - op: eq
+                args:
+                  - ref: choice.packageId
+                  - literal: rehearse-unchanged
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes0
+                  - literal: false
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes1
+                  - literal: false
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes2
+                  - literal: false
+          - op: and
+            args:
+              - op: eq
+                args:
+                  - ref: choice.packageId
+                  - literal: reprint
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes0
+                  - literal: true
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes1
+                  - literal: false
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes2
+                  - literal: false
+          - op: and
+            args:
+              - op: eq
+                args:
+                  - ref: choice.packageId
+                  - literal: repair-journey
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes0
+                  - literal: false
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes1
+                  - literal: true
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes2
+                  - literal: true
+          - op: and
+            args:
+              - op: eq
+                args:
+                  - ref: choice.packageId
+                  - literal: replace-and-repair
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes0
+                  - literal: true
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes1
+                  - literal: true
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes2
+                  - literal: true
+          - op: and
+            args:
+              - op: eq
+                args:
+                  - ref: choice.packageId
+                  - literal: external-replace-and-repair
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes0
+                  - literal: true
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes1
+                  - literal: true
+              - op: eq
+                args:
+                  - op: lookup
+                    table: packages
+                    where:
+                      id:
+                        ref: choice.packageId
+                    column: fixes2
+                  - literal: true
+    - id: correct-fault-0
+      requirement: SUFFICIENCY
+      kind: predicate
+      predicate:
+        op: or
+        args:
+          - op: not
+            args:
+              - ref: scenario.fault0
+          - op: lookup
+            table: packages
+            where:
+              id:
+                ref: choice.packageId
+            column: fixes0
+    - id: correct-fault-1
+      requirement: SUFFICIENCY
+      kind: predicate
+      predicate:
+        op: or
+        args:
+          - op: not
+            args:
+              - ref: scenario.fault1
+          - op: lookup
+            table: packages
+            where:
+              id:
+                ref: choice.packageId
+            column: fixes1
+    - id: correct-fault-2
+      requirement: SUFFICIENCY
+      kind: predicate
+      predicate:
+        op: or
+        args:
+          - op: not
+            args:
+              - ref: scenario.fault2
+          - op: lookup
+            table: packages
+            where:
+              id:
+                ref: choice.packageId
+            column: fixes2
+    - id: known-owner
+      requirement: ACCESS
+      kind: predicate
+      predicate:
+        op: exists
+        table: people
+        where:
+          id:
+            ref: parameter.actorId
+        test:
+          op: and
+          args:
+            - op: ne
+              args:
+                - ref: row.name
+                - literal: ""
+            - op: ne
+              args:
+                - ref: row.role
+                - literal: ""
+    - id: scoped-package-permission
+      requirement: ACCESS
+      kind: predicate
+      predicate:
+        op: exists
+        table: permissions
+        where:
+          batchId:
+            ref: parameter.batchId
+          insertRevision:
+            ref: parameter.insertRevision
+          destinationRevision:
+            ref: parameter.destinationRevision
+          checkoutRevision:
+            ref: parameter.checkoutRevision
+          deviceScope:
+            ref: parameter.deviceScope
+          accountScope:
+            ref: parameter.accountScope
+          packageId:
+            ref: choice.packageId
+          actorId:
+            ref: parameter.actorId
+        test:
+          op: and
+          args:
+            - op: ne
+              args:
+                - ref: row.source
+                - literal: ""
+            - op: lte
+              args:
+                - ref: row.validFrom
+                - ref: activity.correct.start
+            - op: gte
+              args:
+                - ref: row.validThrough
+                - ref: activity.handoff.end
+    - id: resource-calendar
+      requirement: ACCESS
+      kind: predicate
+      predicate:
+        op: interval-covered
+        table: calendars
+        where:
+          resource:
+            literal: production-team
+        start:
+          ref: activity.correct.start
+        end:
+          ref: activity.handoff.end
+        startColumn: start
+        endColumn: end
+    - id: resource-capacity
+      requirement: ACCESS
+      kind: resource-capacity
+    - id: not-in-past
+      requirement: TIME
+      kind: predicate
+      predicate:
+        op: gte
+        args:
+          - ref: activity.correct.start
+          - ref: parameter.nowMinute
+    - id: handoff-by-cutoff
+      requirement: TIME
+      kind: predicate
+      predicate:
+        op: lte
+        args:
+          - ref: activity.handoff.end
+          - ref: parameter.handoffDeadlineMinute
+    - id: package-within-budget
+      requirement: COST
+      kind: predicate
+      predicate:
+        op: lte
+        args:
+          - ref: finance.expense
+          - ref: parameter.budgetMinor
+    - id: quoted-quantity
+      requirement: SUFFICIENCY
+      kind: predicate
+      predicate:
+        op: eq
+        args:
+          - op: lookup
+            table: packages
+            where:
+              id:
+                ref: choice.packageId
+            column: quantity
+          - ref: parameter.quantity
+    - id: minimum-rehearsal
+      requirement: SUFFICIENCY
+      kind: predicate
+      predicate:
+        op: gte
+        args:
+          - ref: parameter.rehearsalMinutes
+          - literal: 5
+    - id: scoped-package-confirmation
+      requirement: CONFIRMATION
+      kind: predicate
+      predicate:
+        op: or
+        args:
+          - literal: false
+          - op: not
+            args:
+              - op: in
+                args:
+                  - ref: choice.packageId
+                  - literal: [external-replace-and-repair]
+          - op: exists
+            table: confirmations
+            where:
+              packageId:
+                ref: choice.packageId
+              batchId:
+                ref: parameter.batchId
+              insertRevision:
+                ref: parameter.insertRevision
+              destinationRevision:
+                ref: parameter.destinationRevision
+              checkoutRevision:
+                ref: parameter.checkoutRevision
+              deviceScope:
+                ref: parameter.deviceScope
+              accountScope:
+                ref: parameter.accountScope
+            test:
+              op: and
+              args:
+                - op: eq
+                  args:
+                    - ref: row.confirmed
+                    - literal: true
+                - op: ne
+                  args:
+                    - ref: row.source
+                    - literal: ""
+                - op: ne
+                  args:
+                    - ref: row.recordedBy
+                    - literal: ""
+                - op: lte
+                  args:
+                    - ref: row.recordedAt
+                    - ref: parameter.nowMinute
+                - op: lte
+                  args:
+                    - ref: row.validFrom
+                    - ref: activity.correct.start
+                - op: gte
+                  args:
+                    - ref: row.validThrough
+                    - ref: activity.handoff.end
+  finance:
+    mode: expense
+    charges:
+      - id: complete-correction-package
+        amount:
+          op: lookup
+          table: packages
+          where:
+            id:
+              ref: choice.packageId
+          column: repairCostMinor
+    holds: []
+  preference:
+    direction: min
+    expression:
+      ref: finance.expense
+    then:
+      - direction: min
+        expression:
+          ref: activity.handoff.end
+  labels:
+    plan: Complete gift-kit correction arrangement
+    actor: Responsible person
+    expense: Complete package cost
+    choice.packageId: Preparation or correction package
+    choice.startMinute: Proposed start minute
+    activity.correct: Prepare or correct the gift-kit arrangement
+    activity.rehearse: Repeat the scoped gift journey rehearsal
+    activity.handoff: Prepare and complete the kit handoff
+    activity.handoff.end: Handoff completion
+    constraint.declared-fault-state: Use an admitted configuration from the published fault catalog
+    constraint.published-package-effects: Retain the published correction effects of the selected package
+    constraint.correct-fault-0: Address The printed code cannot be read whenever it remains possible
+    constraint.correct-fault-1: Address The code leads to the wrong destination whenever it remains possible
+    constraint.correct-fault-2: Address The intended checkout is restricted whenever it remains possible
+    constraint.known-owner: Assign the complete work to a recorded responsible person
+    constraint.scoped-package-permission: "Hold recorded authority for this package, person, exact configuration, and whole working interval"
+    constraint.resource-calendar: "Keep the full correction, rehearsal, and handoff within resource availability"
+    constraint.resource-capacity: Keep all proposed work within recorded resource capacity
+    constraint.not-in-past: Start correction at or after the current review time
+    constraint.handoff-by-cutoff: "Finish correction, scoped rehearsal, and handoff before the kit commitment cutoff"
+    constraint.package-within-budget: Keep the complete proposed package within the recorded spending ceiling
+    constraint.quoted-quantity: Use a complete-package quote for the current kit quantity
+    constraint.minimum-rehearsal: Allow at least the published minimum duration for the scoped rehearsal
+    constraint.scoped-package-confirmation: Confirm the selected arrangement for this exact gift-kit configuration
+    table.confirmations: Recorded exact-configuration confirmations
+case:
+  id: gift-campaign-example-planning
+  parameters:
+    batchId: GIFT-120
+    insertRevision: insert-3
+    destinationRevision: destination-2
+    checkoutRevision: checkout-1
+    deviceScope: campaign-test-phone
+    accountScope: intended-recipient-account
+    actorId: campaign-owner-1
+    quantity: 120
+    nowMinute: 0
+    handoffDeadlineMinute: 60
+    budgetMinor: 60000
+    rehearsalMinutes: 5
+    handoffMinutes: 5
+    startOptions: [0]
+  tables:
+    packages:
+      - id: rehearse-unchanged
+        quantity: 120
+        repairMinutes: 1
+        repairCostMinor: 0
+        fixes0: false
+        fixes1: false
+        fixes2: false
+      - id: reprint
+        quantity: 120
+        repairMinutes: 10
+        repairCostMinor: 10000
+        fixes0: true
+        fixes1: false
+        fixes2: false
+      - id: repair-journey
+        quantity: 120
+        repairMinutes: 15
+        repairCostMinor: 18000
+        fixes0: false
+        fixes1: true
+        fixes2: true
+      - id: replace-and-repair
+        quantity: 120
+        repairMinutes: 25
+        repairCostMinor: 30000
+        fixes0: true
+        fixes1: true
+        fixes2: true
+      - id: external-replace-and-repair
+        quantity: 120
+        repairMinutes: 10
+        repairCostMinor: 40000
+        fixes0: true
+        fixes1: true
+        fixes2: true
+    scenarios:
+      - id: none
+        fault0: false
+        fault1: false
+        fault2: false
+      - id: print
+        fault0: true
+        fault1: false
+        fault2: false
+      - id: destination
+        fault0: false
+        fault1: true
+        fault2: false
+      - id: print-destination
+        fault0: true
+        fault1: true
+        fault2: false
+      - id: checkout
+        fault0: false
+        fault1: false
+        fault2: true
+      - id: print-checkout
+        fault0: true
+        fault1: false
+        fault2: true
+      - id: destination-checkout
+        fault0: false
+        fault1: true
+        fault2: true
+      - id: print-destination-checkout
+        fault0: true
+        fault1: true
+        fault2: true
+    people:
+      - id: campaign-owner-1
+        name: Fictional campaign owner
+        role: campaign-owner
+    permissions:
+      - batchId: GIFT-120
+        insertRevision: insert-3
+        destinationRevision: destination-2
+        checkoutRevision: checkout-1
+        deviceScope: campaign-test-phone
+        accountScope: intended-recipient-account
+        id: PERMISSION-rehearse-unchanged
+        packageId: rehearse-unchanged
+        actorId: campaign-owner-1
+        validFrom: 0
+        validThrough: 120
+        source: Fictional recorded campaign authorization
+      - batchId: GIFT-120
+        insertRevision: insert-3
+        destinationRevision: destination-2
+        checkoutRevision: checkout-1
+        deviceScope: campaign-test-phone
+        accountScope: intended-recipient-account
+        id: PERMISSION-reprint
+        packageId: reprint
+        actorId: campaign-owner-1
+        validFrom: 0
+        validThrough: 120
+        source: Fictional recorded campaign authorization
+      - batchId: GIFT-120
+        insertRevision: insert-3
+        destinationRevision: destination-2
+        checkoutRevision: checkout-1
+        deviceScope: campaign-test-phone
+        accountScope: intended-recipient-account
+        id: PERMISSION-repair-journey
+        packageId: repair-journey
+        actorId: campaign-owner-1
+        validFrom: 0
+        validThrough: 120
+        source: Fictional recorded campaign authorization
+      - batchId: GIFT-120
+        insertRevision: insert-3
+        destinationRevision: destination-2
+        checkoutRevision: checkout-1
+        deviceScope: campaign-test-phone
+        accountScope: intended-recipient-account
+        id: PERMISSION-replace-and-repair
+        packageId: replace-and-repair
+        actorId: campaign-owner-1
+        validFrom: 0
+        validThrough: 120
+        source: Fictional recorded campaign authorization
+      - batchId: GIFT-120
+        insertRevision: insert-3
+        destinationRevision: destination-2
+        checkoutRevision: checkout-1
+        deviceScope: campaign-test-phone
+        accountScope: intended-recipient-account
+        id: PERMISSION-external
+        packageId: external-replace-and-repair
+        actorId: campaign-owner-1
+        validFrom: 0
+        validThrough: 120
+        source: Fictional recorded campaign authorization
+    resources:
+      - id: production-team
+        capacity: 1
+    calendars:
+      - resource: production-team
+        start: 0
+        end: 120
+    bookings: []
+    confirmations: []
+  provenance: []

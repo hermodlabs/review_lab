@@ -6,7 +6,7 @@
       "title": "Compare first-shipment arrangements",
       "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
       "definitionUrl": "first-shipment/workflow.definition.json",
-      "contentHash": "3b35f026e377646390ad311dcde238313cbafbdababb7457d1713f17bdc7f616"
+      "contentHash": "639d615fb3e7f706658577482554cc6cbbc93a4873681b0526c3d5628d0e5a71"
     }
   ]
 }
