@@ -1,0 +1,698 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-73a5a6ea44c4ea7f633497fe",
+  "version": "1.1.5",
+  "title": "Repair a published restaurant roster — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case.",
+  "target": {
+    "type": "workflow",
+    "id": "repair-published-restaurant-roster",
+    "version": "1.6.0",
+    "packageHash": "379c19be95672da68fe79dd8cb57d8e15b8f3e2a65788eef91f989b8d320e4cf",
+    "definitionHash": "f34a7bce24ab37f811d923cac4da778d13dce985e1e8fa961f71f0e8ae589710"
+  },
+  "managedPaths": [
+    "/roster/reliefWindow/fromMinute",
+    "/roster/reliefWindow/throughMinute",
+    "/roster/remainingPayrollLimitMinor",
+    "/roster/comparisonPriority",
+    "/roster/employees",
+    "/roster/qualifications",
+    "/roster/assignments",
+    "/roster/otherAvailability",
+    "/roster/bookings"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "The configured employees, service positions and four complete repair proposals. Change availability, payroll or comparison priority here; a different restaurant roster needs an adapted author profile."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "The workbook contains this case’s recorded inputs. A blank case stays blank; downloading never restores example values. A partly changed example can retain fictional inputs; inspect Input sources in Decision Lab."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "Relief availability uses HH:mm on Saturday, America/Chicago. Other intervals remain elapsed minutes from 2026-11-16T00:00:00-06:00. Payroll limit uses dollars; employee pay rates retain the explicitly labelled canonical units. Money cells display US dollars; portable data retains exact cents."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Relief cook availability",
+          "instructions": "Editable inputs. The complete working interval for Rowan on Saturday. An early finish does not shorten the required service."
+        },
+        {
+          "topic": "Remaining payroll limit",
+          "instructions": "Editable inputs. Complete remaining payroll in USD dollars, including retained assignments and the repair. The import converts dollars to canonical cents. Additional expense is calculated against the retained baseline."
+        },
+        {
+          "topic": "Comparison priority",
+          "instructions": "Editable inputs. Choose an authored priority. Every mandatory staffing and expense requirement remains unchanged. Compare without ranking leaves every passing repair available."
+        },
+        {
+          "topic": "Employee work records",
+          "instructions": "Editable inputs. Only authored employee identities are supported. Fees are flat amounts per assignment. Earlier work is retained as minutes and the latest previous shift end."
+        },
+        {
+          "topic": "Recorded qualifications",
+          "instructions": "Editable inputs. Recorded qualifications for the authored roles. A missing qualification cannot establish suitability for that role."
+        },
+        {
+          "topic": "Complete proposed repairs",
+          "instructions": "Editable inputs. Complete assignments to every authored position. Changing the employee, position or proposal catalog requires authoring a new profile and publishing a new version."
+        },
+        {
+          "topic": "Other working availability",
+          "instructions": "Editable inputs. Working intervals for the other employees, with breaks and unavailable periods omitted. The relief cook interval is supplied separately."
+        },
+        {
+          "topic": "Other employee commitments",
+          "instructions": "Editable inputs. Existing overlapping work using the same employee identities and week clock. Empty means no other commitments are recorded for this comparison."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Relief cook availability",
+      "kind": "record",
+      "role": "roster-owner",
+      "meaning": "The complete working interval for Rowan on Saturday. An early finish does not shorten the required service.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "roster-reliefWindow-fromMinute",
+          "label": "Available from on Saturday (HH:mm)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute after midnight",
+          "path": "/roster/reliefWindow/fromMinute",
+          "minimum": 0,
+          "maximum": 1440,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "time-of-day",
+            "unit": "minute"
+          }
+        },
+        {
+          "id": "roster-reliefWindow-throughMinute",
+          "label": "Available until on Saturday (HH:mm)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute after midnight",
+          "path": "/roster/reliefWindow/throughMinute",
+          "minimum": 0,
+          "maximum": 1440,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "time-of-day",
+            "unit": "minute"
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-2",
+      "name": "Remaining payroll limit",
+      "kind": "record",
+      "role": "roster-owner",
+      "meaning": "Complete remaining payroll in USD dollars, including retained assignments and the repair. The import converts dollars to canonical cents. Additional expense is calculated against the retained baseline.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "roster-remainingPayrollLimitMinor",
+          "label": "Remaining payroll limit (USD)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "USD cent",
+          "path": "/roster/remainingPayrollLimitMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-3",
+      "name": "Comparison priority",
+      "kind": "record",
+      "role": "roster-owner",
+      "meaning": "Choose an authored priority. Every mandatory staffing and expense requirement remains unchanged. Compare without ranking leaves every passing repair available.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "roster-comparisonPriority",
+          "label": "Comparison priority (feasibility, stability or cost)",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/roster/comparisonPriority",
+          "enum": [
+            "feasibility",
+            "stability",
+            "cost"
+          ]
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-4",
+      "name": "Employee work records",
+      "kind": "table",
+      "role": "roster-owner",
+      "meaning": "Only authored employee identities are supported. Fees are flat amounts per assignment. Earlier work is retained as minutes and the latest previous shift end.",
+      "binding": {
+        "path": "/roster/employees"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id",
+          "enum": [
+            "luis",
+            "priya",
+            "theo",
+            "ava",
+            "ben",
+            "nora",
+            "rowan",
+            "unfilled"
+          ]
+        },
+        {
+          "id": "name",
+          "label": "name",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/name"
+        },
+        {
+          "id": "assignmentFeeMinor",
+          "label": "assignment Fee Minor (USD)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "USD cent",
+          "path": "/assignmentFeeMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        },
+        {
+          "id": "earlierWeekMinutes",
+          "label": "earlier Week Minutes (minutes)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/earlierWeekMinutes",
+          "minimum": 0
+        },
+        {
+          "id": "weeklyLimitMinutes",
+          "label": "weekly Limit Minutes (minutes)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/weeklyLimitMinutes",
+          "minimum": 0
+        },
+        {
+          "id": "lastEarlierShiftEnd",
+          "label": "last Earlier Shift End (minutes)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/lastEarlierShiftEnd",
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-5",
+      "name": "Recorded qualifications",
+      "kind": "table",
+      "role": "roster-owner",
+      "meaning": "Recorded qualifications for the authored roles. A missing qualification cannot establish suitability for that role.",
+      "binding": {
+        "path": "/roster/qualifications"
+      },
+      "columns": [
+        {
+          "id": "employee",
+          "label": "employee",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/employee",
+          "enum": [
+            "luis",
+            "priya",
+            "theo",
+            "ava",
+            "ben",
+            "nora",
+            "rowan",
+            "unfilled"
+          ]
+        },
+        {
+          "id": "role",
+          "label": "role",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/role",
+          "enum": [
+            "cook",
+            "server"
+          ]
+        }
+      ],
+      "key": [
+        "employee",
+        "role"
+      ]
+    },
+    {
+      "id": "inputs-6",
+      "name": "Complete proposed repairs",
+      "kind": "table",
+      "role": "roster-owner",
+      "meaning": "Complete assignments to every authored position. Changing the employee, position or proposal catalog requires authoring a new profile and publishing a new version.",
+      "binding": {
+        "path": "/roster/assignments"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id",
+          "enum": [
+            "hold",
+            "move-only",
+            "relief",
+            "coupled"
+          ]
+        },
+        {
+          "id": "fri-dinner-cook-1",
+          "label": "fri-dinner-cook-1",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/fri-dinner-cook-1",
+          "enum": [
+            "luis",
+            "priya",
+            "theo",
+            "ava",
+            "ben",
+            "nora",
+            "rowan",
+            "unfilled"
+          ]
+        },
+        {
+          "id": "fri-dinner-cook-2",
+          "label": "fri-dinner-cook-2",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/fri-dinner-cook-2",
+          "enum": [
+            "luis",
+            "priya",
+            "theo",
+            "ava",
+            "ben",
+            "nora",
+            "rowan",
+            "unfilled"
+          ]
+        },
+        {
+          "id": "fri-dinner-server",
+          "label": "fri-dinner-server",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/fri-dinner-server",
+          "enum": [
+            "luis",
+            "priya",
+            "theo",
+            "ava",
+            "ben",
+            "nora",
+            "rowan",
+            "unfilled"
+          ]
+        },
+        {
+          "id": "sat-dinner-cook-1",
+          "label": "sat-dinner-cook-1",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/sat-dinner-cook-1",
+          "enum": [
+            "luis",
+            "priya",
+            "theo",
+            "ava",
+            "ben",
+            "nora",
+            "rowan",
+            "unfilled"
+          ]
+        },
+        {
+          "id": "sat-dinner-cook-2",
+          "label": "sat-dinner-cook-2",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/sat-dinner-cook-2",
+          "enum": [
+            "luis",
+            "priya",
+            "theo",
+            "ava",
+            "ben",
+            "nora",
+            "rowan",
+            "unfilled"
+          ]
+        },
+        {
+          "id": "sat-dinner-server",
+          "label": "sat-dinner-server",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/sat-dinner-server",
+          "enum": [
+            "luis",
+            "priya",
+            "theo",
+            "ava",
+            "ben",
+            "nora",
+            "rowan",
+            "unfilled"
+          ]
+        },
+        {
+          "id": "sun-lunch-cook-1",
+          "label": "sun-lunch-cook-1",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/sun-lunch-cook-1",
+          "enum": [
+            "luis",
+            "priya",
+            "theo",
+            "ava",
+            "ben",
+            "nora",
+            "rowan",
+            "unfilled"
+          ]
+        },
+        {
+          "id": "sun-lunch-cook-2",
+          "label": "sun-lunch-cook-2",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/sun-lunch-cook-2",
+          "enum": [
+            "luis",
+            "priya",
+            "theo",
+            "ava",
+            "ben",
+            "nora",
+            "rowan",
+            "unfilled"
+          ]
+        },
+        {
+          "id": "sun-lunch-server",
+          "label": "sun-lunch-server",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/sun-lunch-server",
+          "enum": [
+            "luis",
+            "priya",
+            "theo",
+            "ava",
+            "ben",
+            "nora",
+            "rowan",
+            "unfilled"
+          ]
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-7",
+      "name": "Other working availability",
+      "kind": "table",
+      "role": "roster-owner",
+      "meaning": "Working intervals for the other employees, with breaks and unavailable periods omitted. The relief cook interval is supplied separately.",
+      "binding": {
+        "path": "/roster/otherAvailability"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "employee",
+          "label": "employee",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/employee",
+          "enum": [
+            "luis",
+            "priya",
+            "theo",
+            "ava",
+            "ben",
+            "nora",
+            "rowan",
+            "unfilled"
+          ]
+        },
+        {
+          "id": "from",
+          "label": "from (minutes)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/from",
+          "minimum": 0
+        },
+        {
+          "id": "through",
+          "label": "through (minutes)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/through",
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-8",
+      "name": "Other employee commitments",
+      "kind": "table",
+      "role": "roster-owner",
+      "meaning": "Existing overlapping work using the same employee identities and week clock. Empty means no other commitments are recorded for this comparison.",
+      "binding": {
+        "path": "/roster/bookings"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "employee",
+          "label": "employee",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/employee",
+          "enum": [
+            "luis",
+            "priya",
+            "theo",
+            "ava",
+            "ben",
+            "nora",
+            "rowan",
+            "unfilled"
+          ]
+        },
+        {
+          "id": "from",
+          "label": "from (minutes)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/from",
+          "minimum": 0
+        },
+        {
+          "id": "through",
+          "label": "through (minutes)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/through",
+          "minimum": 0
+        },
+        {
+          "id": "amount",
+          "label": "amount",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/amount",
+          "enum": [
+            1
+          ],
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "0ab7f82c83aba50675731752883c742c4960793ac058394c143cfcd5e7cdee1c"
+}

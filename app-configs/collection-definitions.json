@@ -8,7 +8,7 @@
           "id": "decision-lab",
           "label": "Decision Lab"
         },
-        "version": "1.10.0",
+        "version": "1.11.0",
         "title": "Order fulfillment",
         "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
         "useCases": [
@@ -39,19 +39,19 @@
           {
             "type": "workflow",
             "id": "review-first-shipment",
-            "version": "1.8.0",
-            "packageHash": "bc8577e12502b02253af46cd2cb356c7bd7e7631d985c73f220a0f22cd38032b",
+            "version": "1.9.0",
+            "packageHash": "52e815aca62217bbe5e21e7003283d917464a438fa013cdf21196b71fc22e749",
             "useCaseId": "review-first-shipment",
             "artifact": {
-              "path": "workflows/review-first-shipment/1.8.0/workflow.workflow.json",
-              "bytes": 1022751,
-              "sha256": "d21cfb36f80ff9192274b876ef4ef8c7ebef66f8257f65c5e35d380bc71e84f7"
+              "path": "workflows/review-first-shipment/1.9.0/workflow.workflow.json",
+              "bytes": 1031850,
+              "sha256": "9e3840d8d5f830422a89369cf608ecf832e3dab8bee5dccbefc2daf108ae6ddd"
             }
           }
         ],
         "format": "decision-lab-collection-definition/1"
       },
-      "createdAt": "2026-11-21T23:55:36.071Z"
+      "createdAt": "2026-11-22T02:08:38.561Z"
     },
     {
       "definition": {
@@ -60,7 +60,7 @@
           "id": "decision-lab",
           "label": "Decision Lab"
         },
-        "version": "2.7.0",
+        "version": "2.8.0",
         "title": "Gifting operations",
         "description": "Gifting operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
         "useCases": [
@@ -74,13 +74,13 @@
           {
             "type": "workflow",
             "id": "review-gift-kit-flexible",
-            "version": "2.7.0",
-            "packageHash": "cf8619e3a4dd739e76bc86a4faea3186d5f08f306e3693497432f24f6fae6178",
+            "version": "2.8.0",
+            "packageHash": "72e6b2fcd10236ab4b5693bc37d122be4e8e551f41d584ae50fd80e6725c188f",
             "useCaseId": "prepare-gift-kit-campaign",
             "artifact": {
-              "path": "workflows/review-gift-kit-flexible/2.7.0/workflow.workflow.json",
-              "bytes": 565409,
-              "sha256": "251abca8b344219bf4cb59b978f52549a043ee9331373112aa0cf8d7b61cfe99"
+              "path": "workflows/review-gift-kit-flexible/2.8.0/workflow.workflow.json",
+              "bytes": 570188,
+              "sha256": "a3a2bef2ac30280efa64b8cc10c8d016f37088d510c686dedd1de20119e0e128"
             }
           },
           {
@@ -110,13 +110,13 @@
           {
             "type": "workflow",
             "id": "review-gift-kit-earliest",
-            "version": "2.7.0",
-            "packageHash": "dd607c888648dd538dc50159e27989278adfe7a5b185f03011a0c3bb3677edcb",
+            "version": "2.8.0",
+            "packageHash": "60319b59313d7462a014f4aa57e259718c8abe3117c231fff6b314773a463d39",
             "useCaseId": "prepare-gift-kit-campaign",
             "artifact": {
-              "path": "workflows/review-gift-kit-earliest/2.7.0/workflow.workflow.json",
-              "bytes": 565430,
-              "sha256": "1a6371cda2ae872be20ed3e94a43adddae3364664c1d08ebbc86258b88854861"
+              "path": "workflows/review-gift-kit-earliest/2.8.0/workflow.workflow.json",
+              "bytes": 570209,
+              "sha256": "16e4885cfc78314620c7cb3e9ad1d72d0478f5c393e979a79b226451c3619ea0"
             }
           },
           {
@@ -134,7 +134,7 @@
         ],
         "format": "decision-lab-collection-definition/1"
       },
-      "createdAt": "2026-11-21T23:55:36.071Z"
+      "createdAt": "2026-11-22T02:08:38.561Z"
     },
     {
       "definition": {
@@ -143,7 +143,7 @@
           "id": "decision-lab",
           "label": "Decision Lab"
         },
-        "version": "1.11.0",
+        "version": "1.12.0",
         "title": "Venue operations",
         "description": "Venue operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
         "useCases": [
@@ -157,24 +157,24 @@
           {
             "type": "workflow",
             "id": "street-team-deployment",
-            "version": "1.12.0",
-            "packageHash": "d3b44da60ec74103831b2e138cdf02dc2f1fa82374b3b8b8959581cd8e9ebcdc",
+            "version": "1.13.0",
+            "packageHash": "9c6f8584e6a075918b0081d4068bf2d503083770d1f97a3ca039f101c9115e70",
             "useCaseId": "deploy-street-team",
             "artifact": {
-              "path": "workflows/street-team-deployment/1.12.0/workflow.workflow.json",
-              "bytes": 255577,
-              "sha256": "62ed29dd07ed6d224e4a5831bae8cd3f4d534c9f6906753e0c1c6b27ede77747"
+              "path": "workflows/street-team-deployment/1.13.0/workflow.workflow.json",
+              "bytes": 256071,
+              "sha256": "9665236e76aec93941591a96696dedd873e5b20a9a4a209ae1e846c36740c98f"
             }
           }
         ],
         "format": "decision-lab-collection-definition/1"
       },
-      "createdAt": "2026-11-21T23:55:36.071Z"
+      "createdAt": "2026-11-22T02:08:38.561Z"
     },
     {
       "definition": {
         "id": "restaurant-operations",
-        "version": "1.5.0",
+        "version": "1.6.0",
         "publisher": {
           "id": "decision-lab",
           "label": "Decision Lab"
@@ -192,19 +192,19 @@
           {
             "type": "workflow",
             "id": "repair-published-restaurant-roster",
-            "version": "1.5.0",
-            "packageHash": "1a711dcaafdba4da5c77b7cc0d3ed9d609f2e2ffb053adab632badae836e5f63",
+            "version": "1.6.0",
+            "packageHash": "379c19be95672da68fe79dd8cb57d8e15b8f3e2a65788eef91f989b8d320e4cf",
             "useCaseId": "repair-published-roster",
             "artifact": {
-              "path": "workflows/repair-published-restaurant-roster/1.5.0/workflow.workflow.json",
-              "bytes": 1642081,
-              "sha256": "3371d405e523ad0fc230b161c616c4afe37243bfaedccde6ef2804d0b329bc9a"
+              "path": "workflows/repair-published-restaurant-roster/1.6.0/workflow.workflow.json",
+              "bytes": 1642793,
+              "sha256": "da0db5adbb49806f13582a55adebd69fc5975c8d5639a4988e9d702c062bc24f"
             }
           }
         ],
         "format": "decision-lab-collection-definition/1"
       },
-      "createdAt": "2026-11-21T23:55:36.071Z"
+      "createdAt": "2026-11-22T02:08:38.561Z"
     }
   ]
 }

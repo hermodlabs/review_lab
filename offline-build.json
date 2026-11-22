@@ -1,12 +1,12 @@
 {
-  "version": "831b0105a66b33afabc2",
+  "version": "8b1a876990861ab243e9",
   "appVersion": "0.2.0",
-  "totalBytes": 14095826,
+  "totalBytes": 22782058,
   "assets": [
     {
       "url": "app-configs/README.txt",
-      "sha256": "9983e7f75e07a42a3e5b2c863255fa25821277c875961a5b378bddbdceca0eb3",
-      "bytes": 3419
+      "sha256": "89bf161a9a7129208b9f9af9e668ff34c46c13b37b15fb24d1eea270cfc80a70",
+      "bytes": 3684
     },
     {
       "url": "app-configs/apps/complete-first-shipment/5/app.app.json",
@@ -110,12 +110,12 @@
     },
     {
       "url": "app-configs/catalog.json",
-      "sha256": "327937271eaac80ffa24bac24288f4e2fad95c054bdccbc894c02b83ea78bb01",
-      "bytes": 29293
+      "sha256": "13eef24c379241692905370d178d5dbfc0c66d47f6bcdcf6d21d9b3237397508",
+      "bytes": 29465
     },
     {
       "url": "app-configs/collection-definitions.json",
-      "sha256": "d8c54dd4ace8e23a4f2b0cdbd094b73fb40f2bb410d4a306605adc5afb748a0c",
+      "sha256": "189f9842edf24c522cb15b570f65f18bf5e8cc4cabe527a0513f6e339fc93d65",
       "bytes": 8440
     },
     {
@@ -124,8 +124,18 @@
       "bytes": 3250
     },
     {
+      "url": "app-configs/collections/decision-lab/gifting-operations/2.8.0/collection.collection.json",
+      "sha256": "0e7b19a1de49cc2f7a1011f21508173fac0484ba586eff59c1f80d7373bd2b15",
+      "bytes": 3250
+    },
+    {
       "url": "app-configs/collections/decision-lab/order-fulfillment/1.10.0/collection.collection.json",
       "sha256": "65e7588e188660befdae8476412b1c3eb3b8ab9ea9f934496b53716ef3e0d3c7",
+      "bytes": 2016
+    },
+    {
+      "url": "app-configs/collections/decision-lab/order-fulfillment/1.11.0/collection.collection.json",
+      "sha256": "3752a940230f54ee56984e7eddfa07a53ddb47276553177624c464482982edb7",
       "bytes": 2016
     },
     {
@@ -134,8 +144,18 @@
       "bytes": 1361
     },
     {
+      "url": "app-configs/collections/decision-lab/restaurant-operations/1.6.0/collection.collection.json",
+      "sha256": "27258d5eefde843575054d1689da68a65fe6a1ea14bd39e677ba77d420614e05",
+      "bytes": 1361
+    },
+    {
       "url": "app-configs/collections/decision-lab/venue-operations/1.11.0/collection.collection.json",
       "sha256": "c6fdc067abfaff1c6bd543935dbba83377f7a0d7a4eae2b34f4d4d83ff887a76",
+      "bytes": 1418
+    },
+    {
+      "url": "app-configs/collections/decision-lab/venue-operations/1.12.0/collection.collection.json",
+      "sha256": "f689e6b4091fdf17183acad7c5cd29186f8986b71ea5bd50e4a69016b5596a5a",
       "bytes": 1418
     },
     {
@@ -144,8 +164,13 @@
       "bytes": 12486
     },
     {
+      "url": "app-configs/release-history.catalog.json",
+      "sha256": "fe54222f9dda2d0bfb9b3566a80a4a039de7552aa8b91e6183139c4dfa5de014",
+      "bytes": 29358
+    },
+    {
       "url": "app-configs/workbook-definitions.json",
-      "sha256": "c3fb85022953de1e23a22e22f8efd2b5588795fc2c20bbb4ce0b144b93b1369f",
+      "sha256": "fec8d1f878d3dc05c518a4811276ca6a3c1dbab057497f955b5aa54e42533831",
       "bytes": 1772
     },
     {
@@ -164,6 +189,21 @@
       "bytes": 1642081
     },
     {
+      "url": "app-configs/workflows/repair-published-restaurant-roster/1.6.0/inputs.mapping.json",
+      "sha256": "1e81d1cfe748aede412198d53b196af9350afc743307a4158c172ff9e5073d57",
+      "bytes": 20242
+    },
+    {
+      "url": "app-configs/workflows/repair-published-restaurant-roster/1.6.0/inputs.workbook.json",
+      "sha256": "0080a631971a24b2fafef1a922ad1312caf5ae98d3c766959466efbd21723f12",
+      "bytes": 1721573
+    },
+    {
+      "url": "app-configs/workflows/repair-published-restaurant-roster/1.6.0/workflow.workflow.json",
+      "sha256": "da0db5adbb49806f13582a55adebd69fc5975c8d5639a4988e9d702c062bc24f",
+      "bytes": 1642793
+    },
+    {
       "url": "app-configs/workflows/review-first-shipment/1.8.0/inputs.mapping.json",
       "sha256": "a35cbda1821316541724651f07553c2f2532944b3dc7c73860b9c6192055d23d",
       "bytes": 53712
@@ -177,6 +217,21 @@
       "url": "app-configs/workflows/review-first-shipment/1.8.0/workflow.workflow.json",
       "sha256": "d21cfb36f80ff9192274b876ef4ef8c7ebef66f8257f65c5e35d380bc71e84f7",
       "bytes": 1022751
+    },
+    {
+      "url": "app-configs/workflows/review-first-shipment/1.9.0/inputs.mapping.json",
+      "sha256": "603126be06377aef316025f6ee0912c22043c050f994f52b1bf0acdffbc2915f",
+      "bytes": 53712
+    },
+    {
+      "url": "app-configs/workflows/review-first-shipment/1.9.0/inputs.workbook.json",
+      "sha256": "f64a26d10310388a0060ceb4d66ae18e94ba5e602fb0c961bfa35846ebcb4d4a",
+      "bytes": 1137455
+    },
+    {
+      "url": "app-configs/workflows/review-first-shipment/1.9.0/workflow.workflow.json",
+      "sha256": "9e3840d8d5f830422a89369cf608ecf832e3dab8bee5dccbefc2daf108ae6ddd",
+      "bytes": 1031850
     },
     {
       "url": "app-configs/workflows/review-gift-kit-earliest/2.7.0/inputs.mapping.json",
@@ -194,6 +249,21 @@
       "bytes": 565430
     },
     {
+      "url": "app-configs/workflows/review-gift-kit-earliest/2.8.0/inputs.mapping.json",
+      "sha256": "6a1893a93c1225b78b8604fdcc4600867bdf609925d48f5bb3abb0beac3783cc",
+      "bytes": 30539
+    },
+    {
+      "url": "app-configs/workflows/review-gift-kit-earliest/2.8.0/inputs.workbook.json",
+      "sha256": "435343eaf154da8f5b6dab3207f1f146b35bd4360787f2a128b60f00f5b85f6a",
+      "bytes": 634759
+    },
+    {
+      "url": "app-configs/workflows/review-gift-kit-earliest/2.8.0/workflow.workflow.json",
+      "sha256": "16e4885cfc78314620c7cb3e9ad1d72d0478f5c393e979a79b226451c3619ea0",
+      "bytes": 570209
+    },
+    {
       "url": "app-configs/workflows/review-gift-kit-flexible/2.7.0/inputs.mapping.json",
       "sha256": "5fc835d46c3ea927167706d802f699c481f2428e06d7253c873196c11390769e",
       "bytes": 30536
@@ -207,6 +277,21 @@
       "url": "app-configs/workflows/review-gift-kit-flexible/2.7.0/workflow.workflow.json",
       "sha256": "251abca8b344219bf4cb59b978f52549a043ee9331373112aa0cf8d7b61cfe99",
       "bytes": 565409
+    },
+    {
+      "url": "app-configs/workflows/review-gift-kit-flexible/2.8.0/inputs.mapping.json",
+      "sha256": "07d3bc3eb41e21e05e78dd26a8a58134a4f75fba571e6697e1b4a0d366dfd121",
+      "bytes": 30536
+    },
+    {
+      "url": "app-configs/workflows/review-gift-kit-flexible/2.8.0/inputs.workbook.json",
+      "sha256": "23438a99aa9f9f78822e344ed4c2a2df4b3e1abe5a8b4e6611959da0c40ef146",
+      "bytes": 634735
+    },
+    {
+      "url": "app-configs/workflows/review-gift-kit-flexible/2.8.0/workflow.workflow.json",
+      "sha256": "a3a2bef2ac30280efa64b8cc10c8d016f37088d510c686dedd1de20119e0e128",
+      "bytes": 570188
     },
     {
       "url": "app-configs/workflows/street-team-deployment/1.12.0/inputs.mapping.json",
@@ -224,23 +309,38 @@
       "bytes": 255577
     },
     {
-      "url": "assets/exceljs.min-sgNo9-By.js",
-      "sha256": "c0977042b3cf2156777e50330e1fc3214fd449fd0d34103b500e17c5b7232966",
+      "url": "app-configs/workflows/street-team-deployment/1.13.0/inputs.mapping.json",
+      "sha256": "a1cb34a00d9315fd8f1ae8ec4c5dd14ee7b4a8b722fff8b1810d029943c9b886",
+      "bytes": 17582
+    },
+    {
+      "url": "app-configs/workflows/street-team-deployment/1.13.0/inputs.workbook.json",
+      "sha256": "9f0f301651e4581c69fc616ad35c08fc10eb508f5a9d3e7f06bd0315966f282e",
+      "bytes": 287564
+    },
+    {
+      "url": "app-configs/workflows/street-team-deployment/1.13.0/workflow.workflow.json",
+      "sha256": "9665236e76aec93941591a96696dedd873e5b20a9a4a209ae1e846c36740c98f",
+      "bytes": 256071
+    },
+    {
+      "url": "assets/exceljs.min-Ct9C7fPR.js",
+      "sha256": "f78560fb6a07cf2024ea8dc281ab44094bcd794115d378f4a9142ef0f7d30070",
       "bytes": 929558
     },
     {
-      "url": "assets/index-BxKf47Ur.css",
-      "sha256": "2ef757244c3486b24f7449f1215047ba775f67f695bd60be881d743c4add5624",
-      "bytes": 221844
+      "url": "assets/index-BXKwmWEm.css",
+      "sha256": "812851f68ed889c82857216f9ab937e87c7d65c8da5ec5c7340dabc7988ef58e",
+      "bytes": 224199
     },
     {
-      "url": "assets/index-CuHBHLZv.js",
-      "sha256": "4a7f49cd05d5434a683c03b8248f3d11f0265c68a634dfb06f6eb4866d7b79eb",
-      "bytes": 1900539
+      "url": "assets/index-Dt-65VNi.js",
+      "sha256": "921d5e54576bde22aacc663a11a8129076c25271ad8ea8712387ce01a8e35198",
+      "bytes": 1906768
     },
     {
-      "url": "assets/jszip.min-DudmJaj6.js",
-      "sha256": "7026a487c3307f3b32dd793f90c7607a8012f8c3a763850d5f5f869044072b73",
+      "url": "assets/jszip.min-BphZD3zH.js",
+      "sha256": "2b0eed9a58cd52f7c26c0a5715c42acb3e8244974dbfcc6c2a5b0df60ddf3e5c",
       "bytes": 95949
     },
     {
@@ -275,7 +375,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "5d8608a965ff4f9165b67b502f1192540c08e6c4216f1763013788e2cb2718be",
+      "sha256": "3c7a0787f9414f94e36270948124dd934b7968aaed4b03bde26a73ab44f5655b",
       "bytes": 1023
     },
     {

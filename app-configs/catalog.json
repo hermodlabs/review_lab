@@ -3,7 +3,7 @@
   "kind": "decision-lab-app-catalog",
   "title": "Decision Lab marketplace",
   "description": "Operational calculations organized into collections and use cases.",
-  "exportedAt": "2026-11-21T23:55:36.071Z",
+  "exportedAt": "2026-11-22T02:08:38.561Z",
   "scope": "current-product",
   "apps": [
     {
@@ -309,12 +309,12 @@
   "workflows": [
     {
       "id": "review-first-shipment",
-      "version": "1.8.0",
+      "version": "1.9.0",
       "name": "Compare first-shipment arrangements",
       "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
-      "publishedAt": "2026-11-21T23:55:36.071Z",
-      "contentHash": "bc8577e12502b02253af46cd2cb356c7bd7e7631d985c73f220a0f22cd38032b",
-      "definitionHash": "11b54d8b5d638a9ef945562c476353a5c74521f680bcfce9f84eca25df1af745",
+      "publishedAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "52e815aca62217bbe5e21e7003283d917464a438fa013cdf21196b71fc22e749",
+      "definitionHash": "33b5fca3f96cc4e0a58e3c5d84d4b1ee76ae26e74ee6575cc0c9f8ca67fa6d0e",
       "domain": {
         "id": "order-fulfillment",
         "label": "Order fulfillment",
@@ -366,24 +366,24 @@
         "supportsOwnData": true
       },
       "package": {
-        "path": "workflows/review-first-shipment/1.8.0/workflow.workflow.json",
-        "bytes": 1022751,
-        "sha256": "d21cfb36f80ff9192274b876ef4ef8c7ebef66f8257f65c5e35d380bc71e84f7"
+        "path": "workflows/review-first-shipment/1.9.0/workflow.workflow.json",
+        "bytes": 1031850,
+        "sha256": "9e3840d8d5f830422a89369cf608ecf832e3dab8bee5dccbefc2daf108ae6ddd"
       },
       "workbook": {
-        "path": "workflows/review-first-shipment/1.8.0/inputs.workbook.json",
-        "bytes": 1127848,
-        "sha256": "58e7b8b7aa45977d98bd3154fdb59982537ad723745cf6dc1c60afff59aa2be2"
+        "path": "workflows/review-first-shipment/1.9.0/inputs.workbook.json",
+        "bytes": 1137455,
+        "sha256": "f64a26d10310388a0060ceb4d66ae18e94ba5e602fb0c961bfa35846ebcb4d4a"
       }
     },
     {
       "id": "review-gift-kit-flexible",
-      "version": "2.7.0",
+      "version": "2.8.0",
       "name": "Plan a gift-kit commitment",
       "description": "Compare complete gift-kit correction arrangements against the recorded configuration, work, handoff, capacity, permission and expense requirements.",
-      "publishedAt": "2026-11-21T23:55:36.071Z",
-      "contentHash": "cf8619e3a4dd739e76bc86a4faea3186d5f08f306e3693497432f24f6fae6178",
-      "definitionHash": "96919ee26d04733fd93808696c6110c0cbf5b1ccfe04d9f2e4d39b5e3a300c17",
+      "publishedAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "72e6b2fcd10236ab4b5693bc37d122be4e8e551f41d584ae50fd80e6725c188f",
+      "definitionHash": "2cfbdc3f169e8eb93792cf22e76f57d8f0859c5bf4045dae8c583cfa4f3f46c2",
       "domain": {
         "id": "gifting-operations",
         "label": "Gifting operations",
@@ -427,24 +427,24 @@
         "supportsOwnData": true
       },
       "package": {
-        "path": "workflows/review-gift-kit-flexible/2.7.0/workflow.workflow.json",
-        "bytes": 565409,
-        "sha256": "251abca8b344219bf4cb59b978f52549a043ee9331373112aa0cf8d7b61cfe99"
+        "path": "workflows/review-gift-kit-flexible/2.8.0/workflow.workflow.json",
+        "bytes": 570188,
+        "sha256": "a3a2bef2ac30280efa64b8cc10c8d016f37088d510c686dedd1de20119e0e128"
       },
       "workbook": {
-        "path": "workflows/review-gift-kit-flexible/2.7.0/inputs.workbook.json",
-        "bytes": 629670,
-        "sha256": "a01ebdbd64486fdf45af13f21828d5bf5bc48c0a45aadce3c1ce6b0c51b68fb3"
+        "path": "workflows/review-gift-kit-flexible/2.8.0/inputs.workbook.json",
+        "bytes": 634735,
+        "sha256": "23438a99aa9f9f78822e344ed4c2a2df4b3e1abe5a8b4e6611959da0c40ef146"
       }
     },
     {
       "id": "review-gift-kit-earliest",
-      "version": "2.7.0",
+      "version": "2.8.0",
       "name": "Plan the earliest gift-kit handoff",
       "description": "Find the earliest complete gift-kit correction arrangement meeting the recorded configuration, work, capacity, permission and expense requirements.",
-      "publishedAt": "2026-11-21T23:55:36.071Z",
-      "contentHash": "dd607c888648dd538dc50159e27989278adfe7a5b185f03011a0c3bb3677edcb",
-      "definitionHash": "4e2ce7b47b8943e686e72092752275e2afe34bb4d35bad1c1da67a9036a53554",
+      "publishedAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "60319b59313d7462a014f4aa57e259718c8abe3117c231fff6b314773a463d39",
+      "definitionHash": "34d83ba1ad865e09c26df9dff70864ba435abeb21ac3b630a627ce5dc8a09000",
       "domain": {
         "id": "gifting-operations",
         "label": "Gifting operations",
@@ -488,24 +488,24 @@
         "supportsOwnData": true
       },
       "package": {
-        "path": "workflows/review-gift-kit-earliest/2.7.0/workflow.workflow.json",
-        "bytes": 565430,
-        "sha256": "1a6371cda2ae872be20ed3e94a43adddae3364664c1d08ebbc86258b88854861"
+        "path": "workflows/review-gift-kit-earliest/2.8.0/workflow.workflow.json",
+        "bytes": 570209,
+        "sha256": "16e4885cfc78314620c7cb3e9ad1d72d0478f5c393e979a79b226451c3619ea0"
       },
       "workbook": {
-        "path": "workflows/review-gift-kit-earliest/2.7.0/inputs.workbook.json",
-        "bytes": 629694,
-        "sha256": "d4ba268c992663f13a1bf0c22d00232f92ea2ccd58a37a7e2a4eab5aa60bfe4e"
+        "path": "workflows/review-gift-kit-earliest/2.8.0/inputs.workbook.json",
+        "bytes": 634759,
+        "sha256": "435343eaf154da8f5b6dab3207f1f146b35bd4360787f2a128b60f00f5b85f6a"
       }
     },
     {
       "id": "street-team-deployment",
-      "version": "1.12.0",
+      "version": "1.13.0",
       "name": "Plan a street-team deployment",
       "description": "Compare complete promotion plans against staffing, timing, recorded access and spending requirements, then calculate the additional guests needed to cover expense and separate discount loss. Choice and authorization remain outside the app; customer response is not forecast.",
-      "publishedAt": "2026-11-21T23:55:36.071Z",
-      "contentHash": "d3b44da60ec74103831b2e138cdf02dc2f1fa82374b3b8b8959581cd8e9ebcdc",
-      "definitionHash": "c4ac427480c7daab6758a3019f1ae4f569b56e35ec2e9857a98e68df4ab96d5b",
+      "publishedAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "9c6f8584e6a075918b0081d4068bf2d503083770d1f97a3ca039f101c9115e70",
+      "definitionHash": "b78e1fff6580289388cf7c18a9da291ebceefb1234b5d682c2fd70c06f56660c",
       "domain": {
         "id": "venue-operations",
         "label": "Venue operations"
@@ -539,24 +539,24 @@
         "supportsOwnData": true
       },
       "package": {
-        "path": "workflows/street-team-deployment/1.12.0/workflow.workflow.json",
-        "bytes": 255577,
-        "sha256": "62ed29dd07ed6d224e4a5831bae8cd3f4d534c9f6906753e0c1c6b27ede77747"
+        "path": "workflows/street-team-deployment/1.13.0/workflow.workflow.json",
+        "bytes": 256071,
+        "sha256": "9665236e76aec93941591a96696dedd873e5b20a9a4a209ae1e846c36740c98f"
       },
       "workbook": {
-        "path": "workflows/street-team-deployment/1.12.0/inputs.workbook.json",
-        "bytes": 287030,
-        "sha256": "20ac4b15850018af6ba530c11eef2520bab84f8fd154878e6aef6f39f3fdfc60"
+        "path": "workflows/street-team-deployment/1.13.0/inputs.workbook.json",
+        "bytes": 287564,
+        "sha256": "9f0f301651e4581c69fc616ad35c08fc10eb508f5a9d3e7f06bd0315966f282e"
       }
     },
     {
       "id": "repair-published-restaurant-roster",
-      "version": "1.5.0",
+      "version": "1.6.0",
       "name": "Repair a published restaurant roster",
       "description": "Compare complete repairs to a disrupted published restaurant roster across every remaining service. Check coverage, qualifications, availability, capacity, rest, hours and remaining payroll; optionally compare passing repairs by stability or payroll. The calculation compares supplied proposals and does not generate or publish a roster.",
-      "publishedAt": "2026-11-21T23:55:36.071Z",
-      "contentHash": "1a711dcaafdba4da5c77b7cc0d3ed9d609f2e2ffb053adab632badae836e5f63",
-      "definitionHash": "a21bd5db41b3a6663bcfdbb19abb4006b6c18712a2504cd9377da73c20ee23d8",
+      "publishedAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "379c19be95672da68fe79dd8cb57d8e15b8f3e2a65788eef91f989b8d320e4cf",
+      "definitionHash": "f34a7bce24ab37f811d923cac4da778d13dce985e1e8fa961f71f0e8ae589710",
       "domain": {
         "id": "restaurant-operations",
         "label": "Restaurant operations"
@@ -606,14 +606,14 @@
         "supportsOwnData": false
       },
       "package": {
-        "path": "workflows/repair-published-restaurant-roster/1.5.0/workflow.workflow.json",
-        "bytes": 1642081,
-        "sha256": "3371d405e523ad0fc230b161c616c4afe37243bfaedccde6ef2804d0b329bc9a"
+        "path": "workflows/repair-published-restaurant-roster/1.6.0/workflow.workflow.json",
+        "bytes": 1642793,
+        "sha256": "da0db5adbb49806f13582a55adebd69fc5975c8d5639a4988e9d702c062bc24f"
       },
       "workbook": {
-        "path": "workflows/repair-published-restaurant-roster/1.5.0/inputs.workbook.json",
-        "bytes": 1720819,
-        "sha256": "906adcf53958697a936c8ee0425b35a1e82a34ada7f48fc174898d9307f87b33"
+        "path": "workflows/repair-published-restaurant-roster/1.6.0/inputs.workbook.json",
+        "bytes": 1721573,
+        "sha256": "0080a631971a24b2fafef1a922ad1312caf5ae98d3c766959466efbd21723f12"
       }
     }
   ],
@@ -624,15 +624,15 @@
         "id": "decision-lab",
         "label": "Decision Lab"
       },
-      "version": "1.10.0",
+      "version": "1.11.0",
       "title": "Order fulfillment",
       "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
-      "createdAt": "2026-11-21T23:55:36.071Z",
-      "contentHash": "dcb593f7ce058c9dbcbede823f19b2fe4a2c39eb695730f77156626405638fc9",
+      "createdAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "f30798ba36663259873574ed7f7c0cae4ff629d9231a8ac95142b628ef4b9dc9",
       "package": {
-        "path": "collections/decision-lab/order-fulfillment/1.10.0/collection.collection.json",
+        "path": "collections/decision-lab/order-fulfillment/1.11.0/collection.collection.json",
         "bytes": 2016,
-        "sha256": "65e7588e188660befdae8476412b1c3eb3b8ab9ea9f934496b53716ef3e0d3c7"
+        "sha256": "3752a940230f54ee56984e7eddfa07a53ddb47276553177624c464482982edb7"
       }
     },
     {
@@ -641,15 +641,15 @@
         "id": "decision-lab",
         "label": "Decision Lab"
       },
-      "version": "2.7.0",
+      "version": "2.8.0",
       "title": "Gifting operations",
       "description": "Gifting operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
-      "createdAt": "2026-11-21T23:55:36.071Z",
-      "contentHash": "d92c14346f9952a2375ed4a3dc6c24446cd8a8f411ee8d3d866c4c1bc9f20854",
+      "createdAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "7ec9d5de8b31b47907d54eb035f13ae4cae8dd8fc1fce8f87dfed7b9c6d0169b",
       "package": {
-        "path": "collections/decision-lab/gifting-operations/2.7.0/collection.collection.json",
+        "path": "collections/decision-lab/gifting-operations/2.8.0/collection.collection.json",
         "bytes": 3250,
-        "sha256": "ab306ba6d08990857187a714d087608ddd70cddbd06eecc2dff9a035e00f2ced"
+        "sha256": "0e7b19a1de49cc2f7a1011f21508173fac0484ba586eff59c1f80d7373bd2b15"
       }
     },
     {
@@ -658,15 +658,15 @@
         "id": "decision-lab",
         "label": "Decision Lab"
       },
-      "version": "1.11.0",
+      "version": "1.12.0",
       "title": "Venue operations",
       "description": "Venue operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
-      "createdAt": "2026-11-21T23:55:36.071Z",
-      "contentHash": "e7172e845378bb950a0204d8227bc1709b18c6456f667878fcc614a38374c89a",
+      "createdAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "dd28f8c4a9cfea8f679d9684bcae2dd3c35db2995e1f08100d29530b470bbd6b",
       "package": {
-        "path": "collections/decision-lab/venue-operations/1.11.0/collection.collection.json",
+        "path": "collections/decision-lab/venue-operations/1.12.0/collection.collection.json",
         "bytes": 1418,
-        "sha256": "c6fdc067abfaff1c6bd543935dbba83377f7a0d7a4eae2b34f4d4d83ff887a76"
+        "sha256": "f689e6b4091fdf17183acad7c5cd29186f8986b71ea5bd50e4a69016b5596a5a"
       }
     },
     {
@@ -675,16 +675,21 @@
         "id": "decision-lab",
         "label": "Decision Lab"
       },
-      "version": "1.5.0",
+      "version": "1.6.0",
       "title": "Restaurant operations",
       "description": "Operational calculations for restaurant staffing and service commitments.",
-      "createdAt": "2026-11-21T23:55:36.071Z",
-      "contentHash": "b18e97f5b25a9db597cc49ff06e15710d8ab7e873bb7438c169c52210a6fbecb",
+      "createdAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "1b11350d8a30ec19b8d0bc80e74adf380d14eaa8f31e5d6679971d714b6841f3",
       "package": {
-        "path": "collections/decision-lab/restaurant-operations/1.5.0/collection.collection.json",
+        "path": "collections/decision-lab/restaurant-operations/1.6.0/collection.collection.json",
         "bytes": 1361,
-        "sha256": "87bafde13fe6cd3ac5fe4e7471e756391860e3d75b369db14971442d5a133573"
+        "sha256": "27258d5eefde843575054d1689da68a65fe6a1ea14bd39e677ba77d420614e05"
       }
     }
-  ]
+  ],
+  "historyCatalog": {
+    "path": "release-history.catalog.json",
+    "bytes": 29358,
+    "sha256": "fe54222f9dda2d0bfb9b3566a80a4a039de7552aa8b91e6183139c4dfa5de014"
+  }
 }

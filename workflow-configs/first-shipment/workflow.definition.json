@@ -1,7 +1,7 @@
 {
   "format": "decision-lab-workflow/1",
   "id": "review-first-shipment",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "title": "Compare first-shipment arrangements",
   "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
   "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
@@ -367,8 +367,45 @@
         },
         "formats": {
           "expense": "money",
-          "arrivalMinute": "time",
-          "departureMinute": "time"
+          "arrivalMinute": {
+            "type": "time",
+            "unit": "minute",
+            "timeZone": "America/Chicago"
+          },
+          "departureMinute": {
+            "type": "time",
+            "unit": "minute",
+            "timeZone": "America/Chicago"
+          },
+          "start": {
+            "type": "time",
+            "unit": "minute",
+            "timeZone": "America/Chicago"
+          },
+          "end": {
+            "type": "time",
+            "unit": "minute",
+            "timeZone": "America/Chicago"
+          },
+          "time": {
+            "type": "time",
+            "unit": "minute",
+            "timeZone": "America/Chicago"
+          },
+          "duration": {
+            "type": "duration",
+            "unit": "minute"
+          },
+          "reserveBy": {
+            "type": "time",
+            "unit": "minute",
+            "timeZone": "America/Chicago"
+          },
+          "receiveBy": {
+            "type": "time",
+            "unit": "minute",
+            "timeZone": "America/Chicago"
+          }
         },
         "timeOriginSource": {
           "questionId": "scope",
@@ -393,11 +430,19 @@
               "group": "arrangement",
               "keyField": "arrangement",
               "labelField": "arrangement",
-              "defaultKey": "backup"
+              "initial": {
+                "preferredField": "preferred",
+                "supportedField": "feasible"
+              }
             },
             "summary": {
-              "title": "The arrangement and commitment",
               "fields": [
+                {
+                  "key": "feasible",
+                  "label": "Meets recorded requirements",
+                  "format": "boolean",
+                  "presentation": "text"
+                },
                 {
                   "key": "expense",
                   "label": "Complete arrangement expense",
@@ -405,14 +450,14 @@
                   "presentation": "metric"
                 },
                 {
-                  "key": "receiveBy",
-                  "label": "Required customer receipt",
-                  "presentation": "text"
-                },
-                {
-                  "key": "reserveBy",
-                  "label": "Reservation cutoff",
-                  "presentation": "text"
+                  "key": "arrivalMinute",
+                  "label": "Latest customer receipt",
+                  "format": {
+                    "type": "time",
+                    "unit": "minute",
+                    "timeZone": "America/Chicago"
+                  },
+                  "presentation": "metric"
                 }
               ]
             },
@@ -439,26 +484,30 @@
                   "presentation": "text"
                 },
                 {
-                  "key": "blockers",
-                  "label": "Unmet conditions",
-                  "presentation": "records"
+                  "key": "arrivalMinute",
+                  "label": "Latest customer receipt",
+                  "format": {
+                    "type": "time",
+                    "unit": "minute",
+                    "timeZone": "America/Chicago"
+                  },
+                  "presentation": "text"
                 }
               ]
             },
-            "contextFields": [
-              {
-                "key": "feasible",
-                "label": "Meets recorded requirements",
-                "format": "boolean",
-                "presentation": "text"
-              },
-              {
-                "key": "blockers",
-                "label": "Unmet conditions",
-                "presentation": "records"
-              }
-            ],
             "details": [
+              {
+                "id": "conditions",
+                "title": "Requirements",
+                "question": "Which recorded requirements prevent this arrangement?",
+                "fields": [
+                  {
+                    "key": "blockers",
+                    "label": "Conditions preventing this arrangement",
+                    "presentation": "records"
+                  }
+                ]
+              },
               {
                 "id": "delivery",
                 "title": "Delivery in each possible situation",
@@ -484,12 +533,22 @@
                   {
                     "key": "reserveBy",
                     "label": "Reservation cutoff",
-                    "presentation": "text"
+                    "presentation": "text",
+                    "format": {
+                      "type": "time",
+                      "unit": "minute",
+                      "timeZone": "America/Chicago"
+                    }
                   },
                   {
                     "key": "receiveBy",
                     "label": "Required customer receipt",
-                    "presentation": "text"
+                    "presentation": "text",
+                    "format": {
+                      "type": "time",
+                      "unit": "minute",
+                      "timeZone": "America/Chicago"
+                    }
                   }
                 ]
               }
@@ -515,7 +574,12 @@
               "planning",
               "planning-fast",
               "planning-slow"
-            ]
+            ],
+            "selection": {
+              "group": "arrangement",
+              "keyField": "choices.arrangement",
+              "labelField": "choices.arrangement"
+            }
           },
           {
             "id": "records",
@@ -609,7 +673,7 @@
             "columns": [
               {
                 "key": "label",
-                "label": "Arrangement"
+                "label": "Complete arrangement"
               },
               {
                 "key": "standing",
@@ -631,7 +695,8 @@
               }
             ],
             "tabId": "arrangements",
-            "inspectionKeyField": "inspectionKey"
+            "inspectionKeyField": "inspectionKey",
+            "primaryField": "canOperate"
           },
           "actionGroups": [
             {
@@ -881,11 +946,15 @@
         },
         "response-time": {
           "type": "number",
-          "label": "Review and response duration (minutes)"
+          "label": "Review and response duration (minutes)",
+          "integer": true,
+          "minimum": 0
         },
         "quantity": {
           "type": "number",
-          "label": "Committed quantity"
+          "label": "Committed quantity",
+          "integer": true,
+          "minimum": 1
         },
         "quantity-unit": {
           "type": "string",
@@ -894,15 +963,20 @@
         "current-time": {
           "type": "number",
           "label": "Current time (minute from time origin)",
-          "integer": true
+          "integer": true,
+          "minimum": 0
         },
         "preparation-time": {
           "type": "number",
-          "label": "Packing duration (minutes)"
+          "label": "Packing duration (minutes)",
+          "integer": true,
+          "minimum": 1
         },
         "release-time": {
           "type": "number",
-          "label": "Release duration (minutes)"
+          "label": "Release duration (minutes)",
+          "integer": true,
+          "minimum": 1
         },
         "packing-actor": {
           "type": "string",
@@ -915,12 +989,14 @@
         "receipt-open": {
           "type": "number",
           "label": "Receiving window opens (minute from time origin)",
-          "integer": true
+          "integer": true,
+          "minimum": 0
         },
         "receipt-close": {
           "type": "number",
           "label": "Receiving window closes (minute from time origin)",
-          "integer": true
+          "integer": true,
+          "minimum": 0
         },
         "arrangements": {
           "type": "array",
@@ -950,16 +1026,20 @@
                   "kind": "money",
                   "currency": "USD",
                   "divisor": 100
-                }
+                },
+                "minimum": 0
               },
               "departureMinute": {
                 "type": "number",
                 "label": "Departure (minute from time origin)",
-                "integer": true
+                "integer": true,
+                "minimum": 0
               },
               "travelMinutes": {
                 "type": "number",
-                "label": "Travel duration (minutes)"
+                "label": "Travel duration (minutes)",
+                "integer": true,
+                "minimum": 0
               },
               "arrivalAt": {
                 "type": "string",
@@ -969,10 +1049,17 @@
               },
               "capacity": {
                 "type": "number",
-                "label": "Capacity (shipment quantity unit)"
+                "label": "Capacity (shipment quantity unit)",
+                "integer": true,
+                "minimum": 0
               }
             }
-          }
+          },
+          "collapseRecords": true,
+          "summaryFields": [
+            "id",
+            "shipPointId"
+          ]
         },
         "authority": {
           "type": "object",
@@ -987,7 +1074,8 @@
                 "kind": "money",
                 "currency": "USD",
                 "divisor": 100
-              }
+              },
+              "minimum": 0
             },
             "cashLimitMinor": {
               "type": "number",
@@ -998,7 +1086,8 @@
                 "kind": "money",
                 "currency": "USD",
                 "divisor": 100
-              }
+              },
+              "minimum": 0
             },
             "studyPurchaseCapMinor": {
               "type": "number",
@@ -1009,7 +1098,8 @@
                 "kind": "money",
                 "currency": "USD",
                 "divisor": 100
-              }
+              },
+              "minimum": 0
             },
             "studyPurchaseGrant": {
               "type": "object",
@@ -1051,12 +1141,14 @@
                 "validFrom": {
                   "type": "number",
                   "label": "Grant valid from (minute from time origin)",
-                  "integer": true
+                  "integer": true,
+                  "minimum": 0
                 },
                 "validUntil": {
                   "type": "number",
                   "label": "Grant valid until (exclusive) (minute from time origin)",
-                  "integer": true
+                  "integer": true,
+                  "minimum": 0
                 },
                 "ceilingMinor": {
                   "type": "number",
@@ -1067,7 +1159,8 @@
                     "kind": "money",
                     "currency": "USD",
                     "divisor": 100
-                  }
+                  },
+                  "minimum": 0
                 }
               },
               "nullable": true,
@@ -1095,7 +1188,12 @@
                     "label": "Action"
                   }
                 }
-              }
+              },
+              "collapseRecords": true,
+              "summaryFields": [
+                "actor",
+                "action"
+              ]
             },
             "calendars": {
               "type": "array",
@@ -1111,15 +1209,23 @@
                   "start": {
                     "type": "number",
                     "label": "Available from (minute from time origin)",
-                    "integer": true
+                    "integer": true,
+                    "minimum": 0
                   },
                   "end": {
                     "type": "number",
                     "label": "Available until (exclusive) (minute from time origin)",
-                    "integer": true
+                    "integer": true,
+                    "minimum": 0
                   }
                 }
-              }
+              },
+              "collapseRecords": true,
+              "summaryFields": [
+                "actor",
+                "start",
+                "end"
+              ]
             },
             "resources": {
               "type": "array",
@@ -1134,10 +1240,17 @@
                   },
                   "capacity": {
                     "type": "number",
-                    "label": "Capacity"
+                    "label": "Capacity",
+                    "integer": true,
+                    "minimum": 0
                   }
                 }
-              }
+              },
+              "collapseRecords": true,
+              "summaryFields": [
+                "id",
+                "capacity"
+              ]
             },
             "bookings": {
               "type": "array",
@@ -1157,19 +1270,28 @@
                   "start": {
                     "type": "number",
                     "label": "Start (minute from time origin)",
-                    "integer": true
+                    "integer": true,
+                    "minimum": 0
                   },
                   "end": {
                     "type": "number",
                     "label": "End (exclusive) (minute from time origin)",
-                    "integer": true
+                    "integer": true,
+                    "minimum": 0
                   },
                   "amount": {
                     "type": "number",
-                    "label": "Occupied capacity"
+                    "label": "Occupied capacity",
+                    "integer": true,
+                    "minimum": 0
                   }
                 }
-              }
+              },
+              "collapseRecords": true,
+              "summaryFields": [
+                "id",
+                "resource"
+              ]
             },
             "releaseGrants": {
               "type": "array",
@@ -1222,15 +1344,22 @@
                   "start": {
                     "type": "number",
                     "label": "Valid from (minute from time origin)",
-                    "integer": true
+                    "integer": true,
+                    "minimum": 0
                   },
                   "end": {
                     "type": "number",
                     "label": "Valid until (exclusive) (minute from time origin)",
-                    "integer": true
+                    "integer": true,
+                    "minimum": 0
                   }
                 }
-              }
+              },
+              "collapseRecords": true,
+              "summaryFields": [
+                "id",
+                "arrangement"
+              ]
             },
             "arrangementAuthorities": {
               "type": "array",
@@ -1267,15 +1396,21 @@
                   "start": {
                     "type": "number",
                     "label": "Valid from (minute from time origin)",
-                    "integer": true
+                    "integer": true,
+                    "minimum": 0
                   },
                   "end": {
                     "type": "number",
                     "label": "Valid until (exclusive) (minute from time origin)",
-                    "integer": true
+                    "integer": true,
+                    "minimum": 0
                   }
                 }
-              }
+              },
+              "collapseRecords": true,
+              "summaryFields": [
+                "arrangement"
+              ]
             }
           }
         },
@@ -1354,10 +1489,16 @@
               "observedAtMinute": {
                 "type": "number",
                 "label": "Observed at (minute from time origin)",
-                "integer": true
+                "integer": true,
+                "minimum": 0
               }
             }
-          }
+          },
+          "collapseRecords": true,
+          "summaryFields": [
+            "id",
+            "field"
+          ]
         },
         "sources": {
           "type": "array",
@@ -1391,7 +1532,8 @@
               "observedAt": {
                 "type": "number",
                 "label": "Observed at (minute from time origin)",
-                "integer": true
+                "integer": true,
+                "minimum": 0
               },
               "description": {
                 "type": "string",
@@ -1399,7 +1541,12 @@
                 "multiline": true
               }
             }
-          }
+          },
+          "collapseRecords": true,
+          "summaryFields": [
+            "id",
+            "kind"
+          ]
         },
         "incurred-fees": {
           "type": "array",
@@ -1421,15 +1568,22 @@
                   "kind": "money",
                   "currency": "USD",
                   "divisor": 100
-                }
+                },
+                "minimum": 0
               },
               "paidAtMinute": {
                 "type": "number",
                 "label": "Paid at (minute from time origin)",
-                "integer": true
+                "integer": true,
+                "minimum": 0
               }
             }
-          }
+          },
+          "collapseRecords": true,
+          "summaryFields": [
+            "id",
+            "amountMinor"
+          ]
         },
         "learning-requested": {
           "type": "boolean",
@@ -1488,7 +1642,8 @@
                   "kind": "money",
                   "currency": "USD",
                   "divisor": 100
-                }
+                },
+                "minimum": 0
               },
               "reportAvailableAt": {
                 "type": "string",
@@ -1499,7 +1654,8 @@
               "reportMinute": {
                 "type": "number",
                 "label": "Report available (minute from time origin)",
-                "integer": true
+                "integer": true,
+                "minimum": 0
               },
               "observationModelId": {
                 "type": "string",
@@ -1511,7 +1667,12 @@
                 ]
               }
             }
-          }
+          },
+          "collapseRecords": true,
+          "summaryFields": [
+            "id",
+            "reportAvailableAt"
+          ]
         }
       },
       "workflowMap": {
@@ -18739,6 +18900,96 @@
                         },
                         "scope": {
                           "ref": "case.scope"
+                        },
+                        "preferred": {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "ref": "steps.planning.output.recommendation.preferenceEstablished"
+                                },
+                                true
+                              ]
+                            },
+                            {
+                              "op": "any",
+                              "args": [
+                                {
+                                  "ref": "steps.planning.output.recommendation.tiedPlanIds"
+                                },
+                                {
+                                  "op": "eq",
+                                  "args": [
+                                    {
+                                      "ref": "vars.preferredId"
+                                    },
+                                    {
+                                      "ref": "item.id"
+                                    }
+                                  ]
+                                }
+                              ],
+                              "as": "preferredId"
+                            }
+                          ]
+                        },
+                        "arrivalMinute": {
+                          "op": "if",
+                          "args": [
+                            {
+                              "op": "gt",
+                              "args": [
+                                {
+                                  "op": "length",
+                                  "args": [
+                                    {
+                                      "ref": "item.scenarios"
+                                    }
+                                  ]
+                                },
+                                0
+                              ]
+                            },
+                            {
+                              "op": "get",
+                              "args": [
+                                {
+                                  "op": "sort",
+                                  "args": [
+                                    {
+                                      "op": "map",
+                                      "args": [
+                                        {
+                                          "ref": "item.scenarios"
+                                        },
+                                        {
+                                          "ref": "vars.arrivalScenario.derived.arrival"
+                                        }
+                                      ],
+                                      "as": "arrivalScenario"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "op": "subtract",
+                                  "args": [
+                                    {
+                                      "op": "length",
+                                      "args": [
+                                        {
+                                          "ref": "item.scenarios"
+                                        }
+                                      ]
+                                    },
+                                    1
+                                  ]
+                                }
+                              ]
+                            },
+                            null
+                          ]
                         }
                       }
                     ]
@@ -19313,6 +19564,9 @@
                           ]
                         }
                       ]
+                    },
+                    "canOperate": {
+                      "ref": "vars.plan.feasible"
                     }
                   }
                 ],
@@ -20768,5 +21022,5 @@
       }
     ]
   },
-  "contentHash": "11b54d8b5d638a9ef945562c476353a5c74521f680bcfce9f84eca25df1af745"
+  "contentHash": "33b5fca3f96cc4e0a58e3c5d84d4b1ee76ae26e74ee6575cc0c9f8ca67fa6d0e"
 }

@@ -5,15 +5,18 @@ are identical for local development, the offline build and a remote RSS source.
 
 CURRENT INVENTORY
 
-  Order fulfillment: first-shipment workflow 1.4.0 and shipment planner app 2
-  Gifting operations: cost-first and earliest-handoff workflows 2.3.0,
+  Order fulfillment: first-shipment workflow 1.9.0 and shipment planner app 5
+  Gifting operations: cost-first and earliest-handoff workflows 2.8.0,
     with their four exact supporting evidence/planning apps
-  Venue operations: street-team deployment workflow 1.5.0
-  Restaurant operations: published roster repair workflow 1.0.0
+  Venue operations: street-team deployment workflow 1.13.0
+  Restaurant operations: published roster repair workflow 1.6.0
 
 There are four collections, five workflows and five standalone apps. All ten
-products include prefilled Excel inputs. Only the current releases are served.
-Older releases retained by an installed case are not rewritten or deleted.
+products include prefilled Excel inputs. Normal browsing offers current releases.
+An explicit release-history catalog preserves exact preceding installation links
+used by current articles and shared links. It is fetched only for a fully pinned
+historical request; it does not add older cards to normal browsing. Older releases
+retained by an installed case are not rewritten or deleted.
 
 The roster workflow embeds feasibility-only, stability-first and cost-first
 apps using the same operating requirements. The original public website's
@@ -22,6 +25,7 @@ retained SDK examples keep their own exact release pins.
 FILES
 
   catalog.json
+  release-history.catalog.json
   collections/PUBLISHER/COLLECTION/VERSION/collection.collection.json
   apps/APP/RELEASE/app.app.json
   apps/APP/RELEASE/model.yaml

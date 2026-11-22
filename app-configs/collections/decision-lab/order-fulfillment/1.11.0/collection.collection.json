@@ -1,0 +1,54 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "order-fulfillment",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "version": "1.11.0",
+    "title": "Order fulfillment",
+    "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+    "useCases": [
+      {
+        "id": "complete-first-shipment",
+        "label": "Complete the first shipment",
+        "description": "Compare complete shipment plans that must meet every mandatory obligation across the declared readiness and travel scenarios."
+      },
+      {
+        "id": "review-first-shipment",
+        "label": "Review a first shipment",
+        "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+      }
+    ],
+    "members": [
+      {
+        "type": "app",
+        "id": "complete-first-shipment",
+        "version": 5,
+        "packageHash": "3f0fe808738c4a9868fd4590fb4c2db74542a9c99b0c883f7ed0bf086f4e58bf",
+        "useCaseId": "complete-first-shipment",
+        "artifact": {
+          "path": "apps/complete-first-shipment/5/app.app.json",
+          "bytes": 120983,
+          "sha256": "3b853cf9c081714f49e5381c553ddc410152506004d05078c967cc35cac8046f"
+        }
+      },
+      {
+        "type": "workflow",
+        "id": "review-first-shipment",
+        "version": "1.9.0",
+        "packageHash": "52e815aca62217bbe5e21e7003283d917464a438fa013cdf21196b71fc22e749",
+        "useCaseId": "review-first-shipment",
+        "artifact": {
+          "path": "workflows/review-first-shipment/1.9.0/workflow.workflow.json",
+          "bytes": 1031850,
+          "sha256": "9e3840d8d5f830422a89369cf608ecf832e3dab8bee5dccbefc2daf108ae6ddd"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-22T02:08:38.561Z",
+  "contentHash": "f30798ba36663259873574ed7f7c0cae4ff629d9231a8ac95142b628ef4b9dc9"
+}

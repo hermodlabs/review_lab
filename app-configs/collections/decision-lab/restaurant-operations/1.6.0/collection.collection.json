@@ -1,0 +1,37 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "restaurant-operations",
+    "version": "1.6.0",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "title": "Restaurant operations",
+    "description": "Operational calculations for restaurant staffing and service commitments.",
+    "useCases": [
+      {
+        "id": "repair-published-roster",
+        "label": "Repair a published roster",
+        "description": "Compare supplied complete roster repairs across all remaining services, with explicit staffing requirements and optional stability or payroll priorities."
+      }
+    ],
+    "members": [
+      {
+        "type": "workflow",
+        "id": "repair-published-restaurant-roster",
+        "version": "1.6.0",
+        "packageHash": "379c19be95672da68fe79dd8cb57d8e15b8f3e2a65788eef91f989b8d320e4cf",
+        "useCaseId": "repair-published-roster",
+        "artifact": {
+          "path": "workflows/repair-published-restaurant-roster/1.6.0/workflow.workflow.json",
+          "bytes": 1642793,
+          "sha256": "da0db5adbb49806f13582a55adebd69fc5975c8d5639a4988e9d702c062bc24f"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-22T02:08:38.561Z",
+  "contentHash": "1b11350d8a30ec19b8d0bc80e74adf380d14eaa8f31e5d6679971d714b6841f3"
+}
