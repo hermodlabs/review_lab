@@ -1,7 +1,7 @@
 {
   "format": "decision-lab-workflow/1",
   "id": "review-first-shipment",
-  "version": "1.6.0",
+  "version": "1.8.0",
   "title": "Compare first-shipment arrangements",
   "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
   "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
@@ -388,7 +388,7 @@
             "sectionId": "arrangements",
             "rowsPath": "comparisonRows",
             "title": "Shipment arrangements",
-            "question": "Which complete arrangements meet this delivery commitment?",
+            "question": "Why does each complete shipment arrangement pass or fail?",
             "selection": {
               "group": "arrangement",
               "keyField": "arrangement",
@@ -504,13 +504,13 @@
             "sectionId": "arrangements",
             "viewId": "shipment-arrangements",
             "label": "Arrangement choice",
-            "question": "Which complete arrangements meet this delivery commitment?"
+            "question": "Why does each complete shipment arrangement pass or fail?"
           },
           {
             "id": "schedules",
             "kind": "schedules",
             "label": "Work and timing",
-            "question": "Can preparation, release and delivery fit the required windows?",
+            "question": "When does each shipment arrangement perform the selected activity?",
             "stepIds": [
               "planning",
               "planning-fast",
@@ -538,7 +538,7 @@
                 "format": "name"
               }
             ],
-            "question": "What do the operating records establish?",
+            "question": "What do the operating records establish about this shipment?",
             "rowsPath": "queries"
           },
           {
@@ -574,7 +574,7 @@
                 "label": "Requirement"
               }
             ],
-            "question": "What prevents a listed arrangement from meeting the commitment?",
+            "question": "What would resolve each unmet shipment requirement?",
             "navigation": "advanced"
           }
         ],
@@ -660,6 +660,28 @@
               ],
               "tabId": "learning",
               "presentation": "disclosure"
+            }
+          ],
+          "sections": [
+            {
+              "id": "options",
+              "label": "Options",
+              "question": "Which shipment arrangements meet the commitment, and how do their expense and arrival times compare?"
+            },
+            {
+              "id": "next-actions",
+              "label": "Next actions",
+              "question": "What can we do next, given the current shipment findings?"
+            },
+            {
+              "id": "assumptions",
+              "label": "Assumptions",
+              "question": "What assumptions and limits does this shipment comparison depend on?"
+            },
+            {
+              "id": "questions",
+              "label": "Questions",
+              "question": "What still needs to be established before committing to an arrangement?"
             }
           ]
         },
@@ -921,8 +943,14 @@
               },
               "costMinor": {
                 "type": "number",
-                "label": "Complete arrangement quote (USD cents)",
-                "integer": true
+                "label": "Complete arrangement quote",
+                "integer": true,
+                "unit": "USD cent",
+                "display": {
+                  "kind": "money",
+                  "currency": "USD",
+                  "divisor": 100
+                }
               },
               "departureMinute": {
                 "type": "number",
@@ -952,18 +980,36 @@
           "fields": {
             "budgetMinor": {
               "type": "number",
-              "label": "Expense limit (USD cents)",
-              "integer": true
+              "label": "Expense limit",
+              "integer": true,
+              "unit": "USD cent",
+              "display": {
+                "kind": "money",
+                "currency": "USD",
+                "divisor": 100
+              }
             },
             "cashLimitMinor": {
               "type": "number",
-              "label": "Available cash (USD cents)",
-              "integer": true
+              "label": "Available cash",
+              "integer": true,
+              "unit": "USD cent",
+              "display": {
+                "kind": "money",
+                "currency": "USD",
+                "divisor": 100
+              }
             },
             "studyPurchaseCapMinor": {
               "type": "number",
-              "label": "Verification purchase limit (USD cents)",
-              "integer": true
+              "label": "Verification purchase limit",
+              "integer": true,
+              "unit": "USD cent",
+              "display": {
+                "kind": "money",
+                "currency": "USD",
+                "divisor": 100
+              }
             },
             "studyPurchaseGrant": {
               "type": "object",
@@ -1014,8 +1060,14 @@
                 },
                 "ceilingMinor": {
                   "type": "number",
-                  "label": "Grant ceiling (USD cents)",
-                  "integer": true
+                  "label": "Grant ceiling",
+                  "integer": true,
+                  "unit": "USD cent",
+                  "display": {
+                    "kind": "money",
+                    "currency": "USD",
+                    "divisor": 100
+                  }
                 }
               },
               "nullable": true,
@@ -1362,8 +1414,14 @@
               },
               "amountMinor": {
                 "type": "number",
-                "label": "Amount already incurred (USD cents)",
-                "integer": true
+                "label": "Amount already incurred",
+                "integer": true,
+                "unit": "USD cent",
+                "display": {
+                  "kind": "money",
+                  "currency": "USD",
+                  "divisor": 100
+                }
               },
               "paidAtMinute": {
                 "type": "number",
@@ -1423,8 +1481,14 @@
               },
               "feeMinor": {
                 "type": "number",
-                "label": "Verification fee (USD cents)",
-                "integer": true
+                "label": "Verification fee",
+                "integer": true,
+                "unit": "USD cent",
+                "display": {
+                  "kind": "money",
+                  "currency": "USD",
+                  "divisor": 100
+                }
               },
               "reportAvailableAt": {
                 "type": "string",
@@ -19749,7 +19813,7 @@
                   [
                     {
                       "id": "registration",
-                      "label": "Direct ship-point transportation registration remains unresolved.",
+                      "label": "Is the direct ship point registered for transportation for this shipment?",
                       "detail": "The existing arrangement comparison must accommodate every remaining operating situation."
                     }
                   ],
@@ -19759,7 +19823,7 @@
               [
                 {
                   "id": "registration-pending",
-                  "label": "Transportation registration has not been established on a current evidence basis.",
+                  "label": "What do the current records establish about transportation registration for this shipment?",
                   "detail": "Calculate the supplied records before interpreting readiness for an arrangement."
                 }
               ]
@@ -20704,5 +20768,5 @@
       }
     ]
   },
-  "contentHash": "639d615fb3e7f706658577482554cc6cbbc93a4873681b0526c3d5628d0e5a71"
+  "contentHash": "11b54d8b5d638a9ef945562c476353a5c74521f680bcfce9f84eca25df1af745"
 }
