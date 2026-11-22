@@ -10,8 +10,9 @@ CURRENT INVENTORY
     with their four exact supporting evidence/planning apps
   Venue operations: street-team deployment workflow 1.13.0
   Restaurant operations: published roster repair workflow 1.6.0
+  Software delivery: release recovery workflow 1.0.0 and release arrangements app 1
 
-There are four collections, five workflows and five standalone apps. All ten
+There are five collections, six workflows and six standalone apps. All twelve
 products include prefilled Excel inputs. Normal browsing offers current releases.
 An explicit release-history catalog preserves exact preceding installation links
 used by current articles and shared links. It is fetched only for a fully pinned
@@ -21,6 +22,13 @@ retained by an installed case are not rewritten or deleted.
 The roster workflow embeds feasibility-only, stability-first and cost-first
 apps using the same operating requirements. The original public website's
 retained SDK examples keep their own exact release pins.
+
+The software release example compares four supplied complete arrangements. Its
+CSV adapter and CLI walkthrough live in sample_code/software-delivery/release-recovery
+in the development repository. Jira exports supply workload estimates and source
+references; resource availability, qualifications and accepted revisions remain
+explicit operational inputs. The native package never interprets arbitrary issue
+graphs, converts story points to hours or predicts a delivery probability.
 
 FILES
 

@@ -1,0 +1,440 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-147a7e3faf3f974f44384f7c",
+  "version": "1.0.0",
+  "title": "Compare release arrangements — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case.",
+  "target": {
+    "type": "app",
+    "id": "compare-release-arrangements",
+    "release": 1,
+    "pattern": "complete-a-commitment/1",
+    "packageHash": "8149c0f48faa6c27727d32984c7c137189cc91247a6b254d594c1ba70c9f84e1",
+    "moduleHash": "b2525bc311454c8773baf68ae37a98f7cad4ed974969db68c52c7659d51a81d2"
+  },
+  "managedPaths": [
+    "/parameters/coreMinutes",
+    "/parameters/reportingMinutes",
+    "/parameters/originalDeadline",
+    "/parameters/proposedDeadline",
+    "/parameters/acceptedRevisedDeadline",
+    "/parameters/budgetMinor",
+    "/parameters/extraFeeMinor",
+    "/parameters/scopeRevisionAccepted",
+    "/parameters/dateRevisionAccepted",
+    "/parameters/prerequisiteConfirmed",
+    "/parameters/releaseAuthorized",
+    "/tables/availability",
+    "/tables/qualifications",
+    "/tables/bookings"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "A fictional release with four authored arrangements and fixed validation phases. Change the declared operating inputs; adapt the model for other scopes, work structures, resources or arrangements."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "Integer elapsed minutes from the declared release origin; these are explicitly supplied working windows, not continuous availability inferred from elapsed time. Money is USD cents. Workbook money controls use dollars where labelled. Original scope and deadline remain the baseline when evaluating a proposed accepted amendment."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Parameters",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Availability",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Qualifications",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Bookings",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Parameters",
+      "kind": "record",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "parameters-coreMinutes",
+          "label": "Parameters core Minutes",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/parameters/coreMinutes",
+          "minimum": 301
+        },
+        {
+          "id": "parameters-reportingMinutes",
+          "label": "Parameters reporting Minutes",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/parameters/reportingMinutes",
+          "minimum": 1
+        },
+        {
+          "id": "parameters-originalDeadline",
+          "label": "Parameters original Deadline",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/parameters/originalDeadline",
+          "minimum": 60
+        },
+        {
+          "id": "parameters-proposedDeadline",
+          "label": "Parameters proposed Deadline",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/parameters/proposedDeadline",
+          "minimum": 0
+        },
+        {
+          "id": "parameters-acceptedRevisedDeadline",
+          "label": "Parameters accepted Revised Deadline",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/parameters/acceptedRevisedDeadline",
+          "minimum": 0
+        },
+        {
+          "id": "parameters-budgetMinor",
+          "label": "Additional expense limit (USD)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "USD cent",
+          "path": "/parameters/budgetMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        },
+        {
+          "id": "parameters-extraFeeMinor",
+          "label": "Complete additional-help fee (USD)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "USD cent",
+          "path": "/parameters/extraFeeMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        },
+        {
+          "id": "parameters-scopeRevisionAccepted",
+          "label": "Parameters scope Revision Accepted",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/parameters/scopeRevisionAccepted"
+        },
+        {
+          "id": "parameters-dateRevisionAccepted",
+          "label": "Parameters date Revision Accepted",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/parameters/dateRevisionAccepted"
+        },
+        {
+          "id": "parameters-prerequisiteConfirmed",
+          "label": "Parameters prerequisite Confirmed",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/parameters/prerequisiteConfirmed"
+        },
+        {
+          "id": "parameters-releaseAuthorized",
+          "label": "Parameters release Authorized",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/parameters/releaseAuthorized"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-2",
+      "name": "Availability",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/tables/availability"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "resource",
+          "label": "Resource",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/resource",
+          "enum": [
+            "existing-qa",
+            "external-qa",
+            "release-owner"
+          ]
+        },
+        {
+          "id": "from",
+          "label": "From",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/from",
+          "minimum": 0
+        },
+        {
+          "id": "through",
+          "label": "Through",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/through",
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-3",
+      "name": "Qualifications",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/tables/qualifications"
+      },
+      "columns": [
+        {
+          "id": "resource",
+          "label": "Resource",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/resource",
+          "enum": [
+            "existing-qa",
+            "external-qa"
+          ]
+        },
+        {
+          "id": "build",
+          "label": "Build",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/build"
+        },
+        {
+          "id": "environment",
+          "label": "Environment",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/environment"
+        },
+        {
+          "id": "from",
+          "label": "From",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/from",
+          "minimum": 0
+        },
+        {
+          "id": "through",
+          "label": "Through",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/through",
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "resource",
+        "build",
+        "environment",
+        "from",
+        "through"
+      ]
+    },
+    {
+      "id": "inputs-4",
+      "name": "Bookings",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/tables/bookings"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "resource",
+          "label": "Resource",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/resource",
+          "enum": [
+            "existing-qa",
+            "external-qa",
+            "release-owner"
+          ]
+        },
+        {
+          "id": "from",
+          "label": "From",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/from",
+          "minimum": 0
+        },
+        {
+          "id": "through",
+          "label": "Through",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/through",
+          "minimum": 0
+        },
+        {
+          "id": "amount",
+          "label": "Amount",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "resource",
+          "path": "/amount",
+          "enum": [
+            1
+          ],
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "339934fa3e6e770d758b1a5a23ef5d78d78623df001b1d9c701de9a51f81ed18"
+}

@@ -1,0 +1,2574 @@
+{
+  "format": "complete-a-commitment/1",
+  "module": {
+    "id": "release-recovery",
+    "version": "1.0.0",
+    "template": {
+      "id": "complete-a-commitment",
+      "version": 1
+    },
+    "title": "Compare release arrangements",
+    "question": "Which supplied release arrangements can satisfy the recorded scope, deadline, QA and spending requirements?",
+    "description": "Compare four complete arrangements for an at-risk release. Reduced scope and a later date remain explicit amendments to the original commitment. This bounded calculation does not certify release quality or search all possible schedules.",
+    "units": {
+      "time": "minute",
+      "timeOrigin": "minutes from the recorded release-planning origin",
+      "money": "USD cent",
+      "count": "resource"
+    },
+    "assumptions": [
+      "Inputs describe fictional remaining QA work and recorded qualifications. Unknown workload or missing required facts leave the comparison unavailable; ticket status is not acceptance evidence.",
+      "Core QA includes 240 minutes of independent regression and 60 minutes of integration sign-off. Primary core QA is the remaining recorded core work. Reporting QA is added to integration when included. All intervals are half-open working minutes.",
+      "The existing QA resource represents one exclusive qualified allocation. Concurrent outside bookings reduce its availability through the shared capacity check. The additional QA resource can perform the authored independent regression package only.",
+      "These four supplied schedules are not an exhaustive release scheduler. A different task dependency, a different transferable work package or a changed staffing structure requires an authored model revision.",
+      "The original full scope and original deadline are retained in every outcome. A passing amended arrangement does not meet the original commitment unchanged.",
+      "The additional fee is a flat accepted amount for the complete engagement, in currency cents; existing sunk costs and unmodeled quality risks are not estimated.",
+      "Recorded prerequisite confirmation and authority do not authenticate an approver, perform tests, change the product scope, publish a release or prove successful operation."
+    ],
+    "inputs": {
+      "parameters": {
+        "coreMinutes": {
+          "type": "integer",
+          "unit": "time",
+          "minimum": 301
+        },
+        "reportingMinutes": {
+          "type": "integer",
+          "unit": "time",
+          "minimum": 1
+        },
+        "originalDeadline": {
+          "type": "integer",
+          "unit": "time",
+          "minimum": 60
+        },
+        "proposedDeadline": {
+          "type": "integer",
+          "unit": "time",
+          "minimum": 0
+        },
+        "acceptedRevisedDeadline": {
+          "type": "integer",
+          "unit": "time",
+          "minimum": 0
+        },
+        "budgetMinor": {
+          "type": "integer",
+          "unit": "money",
+          "minimum": 0
+        },
+        "extraFeeMinor": {
+          "type": "integer",
+          "unit": "money",
+          "minimum": 0
+        },
+        "scopeRevisionAccepted": {
+          "type": "boolean"
+        },
+        "dateRevisionAccepted": {
+          "type": "boolean"
+        },
+        "prerequisiteConfirmed": {
+          "type": "boolean"
+        },
+        "releaseAuthorized": {
+          "type": "boolean"
+        }
+      },
+      "tables": {
+        "availability": {
+          "key": [
+            "id"
+          ],
+          "columns": {
+            "id": {
+              "type": "string"
+            },
+            "resource": {
+              "type": "string",
+              "enum": [
+                "existing-qa",
+                "external-qa",
+                "release-owner"
+              ]
+            },
+            "from": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "through": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            }
+          }
+        },
+        "qualifications": {
+          "key": [
+            "resource",
+            "build",
+            "environment",
+            "from",
+            "through"
+          ],
+          "columns": {
+            "resource": {
+              "type": "string",
+              "enum": [
+                "existing-qa",
+                "external-qa"
+              ]
+            },
+            "build": {
+              "type": "string"
+            },
+            "environment": {
+              "type": "string"
+            },
+            "from": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "through": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            }
+          }
+        },
+        "bookings": {
+          "key": [
+            "id"
+          ],
+          "columns": {
+            "id": {
+              "type": "string"
+            },
+            "resource": {
+              "type": "string",
+              "enum": [
+                "existing-qa",
+                "external-qa",
+                "release-owner"
+              ]
+            },
+            "from": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "through": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "amount": {
+              "type": "integer",
+              "unit": "count",
+              "minimum": 0,
+              "enum": [
+                1
+              ]
+            }
+          }
+        },
+        "scenarios": {
+          "key": [
+            "id"
+          ],
+          "columns": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "recorded-release"
+              ]
+            }
+          }
+        },
+        "_arrangements": {
+          "key": [
+            "id"
+          ],
+          "columns": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "original",
+                "core-only",
+                "extra-help",
+                "later-release"
+              ]
+            },
+            "reportingIncluded": {
+              "type": "boolean"
+            },
+            "reportingFactor": {
+              "type": "integer",
+              "unit": "count",
+              "minimum": 0,
+              "enum": [
+                0,
+                1
+              ]
+            },
+            "requiresScopeRevision": {
+              "type": "boolean"
+            },
+            "requiresDateRevision": {
+              "type": "boolean"
+            },
+            "externalFactor": {
+              "type": "integer",
+              "unit": "count",
+              "minimum": 0,
+              "enum": [
+                0,
+                1
+              ]
+            },
+            "serialFactor": {
+              "type": "integer",
+              "unit": "count",
+              "minimum": 0,
+              "enum": [
+                0,
+                1
+              ]
+            },
+            "currentDayFactor": {
+              "type": "integer",
+              "unit": "count",
+              "minimum": 0,
+              "enum": [
+                0,
+                1
+              ]
+            },
+            "laterFactor": {
+              "type": "integer",
+              "unit": "count",
+              "minimum": 0,
+              "enum": [
+                0,
+                1
+              ]
+            },
+            "independentActor": {
+              "type": "string",
+              "enum": [
+                "existing-qa",
+                "external-qa"
+              ]
+            }
+          }
+        },
+        "_resources": {
+          "key": [
+            "id"
+          ],
+          "columns": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "existing-qa",
+                "external-qa",
+                "release-owner"
+              ]
+            },
+            "capacity": {
+              "type": "integer",
+              "unit": "count",
+              "minimum": 0,
+              "enum": [
+                1
+              ]
+            }
+          }
+        }
+      }
+    },
+    "choices": [
+      {
+        "id": "arrangement",
+        "domain": {
+          "values": [
+            "original",
+            "core-only",
+            "extra-help",
+            "later-release"
+          ]
+        }
+      }
+    ],
+    "scenarioDomain": {
+      "table": "scenarios"
+    },
+    "lookupCoverage": [
+      {
+        "table": "_arrangements",
+        "keys": {
+          "id": {
+            "domain": {
+              "values": [
+                "original",
+                "core-only",
+                "extra-help",
+                "later-release"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "table": "_resources",
+        "keys": {
+          "id": {
+            "domain": {
+              "values": [
+                "existing-qa",
+                "external-qa",
+                "release-owner"
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "derived": [
+      {
+        "id": "baselineCoreMinutes",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "ref": "parameter.coreMinutes"
+        }
+      },
+      {
+        "id": "baselineReportingMinutes",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "ref": "parameter.reportingMinutes"
+        }
+      },
+      {
+        "id": "originalDeadline",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "ref": "parameter.originalDeadline"
+        }
+      },
+      {
+        "id": "originalQaDeadline",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "op": "sub",
+          "args": [
+            {
+              "ref": "parameter.originalDeadline"
+            },
+            {
+              "literal": 60
+            }
+          ]
+        }
+      },
+      {
+        "id": "originalReportingIncluded",
+        "type": "boolean",
+        "expr": {
+          "literal": true
+        }
+      },
+      {
+        "id": "proposedReportingIncluded",
+        "type": "boolean",
+        "expr": {
+          "op": "lookup",
+          "table": "_arrangements",
+          "where": {
+            "id": {
+              "ref": "choice.arrangement"
+            }
+          },
+          "column": "reportingIncluded"
+        }
+      },
+      {
+        "id": "requiresScopeRevision",
+        "type": "boolean",
+        "expr": {
+          "op": "lookup",
+          "table": "_arrangements",
+          "where": {
+            "id": {
+              "ref": "choice.arrangement"
+            }
+          },
+          "column": "requiresScopeRevision"
+        }
+      },
+      {
+        "id": "requiresDateRevision",
+        "type": "boolean",
+        "expr": {
+          "op": "lookup",
+          "table": "_arrangements",
+          "where": {
+            "id": {
+              "ref": "choice.arrangement"
+            }
+          },
+          "column": "requiresDateRevision"
+        }
+      },
+      {
+        "id": "originalCommitmentPreserved",
+        "type": "boolean",
+        "expr": {
+          "op": "and",
+          "args": [
+            {
+              "op": "not",
+              "args": [
+                {
+                  "op": "lookup",
+                  "table": "_arrangements",
+                  "where": {
+                    "id": {
+                      "ref": "choice.arrangement"
+                    }
+                  },
+                  "column": "requiresScopeRevision"
+                }
+              ]
+            },
+            {
+              "op": "not",
+              "args": [
+                {
+                  "op": "lookup",
+                  "table": "_arrangements",
+                  "where": {
+                    "id": {
+                      "ref": "choice.arrangement"
+                    }
+                  },
+                  "column": "requiresDateRevision"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "revisionAccepted",
+        "type": "boolean",
+        "expr": {
+          "op": "and",
+          "args": [
+            {
+              "op": "or",
+              "args": [
+                {
+                  "op": "not",
+                  "args": [
+                    {
+                      "op": "lookup",
+                      "table": "_arrangements",
+                      "where": {
+                        "id": {
+                          "ref": "choice.arrangement"
+                        }
+                      },
+                      "column": "requiresScopeRevision"
+                    }
+                  ]
+                },
+                {
+                  "ref": "parameter.scopeRevisionAccepted"
+                }
+              ]
+            },
+            {
+              "op": "or",
+              "args": [
+                {
+                  "op": "not",
+                  "args": [
+                    {
+                      "op": "lookup",
+                      "table": "_arrangements",
+                      "where": {
+                        "id": {
+                          "ref": "choice.arrangement"
+                        }
+                      },
+                      "column": "requiresDateRevision"
+                    }
+                  ]
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "ref": "parameter.dateRevisionAccepted"
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "ref": "parameter.acceptedRevisedDeadline"
+                        },
+                        {
+                          "ref": "parameter.proposedDeadline"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "applicableDeadline",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "op": "add",
+          "args": [
+            {
+              "op": "mul",
+              "args": [
+                {
+                  "ref": "parameter.originalDeadline"
+                },
+                {
+                  "op": "lookup",
+                  "table": "_arrangements",
+                  "where": {
+                    "id": {
+                      "ref": "choice.arrangement"
+                    }
+                  },
+                  "column": "currentDayFactor"
+                }
+              ]
+            },
+            {
+              "op": "mul",
+              "args": [
+                {
+                  "ref": "parameter.proposedDeadline"
+                },
+                {
+                  "op": "lookup",
+                  "table": "_arrangements",
+                  "where": {
+                    "id": {
+                      "ref": "choice.arrangement"
+                    }
+                  },
+                  "column": "laterFactor"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "qaMinutes",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "op": "add",
+          "args": [
+            {
+              "ref": "parameter.coreMinutes"
+            },
+            {
+              "op": "mul",
+              "args": [
+                {
+                  "ref": "parameter.reportingMinutes"
+                },
+                {
+                  "op": "lookup",
+                  "table": "_arrangements",
+                  "where": {
+                    "id": {
+                      "ref": "choice.arrangement"
+                    }
+                  },
+                  "column": "reportingFactor"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "extraExpense",
+        "type": "integer",
+        "unit": "money",
+        "expr": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "parameter.extraFeeMinor"
+            },
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "ref": "choice.arrangement"
+                }
+              },
+              "column": "externalFactor"
+            }
+          ]
+        }
+      },
+      {
+        "id": "independentCoreDuration",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "literal": 240
+        }
+      },
+      {
+        "id": "nextDayIntegrationMinute",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "literal": 1440
+        }
+      },
+      {
+        "id": "primaryCoreDuration",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "op": "sub",
+          "args": [
+            {
+              "ref": "parameter.coreMinutes"
+            },
+            {
+              "literal": 300
+            }
+          ]
+        }
+      },
+      {
+        "id": "integrationDuration",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "op": "add",
+          "args": [
+            {
+              "literal": 60
+            },
+            {
+              "op": "mul",
+              "args": [
+                {
+                  "ref": "parameter.reportingMinutes"
+                },
+                {
+                  "op": "lookup",
+                  "table": "_arrangements",
+                  "where": {
+                    "id": {
+                      "ref": "choice.arrangement"
+                    }
+                  },
+                  "column": "reportingFactor"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "integrationStart",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "op": "add",
+          "args": [
+            {
+              "op": "mul",
+              "args": [
+                {
+                  "ref": "derived.primaryCoreDuration"
+                },
+                {
+                  "op": "lookup",
+                  "table": "_arrangements",
+                  "where": {
+                    "id": {
+                      "ref": "choice.arrangement"
+                    }
+                  },
+                  "column": "currentDayFactor"
+                }
+              ]
+            },
+            {
+              "op": "mul",
+              "args": [
+                {
+                  "ref": "derived.independentCoreDuration"
+                },
+                {
+                  "op": "lookup",
+                  "table": "_arrangements",
+                  "where": {
+                    "id": {
+                      "ref": "choice.arrangement"
+                    }
+                  },
+                  "column": "serialFactor"
+                }
+              ]
+            },
+            {
+              "op": "mul",
+              "args": [
+                {
+                  "ref": "derived.nextDayIntegrationMinute"
+                },
+                {
+                  "op": "lookup",
+                  "table": "_arrangements",
+                  "where": {
+                    "id": {
+                      "ref": "choice.arrangement"
+                    }
+                  },
+                  "column": "laterFactor"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "completionMinute",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "ref": "activity.release-handoff.end"
+        }
+      }
+    ],
+    "activities": [
+      {
+        "id": "primary-core-qa",
+        "actor": {
+          "literal": "existing-qa"
+        },
+        "start": {
+          "literal": 0
+        },
+        "duration": {
+          "ref": "derived.primaryCoreDuration"
+        },
+        "resources": [
+          {
+            "resource": {
+              "literal": "existing-qa"
+            },
+            "amount": {
+              "literal": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "independent-regression",
+        "actor": {
+          "op": "lookup",
+          "table": "_arrangements",
+          "where": {
+            "id": {
+              "ref": "choice.arrangement"
+            }
+          },
+          "column": "independentActor"
+        },
+        "start": {
+          "ref": "activity.primary-core-qa.end"
+        },
+        "duration": {
+          "literal": 240
+        },
+        "resources": [
+          {
+            "resource": {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "ref": "choice.arrangement"
+                }
+              },
+              "column": "independentActor"
+            },
+            "amount": {
+              "literal": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "integration-qa",
+        "actor": {
+          "literal": "existing-qa"
+        },
+        "start": {
+          "ref": "derived.integrationStart"
+        },
+        "duration": {
+          "ref": "derived.integrationDuration"
+        },
+        "resources": [
+          {
+            "resource": {
+              "literal": "existing-qa"
+            },
+            "amount": {
+              "literal": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "release-handoff",
+        "actor": {
+          "literal": "release-owner"
+        },
+        "start": {
+          "ref": "activity.integration-qa.end"
+        },
+        "duration": {
+          "literal": 60
+        },
+        "resources": [
+          {
+            "resource": {
+              "literal": "release-owner"
+            },
+            "amount": {
+              "literal": 1
+            }
+          }
+        ]
+      }
+    ],
+    "resources": {
+      "definitions": {
+        "table": "_resources",
+        "idColumn": "id",
+        "capacityColumn": "capacity"
+      },
+      "bookings": {
+        "table": "bookings",
+        "resourceColumn": "resource",
+        "startColumn": "from",
+        "endColumn": "through",
+        "amountColumn": "amount"
+      }
+    },
+    "requirements": [
+      {
+        "id": "SCOPE",
+        "label": "Recorded release scope",
+        "meaning": "Core QA is retained. Deferring reporting requires an explicitly accepted scope amendment for this release.",
+        "waivable": false
+      },
+      {
+        "id": "TIME",
+        "label": "Recorded release deadline",
+        "meaning": "All QA and the complete handoff finish by the original deadline or a proposed deadline matching the explicitly accepted revised deadline.",
+        "waivable": false
+      },
+      {
+        "id": "QUALIFICATION",
+        "label": "Qualified QA for this build",
+        "meaning": "Each actual QA resource has a qualification covering this build, environment and full assigned interval.",
+        "waivable": false
+      },
+      {
+        "id": "AVAILABILITY",
+        "label": "Whole-activity availability",
+        "meaning": "Recorded working availability covers every complete assigned activity.",
+        "waivable": false
+      },
+      {
+        "id": "CAPACITY",
+        "label": "Exclusive QA and handoff resources",
+        "meaning": "Activities and existing bookings cannot use the same exclusive resource simultaneously.",
+        "waivable": false
+      },
+      {
+        "id": "PREREQUISITES",
+        "label": "Confirmed release prerequisite",
+        "meaning": "The recorded prerequisite is confirmed; a ticket status alone does not establish it.",
+        "waivable": false
+      },
+      {
+        "id": "ACCESS",
+        "label": "Recorded release authority",
+        "meaning": "The recorded release authorization is present. This does not obtain an external approval.",
+        "waivable": false
+      },
+      {
+        "id": "BUDGET",
+        "label": "Additional spending limit",
+        "meaning": "The flat accepted fee for the complete additional QA engagement fits the recorded limit.",
+        "waivable": false
+      },
+      {
+        "id": "BASIS",
+        "label": "Authored arrangement meaning",
+        "meaning": "Case inputs cannot rewrite which scope, deadline or resources an arrangement represents.",
+        "waivable": false
+      }
+    ],
+    "constraints": [
+      {
+        "id": "meaning-original-reportingIncluded",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "original"
+                }
+              },
+              "column": "reportingIncluded"
+            },
+            {
+              "literal": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-original-reportingFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "original"
+                }
+              },
+              "column": "reportingFactor"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-original-requiresScopeRevision",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "original"
+                }
+              },
+              "column": "requiresScopeRevision"
+            },
+            {
+              "literal": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-original-requiresDateRevision",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "original"
+                }
+              },
+              "column": "requiresDateRevision"
+            },
+            {
+              "literal": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-original-externalFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "original"
+                }
+              },
+              "column": "externalFactor"
+            },
+            {
+              "literal": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-original-serialFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "original"
+                }
+              },
+              "column": "serialFactor"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-original-currentDayFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "original"
+                }
+              },
+              "column": "currentDayFactor"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-original-laterFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "original"
+                }
+              },
+              "column": "laterFactor"
+            },
+            {
+              "literal": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-original-independentActor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "original"
+                }
+              },
+              "column": "independentActor"
+            },
+            {
+              "literal": "existing-qa"
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-core-only-reportingIncluded",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "core-only"
+                }
+              },
+              "column": "reportingIncluded"
+            },
+            {
+              "literal": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-core-only-reportingFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "core-only"
+                }
+              },
+              "column": "reportingFactor"
+            },
+            {
+              "literal": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-core-only-requiresScopeRevision",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "core-only"
+                }
+              },
+              "column": "requiresScopeRevision"
+            },
+            {
+              "literal": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-core-only-requiresDateRevision",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "core-only"
+                }
+              },
+              "column": "requiresDateRevision"
+            },
+            {
+              "literal": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-core-only-externalFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "core-only"
+                }
+              },
+              "column": "externalFactor"
+            },
+            {
+              "literal": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-core-only-serialFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "core-only"
+                }
+              },
+              "column": "serialFactor"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-core-only-currentDayFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "core-only"
+                }
+              },
+              "column": "currentDayFactor"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-core-only-laterFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "core-only"
+                }
+              },
+              "column": "laterFactor"
+            },
+            {
+              "literal": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-core-only-independentActor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "core-only"
+                }
+              },
+              "column": "independentActor"
+            },
+            {
+              "literal": "existing-qa"
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-extra-help-reportingIncluded",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "extra-help"
+                }
+              },
+              "column": "reportingIncluded"
+            },
+            {
+              "literal": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-extra-help-reportingFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "extra-help"
+                }
+              },
+              "column": "reportingFactor"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-extra-help-requiresScopeRevision",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "extra-help"
+                }
+              },
+              "column": "requiresScopeRevision"
+            },
+            {
+              "literal": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-extra-help-requiresDateRevision",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "extra-help"
+                }
+              },
+              "column": "requiresDateRevision"
+            },
+            {
+              "literal": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-extra-help-externalFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "extra-help"
+                }
+              },
+              "column": "externalFactor"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-extra-help-serialFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "extra-help"
+                }
+              },
+              "column": "serialFactor"
+            },
+            {
+              "literal": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-extra-help-currentDayFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "extra-help"
+                }
+              },
+              "column": "currentDayFactor"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-extra-help-laterFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "extra-help"
+                }
+              },
+              "column": "laterFactor"
+            },
+            {
+              "literal": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-extra-help-independentActor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "extra-help"
+                }
+              },
+              "column": "independentActor"
+            },
+            {
+              "literal": "external-qa"
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-later-release-reportingIncluded",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "later-release"
+                }
+              },
+              "column": "reportingIncluded"
+            },
+            {
+              "literal": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-later-release-reportingFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "later-release"
+                }
+              },
+              "column": "reportingFactor"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-later-release-requiresScopeRevision",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "later-release"
+                }
+              },
+              "column": "requiresScopeRevision"
+            },
+            {
+              "literal": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-later-release-requiresDateRevision",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "later-release"
+                }
+              },
+              "column": "requiresDateRevision"
+            },
+            {
+              "literal": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-later-release-externalFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "later-release"
+                }
+              },
+              "column": "externalFactor"
+            },
+            {
+              "literal": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-later-release-serialFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "later-release"
+                }
+              },
+              "column": "serialFactor"
+            },
+            {
+              "literal": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-later-release-currentDayFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "later-release"
+                }
+              },
+              "column": "currentDayFactor"
+            },
+            {
+              "literal": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-later-release-laterFactor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "later-release"
+                }
+              },
+              "column": "laterFactor"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "meaning-later-release-independentActor",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_arrangements",
+              "where": {
+                "id": {
+                  "literal": "later-release"
+                }
+              },
+              "column": "independentActor"
+            },
+            {
+              "literal": "existing-qa"
+            }
+          ]
+        }
+      },
+      {
+        "id": "capacity-existing-qa",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_resources",
+              "where": {
+                "id": {
+                  "literal": "existing-qa"
+                }
+              },
+              "column": "capacity"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "capacity-external-qa",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_resources",
+              "where": {
+                "id": {
+                  "literal": "external-qa"
+                }
+              },
+              "column": "capacity"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "capacity-release-owner",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_resources",
+              "where": {
+                "id": {
+                  "literal": "release-owner"
+                }
+              },
+              "column": "capacity"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "scope-amendment",
+        "requirement": "SCOPE",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "not",
+              "args": [
+                {
+                  "op": "lookup",
+                  "table": "_arrangements",
+                  "where": {
+                    "id": {
+                      "ref": "choice.arrangement"
+                    }
+                  },
+                  "column": "requiresScopeRevision"
+                }
+              ]
+            },
+            {
+              "ref": "parameter.scopeRevisionAccepted"
+            }
+          ]
+        }
+      },
+      {
+        "id": "deadline-amendment",
+        "requirement": "TIME",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "not",
+              "args": [
+                {
+                  "op": "lookup",
+                  "table": "_arrangements",
+                  "where": {
+                    "id": {
+                      "ref": "choice.arrangement"
+                    }
+                  },
+                  "column": "requiresDateRevision"
+                }
+              ]
+            },
+            {
+              "op": "and",
+              "args": [
+                {
+                  "ref": "parameter.dateRevisionAccepted"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "parameter.acceptedRevisedDeadline"
+                    },
+                    {
+                      "ref": "parameter.proposedDeadline"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "later-deadline-meaning",
+        "requirement": "TIME",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "not",
+              "args": [
+                {
+                  "op": "lookup",
+                  "table": "_arrangements",
+                  "where": {
+                    "id": {
+                      "ref": "choice.arrangement"
+                    }
+                  },
+                  "column": "requiresDateRevision"
+                }
+              ]
+            },
+            {
+              "op": "gt",
+              "args": [
+                {
+                  "ref": "parameter.proposedDeadline"
+                },
+                {
+                  "ref": "parameter.originalDeadline"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "complete-by-deadline",
+        "requirement": "TIME",
+        "kind": "predicate",
+        "predicate": {
+          "op": "lte",
+          "args": [
+            {
+              "ref": "derived.completionMinute"
+            },
+            {
+              "ref": "derived.applicableDeadline"
+            }
+          ]
+        }
+      },
+      {
+        "id": "integration-after-core",
+        "requirement": "TIME",
+        "kind": "predicate",
+        "predicate": {
+          "op": "gte",
+          "args": [
+            {
+              "ref": "activity.integration-qa.start"
+            },
+            {
+              "ref": "activity.primary-core-qa.end"
+            }
+          ]
+        }
+      },
+      {
+        "id": "handoff-after-independent",
+        "requirement": "TIME",
+        "kind": "predicate",
+        "predicate": {
+          "op": "gte",
+          "args": [
+            {
+              "ref": "activity.release-handoff.start"
+            },
+            {
+              "ref": "activity.independent-regression.end"
+            }
+          ]
+        }
+      },
+      {
+        "id": "available-primary-core-qa",
+        "requirement": "AVAILABILITY",
+        "kind": "predicate",
+        "predicate": {
+          "op": "interval-covered",
+          "table": "availability",
+          "where": {
+            "resource": {
+              "ref": "activity.primary-core-qa.actor"
+            }
+          },
+          "start": {
+            "ref": "activity.primary-core-qa.start"
+          },
+          "end": {
+            "ref": "activity.primary-core-qa.end"
+          },
+          "startColumn": "from",
+          "endColumn": "through"
+        }
+      },
+      {
+        "id": "qualified-primary-core-qa",
+        "requirement": "QUALIFICATION",
+        "kind": "predicate",
+        "predicate": {
+          "op": "exists",
+          "table": "qualifications",
+          "where": {
+            "resource": {
+              "ref": "activity.primary-core-qa.actor"
+            },
+            "build": {
+              "literal": "release-2026-11"
+            },
+            "environment": {
+              "literal": "release-validation"
+            }
+          },
+          "test": {
+            "op": "and",
+            "args": [
+              {
+                "op": "lte",
+                "args": [
+                  {
+                    "ref": "row.from"
+                  },
+                  {
+                    "ref": "activity.primary-core-qa.start"
+                  }
+                ]
+              },
+              {
+                "op": "gte",
+                "args": [
+                  {
+                    "ref": "row.through"
+                  },
+                  {
+                    "ref": "activity.primary-core-qa.end"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "available-independent-regression",
+        "requirement": "AVAILABILITY",
+        "kind": "predicate",
+        "predicate": {
+          "op": "interval-covered",
+          "table": "availability",
+          "where": {
+            "resource": {
+              "ref": "activity.independent-regression.actor"
+            }
+          },
+          "start": {
+            "ref": "activity.independent-regression.start"
+          },
+          "end": {
+            "ref": "activity.independent-regression.end"
+          },
+          "startColumn": "from",
+          "endColumn": "through"
+        }
+      },
+      {
+        "id": "qualified-independent-regression",
+        "requirement": "QUALIFICATION",
+        "kind": "predicate",
+        "predicate": {
+          "op": "exists",
+          "table": "qualifications",
+          "where": {
+            "resource": {
+              "ref": "activity.independent-regression.actor"
+            },
+            "build": {
+              "literal": "release-2026-11"
+            },
+            "environment": {
+              "literal": "release-validation"
+            }
+          },
+          "test": {
+            "op": "and",
+            "args": [
+              {
+                "op": "lte",
+                "args": [
+                  {
+                    "ref": "row.from"
+                  },
+                  {
+                    "ref": "activity.independent-regression.start"
+                  }
+                ]
+              },
+              {
+                "op": "gte",
+                "args": [
+                  {
+                    "ref": "row.through"
+                  },
+                  {
+                    "ref": "activity.independent-regression.end"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "available-integration-qa",
+        "requirement": "AVAILABILITY",
+        "kind": "predicate",
+        "predicate": {
+          "op": "interval-covered",
+          "table": "availability",
+          "where": {
+            "resource": {
+              "ref": "activity.integration-qa.actor"
+            }
+          },
+          "start": {
+            "ref": "activity.integration-qa.start"
+          },
+          "end": {
+            "ref": "activity.integration-qa.end"
+          },
+          "startColumn": "from",
+          "endColumn": "through"
+        }
+      },
+      {
+        "id": "qualified-integration-qa",
+        "requirement": "QUALIFICATION",
+        "kind": "predicate",
+        "predicate": {
+          "op": "exists",
+          "table": "qualifications",
+          "where": {
+            "resource": {
+              "ref": "activity.integration-qa.actor"
+            },
+            "build": {
+              "literal": "release-2026-11"
+            },
+            "environment": {
+              "literal": "release-validation"
+            }
+          },
+          "test": {
+            "op": "and",
+            "args": [
+              {
+                "op": "lte",
+                "args": [
+                  {
+                    "ref": "row.from"
+                  },
+                  {
+                    "ref": "activity.integration-qa.start"
+                  }
+                ]
+              },
+              {
+                "op": "gte",
+                "args": [
+                  {
+                    "ref": "row.through"
+                  },
+                  {
+                    "ref": "activity.integration-qa.end"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "available-release-handoff",
+        "requirement": "AVAILABILITY",
+        "kind": "predicate",
+        "predicate": {
+          "op": "interval-covered",
+          "table": "availability",
+          "where": {
+            "resource": {
+              "ref": "activity.release-handoff.actor"
+            }
+          },
+          "start": {
+            "ref": "activity.release-handoff.start"
+          },
+          "end": {
+            "ref": "activity.release-handoff.end"
+          },
+          "startColumn": "from",
+          "endColumn": "through"
+        }
+      },
+      {
+        "id": "exclusive-resource-capacity",
+        "requirement": "CAPACITY",
+        "kind": "resource-capacity"
+      },
+      {
+        "id": "release-prerequisite",
+        "requirement": "PREREQUISITES",
+        "kind": "predicate",
+        "predicate": {
+          "ref": "parameter.prerequisiteConfirmed"
+        }
+      },
+      {
+        "id": "release-authorization",
+        "requirement": "ACCESS",
+        "kind": "predicate",
+        "predicate": {
+          "ref": "parameter.releaseAuthorized"
+        }
+      },
+      {
+        "id": "additional-qa-budget",
+        "requirement": "BUDGET",
+        "kind": "predicate",
+        "predicate": {
+          "op": "lte",
+          "args": [
+            {
+              "ref": "finance.expense"
+            },
+            {
+              "ref": "parameter.budgetMinor"
+            }
+          ]
+        }
+      }
+    ],
+    "finance": {
+      "mode": "expense",
+      "charges": [
+        {
+          "id": "additional-qa-engagement",
+          "amount": {
+            "ref": "derived.extraExpense"
+          }
+        }
+      ],
+      "holds": []
+    },
+    "preference": {
+      "mode": "feasibility-only"
+    },
+    "labels": {
+      "plan": "Complete release arrangement",
+      "actor": "Assigned resource",
+      "scenario": "Recorded release",
+      "financeExpense": "Additional QA expense",
+      "choice.arrangement": "Release arrangement",
+      "view.schedule.title": "Release work and handoff",
+      "activity.primary-core-qa": "Primary core QA",
+      "activity.independent-regression": "Independent core regression",
+      "activity.integration-qa": "Core integration and selected reporting QA",
+      "activity.release-handoff": "Complete release handoff",
+      "constraint.meaning-original-reportingIncluded": "Retain the authored meaning of Full release with existing QA",
+      "constraint.meaning-original-reportingFactor": "Retain the authored meaning of Full release with existing QA",
+      "constraint.meaning-original-requiresScopeRevision": "Retain the authored meaning of Full release with existing QA",
+      "constraint.meaning-original-requiresDateRevision": "Retain the authored meaning of Full release with existing QA",
+      "constraint.meaning-original-externalFactor": "Retain the authored meaning of Full release with existing QA",
+      "constraint.meaning-original-serialFactor": "Retain the authored meaning of Full release with existing QA",
+      "constraint.meaning-original-currentDayFactor": "Retain the authored meaning of Full release with existing QA",
+      "constraint.meaning-original-laterFactor": "Retain the authored meaning of Full release with existing QA",
+      "constraint.meaning-original-independentActor": "Retain the authored meaning of Full release with existing QA",
+      "constraint.meaning-core-only-reportingIncluded": "Retain the authored meaning of Core release with reporting deferred",
+      "constraint.meaning-core-only-reportingFactor": "Retain the authored meaning of Core release with reporting deferred",
+      "constraint.meaning-core-only-requiresScopeRevision": "Retain the authored meaning of Core release with reporting deferred",
+      "constraint.meaning-core-only-requiresDateRevision": "Retain the authored meaning of Core release with reporting deferred",
+      "constraint.meaning-core-only-externalFactor": "Retain the authored meaning of Core release with reporting deferred",
+      "constraint.meaning-core-only-serialFactor": "Retain the authored meaning of Core release with reporting deferred",
+      "constraint.meaning-core-only-currentDayFactor": "Retain the authored meaning of Core release with reporting deferred",
+      "constraint.meaning-core-only-laterFactor": "Retain the authored meaning of Core release with reporting deferred",
+      "constraint.meaning-core-only-independentActor": "Retain the authored meaning of Core release with reporting deferred",
+      "constraint.meaning-extra-help-reportingIncluded": "Retain the authored meaning of Full release with additional qualified QA",
+      "constraint.meaning-extra-help-reportingFactor": "Retain the authored meaning of Full release with additional qualified QA",
+      "constraint.meaning-extra-help-requiresScopeRevision": "Retain the authored meaning of Full release with additional qualified QA",
+      "constraint.meaning-extra-help-requiresDateRevision": "Retain the authored meaning of Full release with additional qualified QA",
+      "constraint.meaning-extra-help-externalFactor": "Retain the authored meaning of Full release with additional qualified QA",
+      "constraint.meaning-extra-help-serialFactor": "Retain the authored meaning of Full release with additional qualified QA",
+      "constraint.meaning-extra-help-currentDayFactor": "Retain the authored meaning of Full release with additional qualified QA",
+      "constraint.meaning-extra-help-laterFactor": "Retain the authored meaning of Full release with additional qualified QA",
+      "constraint.meaning-extra-help-independentActor": "Retain the authored meaning of Full release with additional qualified QA",
+      "constraint.meaning-later-release-reportingIncluded": "Retain the authored meaning of Full release on the proposed later date",
+      "constraint.meaning-later-release-reportingFactor": "Retain the authored meaning of Full release on the proposed later date",
+      "constraint.meaning-later-release-requiresScopeRevision": "Retain the authored meaning of Full release on the proposed later date",
+      "constraint.meaning-later-release-requiresDateRevision": "Retain the authored meaning of Full release on the proposed later date",
+      "constraint.meaning-later-release-externalFactor": "Retain the authored meaning of Full release on the proposed later date",
+      "constraint.meaning-later-release-serialFactor": "Retain the authored meaning of Full release on the proposed later date",
+      "constraint.meaning-later-release-currentDayFactor": "Retain the authored meaning of Full release on the proposed later date",
+      "constraint.meaning-later-release-laterFactor": "Retain the authored meaning of Full release on the proposed later date",
+      "constraint.meaning-later-release-independentActor": "Retain the authored meaning of Full release on the proposed later date",
+      "constraint.capacity-existing-qa": "Retain exclusive capacity for Existing qualified QA",
+      "constraint.capacity-external-qa": "Retain exclusive capacity for Additional qualified QA",
+      "constraint.capacity-release-owner": "Retain exclusive capacity for Release owner",
+      "constraint.scope-amendment": "Deferring reporting requires an accepted scope amendment",
+      "constraint.deadline-amendment": "A later release requires acceptance of this exact proposed deadline",
+      "constraint.later-deadline-meaning": "The proposed later release deadline must be later than the original deadline",
+      "constraint.complete-by-deadline": "All selected QA and the complete handoff must finish by the applicable deadline",
+      "constraint.integration-after-core": "Integration QA starts after the primary core tests",
+      "constraint.handoff-after-independent": "The handoff waits for independent regression as well as integration QA",
+      "constraint.available-primary-core-qa": "Working availability must cover primary core qa",
+      "constraint.qualified-primary-core-qa": "Qualification must cover the build, environment and full primary core qa interval",
+      "constraint.available-independent-regression": "Working availability must cover independent regression",
+      "constraint.qualified-independent-regression": "Qualification must cover the build, environment and full independent regression interval",
+      "constraint.available-integration-qa": "Working availability must cover integration qa",
+      "constraint.qualified-integration-qa": "Qualification must cover the build, environment and full integration qa interval",
+      "constraint.available-release-handoff": "Working availability must cover release handoff",
+      "constraint.exclusive-resource-capacity": "No QA or handoff activity overlaps an existing booking on the same resource",
+      "constraint.release-prerequisite": "Confirm the recorded release prerequisite",
+      "constraint.release-authorization": "Record release authorization",
+      "constraint.additional-qa-budget": "The additional QA fee must fit the recorded spending limit",
+      "resource.existing-qa": "Existing qualified QA",
+      "resource.external-qa": "Additional qualified QA",
+      "resource.release-owner": "Release owner",
+      "choice.arrangement.original": "Full release with existing QA",
+      "choice.arrangement.core-only": "Core release with reporting deferred",
+      "choice.arrangement.extra-help": "Full release with additional qualified QA",
+      "choice.arrangement.later-release": "Full release on the proposed later date"
+    },
+    "metadata": {
+      "caseStart": {
+        "starterMeaning": "example",
+        "supportsOwnData": false,
+        "scope": "The authored build, environment, four release arrangements and transferable independent-regression package. Change recorded estimates, windows, fees and accepted amendments; adapt the author profile for a different release structure."
+      },
+      "catalog": {
+        "domain": {
+          "id": "software-delivery",
+          "label": "Software delivery",
+          "description": "Bounded operating decisions for software teams with explicit scope, capacity and timing."
+        },
+        "useCase": {
+          "id": "release-recovery",
+          "label": "Plan an at-risk release",
+          "description": "Compare supplied arrangements while preserving the original release commitment."
+        }
+      },
+      "decisionPresentation": {
+        "format": "decision-presentation/1",
+        "title": "Compare complete release arrangements",
+        "question": "Which supplied arrangements meet the recorded requirements, and which revise the original promise?",
+        "priorityLabel": "Compare without ranking",
+        "moneyFormat": {
+          "currency": "USD",
+          "divisor": 100
+        },
+        "columns": [
+          {
+            "id": "plan",
+            "label": "Complete arrangement"
+          },
+          {
+            "id": "status",
+            "label": "Recorded requirements"
+          },
+          {
+            "id": "preservesOriginal",
+            "source": {
+              "kind": "derived",
+              "id": "originalCommitmentPreserved"
+            },
+            "label": "Original commitment preserved"
+          },
+          {
+            "id": "expense",
+            "label": "Additional QA expense",
+            "format": {
+              "kind": "money",
+              "currency": "USD",
+              "divisor": 100
+            }
+          },
+          {
+            "id": "completion",
+            "source": {
+              "kind": "derived",
+              "id": "completionMinute"
+            },
+            "label": "Handoff complete (minute)",
+            "format": {
+              "kind": "number"
+            }
+          },
+          {
+            "id": "blockers",
+            "label": "Blocking conditions"
+          }
+        ],
+        "charts": [
+          {
+            "viewId": "commitment:schedule",
+            "defaultRepresentation": "timeline"
+          }
+        ]
+      }
+    }
+  },
+  "case": {
+    "id": "at-risk-release",
+    "parameters": {
+      "coreMinutes": 720,
+      "reportingMinutes": 480,
+      "originalDeadline": 1020,
+      "proposedDeadline": 2040,
+      "acceptedRevisedDeadline": 2040,
+      "budgetMinor": 50000,
+      "extraFeeMinor": 40000,
+      "scopeRevisionAccepted": false,
+      "dateRevisionAccepted": false,
+      "prerequisiteConfirmed": true,
+      "releaseAuthorized": true
+    },
+    "tables": {
+      "availability": [
+        {
+          "id": "existing-today",
+          "resource": "existing-qa",
+          "from": 0,
+          "through": 960
+        },
+        {
+          "id": "existing-next-day",
+          "resource": "existing-qa",
+          "from": 1440,
+          "through": 2400
+        },
+        {
+          "id": "external-window",
+          "resource": "external-qa",
+          "from": 420,
+          "through": 660
+        },
+        {
+          "id": "release-owner-window",
+          "resource": "release-owner",
+          "from": 0,
+          "through": 4000
+        }
+      ],
+      "qualifications": [
+        {
+          "resource": "existing-qa",
+          "build": "release-2026-11",
+          "environment": "release-validation",
+          "from": 0,
+          "through": 4000
+        },
+        {
+          "resource": "external-qa",
+          "build": "release-2026-11",
+          "environment": "release-validation",
+          "from": 420,
+          "through": 660
+        }
+      ],
+      "bookings": [],
+      "scenarios": [
+        {
+          "id": "recorded-release"
+        }
+      ],
+      "_arrangements": [
+        {
+          "id": "original",
+          "reportingIncluded": true,
+          "reportingFactor": 1,
+          "requiresScopeRevision": false,
+          "requiresDateRevision": false,
+          "externalFactor": 0,
+          "serialFactor": 1,
+          "currentDayFactor": 1,
+          "laterFactor": 0,
+          "independentActor": "existing-qa"
+        },
+        {
+          "id": "core-only",
+          "reportingIncluded": false,
+          "reportingFactor": 0,
+          "requiresScopeRevision": true,
+          "requiresDateRevision": false,
+          "externalFactor": 0,
+          "serialFactor": 1,
+          "currentDayFactor": 1,
+          "laterFactor": 0,
+          "independentActor": "existing-qa"
+        },
+        {
+          "id": "extra-help",
+          "reportingIncluded": true,
+          "reportingFactor": 1,
+          "requiresScopeRevision": false,
+          "requiresDateRevision": false,
+          "externalFactor": 1,
+          "serialFactor": 0,
+          "currentDayFactor": 1,
+          "laterFactor": 0,
+          "independentActor": "external-qa"
+        },
+        {
+          "id": "later-release",
+          "reportingIncluded": true,
+          "reportingFactor": 1,
+          "requiresScopeRevision": false,
+          "requiresDateRevision": true,
+          "externalFactor": 0,
+          "serialFactor": 0,
+          "currentDayFactor": 0,
+          "laterFactor": 1,
+          "independentActor": "existing-qa"
+        }
+      ],
+      "_resources": [
+        {
+          "id": "existing-qa",
+          "capacity": 1
+        },
+        {
+          "id": "external-qa",
+          "capacity": 1
+        },
+        {
+          "id": "release-owner",
+          "capacity": 1
+        }
+      ]
+    },
+    "provenance": [
+      {
+        "id": "fictional-release-basis",
+        "description": "Fictional remaining work, recorded working windows, qualifications and accepted amendment facts. This calculation neither certifies software quality nor records an external approval or deployment."
+      }
+    ]
+  }
+}

@@ -3,7 +3,7 @@
   "kind": "decision-lab-app-catalog",
   "title": "Decision Lab marketplace",
   "description": "Operational calculations organized into collections and use cases.",
-  "exportedAt": "2026-11-22T02:08:38.561Z",
+  "exportedAt": "2026-11-22T03:30:00.000Z",
   "scope": "current-product",
   "apps": [
     {
@@ -302,6 +302,67 @@
         ],
         "forms": "none",
         "question": "Which complete correction package addresses every remaining explanation and can finish before we commit the gift kits?",
+        "supportsOwnData": false
+      }
+    },
+    {
+      "id": "compare-release-arrangements",
+      "version": 1,
+      "name": "Compare release arrangements",
+      "description": "Compare four complete arrangements for an at-risk release. Reduced scope and a later date remain explicit amendments to the original commitment. This bounded calculation does not certify release quality or search all possible schedules.",
+      "publishedAt": "2026-11-21T18:00:00.000Z",
+      "contentHash": "0188fd272fcd8b55d0a78e34cda4b64f19d36ff5a922ce76adf51b1e7a36aea2",
+      "module": {
+        "id": "release-recovery",
+        "version": "1.0.0"
+      },
+      "domain": {
+        "id": "software-delivery",
+        "label": "Software delivery",
+        "description": "Bounded operating decisions for software teams with explicit scope, capacity and timing."
+      },
+      "useCase": {
+        "id": "release-recovery",
+        "label": "Plan an at-risk release",
+        "description": "Compare supplied arrangements while preserving the original release commitment."
+      },
+      "pattern": {
+        "id": "complete-a-commitment/1",
+        "label": "Complete a commitment"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "complete-a-commitment/1",
+        "definition": {
+          "id": "complete-a-commitment",
+          "version": "1.0.0",
+          "evaluator": "bounded-static-commitment/1"
+        },
+        "presentationContract": "complete-a-commitment.assessment/1"
+      },
+      "package": {
+        "path": "apps/compare-release-arrangements/1/app.app.json",
+        "bytes": 178620,
+        "sha256": "d71b9cf38923ad30f271414bedf8c4e105de68873422e813128f5f04ff7937f4"
+      },
+      "source": {
+        "path": "apps/compare-release-arrangements/1/model.yaml",
+        "bytes": 70693,
+        "sha256": "e26513b2631991c854925a3ac0fda69e6062794868419fabc863123427f6c626"
+      },
+      "workbook": {
+        "path": "apps/compare-release-arrangements/1/inputs.workbook.json",
+        "bytes": 202253,
+        "sha256": "cf8430b351d1f88cb651312d9beaa66d4e24bf98646789231d9d0246f6f824c3"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "Which supplied release arrangements can satisfy the recorded scope, deadline, QA and spending requirements?",
+        "scope": "The authored build, environment, four release arrangements and transferable independent-regression package. Change recorded estimates, windows, fees and accepted amendments; adapt the author profile for a different release structure.",
         "supportsOwnData": false
       }
     }
@@ -615,6 +676,57 @@
         "bytes": 1721573,
         "sha256": "0080a631971a24b2fafef1a922ad1312caf5ae98d3c766959466efbd21723f12"
       }
+    },
+    {
+      "id": "plan-at-risk-release",
+      "version": "1.0.0",
+      "name": "Plan an at-risk release",
+      "description": "Compare four complete release arrangements against remaining validation work, scoped qualifications, working intervals, resource commitments, additional spending, recorded prerequisites and permission. Keep the original scope and deadline distinct from explicitly accepted revisions. This bounded calculation does not predict delivery probabilities or replace a ticket system.",
+      "publishedAt": "2026-11-21T18:00:00.000Z",
+      "contentHash": "ac082fed5cd44cdaa9aa134b20f9f7712651792e16b03a62758e276096b0762a",
+      "definitionHash": "01667c2381dbb14f2a9152e0e482bd3c3268efdd530370f9346f2f035fc75525",
+      "domain": {
+        "id": "software-delivery",
+        "label": "Software delivery"
+      },
+      "useCase": {
+        "id": "release-recovery",
+        "label": "Recover an at-risk release"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "planning",
+          "name": "Compare release arrangements",
+          "appId": "compare-release-arrangements",
+          "version": 1,
+          "appContentHash": "0188fd272fcd8b55d0a78e34cda4b64f19d36ff5a922ce76adf51b1e7a36aea2",
+          "packageHash": "8149c0f48faa6c27727d32984c7c137189cc91247a6b254d594c1ba70c9f84e1"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "This release is at risk. What can we still commit to?",
+        "scope": "A fictional release with four authored arrangements and fixed validation phases. Change the declared operating inputs; adapt the model for other scopes, work structures, resources or arrangements.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/plan-at-risk-release/1.0.0/workflow.workflow.json",
+        "bytes": 307132,
+        "sha256": "d9c9e866ea6c0793a31630c790b3d66eb194d5871072e52a59ae8a0d90694f72"
+      },
+      "workbook": {
+        "path": "workflows/plan-at-risk-release/1.0.0/inputs.workbook.json",
+        "bytes": 342100,
+        "sha256": "612f6c101caefd6eed93b32777d0d4ebf35d962c332941f27a670ef73c8554c0"
+      }
     }
   ],
   "collections": [
@@ -684,6 +796,23 @@
         "path": "collections/decision-lab/restaurant-operations/1.6.0/collection.collection.json",
         "bytes": 1361,
         "sha256": "27258d5eefde843575054d1689da68a65fe6a1ea14bd39e677ba77d420614e05"
+      }
+    },
+    {
+      "id": "software-delivery",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.0.0",
+      "title": "Software delivery",
+      "description": "Bounded operational calculations for software delivery commitments, qualified capacity and explicit release changes.",
+      "createdAt": "2026-11-21T18:00:00.000Z",
+      "contentHash": "6245e216dad5de4b3bc128beba8147c166c72a6ea72a9375b0527496e3935e8c",
+      "package": {
+        "path": "collections/decision-lab/software-delivery/1.0.0/collection.collection.json",
+        "bytes": 1778,
+        "sha256": "1cc70d3946d0ee79ac64739cedfec14fd5683bf1323c6ed88fa7c30ce14fa752"
       }
     }
   ],

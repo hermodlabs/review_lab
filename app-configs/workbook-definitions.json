@@ -22,6 +22,10 @@
       "mapping": "apps/review-gift-kit-earliest-planning/3/inputs.mapping.json"
     },
     {
+      "target": "apps/compare-release-arrangements/1/app.app.json",
+      "mapping": "apps/compare-release-arrangements/1/inputs.mapping.json"
+    },
+    {
       "target": "workflows/review-first-shipment/1.9.0/workflow.workflow.json",
       "mapping": "workflows/review-first-shipment/1.9.0/inputs.mapping.json"
     },
@@ -40,6 +44,10 @@
     {
       "target": "workflows/repair-published-restaurant-roster/1.6.0/workflow.workflow.json",
       "mapping": "workflows/repair-published-restaurant-roster/1.6.0/inputs.mapping.json"
+    },
+    {
+      "target": "workflows/plan-at-risk-release/1.0.0/workflow.workflow.json",
+      "mapping": "workflows/plan-at-risk-release/1.0.0/inputs.mapping.json"
     }
   ]
 }

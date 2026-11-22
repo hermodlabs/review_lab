@@ -1,0 +1,609 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-d2cf6054ccd0e78e90652243",
+  "version": "1.0.0",
+  "title": "Plan an at-risk release — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case.",
+  "target": {
+    "type": "workflow",
+    "id": "plan-at-risk-release",
+    "version": "1.0.0",
+    "packageHash": "ac082fed5cd44cdaa9aa134b20f9f7712651792e16b03a62758e276096b0762a",
+    "definitionHash": "01667c2381dbb14f2a9152e0e482bd3c3268efdd530370f9346f2f035fc75525"
+  },
+  "managedPaths": [
+    "/release/coreMinutes",
+    "/release/reportingMinutes",
+    "/release/originalDeadline",
+    "/release/proposedDeadline",
+    "/release/acceptedRevisedDeadline",
+    "/release/budgetMinor",
+    "/release/extraFeeMinor",
+    "/release/scopeRevisionAccepted",
+    "/release/dateRevisionAccepted",
+    "/release/prerequisiteConfirmed",
+    "/release/releaseAuthorized",
+    "/release/availability",
+    "/release/qualifications",
+    "/release/bookings"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "A fictional release with four authored arrangements and fixed validation phases. Change the declared operating inputs; adapt the model for other scopes, work structures, resources or arrangements."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "Integer elapsed minutes from the declared release origin; these are explicitly supplied working windows, not continuous availability inferred from elapsed time. Money is USD cents. Workbook money controls use dollars where labelled. Original scope and deadline remain the baseline when evaluating a proposed accepted amendment."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Remaining core validation",
+          "instructions": "Editable inputs. Remaining core QA effort, in whole minutes, across the authored base, independent and integration phases. This bounded profile requires at least 301 minutes; changing the activity structure requires an adapted app."
+        },
+        {
+          "topic": "Remaining reporting validation",
+          "instructions": "Editable inputs. Remaining reporting QA effort in whole minutes. Reporting is included in the original release; deferring it is an explicit scope revision."
+        },
+        {
+          "topic": "Original release deadline",
+          "instructions": "Editable inputs. The original commitment deadline, in whole minutes from the declared calendar origin. A later proposal does not replace this baseline."
+        },
+        {
+          "topic": "Proposed later deadline",
+          "instructions": "Editable inputs. A proposed revised release deadline on the same clock. Supplying a date does not establish acceptance of that change."
+        },
+        {
+          "topic": "Deadline named in the amendment",
+          "instructions": "Editable inputs. The precise deadline named in the amendment record, in whole minutes from the same origin. It is operative only when the later-deadline acceptance flag is true and it matches the proposed deadline. A changed proposal does not inherit an earlier acceptance."
+        },
+        {
+          "topic": "Additional expense limit",
+          "instructions": "Editable inputs. The complete additional-expense limit in USD cents. This is a spending boundary, not a valuation of deferred reporting or delayed delivery."
+        },
+        {
+          "topic": "Complete additional-help fee",
+          "instructions": "Editable inputs. The flat additional expense in USD cents for the authored additional-help arrangement. A low fee does not establish qualification, availability or release permission."
+        },
+        {
+          "topic": "Scope revision accepted",
+          "instructions": "Editable inputs. Recorded acceptance of the specific core-only revision. A passing revised arrangement still does not satisfy the original complete-scope promise."
+        },
+        {
+          "topic": "Later deadline accepted",
+          "instructions": "Editable inputs. Recorded acceptance of the specific later-deadline revision. The original deadline remains visible."
+        },
+        {
+          "topic": "Release prerequisites establish",
+          "instructions": "Editable inputs. The scoped prerequisite finding supplied for this build and validation environment. Ticket status is not evidence of this finding. This pilot does not independently assess the underlying records."
+        },
+        {
+          "topic": "Recorded release permission",
+          "instructions": "Editable inputs. Recorded operating permission for the authored release. The calculation does not authenticate a person or obtain permission."
+        },
+        {
+          "topic": "Validation working intervals",
+          "instructions": "Editable inputs. Complete working intervals on the shared minute clock. Gaps represent unavailable time; effort and elapsed time are different quantities."
+        },
+        {
+          "topic": "Scoped validation qualification",
+          "instructions": "Editable inputs. Qualification intervals must cover the actual work for the authored build and environment. An extra person alone does not establish usable validation capacity."
+        },
+        {
+          "topic": "Other resource commitments",
+          "instructions": "Editable inputs. Retained bookings on the same resource identities and clock. An empty list means none are recorded; missing information must remain unanswered."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Remaining core validation",
+      "kind": "record",
+      "role": "release-owner",
+      "meaning": "Remaining core QA effort, in whole minutes, across the authored base, independent and integration phases. This bounded profile requires at least 301 minutes; changing the activity structure requires an adapted app.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "release-coreMinutes",
+          "label": "Release core Minutes",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "value",
+          "path": "/release/coreMinutes",
+          "minimum": 301
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-2",
+      "name": "Remaining reporting validation",
+      "kind": "record",
+      "role": "release-owner",
+      "meaning": "Remaining reporting QA effort in whole minutes. Reporting is included in the original release; deferring it is an explicit scope revision.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "release-reportingMinutes",
+          "label": "Release reporting Minutes",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "value",
+          "path": "/release/reportingMinutes",
+          "minimum": 1
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-3",
+      "name": "Original release deadline",
+      "kind": "record",
+      "role": "release-owner",
+      "meaning": "The original commitment deadline, in whole minutes from the declared calendar origin. A later proposal does not replace this baseline.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "release-originalDeadline",
+          "label": "Release original Deadline",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "value",
+          "path": "/release/originalDeadline",
+          "minimum": 60
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-4",
+      "name": "Proposed later deadline",
+      "kind": "record",
+      "role": "release-owner",
+      "meaning": "A proposed revised release deadline on the same clock. Supplying a date does not establish acceptance of that change.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "release-proposedDeadline",
+          "label": "Release proposed Deadline",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "value",
+          "path": "/release/proposedDeadline",
+          "minimum": 0
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-5",
+      "name": "Deadline named in the amendment",
+      "kind": "record",
+      "role": "release-owner",
+      "meaning": "The precise deadline named in the amendment record, in whole minutes from the same origin. It is operative only when the later-deadline acceptance flag is true and it matches the proposed deadline. A changed proposal does not inherit an earlier acceptance.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "release-acceptedRevisedDeadline",
+          "label": "Release accepted Revised Deadline",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "value",
+          "path": "/release/acceptedRevisedDeadline",
+          "minimum": 0
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-6",
+      "name": "Additional expense limit",
+      "kind": "record",
+      "role": "release-owner",
+      "meaning": "The complete additional-expense limit in USD cents. This is a spending boundary, not a valuation of deferred reporting or delayed delivery.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "release-budgetMinor",
+          "label": "Additional expense limit (USD)",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "USD cent",
+          "path": "/release/budgetMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-7",
+      "name": "Complete additional-help fee",
+      "kind": "record",
+      "role": "release-owner",
+      "meaning": "The flat additional expense in USD cents for the authored additional-help arrangement. A low fee does not establish qualification, availability or release permission.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "release-extraFeeMinor",
+          "label": "Complete additional-help fee (USD)",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "USD cent",
+          "path": "/release/extraFeeMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-8",
+      "name": "Scope revision accepted",
+      "kind": "record",
+      "role": "release-owner",
+      "meaning": "Recorded acceptance of the specific core-only revision. A passing revised arrangement still does not satisfy the original complete-scope promise.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "release-scopeRevisionAccepted",
+          "label": "Release scope Revision Accepted",
+          "type": "boolean",
+          "nullable": true,
+          "blank": "null",
+          "unit": "value",
+          "path": "/release/scopeRevisionAccepted"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-9",
+      "name": "Later deadline accepted",
+      "kind": "record",
+      "role": "release-owner",
+      "meaning": "Recorded acceptance of the specific later-deadline revision. The original deadline remains visible.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "release-dateRevisionAccepted",
+          "label": "Release date Revision Accepted",
+          "type": "boolean",
+          "nullable": true,
+          "blank": "null",
+          "unit": "value",
+          "path": "/release/dateRevisionAccepted"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-10",
+      "name": "Release prerequisites establish",
+      "kind": "record",
+      "role": "release-owner",
+      "meaning": "The scoped prerequisite finding supplied for this build and validation environment. Ticket status is not evidence of this finding. This pilot does not independently assess the underlying records.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "release-prerequisiteConfirmed",
+          "label": "Release prerequisite Confirmed",
+          "type": "boolean",
+          "nullable": true,
+          "blank": "null",
+          "unit": "value",
+          "path": "/release/prerequisiteConfirmed"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-11",
+      "name": "Recorded release permission",
+      "kind": "record",
+      "role": "release-owner",
+      "meaning": "Recorded operating permission for the authored release. The calculation does not authenticate a person or obtain permission.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "release-releaseAuthorized",
+          "label": "Release release Authorized",
+          "type": "boolean",
+          "nullable": true,
+          "blank": "null",
+          "unit": "value",
+          "path": "/release/releaseAuthorized"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-12",
+      "name": "Validation working intervals",
+      "kind": "table",
+      "role": "release-owner",
+      "meaning": "Complete working intervals on the shared minute clock. Gaps represent unavailable time; effort and elapsed time are different quantities.",
+      "binding": {
+        "path": "/release/availability"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "resource",
+          "label": "Resource",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/resource",
+          "enum": [
+            "existing-qa",
+            "external-qa",
+            "release-owner"
+          ]
+        },
+        {
+          "id": "from",
+          "label": "From",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/from",
+          "minimum": 0
+        },
+        {
+          "id": "through",
+          "label": "Through",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/through",
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-13",
+      "name": "Scoped validation qualification",
+      "kind": "table",
+      "role": "release-owner",
+      "meaning": "Qualification intervals must cover the actual work for the authored build and environment. An extra person alone does not establish usable validation capacity.",
+      "binding": {
+        "path": "/release/qualifications"
+      },
+      "columns": [
+        {
+          "id": "resource",
+          "label": "Resource",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/resource",
+          "enum": [
+            "existing-qa",
+            "external-qa"
+          ]
+        },
+        {
+          "id": "build",
+          "label": "Build",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/build"
+        },
+        {
+          "id": "environment",
+          "label": "Environment",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/environment"
+        },
+        {
+          "id": "from",
+          "label": "From",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/from",
+          "minimum": 0
+        },
+        {
+          "id": "through",
+          "label": "Through",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/through",
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "resource",
+        "build",
+        "environment",
+        "from",
+        "through"
+      ]
+    },
+    {
+      "id": "inputs-14",
+      "name": "Other resource commitments",
+      "kind": "table",
+      "role": "release-owner",
+      "meaning": "Retained bookings on the same resource identities and clock. An empty list means none are recorded; missing information must remain unanswered.",
+      "binding": {
+        "path": "/release/bookings"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "resource",
+          "label": "Resource",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/resource",
+          "enum": [
+            "existing-qa",
+            "external-qa",
+            "release-owner"
+          ]
+        },
+        {
+          "id": "from",
+          "label": "From",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/from",
+          "minimum": 0
+        },
+        {
+          "id": "through",
+          "label": "Through",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/through",
+          "minimum": 0
+        },
+        {
+          "id": "amount",
+          "label": "Amount",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/amount",
+          "enum": [
+            1
+          ],
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "a4c5109bea881af4a3d8f1dcebf7cb939de5457981445273b412c55b2461f779"
+}

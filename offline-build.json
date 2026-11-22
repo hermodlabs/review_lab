@@ -1,12 +1,32 @@
 {
-  "version": "8b1a876990861ab243e9",
+  "version": "5276c31cdf61d3ef20e1",
   "appVersion": "0.2.0",
-  "totalBytes": 22782058,
+  "totalBytes": 23926199,
   "assets": [
     {
       "url": "app-configs/README.txt",
-      "sha256": "89bf161a9a7129208b9f9af9e668ff34c46c13b37b15fb24d1eea270cfc80a70",
-      "bytes": 3684
+      "sha256": "c961daaa96388dea09baa742ae84ce1b836ed307c859d5213aaab1694e536438",
+      "bytes": 4253
+    },
+    {
+      "url": "app-configs/apps/compare-release-arrangements/1/app.app.json",
+      "sha256": "d71b9cf38923ad30f271414bedf8c4e105de68873422e813128f5f04ff7937f4",
+      "bytes": 178620
+    },
+    {
+      "url": "app-configs/apps/compare-release-arrangements/1/inputs.mapping.json",
+      "sha256": "e2237474fa7d967882ac2b2dfa2aed128259bae1bbe9d2ddec131e05de735ff6",
+      "bytes": 12950
+    },
+    {
+      "url": "app-configs/apps/compare-release-arrangements/1/inputs.workbook.json",
+      "sha256": "cf8430b351d1f88cb651312d9beaa66d4e24bf98646789231d9d0246f6f824c3",
+      "bytes": 202253
+    },
+    {
+      "url": "app-configs/apps/compare-release-arrangements/1/model.yaml",
+      "sha256": "e26513b2631991c854925a3ac0fda69e6062794868419fabc863123427f6c626",
+      "bytes": 70693
     },
     {
       "url": "app-configs/apps/complete-first-shipment/5/app.app.json",
@@ -110,13 +130,13 @@
     },
     {
       "url": "app-configs/catalog.json",
-      "sha256": "13eef24c379241692905370d178d5dbfc0c66d47f6bcdcf6d21d9b3237397508",
-      "bytes": 29465
+      "sha256": "1d73b8301cf69b6e96505833bab953cb3c8dfd95673a0a0e8bd3a60749471d2d",
+      "bytes": 35166
     },
     {
       "url": "app-configs/collection-definitions.json",
-      "sha256": "189f9842edf24c522cb15b570f65f18bf5e8cc4cabe527a0513f6e339fc93d65",
-      "bytes": 8440
+      "sha256": "2532fade452ff19afd67ad3c3e6968d80da93a406747a998e7a112bfd5d26cd4",
+      "bytes": 10281
     },
     {
       "url": "app-configs/collections/decision-lab/gifting-operations/2.7.0/collection.collection.json",
@@ -149,6 +169,11 @@
       "bytes": 1361
     },
     {
+      "url": "app-configs/collections/decision-lab/software-delivery/1.0.0/collection.collection.json",
+      "sha256": "1cc70d3946d0ee79ac64739cedfec14fd5683bf1323c6ed88fa7c30ce14fa752",
+      "bytes": 1778
+    },
+    {
       "url": "app-configs/collections/decision-lab/venue-operations/1.11.0/collection.collection.json",
       "sha256": "c6fdc067abfaff1c6bd543935dbba83377f7a0d7a4eae2b34f4d4d83ff887a76",
       "bytes": 1418
@@ -170,8 +195,23 @@
     },
     {
       "url": "app-configs/workbook-definitions.json",
-      "sha256": "fec8d1f878d3dc05c518a4811276ca6a3c1dbab057497f955b5aa54e42533831",
-      "bytes": 1772
+      "sha256": "da9f68d141de7b7b01730732d399bafa16e6bcdd75de10e3c338600a35388a89",
+      "bytes": 2096
+    },
+    {
+      "url": "app-configs/workflows/plan-at-risk-release/1.0.0/inputs.mapping.json",
+      "sha256": "ad013d4b7bb982275a386d66006d5da9dded3736b55e263f85a2a69d5f54b5fe",
+      "bytes": 20180
+    },
+    {
+      "url": "app-configs/workflows/plan-at-risk-release/1.0.0/inputs.workbook.json",
+      "sha256": "612f6c101caefd6eed93b32777d0d4ebf35d962c332941f27a670ef73c8554c0",
+      "bytes": 342100
+    },
+    {
+      "url": "app-configs/workflows/plan-at-risk-release/1.0.0/workflow.workflow.json",
+      "sha256": "d9c9e866ea6c0793a31630c790b3d66eb194d5871072e52a59ae8a0d90694f72",
+      "bytes": 307132
     },
     {
       "url": "app-configs/workflows/repair-published-restaurant-roster/1.5.0/inputs.mapping.json",
@@ -375,7 +415,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "3c7a0787f9414f94e36270948124dd934b7968aaed4b03bde26a73ab44f5655b",
+      "sha256": "34c6d684e6075acb085b2db16a8a83ce8427d21b63ad6558732a416ad7c6b66d",
       "bytes": 1023
     },
     {
