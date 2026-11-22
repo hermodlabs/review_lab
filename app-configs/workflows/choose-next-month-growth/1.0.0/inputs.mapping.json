@@ -1,0 +1,831 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-419617aed4ceb691e516d558",
+  "version": "1.0.0",
+  "title": "Choose next month’s growth commitment — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case.",
+  "target": {
+    "type": "workflow",
+    "id": "choose-next-month-growth",
+    "version": "1.0.0",
+    "packageHash": "0b0686551d4d515cac26acb74aa8870e445cb19fcdee59c1ad5a8840abda565b",
+    "definitionHash": "1fcf577cb148c59c41e6696070c7222560c1faf2c5fbc753e0fa5e4c4b9239cb"
+  },
+  "managedPaths": [
+    "/growth/openingCashMinor",
+    "/growth/minimumReserveMinor",
+    "/growth/unitPriceMinor",
+    "/growth/deliveryExpensePerCustomerMinor",
+    "/growth/deliveryHoursPerCustomer",
+    "/growth/currentDay",
+    "/growth/decisionDeadlineDay",
+    "/growth/horizonDay",
+    "/growth/campaignSurplusTargetMinor",
+    "/growth/arrangements",
+    "/growth/scenarios",
+    "/growth/outcomes",
+    "/growth/capacityPeriods",
+    "/learning/enabled",
+    "/learning/basis/probabilityBasis/source",
+    "/learning/basis/probabilityBasis/scope",
+    "/learning/basis/priors",
+    "/learning/basis/likelihoods",
+    "/learning/basis/feeMinor",
+    "/learning/basis/durationDays"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "A fictional service business with four authored complete arrangements and one standardized package. Edit the explicit case values; adapt the app for other arrangements, payment structures, activity dependencies or services."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "Whole elapsed days from the declared planning origin; event order distinguishes payments within a day. Monetary inputs use integer USD cents, displayed as dollars where labelled. Opening cash is unrestricted incremental growth funding after existing obligations. Reserve funds are deducted by the cash-balance requirement once. Forecast sales and collection dates are supplied assumptions, not predictions."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Cash available at the start",
+          "instructions": "Editable inputs. Available opening cash in minor currency units after obligations outside this case have already been accounted for. Do not subtract those obligations again."
+        },
+        {
+          "topic": "Minimum cash reserve",
+          "instructions": "Editable inputs. A minimum balance maintained after every ordered payment or receipt, including intermediate events on the same date."
+        },
+        {
+          "topic": "Collected price per customer",
+          "instructions": "Editable inputs. Full collected price per customer in minor currency units. Collection timing is declared separately for every arrangement and situation."
+        },
+        {
+          "topic": "Delivery expense per customer",
+          "instructions": "Editable inputs. Incremental complete delivery expense per customer in minor currency units. The campaign expense is committed separately and does not shrink when fewer customers buy."
+        },
+        {
+          "topic": "Delivery effort per customer",
+          "instructions": "Editable inputs. Whole delivery hours per standardized customer package. Only capacity within the declared delivery period supports that work."
+        },
+        {
+          "topic": "Current decision day",
+          "instructions": "Editable inputs. Whole elapsed days from the declared origin. All nonzero operating cash events must still be in the future at commitment time."
+        },
+        {
+          "topic": "Growth commitment cutoff",
+          "instructions": "Editable inputs. Latest elapsed day for a growth arrangement. The no-expansion alternative remains available after this cutoff."
+        },
+        {
+          "topic": "Complete comparison horizon",
+          "instructions": "Editable inputs. All nonzero payments, receipts and complete customer delivery must lie within this horizon. Extending a contract requires its full obligations, not only a favorable first month."
+        },
+        {
+          "topic": "Contribution target above campa",
+          "instructions": "Editable inputs. A stated monetary hurdle above recovering the committed campaign expense. This target does not predict how many genuinely additional customers will be acquired."
+        },
+        {
+          "topic": "Committed campaign expenses",
+          "instructions": "Editable inputs. Complete campaign expense in minor currency units, paid independently of customer response. Arrangement identities and payment-term meanings are fixed by the authored app."
+        },
+        {
+          "topic": "Declared operating situations",
+          "instructions": "Editable inputs. Explicit joint situations, not probability samples. Every arrangement needs exactly one complete outcome in every declared situation."
+        },
+        {
+          "topic": "Customers, collection and deliv",
+          "instructions": "Editable inputs. Customer count, complete payment and receipt dates, delivery interval and capacity period for every arrangement and situation. These are declared assumptions; the app does not forecast sales."
+        },
+        {
+          "topic": "Available delivery capacity",
+          "instructions": "Editable inputs. Available hours during the specified complete period, after other work has been accounted for once. Work must fit inside that period as well as within its available hours."
+        },
+        {
+          "topic": "Compare a preference test",
+          "instructions": "Editable inputs. Optional expected-contribution analysis. Missing probabilities or test assumptions do not prevent the operating comparison."
+        },
+        {
+          "topic": "Probability Basis",
+          "instructions": "Editable inputs. Explicit priors and a complete likelihood matrix for the two authored payment-response situations. The nonbinding test collects no money or orders. Its fee and elapsed days are counted before the complete response."
+        },
+        {
+          "topic": "Priors",
+          "instructions": "Editable inputs. Explicit priors and a complete likelihood matrix for the two authored payment-response situations. The nonbinding test collects no money or orders. Its fee and elapsed days are counted before the complete response."
+        },
+        {
+          "topic": "Likelihoods",
+          "instructions": "Editable inputs. Explicit priors and a complete likelihood matrix for the two authored payment-response situations. The nonbinding test collects no money or orders. Its fee and elapsed days are counted before the complete response."
+        },
+        {
+          "topic": "Test and probability assumption",
+          "instructions": "Editable inputs. Explicit priors and a complete likelihood matrix for the two authored payment-response situations. The nonbinding test collects no money or orders. Its fee and elapsed days are counted before the complete response."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Cash available at the start",
+      "kind": "record",
+      "role": "growth-owner",
+      "meaning": "Available opening cash in minor currency units after obligations outside this case have already been accounted for. Do not subtract those obligations again.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "growth-openingCashMinor",
+          "label": "Growth opening Cash Minor",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "USD cent",
+          "path": "/growth/openingCashMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-2",
+      "name": "Minimum cash reserve",
+      "kind": "record",
+      "role": "growth-owner",
+      "meaning": "A minimum balance maintained after every ordered payment or receipt, including intermediate events on the same date.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "growth-minimumReserveMinor",
+          "label": "Growth minimum Reserve Minor",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "USD cent",
+          "path": "/growth/minimumReserveMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-3",
+      "name": "Collected price per customer",
+      "kind": "record",
+      "role": "growth-owner",
+      "meaning": "Full collected price per customer in minor currency units. Collection timing is declared separately for every arrangement and situation.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "growth-unitPriceMinor",
+          "label": "Growth unit Price Minor",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "USD cent",
+          "path": "/growth/unitPriceMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-4",
+      "name": "Delivery expense per customer",
+      "kind": "record",
+      "role": "growth-owner",
+      "meaning": "Incremental complete delivery expense per customer in minor currency units. The campaign expense is committed separately and does not shrink when fewer customers buy.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "growth-deliveryExpensePerCustomerMinor",
+          "label": "Growth delivery Expense Per Customer Minor",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "USD cent",
+          "path": "/growth/deliveryExpensePerCustomerMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-5",
+      "name": "Delivery effort per customer",
+      "kind": "record",
+      "role": "growth-owner",
+      "meaning": "Whole delivery hours per standardized customer package. Only capacity within the declared delivery period supports that work.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "growth-deliveryHoursPerCustomer",
+          "label": "Growth delivery Hours Per Customer",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "value",
+          "path": "/growth/deliveryHoursPerCustomer",
+          "minimum": 1
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-6",
+      "name": "Current decision day",
+      "kind": "record",
+      "role": "growth-owner",
+      "meaning": "Whole elapsed days from the declared origin. All nonzero operating cash events must still be in the future at commitment time.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "growth-currentDay",
+          "label": "Growth current Day",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "value",
+          "path": "/growth/currentDay",
+          "minimum": 0
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-7",
+      "name": "Growth commitment cutoff",
+      "kind": "record",
+      "role": "growth-owner",
+      "meaning": "Latest elapsed day for a growth arrangement. The no-expansion alternative remains available after this cutoff.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "growth-decisionDeadlineDay",
+          "label": "Growth decision Deadline Day",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "value",
+          "path": "/growth/decisionDeadlineDay",
+          "minimum": 0
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-8",
+      "name": "Complete comparison horizon",
+      "kind": "record",
+      "role": "growth-owner",
+      "meaning": "All nonzero payments, receipts and complete customer delivery must lie within this horizon. Extending a contract requires its full obligations, not only a favorable first month.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "growth-horizonDay",
+          "label": "Growth horizon Day",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "value",
+          "path": "/growth/horizonDay",
+          "minimum": 1
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-9",
+      "name": "Contribution target above campa",
+      "kind": "record",
+      "role": "growth-owner",
+      "meaning": "A stated monetary hurdle above recovering the committed campaign expense. This target does not predict how many genuinely additional customers will be acquired.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "growth-campaignSurplusTargetMinor",
+          "label": "Growth campaign Surplus Target Minor",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "USD cent",
+          "path": "/growth/campaignSurplusTargetMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-10",
+      "name": "Committed campaign expenses",
+      "kind": "table",
+      "role": "growth-owner",
+      "meaning": "Complete campaign expense in minor currency units, paid independently of customer response. Arrangement identities and payment-term meanings are fixed by the authored app.",
+      "binding": {
+        "path": "/growth/arrangements"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id",
+          "enum": [
+            "baseline",
+            "large-invoice",
+            "small-invoice",
+            "medium-prepay"
+          ]
+        },
+        {
+          "id": "campaignExpenseMinor",
+          "label": "Campaign Expense Minor",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "USD cent",
+          "path": "/campaignExpenseMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-11",
+      "name": "Declared operating situations",
+      "kind": "table",
+      "role": "growth-owner",
+      "meaning": "Explicit joint situations, not probability samples. Every arrangement needs exactly one complete outcome in every declared situation.",
+      "binding": {
+        "path": "/growth/scenarios"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "label",
+          "label": "Label",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/label"
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-12",
+      "name": "Customers, collection and deliv",
+      "kind": "table",
+      "role": "growth-owner",
+      "meaning": "Customer count, complete payment and receipt dates, delivery interval and capacity period for every arrangement and situation. These are declared assumptions; the app does not forecast sales.",
+      "binding": {
+        "path": "/growth/outcomes"
+      },
+      "columns": [
+        {
+          "id": "scenario",
+          "label": "Scenario",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/scenario"
+        },
+        {
+          "id": "arrangement",
+          "label": "Arrangement",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/arrangement",
+          "enum": [
+            "baseline",
+            "large-invoice",
+            "small-invoice",
+            "medium-prepay"
+          ]
+        },
+        {
+          "id": "customers",
+          "label": "Customers",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/customers",
+          "minimum": 0
+        },
+        {
+          "id": "campaignExpenseDay",
+          "label": "Campaign Expense Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/campaignExpenseDay",
+          "minimum": 0
+        },
+        {
+          "id": "deliveryExpenseDay",
+          "label": "Delivery Expense Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/deliveryExpenseDay",
+          "minimum": 0
+        },
+        {
+          "id": "customerReceiptDay",
+          "label": "Customer Receipt Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/customerReceiptDay",
+          "minimum": 0
+        },
+        {
+          "id": "deliveryStartDay",
+          "label": "Delivery Start Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/deliveryStartDay",
+          "minimum": 0
+        },
+        {
+          "id": "deliveryFinishDay",
+          "label": "Delivery Finish Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/deliveryFinishDay",
+          "minimum": 0
+        },
+        {
+          "id": "capacityPeriod",
+          "label": "Capacity Period",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/capacityPeriod"
+        }
+      ],
+      "key": [
+        "scenario",
+        "arrangement",
+        "customers",
+        "campaignExpenseDay",
+        "deliveryExpenseDay",
+        "customerReceiptDay",
+        "deliveryStartDay",
+        "deliveryFinishDay",
+        "capacityPeriod"
+      ]
+    },
+    {
+      "id": "inputs-13",
+      "name": "Available delivery capacity",
+      "kind": "table",
+      "role": "growth-owner",
+      "meaning": "Available hours during the specified complete period, after other work has been accounted for once. Work must fit inside that period as well as within its available hours.",
+      "binding": {
+        "path": "/growth/capacityPeriods"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "from",
+          "label": "From",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/from",
+          "minimum": 0
+        },
+        {
+          "id": "through",
+          "label": "Through",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/through",
+          "minimum": 0
+        },
+        {
+          "id": "availableHours",
+          "label": "Available Hours",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/availableHours",
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-14",
+      "name": "Compare a preference test",
+      "kind": "record",
+      "role": "growth-owner",
+      "meaning": "Optional expected-contribution analysis. Missing probabilities or test assumptions do not prevent the operating comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "learning-enabled",
+          "label": "Learning enabled",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/learning/enabled"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-15",
+      "name": "Probability Basis",
+      "kind": "record",
+      "role": "growth-owner",
+      "meaning": "Explicit priors and a complete likelihood matrix for the two authored payment-response situations. The nonbinding test collects no money or orders. Its fee and elapsed days are counted before the complete response.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "learning-basis-probabilityBasis-source",
+          "label": "Learning basis probability Basis source",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/learning/basis/probabilityBasis/source"
+        },
+        {
+          "id": "learning-basis-probabilityBasis-scope",
+          "label": "Learning basis probability Basis scope",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/learning/basis/probabilityBasis/scope"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-16",
+      "name": "Priors",
+      "kind": "table",
+      "role": "growth-owner",
+      "meaning": "Explicit priors and a complete likelihood matrix for the two authored payment-response situations. The nonbinding test collects no money or orders. Its fee and elapsed days are counted before the complete response.",
+      "binding": {
+        "path": "/learning/basis/priors"
+      },
+      "columns": [
+        {
+          "id": "state",
+          "label": "State",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/state"
+        },
+        {
+          "id": "probability",
+          "label": "Probability",
+          "type": "number",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/probability",
+          "minimum": 0,
+          "maximum": 1
+        }
+      ],
+      "key": [
+        "state",
+        "probability"
+      ]
+    },
+    {
+      "id": "inputs-17",
+      "name": "Likelihoods",
+      "kind": "table",
+      "role": "growth-owner",
+      "meaning": "Explicit priors and a complete likelihood matrix for the two authored payment-response situations. The nonbinding test collects no money or orders. Its fee and elapsed days are counted before the complete response.",
+      "binding": {
+        "path": "/learning/basis/likelihoods"
+      },
+      "columns": [
+        {
+          "id": "state",
+          "label": "State",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/state"
+        },
+        {
+          "id": "report",
+          "label": "Report",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/report"
+        },
+        {
+          "id": "probability",
+          "label": "Probability",
+          "type": "number",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/probability",
+          "minimum": 0,
+          "maximum": 1
+        }
+      ],
+      "key": [
+        "state",
+        "report",
+        "probability"
+      ]
+    },
+    {
+      "id": "inputs-18",
+      "name": "Test and probability assumption",
+      "kind": "record",
+      "role": "growth-owner",
+      "meaning": "Explicit priors and a complete likelihood matrix for the two authored payment-response situations. The nonbinding test collects no money or orders. Its fee and elapsed days are counted before the complete response.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "learning-basis-feeMinor",
+          "label": "Learning basis fee Minor",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "USD cent",
+          "path": "/learning/basis/feeMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        },
+        {
+          "id": "learning-basis-durationDays",
+          "label": "Learning basis duration Days",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/learning/basis/durationDays",
+          "minimum": 0
+        }
+      ],
+      "key": []
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "d968905ebfa536e4f63de8ee7abc3174dcb7c23afc983beca32b7159e604c341"
+}

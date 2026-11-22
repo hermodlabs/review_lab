@@ -1,0 +1,461 @@
+{
+  "format": "assess-value-of-learning/1",
+  "module": {
+    "id": "payment-terms-learning",
+    "version": "1.0.0",
+    "title": "Assess a payment-terms test",
+    "description": "Compare choosing a fundable and deliverable growth arrangement now with a nonbinding payment-preference test and a complete response to each possible signal.",
+    "question": "Could a timely preference test improve the growth choice enough to cover its cost?",
+    "boundary": "One nonbinding preference test followed by one complete growth arrangement. Customer orders, collected deposits, refunds and adaptive marketing campaigns are outside this model.",
+    "metadata": {
+      "catalog": {
+        "domain": {
+          "id": "business-growth",
+          "label": "Business growth"
+        },
+        "useCase": {
+          "id": "fund-and-deliver-growth",
+          "label": "Fund and deliver growth"
+        }
+      },
+      "requiredCapabilities": [
+        {
+          "id": "learning-execution-feasibility",
+          "version": 1
+        }
+      ]
+    },
+    "executionFeasibility": {
+      "version": 1
+    },
+    "objective": {
+      "criterion": "risk-neutral-expected-money",
+      "unit": "USD cent",
+      "timeUnit": "day",
+      "beneficiary": "The business funding and delivering the growth commitment",
+      "horizon": "The complete declared campaign and customer delivery horizon"
+    },
+    "assumptions": [
+      "The prior and likelihood matrix are explicit fictional teaching inputs. A survey signal is an imperfect observation of a declared situation; it is not a causal estimate of additional customers.",
+      "Net contribution for each action and situation comes from the same pinned planning assessment: customer receipts less delivery expense and committed campaign expense. The test fee is charged once, separately.",
+      "The test accepts no payment, order or deposit and creates no customer delivery obligation. A paid pilot requires a different complete operating model.",
+      "All declared situations remain logically possible after every report, including an inconclusive report. Zero probabilities never waive funding, capacity or timing conditions.",
+      "Operating eligibility comes from current native commitment runs for acting now and acting after the test fee and delay. A profitable action cannot compensate for an operating failure.",
+      "The baseline is a complete no-expansion alternative. An expected-contribution preference is supplied only for this optional learning comparison; feasibility alone does not select a growth arrangement."
+    ],
+    "attributes": [
+      {
+        "id": "prepayAccepted",
+        "label": "Larger prepayment-offer customer count",
+        "type": "boolean"
+      }
+    ],
+    "states": [
+      {
+        "id": "prepay-accepted",
+        "label": "Prepayment offer attracts the larger customer count",
+        "attributes": {
+          "prepayAccepted": true
+        }
+      },
+      {
+        "id": "prepay-weak",
+        "label": "Prepayment offer attracts the smaller customer count",
+        "attributes": {
+          "prepayAccepted": false
+        }
+      }
+    ],
+    "actions": [
+      {
+        "id": "baseline",
+        "label": "Keep the current approach"
+      },
+      {
+        "id": "large-invoice",
+        "label": "Large campaign with invoiced payment"
+      },
+      {
+        "id": "small-invoice",
+        "label": "Small campaign with invoiced payment"
+      },
+      {
+        "id": "medium-prepay",
+        "label": "Medium campaign with payment before delivery"
+      }
+    ],
+    "studies": [
+      {
+        "id": "payment-preference-test",
+        "label": "Nonbinding payment-preference test",
+        "reports": [
+          {
+            "id": "favorable",
+            "label": "Favorable preference signal",
+            "kind": "report"
+          },
+          {
+            "id": "unfavorable",
+            "label": "Unfavorable preference signal",
+            "kind": "report"
+          },
+          {
+            "id": "inconclusive",
+            "label": "No usable preference signal",
+            "kind": "no-report"
+          }
+        ]
+      }
+    ],
+    "presentation": {
+      "labels": {
+        "baseline": "Choose a growth arrangement now",
+        "study": "Learning option",
+        "action": "Complete growth arrangement",
+        "state": "Customer-response situation",
+        "report": "Preference-test signal"
+      },
+      "reports": {
+        "comparison": {
+          "title": "Test before committing",
+          "question": "Does the preference test improve expected contribution while retaining a complete usable response?"
+        },
+        "responses": {
+          "title": "Response to each signal",
+          "question": "Which eligible growth arrangement has the highest expected contribution after each possible signal?"
+        },
+        "inputs": {
+          "title": "Probability and operating basis",
+          "question": "Which explicit assumptions and complete operating assessments support this comparison?"
+        }
+      }
+    },
+    "recordTypes": []
+  },
+  "case": {
+    "id": "GROWTH-payment-learning",
+    "scope": "growth-commitment / profile 1.0.0 / next-month package and campaign window",
+    "currentTime": 0,
+    "cashBudget": 1200000,
+    "probabilityBasis": {
+      "source": "FICTIONAL-TEACHING-ASSESSMENT-1: Explicit hypothetical probabilities and signal reliability; not evidence interpretation counts or measured demand.",
+      "scope": "One standardized service package and the next-month campaign window"
+    },
+    "priors": [
+      {
+        "state": "prepay-accepted",
+        "probability": 0.5
+      },
+      {
+        "state": "prepay-weak",
+        "probability": 0.5
+      }
+    ],
+    "actions": [
+      {
+        "action": "baseline",
+        "cash": 0,
+        "deadline": null
+      },
+      {
+        "action": "large-invoice",
+        "cash": 2800000,
+        "deadline": 3
+      },
+      {
+        "action": "small-invoice",
+        "cash": 700000,
+        "deadline": 3
+      },
+      {
+        "action": "medium-prepay",
+        "cash": 400000,
+        "deadline": 3
+      }
+    ],
+    "payoffs": [
+      {
+        "action": "baseline",
+        "state": "prepay-accepted",
+        "value": 0
+      },
+      {
+        "action": "baseline",
+        "state": "prepay-weak",
+        "value": 0
+      },
+      {
+        "action": "large-invoice",
+        "state": "prepay-accepted",
+        "value": 3200000
+      },
+      {
+        "action": "large-invoice",
+        "state": "prepay-weak",
+        "value": 3200000
+      },
+      {
+        "action": "small-invoice",
+        "state": "prepay-accepted",
+        "value": 800000
+      },
+      {
+        "action": "small-invoice",
+        "state": "prepay-weak",
+        "value": 800000
+      },
+      {
+        "action": "medium-prepay",
+        "state": "prepay-accepted",
+        "value": 1600000
+      },
+      {
+        "action": "medium-prepay",
+        "state": "prepay-weak",
+        "value": -200000
+      }
+    ],
+    "acceptedFacts": [],
+    "studies": [
+      {
+        "study": "payment-preference-test",
+        "fee": 50000,
+        "duration": 1,
+        "likelihoods": [
+          {
+            "state": "prepay-accepted",
+            "report": "favorable",
+            "probability": 0.7
+          },
+          {
+            "state": "prepay-accepted",
+            "report": "unfavorable",
+            "probability": 0.1
+          },
+          {
+            "state": "prepay-accepted",
+            "report": "inconclusive",
+            "probability": 0.2
+          },
+          {
+            "state": "prepay-weak",
+            "report": "favorable",
+            "probability": 0.1
+          },
+          {
+            "state": "prepay-weak",
+            "report": "unfavorable",
+            "probability": 0.7
+          },
+          {
+            "state": "prepay-weak",
+            "report": "inconclusive",
+            "probability": 0.2
+          }
+        ]
+      }
+    ],
+    "executionFeasibility": {
+      "admittedStateIds": [
+        "prepay-accepted",
+        "prepay-weak"
+      ],
+      "contexts": [
+        {
+          "context": "no-study",
+          "currentTime": 0,
+          "fee": 0,
+          "duration": 0,
+          "cashBudget": 1200000
+        },
+        {
+          "context": "payment-preference-test",
+          "currentTime": 0,
+          "fee": 50000,
+          "duration": 1,
+          "cashBudget": 1200000
+        }
+      ],
+      "reportSupport": [
+        {
+          "study": "payment-preference-test",
+          "report": "favorable",
+          "state": "prepay-accepted",
+          "possible": true
+        },
+        {
+          "study": "payment-preference-test",
+          "report": "unfavorable",
+          "state": "prepay-accepted",
+          "possible": true
+        },
+        {
+          "study": "payment-preference-test",
+          "report": "inconclusive",
+          "state": "prepay-accepted",
+          "possible": true
+        },
+        {
+          "study": "payment-preference-test",
+          "report": "favorable",
+          "state": "prepay-weak",
+          "possible": true
+        },
+        {
+          "study": "payment-preference-test",
+          "report": "unfavorable",
+          "state": "prepay-weak",
+          "possible": true
+        },
+        {
+          "study": "payment-preference-test",
+          "report": "inconclusive",
+          "state": "prepay-weak",
+          "possible": true
+        }
+      ],
+      "eligibility": [
+        {
+          "context": "no-study",
+          "action": "baseline",
+          "state": "prepay-accepted",
+          "eligible": true,
+          "reasons": [],
+          "source": "decision-lab-assessment:a976f1d2574b8fbeb177677f6f8b3d5b8f1a98832c763f5b9adcd6fd0587b9a6#plan=plan-000001&state=prepay-accepted"
+        },
+        {
+          "context": "no-study",
+          "action": "baseline",
+          "state": "prepay-weak",
+          "eligible": true,
+          "reasons": [],
+          "source": "decision-lab-assessment:a976f1d2574b8fbeb177677f6f8b3d5b8f1a98832c763f5b9adcd6fd0587b9a6#plan=plan-000001&state=prepay-weak"
+        },
+        {
+          "context": "no-study",
+          "action": "large-invoice",
+          "state": "prepay-accepted",
+          "eligible": false,
+          "reasons": [
+            "cash-reserve",
+            "delivery-capacity"
+          ],
+          "source": "decision-lab-assessment:a976f1d2574b8fbeb177677f6f8b3d5b8f1a98832c763f5b9adcd6fd0587b9a6#plan=plan-000002&state=prepay-accepted"
+        },
+        {
+          "context": "no-study",
+          "action": "large-invoice",
+          "state": "prepay-weak",
+          "eligible": false,
+          "reasons": [
+            "cash-reserve",
+            "delivery-capacity"
+          ],
+          "source": "decision-lab-assessment:a976f1d2574b8fbeb177677f6f8b3d5b8f1a98832c763f5b9adcd6fd0587b9a6#plan=plan-000002&state=prepay-weak"
+        },
+        {
+          "context": "no-study",
+          "action": "small-invoice",
+          "state": "prepay-accepted",
+          "eligible": true,
+          "reasons": [],
+          "source": "decision-lab-assessment:a976f1d2574b8fbeb177677f6f8b3d5b8f1a98832c763f5b9adcd6fd0587b9a6#plan=plan-000003&state=prepay-accepted"
+        },
+        {
+          "context": "no-study",
+          "action": "small-invoice",
+          "state": "prepay-weak",
+          "eligible": true,
+          "reasons": [],
+          "source": "decision-lab-assessment:a976f1d2574b8fbeb177677f6f8b3d5b8f1a98832c763f5b9adcd6fd0587b9a6#plan=plan-000003&state=prepay-weak"
+        },
+        {
+          "context": "no-study",
+          "action": "medium-prepay",
+          "state": "prepay-accepted",
+          "eligible": true,
+          "reasons": [],
+          "source": "decision-lab-assessment:a976f1d2574b8fbeb177677f6f8b3d5b8f1a98832c763f5b9adcd6fd0587b9a6#plan=plan-000004&state=prepay-accepted"
+        },
+        {
+          "context": "no-study",
+          "action": "medium-prepay",
+          "state": "prepay-weak",
+          "eligible": true,
+          "reasons": [],
+          "source": "decision-lab-assessment:a976f1d2574b8fbeb177677f6f8b3d5b8f1a98832c763f5b9adcd6fd0587b9a6#plan=plan-000004&state=prepay-weak"
+        },
+        {
+          "context": "payment-preference-test",
+          "action": "baseline",
+          "state": "prepay-accepted",
+          "eligible": true,
+          "reasons": [],
+          "source": "decision-lab-assessment:19afe6638c989643ad0abc4556703fe99eca885539a611f36643aa9107df7ed4#plan=plan-000001&state=prepay-accepted"
+        },
+        {
+          "context": "payment-preference-test",
+          "action": "baseline",
+          "state": "prepay-weak",
+          "eligible": true,
+          "reasons": [],
+          "source": "decision-lab-assessment:19afe6638c989643ad0abc4556703fe99eca885539a611f36643aa9107df7ed4#plan=plan-000001&state=prepay-weak"
+        },
+        {
+          "context": "payment-preference-test",
+          "action": "large-invoice",
+          "state": "prepay-accepted",
+          "eligible": false,
+          "reasons": [
+            "cash-reserve",
+            "delivery-capacity"
+          ],
+          "source": "decision-lab-assessment:19afe6638c989643ad0abc4556703fe99eca885539a611f36643aa9107df7ed4#plan=plan-000002&state=prepay-accepted"
+        },
+        {
+          "context": "payment-preference-test",
+          "action": "large-invoice",
+          "state": "prepay-weak",
+          "eligible": false,
+          "reasons": [
+            "cash-reserve",
+            "delivery-capacity"
+          ],
+          "source": "decision-lab-assessment:19afe6638c989643ad0abc4556703fe99eca885539a611f36643aa9107df7ed4#plan=plan-000002&state=prepay-weak"
+        },
+        {
+          "context": "payment-preference-test",
+          "action": "small-invoice",
+          "state": "prepay-accepted",
+          "eligible": true,
+          "reasons": [],
+          "source": "decision-lab-assessment:19afe6638c989643ad0abc4556703fe99eca885539a611f36643aa9107df7ed4#plan=plan-000003&state=prepay-accepted"
+        },
+        {
+          "context": "payment-preference-test",
+          "action": "small-invoice",
+          "state": "prepay-weak",
+          "eligible": true,
+          "reasons": [],
+          "source": "decision-lab-assessment:19afe6638c989643ad0abc4556703fe99eca885539a611f36643aa9107df7ed4#plan=plan-000003&state=prepay-weak"
+        },
+        {
+          "context": "payment-preference-test",
+          "action": "medium-prepay",
+          "state": "prepay-accepted",
+          "eligible": true,
+          "reasons": [],
+          "source": "decision-lab-assessment:19afe6638c989643ad0abc4556703fe99eca885539a611f36643aa9107df7ed4#plan=plan-000004&state=prepay-accepted"
+        },
+        {
+          "context": "payment-preference-test",
+          "action": "medium-prepay",
+          "state": "prepay-weak",
+          "eligible": true,
+          "reasons": [],
+          "source": "decision-lab-assessment:19afe6638c989643ad0abc4556703fe99eca885539a611f36643aa9107df7ed4#plan=plan-000004&state=prepay-weak"
+        }
+      ]
+    }
+  }
+}

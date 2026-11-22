@@ -1,12 +1,52 @@
 {
-  "version": "398c2068cffb091019ac",
+  "version": "a85b727a2817d0f676e5",
   "appVersion": "0.2.0",
-  "totalBytes": 23928826,
+  "totalBytes": 25173902,
   "assets": [
     {
       "url": "app-configs/README.txt",
-      "sha256": "c961daaa96388dea09baa742ae84ce1b836ed307c859d5213aaab1694e536438",
-      "bytes": 4253
+      "sha256": "e05349bfeaee150232a012e9a9df5032564c0d8bdecf9fb3a7da70f8f591432e",
+      "bytes": 4890
+    },
+    {
+      "url": "app-configs/apps/assess-payment-terms-test/1/app.app.json",
+      "sha256": "f018bd0c24a1345dc58a54a6a48b5faf40f74a178dc649ac1a2c22cb36991a36",
+      "bytes": 47341
+    },
+    {
+      "url": "app-configs/apps/assess-payment-terms-test/1/inputs.mapping.json",
+      "sha256": "2247835a3823e54cb0e4d28c2922a232a37d8ada077970f0d538da3b15853578",
+      "bytes": 11980
+    },
+    {
+      "url": "app-configs/apps/assess-payment-terms-test/1/inputs.workbook.json",
+      "sha256": "1cb311e371505e20a6053352b8e8fb9e033efc5911a008655ab0ff55629cb040",
+      "bytes": 72072
+    },
+    {
+      "url": "app-configs/apps/assess-payment-terms-test/1/model.yaml",
+      "sha256": "3f5e5edbf4a3a49a6821938ee4efb97029387aa3185b3ba499b6154ff38a29d0",
+      "bytes": 15208
+    },
+    {
+      "url": "app-configs/apps/compare-growth-arrangements/1/app.app.json",
+      "sha256": "360de70934ab89714fc412c02b91a90f814bd76f02edc15b735c03ba6b3bcfb0",
+      "bytes": 111921
+    },
+    {
+      "url": "app-configs/apps/compare-growth-arrangements/1/inputs.mapping.json",
+      "sha256": "1bc02840195b2da5f1b850f2bc70b9d2a9022b0c30ce1ba6dfd481313e28e217",
+      "bytes": 14621
+    },
+    {
+      "url": "app-configs/apps/compare-growth-arrangements/1/inputs.workbook.json",
+      "sha256": "dcc1459b1ca84c1a5ecdbd94849566d01044f0e2c410cef4fd43c820535d9f8b",
+      "bytes": 134407
+    },
+    {
+      "url": "app-configs/apps/compare-growth-arrangements/1/model.yaml",
+      "sha256": "5b757f7a423ec1bbbc7d672889a5dc6467e9a25a7562a70b5371483f55e6f4b9",
+      "bytes": 40968
     },
     {
       "url": "app-configs/apps/compare-release-arrangements/1/app.app.json",
@@ -130,13 +170,18 @@
     },
     {
       "url": "app-configs/catalog.json",
-      "sha256": "1d73b8301cf69b6e96505833bab953cb3c8dfd95673a0a0e8bd3a60749471d2d",
-      "bytes": 35166
+      "sha256": "1d10e3be7323a8b8d337f2291969849cd8cf5a813c3df527589173c005bf1086",
+      "bytes": 43571
     },
     {
       "url": "app-configs/collection-definitions.json",
-      "sha256": "2532fade452ff19afd67ad3c3e6968d80da93a406747a998e7a112bfd5d26cd4",
-      "bytes": 10281
+      "sha256": "3fb6da15b5caf09cc5387c2344e404d17fcc03bc6f9562a546b923b05687aff5",
+      "bytes": 12645
+    },
+    {
+      "url": "app-configs/collections/decision-lab/business-growth/1.0.0/collection.collection.json",
+      "sha256": "cfaa9781827645c7b05e1c098e27f3c81ef2345a000497ae05946aaeee75dd2f",
+      "bytes": 2253
     },
     {
       "url": "app-configs/collections/decision-lab/gifting-operations/2.7.0/collection.collection.json",
@@ -195,8 +240,23 @@
     },
     {
       "url": "app-configs/workbook-definitions.json",
-      "sha256": "da9f68d141de7b7b01730732d399bafa16e6bcdd75de10e3c338600a35388a89",
-      "bytes": 2096
+      "sha256": "b47d78fdac87c159ed54223383382a4e219785d529ccaa9ec920be0e632f5d58",
+      "bytes": 2576
+    },
+    {
+      "url": "app-configs/workflows/choose-next-month-growth/1.0.0/inputs.mapping.json",
+      "sha256": "3d36149b1e44c7396739b0b884ea0104b61a9ad50d5a8c36a6bf872b864857ee",
+      "bytes": 27692
+    },
+    {
+      "url": "app-configs/workflows/choose-next-month-growth/1.0.0/inputs.workbook.json",
+      "sha256": "6e516e7a4f8bfa5cbd5b9a32982a4059164f90872d393e04d10abf4b64789448",
+      "bytes": 382873
+    },
+    {
+      "url": "app-configs/workflows/choose-next-month-growth/1.0.0/workflow.workflow.json",
+      "sha256": "5b78e9546f883c5c78112610d4509c899c92a74417ea8eb4b6b2e5d44c89179c",
+      "bytes": 335363
     },
     {
       "url": "app-configs/workflows/plan-at-risk-release/1.0.0/inputs.mapping.json",
@@ -364,29 +424,29 @@
       "bytes": 256071
     },
     {
-      "url": "assets/exceljs.min-Dw5oWai3.js",
-      "sha256": "c3ddd9344793015aa219f80213a4ac899af20888cfe97703c01abd4b99734662",
+      "url": "assets/exceljs.min-BKQ8WQKR.js",
+      "sha256": "fa98c390775a194f64b43771f7f830e55bd6485db6c6c333cb5032ebcdbd3f37",
       "bytes": 929558
     },
     {
-      "url": "assets/index-Cr6UW-DM.css",
-      "sha256": "b2cb48556e08db77b154b52e76a2438e6f87fa18f974eb0091aefaef792e8a42",
-      "bytes": 224718
+      "url": "assets/index-BktlON_I.js",
+      "sha256": "2d4e5012325c371f2f43a845888e70760e58048977acb96861c8cb9e01280425",
+      "bytes": 1929530
     },
     {
-      "url": "assets/index-Dw5YNto6.js",
-      "sha256": "1af0396934aeac5c530d7a76b7597363aa28afe638f56543e10637c446e507ca",
-      "bytes": 1908876
+      "url": "assets/index-CnXbcaT4.css",
+      "sha256": "ca3ec251411530f7d7d186bec60048505644388bffcf9aef424e8a27980ae92b",
+      "bytes": 225366
     },
     {
-      "url": "assets/jszip.min-CG2m3KeC.js",
-      "sha256": "9b715fb2072d2ba1ba7f3bb5bfdd58e907921412224c4b8240dcb07a9c39582a",
+      "url": "assets/jszip.min-bl-8fAub.js",
+      "sha256": "133ebd382a36d6a5654ea5854a7e1a6e299d0b218e4367fb6d498974e6189818",
       "bytes": 95949
     },
     {
-      "url": "assets/worker-CZIXNd4y.js",
-      "sha256": "4d228b2de39572a04283e981280f327e7d6c915bd98984ecc70e98390c0c4cc5",
-      "bytes": 415269
+      "url": "assets/worker-dXPmBJMu.js",
+      "sha256": "8d1752351135a75b25157b20247025b66afae68503d2706b222fe9906dba339c",
+      "bytes": 430458
     },
     {
       "url": "icons/apple-touch-icon.png",
@@ -415,7 +475,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "2814a3a91f188a64b238a6570cd2a759d19041f8d67148b8539f4f94a12a5ab8",
+      "sha256": "0691137a3bc2ec654d2a42912a9bacf13931906462909730eb1825d9b270e90c",
       "bytes": 1023
     },
     {

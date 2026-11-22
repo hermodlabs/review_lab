@@ -365,6 +365,125 @@
         "scope": "The authored build, environment, four release arrangements and transferable independent-regression package. Change recorded estimates, windows, fees and accepted amendments; adapt the author profile for a different release structure.",
         "supportsOwnData": false
       }
+    },
+    {
+      "id": "compare-growth-arrangements",
+      "version": 1,
+      "name": "Compare growth arrangements",
+      "description": "Compare a current-approach baseline and three complete growth arrangements against cash by date, a required reserve, delivery capacity and a commitment cutoff. Forecast customer counts are uncertain situations, not controllable sales or probabilities. A passing arrangement is operationally supportable under these inputs; no most-profitable option is selected.",
+      "publishedAt": "2026-11-22T18:00:00.000Z",
+      "contentHash": "410b8625863103042ea7a353ef56c7a0c1474a064b25c55e30508df510d1c242",
+      "module": {
+        "id": "growth-commitment",
+        "version": "1.0.0"
+      },
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth",
+        "description": "Bounded growth commitments, operating capacity and the value of further learning."
+      },
+      "useCase": {
+        "id": "growth-commitment",
+        "label": "Choose next month’s growth commitment",
+        "description": "Find which supplied growth arrangements can be funded and delivered, then inspect what their spending must achieve."
+      },
+      "pattern": {
+        "id": "complete-a-commitment/1",
+        "label": "Complete a commitment"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "complete-a-commitment/1",
+        "definition": {
+          "id": "complete-a-commitment",
+          "version": "1.0.0",
+          "evaluator": "bounded-static-commitment/1"
+        },
+        "presentationContract": "complete-a-commitment.assessment/1"
+      },
+      "package": {
+        "path": "apps/compare-growth-arrangements/1/app.app.json",
+        "bytes": 111921,
+        "sha256": "360de70934ab89714fc412c02b91a90f814bd76f02edc15b735c03ba6b3bcfb0"
+      },
+      "source": {
+        "path": "apps/compare-growth-arrangements/1/model.yaml",
+        "bytes": 40968,
+        "sha256": "5b757f7a423ec1bbbc7d672889a5dc6467e9a25a7562a70b5371483f55e6f4b9"
+      },
+      "workbook": {
+        "path": "apps/compare-growth-arrangements/1/inputs.workbook.json",
+        "bytes": 134407,
+        "sha256": "dcc1459b1ca84c1a5ecdbd94849566d01044f0e2c410cef4fd43c820535d9f8b"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "Which growth commitments can we fund and deliver under the declared demand and collection situations?",
+        "scope": "Four authored arrangements for one standard service package. Change prices, committed campaign quotes, joint customer and collection forecasts, available cash, reserve and delivery-period capacity. A different service structure, installment contract or refund process needs an authored extension.",
+        "supportsOwnData": false
+      }
+    },
+    {
+      "id": "assess-payment-terms-test",
+      "version": 1,
+      "name": "Assess a payment-terms test",
+      "description": "Compare choosing a fundable and deliverable growth arrangement now with a nonbinding payment-preference test and a complete response to each possible signal.",
+      "publishedAt": "2026-11-22T18:00:00.000Z",
+      "contentHash": "c2d194000415cb9cb4c4f0124fffd4464391334896645a74bdadec575ff5047b",
+      "module": {
+        "id": "payment-terms-learning",
+        "version": "1.0.0"
+      },
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth"
+      },
+      "useCase": {
+        "id": "fund-and-deliver-growth",
+        "label": "Fund and deliver growth"
+      },
+      "pattern": {
+        "id": "assess-value-of-learning/1",
+        "label": "Assess the value of learning"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "assess-value-of-learning/1",
+        "definition": {
+          "id": "assess-value-of-learning",
+          "version": "1.0.0",
+          "evaluator": "finite-learning-value/1"
+        },
+        "presentationContract": "learning-value-assessment/1"
+      },
+      "package": {
+        "path": "apps/assess-payment-terms-test/1/app.app.json",
+        "bytes": 47341,
+        "sha256": "f018bd0c24a1345dc58a54a6a48b5faf40f74a178dc649ac1a2c22cb36991a36"
+      },
+      "source": {
+        "path": "apps/assess-payment-terms-test/1/model.yaml",
+        "bytes": 15208,
+        "sha256": "3f5e5edbf4a3a49a6821938ee4efb97029387aa3185b3ba499b6154ff38a29d0"
+      },
+      "workbook": {
+        "path": "apps/assess-payment-terms-test/1/inputs.workbook.json",
+        "bytes": 72072,
+        "sha256": "1cb311e371505e20a6053352b8e8fb9e033efc5911a008655ab0ff55629cb040"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "Could a timely preference test improve the growth choice enough to cover its cost?",
+        "supportsOwnData": false
+      }
     }
   ],
   "workflows": [
@@ -727,6 +846,65 @@
         "bytes": 342100,
         "sha256": "612f6c101caefd6eed93b32777d0d4ebf35d962c332941f27a670ef73c8554c0"
       }
+    },
+    {
+      "id": "choose-next-month-growth",
+      "version": "1.0.0",
+      "name": "Choose next month’s growth commitment",
+      "description": "Compare four complete growth commitments against cash after every dated payment and receipt, a required reserve, delivery hours, collection timing and the complete obligation horizon. Show the customer contribution needed to cover committed campaign spending. Optionally compare a nonbinding preference test using explicit probability assumptions and the same complete operating checks.",
+      "publishedAt": "2026-11-22T18:00:00.000Z",
+      "contentHash": "0b0686551d4d515cac26acb74aa8870e445cb19fcdee59c1ad5a8840abda565b",
+      "definitionHash": "1fcf577cb148c59c41e6696070c7222560c1faf2c5fbc753e0fa5e4c4b9239cb",
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth"
+      },
+      "useCase": {
+        "id": "fund-and-deliver-growth",
+        "label": "Fund and deliver growth"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "planning",
+          "name": "Compare growth arrangements",
+          "appId": "compare-growth-arrangements",
+          "version": 1,
+          "appContentHash": "410b8625863103042ea7a353ef56c7a0c1474a064b25c55e30508df510d1c242",
+          "packageHash": "7a04e76f030c07d20e89d577a9c1aebb6ab9fa28c05a47d8e9afea21d379876f"
+        },
+        {
+          "id": "learning",
+          "name": "Assess a payment-terms test",
+          "appId": "assess-payment-terms-test",
+          "version": 1,
+          "appContentHash": "c2d194000415cb9cb4c4f0124fffd4464391334896645a74bdadec575ff5047b",
+          "packageHash": "521aad0c71c44b9ec3cc979e0bb0bda410cbfb1e6415b4ee82f087ec8fdac068"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which growth plan can we afford to carry out?",
+        "scope": "A fictional service business with four authored complete arrangements and one standardized package. Edit the explicit case values; adapt the app for other arrangements, payment structures, activity dependencies or services.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/choose-next-month-growth/1.0.0/workflow.workflow.json",
+        "bytes": 335363,
+        "sha256": "5b78e9546f883c5c78112610d4509c899c92a74417ea8eb4b6b2e5d44c89179c"
+      },
+      "workbook": {
+        "path": "workflows/choose-next-month-growth/1.0.0/inputs.workbook.json",
+        "bytes": 382873,
+        "sha256": "6e516e7a4f8bfa5cbd5b9a32982a4059164f90872d393e04d10abf4b64789448"
+      }
     }
   ],
   "collections": [
@@ -813,6 +991,23 @@
         "path": "collections/decision-lab/software-delivery/1.0.0/collection.collection.json",
         "bytes": 1778,
         "sha256": "1cc70d3946d0ee79ac64739cedfec14fd5683bf1323c6ed88fa7c30ce14fa752"
+      }
+    },
+    {
+      "id": "business-growth",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.0.0",
+      "title": "Business growth",
+      "description": "Compare fundable growth commitments, the performance they require and the value of a bounded payment-terms test.",
+      "createdAt": "2026-11-22T18:00:00.000Z",
+      "contentHash": "222ae78d5f2b2ef1ca4a937b7df0b6c3f5b85d3f687983090bfa32aa6d5c2b0f",
+      "package": {
+        "path": "collections/decision-lab/business-growth/1.0.0/collection.collection.json",
+        "bytes": 2253,
+        "sha256": "cfaa9781827645c7b05e1c098e27f3c81ef2345a000497ae05946aaeee75dd2f"
       }
     }
   ],

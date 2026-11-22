@@ -252,6 +252,65 @@
         "format": "decision-lab-collection-definition/1"
       },
       "createdAt": "2026-11-21T18:00:00.000Z"
+    },
+    {
+      "definition": {
+        "id": "business-growth",
+        "version": "1.0.0",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "title": "Business growth",
+        "description": "Compare fundable growth commitments, the performance they require and the value of a bounded payment-terms test.",
+        "useCases": [
+          {
+            "id": "fund-and-deliver-growth",
+            "label": "Fund and deliver growth",
+            "description": "Compare complete campaigns, payment terms, dated cash and delivery capacity under explicit sales and collection assumptions."
+          }
+        ],
+        "members": [
+          {
+            "type": "workflow",
+            "id": "choose-next-month-growth",
+            "version": "1.0.0",
+            "packageHash": "0b0686551d4d515cac26acb74aa8870e445cb19fcdee59c1ad5a8840abda565b",
+            "useCaseId": "fund-and-deliver-growth",
+            "artifact": {
+              "path": "workflows/choose-next-month-growth/1.0.0/workflow.workflow.json",
+              "bytes": 335363,
+              "sha256": "5b78e9546f883c5c78112610d4509c899c92a74417ea8eb4b6b2e5d44c89179c"
+            }
+          },
+          {
+            "type": "app",
+            "id": "compare-growth-arrangements",
+            "version": 1,
+            "packageHash": "7a04e76f030c07d20e89d577a9c1aebb6ab9fa28c05a47d8e9afea21d379876f",
+            "useCaseId": "fund-and-deliver-growth",
+            "artifact": {
+              "path": "apps/compare-growth-arrangements/1/app.app.json",
+              "bytes": 111921,
+              "sha256": "360de70934ab89714fc412c02b91a90f814bd76f02edc15b735c03ba6b3bcfb0"
+            }
+          },
+          {
+            "type": "app",
+            "id": "assess-payment-terms-test",
+            "version": 1,
+            "packageHash": "521aad0c71c44b9ec3cc979e0bb0bda410cbfb1e6415b4ee82f087ec8fdac068",
+            "useCaseId": "fund-and-deliver-growth",
+            "artifact": {
+              "path": "apps/assess-payment-terms-test/1/app.app.json",
+              "bytes": 47341,
+              "sha256": "f018bd0c24a1345dc58a54a6a48b5faf40f74a178dc649ac1a2c22cb36991a36"
+            }
+          }
+        ],
+        "format": "decision-lab-collection-definition/1"
+      },
+      "createdAt": "2026-11-22T18:00:00.000Z"
     }
   ]
 }

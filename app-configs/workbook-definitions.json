@@ -26,6 +26,14 @@
       "mapping": "apps/compare-release-arrangements/1/inputs.mapping.json"
     },
     {
+      "target": "apps/compare-growth-arrangements/1/app.app.json",
+      "mapping": "apps/compare-growth-arrangements/1/inputs.mapping.json"
+    },
+    {
+      "target": "apps/assess-payment-terms-test/1/app.app.json",
+      "mapping": "apps/assess-payment-terms-test/1/inputs.mapping.json"
+    },
+    {
       "target": "workflows/review-first-shipment/1.9.0/workflow.workflow.json",
       "mapping": "workflows/review-first-shipment/1.9.0/inputs.mapping.json"
     },
@@ -48,6 +56,10 @@
     {
       "target": "workflows/plan-at-risk-release/1.0.0/workflow.workflow.json",
       "mapping": "workflows/plan-at-risk-release/1.0.0/inputs.mapping.json"
+    },
+    {
+      "target": "workflows/choose-next-month-growth/1.0.0/workflow.workflow.json",
+      "mapping": "workflows/choose-next-month-growth/1.0.0/inputs.mapping.json"
     }
   ]
 }

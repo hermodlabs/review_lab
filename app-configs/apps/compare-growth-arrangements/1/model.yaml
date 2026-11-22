@@ -1,0 +1,1487 @@
+{
+  "format": "complete-a-commitment/1",
+  "module": {
+    "id": "growth-commitment",
+    "version": "1.0.0",
+    "template": {
+      "id": "complete-a-commitment",
+      "version": 1
+    },
+    "title": "Compare growth arrangements",
+    "question": "Which growth commitments can we fund and deliver under the declared demand and collection situations?",
+    "description": "Compare a current-approach baseline and three complete growth arrangements against cash by date, a required reserve, delivery capacity and a commitment cutoff. Forecast customer counts are uncertain situations, not controllable sales or probabilities. A passing arrangement is operationally supportable under these inputs; no most-profitable option is selected.",
+    "units": {
+      "time": "day",
+      "timeOrigin": "elapsed whole days from the declared growth-planning origin",
+      "money": "USD cent",
+      "count": "customer",
+      "hours": "hour"
+    },
+    "assumptions": [
+      "This is an incremental growth calculation for one standard service package. Opening cash is already unrestricted growth funding after existing obligations; do not deduct those obligations again. The minimum reserve is an additional balance that must remain available.",
+      "Each arrangement has a fixed committed campaign expense that remains payable when sales disappoint. Forecast customer counts determine delivery expense, receipts and workload. Costs are not automatically inferred from customer-acquisition ratios.",
+      "Every declared situation supplies a complete joint forecast for all alternatives. Passing requires meeting every retained requirement in every declared situation; no probability of success or guarantee of customer demand is inferred.",
+      "Cash uses explicit elapsed days and ordered atomic events. On the same day, campaign payment occurs first, delivery payment second, and customer receipt third. A later receipt cannot fund an earlier payment. Customer receipts are not treated as negative expenses or returned deposits.",
+      "The payment-before-delivery alternative receives its complete customer price no later than delivery starts. Invoice alternatives collect no earlier than delivery finishes. The model assumes full receipt on each declared collection date; bad debt, refunds, tax and recognition rules require an authored extension.",
+      "Capacity is available incremental hours in the explicitly identified delivery period. All customer work fits inside that period. The model does not spread work across periods, infer staffing from elapsed time, or solve a detailed task schedule.",
+      "The comparison horizon must contain every payment, receipt and delivery completion. A multi-period contract needs its complete obligations inside this model or a new authored profile; its first month cannot stand for the whole commitment.",
+      "The baseline represents no incremental campaign and no incremental customers. Its zero cash events are harmless placeholders. Feasibility-only comparison neither recommends a growth target nor estimates campaign effectiveness or causal impact."
+    ],
+    "inputs": {
+      "parameters": {
+        "openingCashMinor": {
+          "type": "integer",
+          "unit": "money",
+          "minimum": 0
+        },
+        "minimumReserveMinor": {
+          "type": "integer",
+          "unit": "money",
+          "minimum": 0
+        },
+        "unitPriceMinor": {
+          "type": "integer",
+          "unit": "money",
+          "minimum": 0
+        },
+        "deliveryExpensePerCustomerMinor": {
+          "type": "integer",
+          "unit": "money",
+          "minimum": 0
+        },
+        "deliveryHoursPerCustomer": {
+          "type": "integer",
+          "unit": "hours",
+          "minimum": 1
+        },
+        "currentDay": {
+          "type": "integer",
+          "unit": "time",
+          "minimum": 0
+        },
+        "decisionDeadlineDay": {
+          "type": "integer",
+          "unit": "time",
+          "minimum": 0
+        },
+        "horizonDay": {
+          "type": "integer",
+          "unit": "time",
+          "minimum": 1
+        },
+        "campaignSurplusTargetMinor": {
+          "type": "integer",
+          "unit": "money",
+          "minimum": 0
+        }
+      },
+      "tables": {
+        "arrangements": {
+          "key": [
+            "id"
+          ],
+          "columns": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "baseline",
+                "large-invoice",
+                "small-invoice",
+                "medium-prepay"
+              ]
+            },
+            "campaignExpenseMinor": {
+              "type": "integer",
+              "unit": "money",
+              "minimum": 0
+            }
+          }
+        },
+        "scenarios": {
+          "key": [
+            "id"
+          ],
+          "columns": {
+            "id": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "outcomes": {
+          "key": [
+            "scenario",
+            "arrangement"
+          ],
+          "columns": {
+            "scenario": {
+              "type": "string",
+              "references": {
+                "table": "scenarios",
+                "column": "id"
+              }
+            },
+            "arrangement": {
+              "type": "string",
+              "enum": [
+                "baseline",
+                "large-invoice",
+                "small-invoice",
+                "medium-prepay"
+              ]
+            },
+            "customers": {
+              "type": "integer",
+              "unit": "count",
+              "minimum": 0
+            },
+            "campaignExpenseDay": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "deliveryExpenseDay": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "customerReceiptDay": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "deliveryStartDay": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "deliveryFinishDay": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "capacityPeriod": {
+              "type": "string",
+              "references": {
+                "table": "capacityPeriods",
+                "column": "id"
+              }
+            }
+          }
+        },
+        "capacityPeriods": {
+          "key": [
+            "id"
+          ],
+          "columns": {
+            "id": {
+              "type": "string"
+            },
+            "from": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "through": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "availableHours": {
+              "type": "integer",
+              "unit": "hours",
+              "minimum": 0
+            }
+          }
+        },
+        "_resources": {
+          "key": [
+            "id"
+          ],
+          "columns": {
+            "id": {
+              "type": "string"
+            },
+            "capacity": {
+              "type": "integer",
+              "unit": "count",
+              "minimum": 0
+            }
+          }
+        },
+        "_bookings": {
+          "key": [
+            "id"
+          ],
+          "columns": {
+            "id": {
+              "type": "string"
+            },
+            "resource": {
+              "type": "string"
+            },
+            "from": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "through": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0
+            },
+            "amount": {
+              "type": "integer",
+              "unit": "count",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "choices": [
+      {
+        "id": "arrangement",
+        "domain": {
+          "values": [
+            "baseline",
+            "large-invoice",
+            "small-invoice",
+            "medium-prepay"
+          ]
+        }
+      }
+    ],
+    "scenarioDomain": {
+      "table": "scenarios"
+    },
+    "lookupCoverage": [
+      {
+        "table": "arrangements",
+        "keys": {
+          "id": {
+            "domain": {
+              "values": [
+                "baseline",
+                "large-invoice",
+                "small-invoice",
+                "medium-prepay"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "table": "outcomes",
+        "keys": {
+          "scenario": {
+            "domain": {
+              "table": "scenarios",
+              "column": "id"
+            }
+          },
+          "arrangement": {
+            "domain": {
+              "values": [
+                "baseline",
+                "large-invoice",
+                "small-invoice",
+                "medium-prepay"
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "derived": [
+      {
+        "id": "customers",
+        "type": "integer",
+        "unit": "count",
+        "expr": {
+          "op": "lookup",
+          "table": "outcomes",
+          "where": {
+            "scenario": {
+              "ref": "scenario.id"
+            },
+            "arrangement": {
+              "ref": "choice.arrangement"
+            }
+          },
+          "column": "customers"
+        }
+      },
+      {
+        "id": "campaignExpense",
+        "type": "integer",
+        "unit": "money",
+        "expr": {
+          "op": "lookup",
+          "table": "arrangements",
+          "where": {
+            "id": {
+              "ref": "choice.arrangement"
+            }
+          },
+          "column": "campaignExpenseMinor"
+        }
+      },
+      {
+        "id": "customerReceipts",
+        "type": "integer",
+        "unit": "money",
+        "expr": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "derived.customers"
+            },
+            {
+              "ref": "parameter.unitPriceMinor"
+            }
+          ]
+        }
+      },
+      {
+        "id": "deliveryExpense",
+        "type": "integer",
+        "unit": "money",
+        "expr": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "derived.customers"
+            },
+            {
+              "ref": "parameter.deliveryExpensePerCustomerMinor"
+            }
+          ]
+        }
+      },
+      {
+        "id": "totalExpense",
+        "type": "integer",
+        "unit": "money",
+        "expr": {
+          "op": "add",
+          "args": [
+            {
+              "ref": "derived.campaignExpense"
+            },
+            {
+              "ref": "derived.deliveryExpense"
+            }
+          ]
+        }
+      },
+      {
+        "id": "contributionBeforeCampaign",
+        "type": "integer",
+        "unit": "money",
+        "expr": {
+          "op": "sub",
+          "args": [
+            {
+              "ref": "derived.customerReceipts"
+            },
+            {
+              "ref": "derived.deliveryExpense"
+            }
+          ]
+        }
+      },
+      {
+        "id": "netContribution",
+        "type": "integer",
+        "unit": "money",
+        "expr": {
+          "op": "sub",
+          "args": [
+            {
+              "ref": "derived.contributionBeforeCampaign"
+            },
+            {
+              "ref": "derived.campaignExpense"
+            }
+          ]
+        }
+      },
+      {
+        "id": "contributionPerCustomer",
+        "type": "integer",
+        "unit": "money",
+        "expr": {
+          "op": "sub",
+          "args": [
+            {
+              "ref": "parameter.unitPriceMinor"
+            },
+            {
+              "ref": "parameter.deliveryExpensePerCustomerMinor"
+            }
+          ]
+        }
+      },
+      {
+        "id": "campaignRecoveryTarget",
+        "type": "integer",
+        "unit": "money",
+        "expr": {
+          "op": "add",
+          "args": [
+            {
+              "ref": "derived.campaignExpense"
+            },
+            {
+              "ref": "parameter.campaignSurplusTargetMinor"
+            }
+          ]
+        }
+      },
+      {
+        "id": "capacityHours",
+        "type": "integer",
+        "unit": "hours",
+        "expr": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "derived.customers"
+            },
+            {
+              "ref": "parameter.deliveryHoursPerCustomer"
+            }
+          ]
+        }
+      },
+      {
+        "id": "availableHours",
+        "type": "integer",
+        "unit": "hours",
+        "expr": {
+          "op": "lookup",
+          "table": "capacityPeriods",
+          "where": {
+            "id": {
+              "op": "lookup",
+              "table": "outcomes",
+              "where": {
+                "scenario": {
+                  "ref": "scenario.id"
+                },
+                "arrangement": {
+                  "ref": "choice.arrangement"
+                }
+              },
+              "column": "capacityPeriod"
+            }
+          },
+          "column": "availableHours"
+        }
+      },
+      {
+        "id": "capacityHeadroom",
+        "type": "integer",
+        "unit": "hours",
+        "expr": {
+          "op": "sub",
+          "args": [
+            {
+              "ref": "derived.availableHours"
+            },
+            {
+              "ref": "derived.capacityHours"
+            }
+          ]
+        }
+      },
+      {
+        "id": "campaignExpenseDay",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "op": "lookup",
+          "table": "outcomes",
+          "where": {
+            "scenario": {
+              "ref": "scenario.id"
+            },
+            "arrangement": {
+              "ref": "choice.arrangement"
+            }
+          },
+          "column": "campaignExpenseDay"
+        }
+      },
+      {
+        "id": "deliveryExpenseDay",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "op": "lookup",
+          "table": "outcomes",
+          "where": {
+            "scenario": {
+              "ref": "scenario.id"
+            },
+            "arrangement": {
+              "ref": "choice.arrangement"
+            }
+          },
+          "column": "deliveryExpenseDay"
+        }
+      },
+      {
+        "id": "customerReceiptDay",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "op": "lookup",
+          "table": "outcomes",
+          "where": {
+            "scenario": {
+              "ref": "scenario.id"
+            },
+            "arrangement": {
+              "ref": "choice.arrangement"
+            }
+          },
+          "column": "customerReceiptDay"
+        }
+      },
+      {
+        "id": "deliveryStartDay",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "op": "lookup",
+          "table": "outcomes",
+          "where": {
+            "scenario": {
+              "ref": "scenario.id"
+            },
+            "arrangement": {
+              "ref": "choice.arrangement"
+            }
+          },
+          "column": "deliveryStartDay"
+        }
+      },
+      {
+        "id": "deliveryFinishDay",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "op": "lookup",
+          "table": "outcomes",
+          "where": {
+            "scenario": {
+              "ref": "scenario.id"
+            },
+            "arrangement": {
+              "ref": "choice.arrangement"
+            }
+          },
+          "column": "deliveryFinishDay"
+        }
+      },
+      {
+        "id": "cashHeadroom",
+        "type": "integer",
+        "unit": "money",
+        "expr": {
+          "ref": "finance.minimumHeadroom"
+        }
+      },
+      {
+        "id": "peakFundingRequired",
+        "type": "integer",
+        "unit": "money",
+        "expr": {
+          "ref": "finance.peakFundingRequired"
+        }
+      },
+      {
+        "id": "minimumCashBalance",
+        "type": "integer",
+        "unit": "money",
+        "expr": {
+          "ref": "finance.lowestBalance"
+        }
+      },
+      {
+        "id": "endingCashBalance",
+        "type": "integer",
+        "unit": "money",
+        "expr": {
+          "ref": "finance.endingBalance"
+        }
+      }
+    ],
+    "activities": [],
+    "resources": {
+      "definitions": {
+        "table": "_resources",
+        "idColumn": "id",
+        "capacityColumn": "capacity"
+      },
+      "bookings": {
+        "table": "_bookings",
+        "resourceColumn": "resource",
+        "startColumn": "from",
+        "endColumn": "through",
+        "amountColumn": "amount"
+      }
+    },
+    "requirements": [
+      {
+        "id": "CASH",
+        "label": "Cash and reserve by date",
+        "meaning": "Every ordered payment and receipt leaves at least the declared reserve.",
+        "waivable": false
+      },
+      {
+        "id": "CAPACITY",
+        "label": "Delivery-period capacity",
+        "meaning": "The complete forecast workload fits the available hours and interval of its declared delivery period.",
+        "waivable": false
+      },
+      {
+        "id": "TIME",
+        "label": "Commitment cutoff and full horizon",
+        "meaning": "New campaign choices remain available at the planning day and all future obligations fit the comparison horizon.",
+        "waivable": false
+      },
+      {
+        "id": "TERMS",
+        "label": "Declared customer payment terms",
+        "meaning": "Receipt dates preserve the published invoice or payment-before-delivery meaning.",
+        "waivable": false
+      },
+      {
+        "id": "BASIS",
+        "label": "Incremental baseline meaning",
+        "meaning": "Keeping the current approach adds no campaign expense and no forecast growth customers.",
+        "waivable": false
+      }
+    ],
+    "constraints": [
+      {
+        "id": "baseline-expense",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "arrangements",
+              "where": {
+                "id": {
+                  "literal": "baseline"
+                }
+              },
+              "column": "campaignExpenseMinor"
+            },
+            {
+              "literal": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "baseline-customers",
+        "requirement": "BASIS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "not",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "choice.arrangement"
+                    },
+                    {
+                      "literal": "baseline"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.customers"
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "cash-reserve",
+        "requirement": "CASH",
+        "kind": "predicate",
+        "predicate": {
+          "op": "gte",
+          "args": [
+            {
+              "ref": "finance.minimumHeadroom"
+            },
+            {
+              "literal": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "delivery-capacity",
+        "requirement": "CAPACITY",
+        "kind": "predicate",
+        "predicate": {
+          "op": "lte",
+          "args": [
+            {
+              "ref": "derived.capacityHours"
+            },
+            {
+              "ref": "derived.availableHours"
+            }
+          ]
+        }
+      },
+      {
+        "id": "delivery-period",
+        "requirement": "CAPACITY",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.customers"
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            },
+            {
+              "op": "and",
+              "args": [
+                {
+                  "op": "gte",
+                  "args": [
+                    {
+                      "ref": "derived.deliveryStartDay"
+                    },
+                    {
+                      "op": "lookup",
+                      "table": "capacityPeriods",
+                      "where": {
+                        "id": {
+                          "op": "lookup",
+                          "table": "outcomes",
+                          "where": {
+                            "scenario": {
+                              "ref": "scenario.id"
+                            },
+                            "arrangement": {
+                              "ref": "choice.arrangement"
+                            }
+                          },
+                          "column": "capacityPeriod"
+                        }
+                      },
+                      "column": "from"
+                    }
+                  ]
+                },
+                {
+                  "op": "lte",
+                  "args": [
+                    {
+                      "ref": "derived.deliveryFinishDay"
+                    },
+                    {
+                      "op": "lookup",
+                      "table": "capacityPeriods",
+                      "where": {
+                        "id": {
+                          "op": "lookup",
+                          "table": "outcomes",
+                          "where": {
+                            "scenario": {
+                              "ref": "scenario.id"
+                            },
+                            "arrangement": {
+                              "ref": "choice.arrangement"
+                            }
+                          },
+                          "column": "capacityPeriod"
+                        }
+                      },
+                      "column": "through"
+                    }
+                  ]
+                },
+                {
+                  "op": "gt",
+                  "args": [
+                    {
+                      "ref": "derived.deliveryFinishDay"
+                    },
+                    {
+                      "ref": "derived.deliveryStartDay"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "decision-cutoff",
+        "requirement": "TIME",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "choice.arrangement"
+                },
+                {
+                  "literal": "baseline"
+                }
+              ]
+            },
+            {
+              "op": "lte",
+              "args": [
+                {
+                  "ref": "parameter.currentDay"
+                },
+                {
+                  "ref": "parameter.decisionDeadlineDay"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "planning-horizon",
+        "requirement": "TIME",
+        "kind": "predicate",
+        "predicate": {
+          "op": "and",
+          "args": [
+            {
+              "op": "or",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.campaignExpense"
+                    },
+                    {
+                      "literal": 0
+                    }
+                  ]
+                },
+                {
+                  "op": "lte",
+                  "args": [
+                    {
+                      "ref": "derived.campaignExpenseDay"
+                    },
+                    {
+                      "ref": "parameter.horizonDay"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": "or",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.deliveryExpense"
+                    },
+                    {
+                      "literal": 0
+                    }
+                  ]
+                },
+                {
+                  "op": "lte",
+                  "args": [
+                    {
+                      "ref": "derived.deliveryExpenseDay"
+                    },
+                    {
+                      "ref": "parameter.horizonDay"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": "or",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.customerReceipts"
+                    },
+                    {
+                      "literal": 0
+                    }
+                  ]
+                },
+                {
+                  "op": "lte",
+                  "args": [
+                    {
+                      "ref": "derived.customerReceiptDay"
+                    },
+                    {
+                      "ref": "parameter.horizonDay"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": "or",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.customers"
+                    },
+                    {
+                      "literal": 0
+                    }
+                  ]
+                },
+                {
+                  "op": "lte",
+                  "args": [
+                    {
+                      "ref": "derived.deliveryFinishDay"
+                    },
+                    {
+                      "ref": "parameter.horizonDay"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "future-campaignExpenseDay",
+        "requirement": "TIME",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.campaignExpense"
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            },
+            {
+              "op": "gte",
+              "args": [
+                {
+                  "ref": "derived.campaignExpenseDay"
+                },
+                {
+                  "ref": "parameter.currentDay"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "future-deliveryExpenseDay",
+        "requirement": "TIME",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.deliveryExpense"
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            },
+            {
+              "op": "gte",
+              "args": [
+                {
+                  "ref": "derived.deliveryExpenseDay"
+                },
+                {
+                  "ref": "parameter.currentDay"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "future-customerReceiptDay",
+        "requirement": "TIME",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.customerReceipts"
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            },
+            {
+              "op": "gte",
+              "args": [
+                {
+                  "ref": "derived.customerReceiptDay"
+                },
+                {
+                  "ref": "parameter.currentDay"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "future-delivery",
+        "requirement": "TIME",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.customers"
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            },
+            {
+              "op": "gte",
+              "args": [
+                {
+                  "ref": "derived.deliveryStartDay"
+                },
+                {
+                  "ref": "parameter.currentDay"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "payment-terms",
+        "requirement": "TERMS",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.customers"
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            },
+            {
+              "op": "and",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "choice.arrangement"
+                    },
+                    {
+                      "literal": "medium-prepay"
+                    }
+                  ]
+                },
+                {
+                  "op": "lte",
+                  "args": [
+                    {
+                      "ref": "derived.customerReceiptDay"
+                    },
+                    {
+                      "ref": "derived.deliveryStartDay"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": "and",
+              "args": [
+                {
+                  "op": "not",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "ref": "choice.arrangement"
+                        },
+                        {
+                          "literal": "medium-prepay"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "gte",
+                  "args": [
+                    {
+                      "ref": "derived.customerReceiptDay"
+                    },
+                    {
+                      "ref": "derived.deliveryFinishDay"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "finance": {
+      "mode": "cash-flow",
+      "charges": [
+        {
+          "id": "campaign-expense",
+          "amount": {
+            "ref": "derived.campaignExpense"
+          }
+        },
+        {
+          "id": "delivery-expense",
+          "amount": {
+            "ref": "derived.deliveryExpense"
+          }
+        }
+      ],
+      "holds": [],
+      "cashFlow": {
+        "version": 1,
+        "openingBalance": {
+          "ref": "parameter.openingCashMinor"
+        },
+        "minimumBalance": {
+          "ref": "parameter.minimumReserveMinor"
+        },
+        "events": [
+          {
+            "id": "campaign-payment",
+            "direction": "payment",
+            "amount": {
+              "ref": "derived.campaignExpense"
+            },
+            "at": {
+              "ref": "derived.campaignExpenseDay"
+            },
+            "order": 0
+          },
+          {
+            "id": "delivery-payment",
+            "direction": "payment",
+            "amount": {
+              "ref": "derived.deliveryExpense"
+            },
+            "at": {
+              "ref": "derived.deliveryExpenseDay"
+            },
+            "order": 1
+          },
+          {
+            "id": "customer-receipt",
+            "direction": "receipt",
+            "amount": {
+              "ref": "derived.customerReceipts"
+            },
+            "at": {
+              "ref": "derived.customerReceiptDay"
+            },
+            "order": 2
+          }
+        ]
+      }
+    },
+    "preference": {
+      "mode": "feasibility-only"
+    },
+    "labels": {
+      "plan": "Complete growth arrangement",
+      "actor": "Delivery team",
+      "scenario": "Demand and collection situation",
+      "financeExpense": "Campaign and delivery expense",
+      "choice.arrangement": "Growth arrangement",
+      "view.finance.title": "Cash and expense",
+      "view.cashFlow.title": "Cash by date",
+      "charge.campaign-expense": "Committed campaign expense",
+      "charge.delivery-expense": "Delivery expense",
+      "cash-event.campaign-payment": "Pay the committed campaign expense",
+      "cash-event.delivery-payment": "Pay delivery expense",
+      "cash-event.customer-receipt": "Receive customer payment",
+      "constraint.baseline-expense": "Keep the current-approach alternative free of incremental campaign expense",
+      "constraint.baseline-customers": "Keep the current-approach alternative free of forecast incremental customers",
+      "constraint.cash-reserve": "Keep available cash at or above the required reserve after every receipt and payment",
+      "constraint.delivery-capacity": "The complete customer workload fits the recorded delivery-period capacity",
+      "constraint.delivery-period": "The complete delivery interval fits its declared capacity period",
+      "constraint.decision-cutoff": "Choose a new campaign before the recorded commitment cutoff",
+      "constraint.planning-horizon": "The comparison horizon includes every nonzero payment, customer receipt and actual delivery completion",
+      "constraint.future-campaignExpenseDay": "The campaign expense day has not already passed when making this future commitment",
+      "constraint.future-deliveryExpenseDay": "The delivery expense day has not already passed when making this future commitment",
+      "constraint.future-customerReceiptDay": "The customer receipt day has not already passed when making this future commitment",
+      "constraint.future-delivery": "Forecast delivery starts no earlier than the planning day",
+      "constraint.payment-terms": "Customer receipt timing retains the authored invoice or payment-before-delivery terms",
+      "choice.arrangement.baseline": "Keep the current approach",
+      "choice.arrangement.large-invoice": "Large campaign with invoiced payment",
+      "choice.arrangement.small-invoice": "Small campaign with invoiced payment",
+      "choice.arrangement.medium-prepay": "Medium campaign with payment before delivery"
+    },
+    "metadata": {
+      "caseStart": {
+        "starterMeaning": "example",
+        "supportsOwnData": false,
+        "scope": "Four authored arrangements for one standard service package. Change prices, committed campaign quotes, joint customer and collection forecasts, available cash, reserve and delivery-period capacity. A different service structure, installment contract or refund process needs an authored extension."
+      },
+      "catalog": {
+        "domain": {
+          "id": "business-growth",
+          "label": "Business growth",
+          "description": "Bounded growth commitments, operating capacity and the value of further learning."
+        },
+        "useCase": {
+          "id": "growth-commitment",
+          "label": "Choose next month’s growth commitment",
+          "description": "Find which supplied growth arrangements can be funded and delivered, then inspect what their spending must achieve."
+        }
+      },
+      "decisionPresentation": {
+        "format": "decision-presentation/1",
+        "title": "Compare growth commitments",
+        "question": "Which arrangements can we fund and deliver?",
+        "priorityLabel": "Compare without ranking",
+        "moneyFormat": {
+          "currency": "USD",
+          "divisor": 100
+        },
+        "columns": [
+          {
+            "id": "plan",
+            "label": "Growth arrangement"
+          },
+          {
+            "id": "status",
+            "label": "Operating fit"
+          },
+          {
+            "id": "cashHeadroom",
+            "source": {
+              "kind": "derived",
+              "id": "cashHeadroom"
+            },
+            "label": "Lowest cash headroom",
+            "format": {
+              "kind": "money",
+              "currency": "USD",
+              "divisor": 100
+            }
+          },
+          {
+            "id": "capacityHeadroom",
+            "source": {
+              "kind": "derived",
+              "id": "capacityHeadroom"
+            },
+            "label": "Delivery headroom (hours)",
+            "format": {
+              "kind": "number"
+            }
+          },
+          {
+            "id": "blockers",
+            "label": "Blocking conditions"
+          }
+        ],
+        "charts": [
+          {
+            "viewId": "commitment:cash-flow",
+            "defaultRepresentation": "line"
+          }
+        ]
+      }
+    }
+  },
+  "case": {
+    "id": "next-month-growth",
+    "parameters": {
+      "openingCashMinor": 1200000,
+      "minimumReserveMinor": 0,
+      "unitPriceMinor": 150000,
+      "deliveryExpensePerCustomerMinor": 50000,
+      "deliveryHoursPerCustomer": 5,
+      "currentDay": 0,
+      "decisionDeadlineDay": 3,
+      "horizonDay": 60,
+      "campaignSurplusTargetMinor": 0
+    },
+    "tables": {
+      "arrangements": [
+        {
+          "id": "baseline",
+          "campaignExpenseMinor": 0
+        },
+        {
+          "id": "large-invoice",
+          "campaignExpenseMinor": 800000
+        },
+        {
+          "id": "small-invoice",
+          "campaignExpenseMinor": 200000
+        },
+        {
+          "id": "medium-prepay",
+          "campaignExpenseMinor": 400000
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "recorded",
+          "label": "Recorded planning estimates"
+        }
+      ],
+      "outcomes": [
+        {
+          "scenario": "recorded",
+          "arrangement": "baseline",
+          "customers": 0,
+          "campaignExpenseDay": 0,
+          "deliveryExpenseDay": 0,
+          "customerReceiptDay": 0,
+          "deliveryStartDay": 0,
+          "deliveryFinishDay": 0,
+          "capacityPeriod": "delivery-period"
+        },
+        {
+          "scenario": "recorded",
+          "arrangement": "large-invoice",
+          "customers": 40,
+          "campaignExpenseDay": 3,
+          "deliveryExpenseDay": 7,
+          "customerReceiptDay": 30,
+          "deliveryStartDay": 7,
+          "deliveryFinishDay": 14,
+          "capacityPeriod": "delivery-period"
+        },
+        {
+          "scenario": "recorded",
+          "arrangement": "small-invoice",
+          "customers": 10,
+          "campaignExpenseDay": 3,
+          "deliveryExpenseDay": 7,
+          "customerReceiptDay": 30,
+          "deliveryStartDay": 7,
+          "deliveryFinishDay": 14,
+          "capacityPeriod": "delivery-period"
+        },
+        {
+          "scenario": "recorded",
+          "arrangement": "medium-prepay",
+          "customers": 20,
+          "campaignExpenseDay": 3,
+          "deliveryExpenseDay": 7,
+          "customerReceiptDay": 4,
+          "deliveryStartDay": 7,
+          "deliveryFinishDay": 14,
+          "capacityPeriod": "delivery-period"
+        }
+      ],
+      "capacityPeriods": [
+        {
+          "id": "delivery-period",
+          "from": 0,
+          "through": 30,
+          "availableHours": 140
+        }
+      ],
+      "_resources": [],
+      "_bookings": []
+    },
+    "provenance": [
+      {
+        "id": "fictional-growth-basis",
+        "description": "Fictional incremental planning estimates. Opening cash is already unrestricted growth funding after existing obligations; those obligations are not deducted a second time. Customer forecasts and payment promises are assumptions, not guaranteed sales or bank receipts."
+      }
+    ]
+  }
+}
