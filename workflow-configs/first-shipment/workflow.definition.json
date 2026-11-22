@@ -1,7 +1,7 @@
 {
   "format": "decision-lab-workflow/1",
   "id": "review-first-shipment",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "title": "Compare first-shipment arrangements",
   "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
   "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
@@ -943,8 +943,14 @@
               },
               "costMinor": {
                 "type": "number",
-                "label": "Complete arrangement quote (USD cents)",
-                "integer": true
+                "label": "Complete arrangement quote",
+                "integer": true,
+                "unit": "USD cent",
+                "display": {
+                  "kind": "money",
+                  "currency": "USD",
+                  "divisor": 100
+                }
               },
               "departureMinute": {
                 "type": "number",
@@ -974,18 +980,36 @@
           "fields": {
             "budgetMinor": {
               "type": "number",
-              "label": "Expense limit (USD cents)",
-              "integer": true
+              "label": "Expense limit",
+              "integer": true,
+              "unit": "USD cent",
+              "display": {
+                "kind": "money",
+                "currency": "USD",
+                "divisor": 100
+              }
             },
             "cashLimitMinor": {
               "type": "number",
-              "label": "Available cash (USD cents)",
-              "integer": true
+              "label": "Available cash",
+              "integer": true,
+              "unit": "USD cent",
+              "display": {
+                "kind": "money",
+                "currency": "USD",
+                "divisor": 100
+              }
             },
             "studyPurchaseCapMinor": {
               "type": "number",
-              "label": "Verification purchase limit (USD cents)",
-              "integer": true
+              "label": "Verification purchase limit",
+              "integer": true,
+              "unit": "USD cent",
+              "display": {
+                "kind": "money",
+                "currency": "USD",
+                "divisor": 100
+              }
             },
             "studyPurchaseGrant": {
               "type": "object",
@@ -1036,8 +1060,14 @@
                 },
                 "ceilingMinor": {
                   "type": "number",
-                  "label": "Grant ceiling (USD cents)",
-                  "integer": true
+                  "label": "Grant ceiling",
+                  "integer": true,
+                  "unit": "USD cent",
+                  "display": {
+                    "kind": "money",
+                    "currency": "USD",
+                    "divisor": 100
+                  }
                 }
               },
               "nullable": true,
@@ -1384,8 +1414,14 @@
               },
               "amountMinor": {
                 "type": "number",
-                "label": "Amount already incurred (USD cents)",
-                "integer": true
+                "label": "Amount already incurred",
+                "integer": true,
+                "unit": "USD cent",
+                "display": {
+                  "kind": "money",
+                  "currency": "USD",
+                  "divisor": 100
+                }
               },
               "paidAtMinute": {
                 "type": "number",
@@ -1445,8 +1481,14 @@
               },
               "feeMinor": {
                 "type": "number",
-                "label": "Verification fee (USD cents)",
-                "integer": true
+                "label": "Verification fee",
+                "integer": true,
+                "unit": "USD cent",
+                "display": {
+                  "kind": "money",
+                  "currency": "USD",
+                  "divisor": 100
+                }
               },
               "reportAvailableAt": {
                 "type": "string",
@@ -20726,5 +20768,5 @@
       }
     ]
   },
-  "contentHash": "94a1651d4c01b4d4ab1499ab986b18350df0b219d99afd6c9871597b35240524"
+  "contentHash": "11b54d8b5d638a9ef945562c476353a5c74521f680bcfce9f84eca25df1af745"
 }
