@@ -1,0 +1,97 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "gifting-operations",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "version": "2.11.0",
+    "title": "Gifting operations",
+    "description": "Gifting operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+    "useCases": [
+      {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign",
+        "description": "Establish the required corrections and compare complete arrangements before committing the gift kits."
+      }
+    ],
+    "members": [
+      {
+        "type": "workflow",
+        "id": "review-gift-kit-flexible",
+        "version": "2.11.0",
+        "packageHash": "65b4cea81db6f78b84b3eabe96f1efc9f5b49898ae4426e1d349f5adf51d9db9",
+        "useCaseId": "prepare-gift-kit-campaign",
+        "artifact": {
+          "path": "workflows/review-gift-kit-flexible/2.11.0/workflow.workflow.json",
+          "bytes": 628258,
+          "sha256": "942e334923db1eb83c5deb14f46bcfc1be22706453c704132218a7ea10372f3f"
+        }
+      },
+      {
+        "type": "app",
+        "id": "review-gift-kit-flexible-evidence",
+        "version": 4,
+        "packageHash": "1a0b6d5519121315e2e0c229972137dda5033fd1e09d6b9b540c95faa1d56f32",
+        "useCaseId": "prepare-gift-kit-campaign",
+        "artifact": {
+          "path": "apps/review-gift-kit-flexible-evidence/4/app.app.json",
+          "bytes": 159484,
+          "sha256": "f245cba22548230b4f69e7dfece076a1cc3d5873b7ff436e576fa0bf21d43d4c"
+        }
+      },
+      {
+        "type": "app",
+        "id": "review-gift-kit-flexible-planning",
+        "version": 4,
+        "packageHash": "9162e13abe114321455cd7138fada5d2c59b26bd90e3abf0f100ab47bcd0e792",
+        "useCaseId": "prepare-gift-kit-campaign",
+        "artifact": {
+          "path": "apps/review-gift-kit-flexible-planning/4/app.app.json",
+          "bytes": 154446,
+          "sha256": "278f87001c4ea2fc5cd679326305e0d880699363eb8115b5f4d4b7863d6b00c5"
+        }
+      },
+      {
+        "type": "workflow",
+        "id": "review-gift-kit-earliest",
+        "version": "2.11.0",
+        "packageHash": "8370f476241f60191e79275054068fdbe30ceed7d5f9a2238010ee80c2c27818",
+        "useCaseId": "prepare-gift-kit-campaign",
+        "artifact": {
+          "path": "workflows/review-gift-kit-earliest/2.11.0/workflow.workflow.json",
+          "bytes": 628300,
+          "sha256": "83af849d6b62b1826dcae5f517f1f7421c5a89ff0e30bcb8fe179d06429b0971"
+        }
+      },
+      {
+        "type": "app",
+        "id": "review-gift-kit-earliest-planning",
+        "version": 4,
+        "packageHash": "f9937e43b0c57bc72f1eae573729479d17ffa5525693e859b942e27d937f61bc",
+        "useCaseId": "prepare-gift-kit-campaign",
+        "artifact": {
+          "path": "apps/review-gift-kit-earliest-planning/4/app.app.json",
+          "bytes": 154465,
+          "sha256": "b0a2b6b251297809eff76997959dc0210c15c7d3fbbbedbdbce07efe36606dc8"
+        }
+      },
+      {
+        "type": "app",
+        "id": "review-gift-kit-earliest-evidence",
+        "version": 4,
+        "packageHash": "49aed1b4fc05add4230e782f423b5777a97bb9852c1d9e69db59ac962bc3bdf2",
+        "useCaseId": "prepare-gift-kit-campaign",
+        "artifact": {
+          "path": "apps/review-gift-kit-earliest-evidence/4/app.app.json",
+          "bytes": 159505,
+          "sha256": "6f94a3e2d69bf49c9f6e8aa14ae2c92c46de50fe0284cd6f9e927f0e36b1e469"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-23T16:59:01.941Z",
+  "contentHash": "56d1403e06b48a3655ce6e3f75c61ce6cdcbd8c82c0b85f194f7b16d57b44651"
+}

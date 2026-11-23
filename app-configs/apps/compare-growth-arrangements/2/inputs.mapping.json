@@ -1,0 +1,488 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-9950d3e4d7fdee264e10b66b",
+  "version": "1.0.0",
+  "title": "Compare growth arrangements — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case.",
+  "target": {
+    "type": "app",
+    "id": "compare-growth-arrangements",
+    "release": 2,
+    "pattern": "complete-a-commitment/1",
+    "packageHash": "7d965e4935d7824084750509eb923a2f4a46f1c52a88f3f9df96b89ba615c8e7",
+    "moduleHash": "9161f6fae3d012ca13acabe21e02d195f994273d3ab5912724242a0e81cfadfc"
+  },
+  "managedPaths": [
+    "/parameters/openingCashMinor",
+    "/parameters/minimumReserveMinor",
+    "/parameters/unitPriceMinor",
+    "/parameters/deliveryExpensePerCustomerMinor",
+    "/parameters/deliveryHoursPerCustomer",
+    "/parameters/currentDay",
+    "/parameters/decisionDeadlineDay",
+    "/parameters/horizonDay",
+    "/parameters/campaignSurplusTargetMinor",
+    "/tables/arrangements",
+    "/tables/scenarios",
+    "/tables/outcomes",
+    "/tables/capacityPeriods"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "A fictional service business with four authored complete arrangements and one standardized package. Edit the explicit case values; adapt the app for other arrangements, payment structures, activity dependencies or services."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "Whole elapsed days from the declared planning origin; event order distinguishes payments within a day. Monetary inputs use integer USD cents, displayed as dollars where labelled. Opening cash is unrestricted incremental growth funding after existing obligations. Reserve funds are deducted by the cash-balance requirement once. Forecast sales and collection dates are supplied assumptions, not predictions."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Parameters",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Arrangements",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Scenarios",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Outcomes",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Capacity Periods",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Parameters",
+      "kind": "record",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "parameters-openingCashMinor",
+          "label": "Parameters opening Cash Minor",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "USD cent",
+          "path": "/parameters/openingCashMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        },
+        {
+          "id": "parameters-minimumReserveMinor",
+          "label": "Parameters minimum Reserve Minor",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "USD cent",
+          "path": "/parameters/minimumReserveMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        },
+        {
+          "id": "parameters-unitPriceMinor",
+          "label": "Parameters unit Price Minor",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "USD cent",
+          "path": "/parameters/unitPriceMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        },
+        {
+          "id": "parameters-deliveryExpensePerCustomerMinor",
+          "label": "Parameters delivery Expense Per Customer Minor",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "USD cent",
+          "path": "/parameters/deliveryExpensePerCustomerMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        },
+        {
+          "id": "parameters-deliveryHoursPerCustomer",
+          "label": "Parameters delivery Hours Per Customer",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "hour",
+          "path": "/parameters/deliveryHoursPerCustomer",
+          "minimum": 1
+        },
+        {
+          "id": "parameters-currentDay",
+          "label": "Parameters current Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "day",
+          "path": "/parameters/currentDay",
+          "minimum": 0
+        },
+        {
+          "id": "parameters-decisionDeadlineDay",
+          "label": "Parameters decision Deadline Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "day",
+          "path": "/parameters/decisionDeadlineDay",
+          "minimum": 0
+        },
+        {
+          "id": "parameters-horizonDay",
+          "label": "Parameters horizon Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "day",
+          "path": "/parameters/horizonDay",
+          "minimum": 1
+        },
+        {
+          "id": "parameters-campaignSurplusTargetMinor",
+          "label": "Parameters campaign Surplus Target Minor",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "USD cent",
+          "path": "/parameters/campaignSurplusTargetMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-2",
+      "name": "Arrangements",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/tables/arrangements"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id",
+          "enum": [
+            "baseline",
+            "large-invoice",
+            "small-invoice",
+            "medium-prepay"
+          ]
+        },
+        {
+          "id": "campaignExpenseMinor",
+          "label": "Campaign Expense Minor",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "USD cent",
+          "path": "/campaignExpenseMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-3",
+      "name": "Scenarios",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/tables/scenarios"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "label",
+          "label": "Label",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/label"
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-4",
+      "name": "Outcomes",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/tables/outcomes"
+      },
+      "columns": [
+        {
+          "id": "scenario",
+          "label": "Scenario",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/scenario"
+        },
+        {
+          "id": "arrangement",
+          "label": "Arrangement",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/arrangement",
+          "enum": [
+            "baseline",
+            "large-invoice",
+            "small-invoice",
+            "medium-prepay"
+          ]
+        },
+        {
+          "id": "customers",
+          "label": "Customers",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "customer",
+          "path": "/customers",
+          "minimum": 0
+        },
+        {
+          "id": "campaignExpenseDay",
+          "label": "Campaign Expense Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "day",
+          "path": "/campaignExpenseDay",
+          "minimum": 0
+        },
+        {
+          "id": "deliveryExpenseDay",
+          "label": "Delivery Expense Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "day",
+          "path": "/deliveryExpenseDay",
+          "minimum": 0
+        },
+        {
+          "id": "customerReceiptDay",
+          "label": "Customer Receipt Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "day",
+          "path": "/customerReceiptDay",
+          "minimum": 0
+        },
+        {
+          "id": "deliveryStartDay",
+          "label": "Delivery Start Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "day",
+          "path": "/deliveryStartDay",
+          "minimum": 0
+        },
+        {
+          "id": "deliveryFinishDay",
+          "label": "Delivery Finish Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "day",
+          "path": "/deliveryFinishDay",
+          "minimum": 0
+        },
+        {
+          "id": "capacityPeriod",
+          "label": "Capacity Period",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/capacityPeriod"
+        }
+      ],
+      "key": [
+        "scenario",
+        "arrangement"
+      ]
+    },
+    {
+      "id": "inputs-5",
+      "name": "Capacity Periods",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/tables/capacityPeriods"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "from",
+          "label": "From",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "day",
+          "path": "/from",
+          "minimum": 0
+        },
+        {
+          "id": "through",
+          "label": "Through",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "day",
+          "path": "/through",
+          "minimum": 0
+        },
+        {
+          "id": "availableHours",
+          "label": "Available Hours",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "hour",
+          "path": "/availableHours",
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "a017dbfbe97e15bcde86554362b208af15549b356f99b28627e352fcfee4f45f"
+}

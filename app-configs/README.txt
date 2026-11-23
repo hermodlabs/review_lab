@@ -11,8 +11,8 @@ CURRENT INVENTORY
   Venue operations: street-team deployment workflow 1.13.0
   Restaurant operations: published roster repair workflow 1.6.0
   Software delivery: release recovery workflow 1.0.0 and release arrangements app 1
-  Business growth: growth commitment workflow 1.0.0, growth arrangements app 1
-    and payment-terms learning app 1
+  Business growth: growth commitment workflow 1.2.1, growth commitments app 4
+    and payment-terms learning app 4
 
 There are six collections, seven workflows and eight standalone apps. All fifteen
 products include prefilled Excel inputs. Normal browsing offers current releases.
@@ -33,7 +33,7 @@ explicit operational inputs. The native package never interprets arbitrary issue
 graphs, converts story points to hours or predicts a delivery probability.
 
 The growth example separates committed expense from dated cash receipts and
-payments. It compares four authored arrangements using explicit customer,
+payments. It compares a baseline and three proposed growth commitments using explicit customer,
 collection and delivery-capacity assumptions. Its optional nonbinding preference
 test uses supplied probabilities and source-linked operating assessments before
 and after the test expense and delay; it accepts no deposits or customer orders.

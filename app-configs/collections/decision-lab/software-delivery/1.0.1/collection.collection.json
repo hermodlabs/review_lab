@@ -1,0 +1,49 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "software-delivery",
+    "version": "1.0.1",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "title": "Software delivery",
+    "description": "Bounded operational calculations for software delivery commitments, qualified capacity and explicit release changes.",
+    "useCases": [
+      {
+        "id": "release-recovery",
+        "label": "Recover an at-risk release",
+        "description": "Compare four complete release arrangements, retain the original commitment, and expose required scope or date amendments."
+      }
+    ],
+    "members": [
+      {
+        "type": "workflow",
+        "id": "plan-at-risk-release",
+        "version": "1.0.1",
+        "packageHash": "764c467a0fee8ad2c49b60a9e01ab4b9ebd6ad71164a030ac19444e611cea7c9",
+        "useCaseId": "release-recovery",
+        "artifact": {
+          "path": "workflows/plan-at-risk-release/1.0.1/workflow.workflow.json",
+          "bytes": 309143,
+          "sha256": "a94cba99e15fa0cc646724d8eaf941a162879bef22457423b7e15f57b8a57290"
+        }
+      },
+      {
+        "type": "app",
+        "id": "compare-release-arrangements",
+        "version": 1,
+        "packageHash": "8149c0f48faa6c27727d32984c7c137189cc91247a6b254d594c1ba70c9f84e1",
+        "useCaseId": "release-recovery",
+        "artifact": {
+          "path": "apps/compare-release-arrangements/1/app.app.json",
+          "bytes": 178620,
+          "sha256": "d71b9cf38923ad30f271414bedf8c4e105de68873422e813128f5f04ff7937f4"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-22T23:00:00.000Z",
+  "contentHash": "ad331ef32b4d46526ba777499a501f82658497c363bcb693c67c9c180dcd8d5a"
+}

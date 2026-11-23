@@ -3,7 +3,7 @@
   "kind": "decision-lab-app-catalog",
   "title": "Decision Lab marketplace",
   "description": "Exact preceding releases retained for published installation links. Not included in normal Marketplace browsing.",
-  "exportedAt": "2026-11-21T23:55:36.071Z",
+  "exportedAt": "2026-11-23T17:16:26.670Z",
   "scope": "pinned-install-history",
   "apps": [
     {
@@ -131,7 +131,7 @@
     {
       "id": "review-gift-kit-flexible-planning",
       "version": 3,
-      "name": "Review a gift-kit commitment \u2014 complete arrangements",
+      "name": "Review a gift-kit commitment — complete arrangements",
       "description": "Compare one authored correction package across every remaining fault configuration, including simultaneous faults. Prospective correction is distinct from completed work.",
       "publishedAt": "2026-11-20T23:30:00.000Z",
       "contentHash": "c2d579b2698e443395a5f678392b368dfb98d615065c6f8f486baf0e66062cc2",
@@ -250,7 +250,7 @@
     {
       "id": "review-gift-kit-earliest-planning",
       "version": 3,
-      "name": "Review gift kits with earliest handoff priority \u2014 complete arrangements",
+      "name": "Review gift kits with earliest handoff priority — complete arrangements",
       "description": "Compare one authored correction package across every remaining fault configuration, including simultaneous faults. Prospective correction is distinct from completed work.",
       "publishedAt": "2026-11-20T23:30:00.000Z",
       "contentHash": "36b000f793baefde7b53588a6e64408b38ac3cdc22f9ef41883e8d24816caa40",
@@ -302,6 +302,607 @@
         ],
         "forms": "none",
         "question": "Which complete correction package addresses every remaining explanation and can finish before we commit the gift kits?",
+        "supportsOwnData": false
+      }
+    },
+    {
+      "id": "compare-growth-arrangements",
+      "version": 1,
+      "name": "Compare growth arrangements",
+      "description": "Compare a current-approach baseline and three complete growth arrangements against cash by date, a required reserve, delivery capacity and a commitment cutoff. Forecast customer counts are uncertain situations, not controllable sales or probabilities. A passing arrangement is operationally supportable under these inputs; no most-profitable option is selected.",
+      "publishedAt": "2026-11-22T18:00:00.000Z",
+      "contentHash": "410b8625863103042ea7a353ef56c7a0c1474a064b25c55e30508df510d1c242",
+      "module": {
+        "id": "growth-commitment",
+        "version": "1.0.0"
+      },
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth",
+        "description": "Bounded growth commitments, operating capacity and the value of further learning."
+      },
+      "useCase": {
+        "id": "growth-commitment",
+        "label": "Choose next month’s growth commitment",
+        "description": "Find which supplied growth arrangements can be funded and delivered, then inspect what their spending must achieve."
+      },
+      "pattern": {
+        "id": "complete-a-commitment/1",
+        "label": "Complete a commitment"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "complete-a-commitment/1",
+        "definition": {
+          "id": "complete-a-commitment",
+          "version": "1.0.0",
+          "evaluator": "bounded-static-commitment/1"
+        },
+        "presentationContract": "complete-a-commitment.assessment/1"
+      },
+      "package": {
+        "path": "apps/compare-growth-arrangements/1/app.app.json",
+        "bytes": 111921,
+        "sha256": "360de70934ab89714fc412c02b91a90f814bd76f02edc15b735c03ba6b3bcfb0"
+      },
+      "source": {
+        "path": "apps/compare-growth-arrangements/1/model.yaml",
+        "bytes": 40968,
+        "sha256": "5b757f7a423ec1bbbc7d672889a5dc6467e9a25a7562a70b5371483f55e6f4b9"
+      },
+      "workbook": {
+        "path": "apps/compare-growth-arrangements/1/inputs.workbook.json",
+        "bytes": 134407,
+        "sha256": "dcc1459b1ca84c1a5ecdbd94849566d01044f0e2c410cef4fd43c820535d9f8b"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "Which growth commitments can we fund and deliver under the declared demand and collection situations?",
+        "scope": "Four authored arrangements for one standard service package. Change prices, committed campaign quotes, joint customer and collection forecasts, available cash, reserve and delivery-period capacity. A different service structure, installment contract or refund process needs an authored extension.",
+        "supportsOwnData": false
+      }
+    },
+    {
+      "id": "assess-payment-terms-test",
+      "version": 1,
+      "name": "Assess a payment-terms test",
+      "description": "Compare choosing a fundable and deliverable growth arrangement now with a nonbinding payment-preference test and a complete response to each possible signal.",
+      "publishedAt": "2026-11-22T18:00:00.000Z",
+      "contentHash": "c2d194000415cb9cb4c4f0124fffd4464391334896645a74bdadec575ff5047b",
+      "module": {
+        "id": "payment-terms-learning",
+        "version": "1.0.0"
+      },
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth"
+      },
+      "useCase": {
+        "id": "fund-and-deliver-growth",
+        "label": "Fund and deliver growth"
+      },
+      "pattern": {
+        "id": "assess-value-of-learning/1",
+        "label": "Assess the value of learning"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "assess-value-of-learning/1",
+        "definition": {
+          "id": "assess-value-of-learning",
+          "version": "1.0.0",
+          "evaluator": "finite-learning-value/1"
+        },
+        "presentationContract": "learning-value-assessment/1"
+      },
+      "package": {
+        "path": "apps/assess-payment-terms-test/1/app.app.json",
+        "bytes": 47341,
+        "sha256": "f018bd0c24a1345dc58a54a6a48b5faf40f74a178dc649ac1a2c22cb36991a36"
+      },
+      "source": {
+        "path": "apps/assess-payment-terms-test/1/model.yaml",
+        "bytes": 15208,
+        "sha256": "3f5e5edbf4a3a49a6821938ee4efb97029387aa3185b3ba499b6154ff38a29d0"
+      },
+      "workbook": {
+        "path": "apps/assess-payment-terms-test/1/inputs.workbook.json",
+        "bytes": 72072,
+        "sha256": "1cb311e371505e20a6053352b8e8fb9e033efc5911a008655ab0ff55629cb040"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "Could a timely preference test improve the growth choice enough to cover its cost?",
+        "supportsOwnData": false
+      }
+    },
+    {
+      "id": "compare-release-arrangements",
+      "version": 1,
+      "name": "Compare release arrangements",
+      "description": "Compare four complete arrangements for an at-risk release. Reduced scope and a later date remain explicit amendments to the original commitment. This bounded calculation does not certify release quality or search all possible schedules.",
+      "publishedAt": "2026-11-21T18:00:00.000Z",
+      "contentHash": "0188fd272fcd8b55d0a78e34cda4b64f19d36ff5a922ce76adf51b1e7a36aea2",
+      "module": {
+        "id": "release-recovery",
+        "version": "1.0.0"
+      },
+      "domain": {
+        "id": "software-delivery",
+        "label": "Software delivery",
+        "description": "Bounded operating decisions for software teams with explicit scope, capacity and timing."
+      },
+      "useCase": {
+        "id": "release-recovery",
+        "label": "Plan an at-risk release",
+        "description": "Compare supplied arrangements while preserving the original release commitment."
+      },
+      "pattern": {
+        "id": "complete-a-commitment/1",
+        "label": "Complete a commitment"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "complete-a-commitment/1",
+        "definition": {
+          "id": "complete-a-commitment",
+          "version": "1.0.0",
+          "evaluator": "bounded-static-commitment/1"
+        },
+        "presentationContract": "complete-a-commitment.assessment/1"
+      },
+      "package": {
+        "path": "apps/compare-release-arrangements/1/app.app.json",
+        "bytes": 178620,
+        "sha256": "d71b9cf38923ad30f271414bedf8c4e105de68873422e813128f5f04ff7937f4"
+      },
+      "source": {
+        "path": "apps/compare-release-arrangements/1/model.yaml",
+        "bytes": 70693,
+        "sha256": "e26513b2631991c854925a3ac0fda69e6062794868419fabc863123427f6c626"
+      },
+      "workbook": {
+        "path": "apps/compare-release-arrangements/1/inputs.workbook.json",
+        "bytes": 202253,
+        "sha256": "cf8430b351d1f88cb651312d9beaa66d4e24bf98646789231d9d0246f6f824c3"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "Which supplied release arrangements can satisfy the recorded scope, deadline, QA and spending requirements?",
+        "scope": "The authored build, environment, four release arrangements and transferable independent-regression package. Change recorded estimates, windows, fees and accepted amendments; adapt the author profile for a different release structure.",
+        "supportsOwnData": false
+      }
+    },
+    {
+      "id": "compare-growth-arrangements",
+      "version": 2,
+      "name": "Compare growth arrangements",
+      "description": "Compare a current-approach baseline and three complete growth arrangements against cash by date, a required reserve, delivery capacity and a commitment cutoff. Forecast customer counts are uncertain situations, not controllable sales or probabilities. A passing arrangement is operationally supportable under these inputs; no most-profitable option is selected.",
+      "publishedAt": "2026-11-22T20:00:00.000Z",
+      "contentHash": "9b7b60c1654a1f200ec8c19396595752c3bfc67f72c4ce985da97f7c1347179a",
+      "module": {
+        "id": "growth-commitment",
+        "version": "1.0.1"
+      },
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth",
+        "description": "Bounded growth commitments, operating capacity and the value of further learning."
+      },
+      "useCase": {
+        "id": "growth-commitment",
+        "label": "Choose next month’s growth commitment",
+        "description": "Find which supplied growth arrangements can be funded and delivered, then inspect what their spending must achieve."
+      },
+      "pattern": {
+        "id": "complete-a-commitment/1",
+        "label": "Complete a commitment"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "complete-a-commitment/1",
+        "definition": {
+          "id": "complete-a-commitment",
+          "version": "1.0.0",
+          "evaluator": "bounded-static-commitment/1"
+        },
+        "presentationContract": "complete-a-commitment.assessment/1"
+      },
+      "package": {
+        "path": "apps/compare-growth-arrangements/2/app.app.json",
+        "bytes": 115440,
+        "sha256": "371c745b39961982e08b81070ee4a6ad104c08949d00513370b6d657a53ffcc4"
+      },
+      "source": {
+        "path": "apps/compare-growth-arrangements/2/model.yaml",
+        "bytes": 42561,
+        "sha256": "62c6fb45d020754adb8b79e7c8b2cab8020fd05f9b995e86b8c668f8f1326ef1"
+      },
+      "workbook": {
+        "path": "apps/compare-growth-arrangements/2/inputs.workbook.json",
+        "bytes": 138020,
+        "sha256": "bbaab589340e4b34b05f1494d37b935dcba103265e18a5f1cbd10363f5bc6021"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "Which growth commitments can we fund and deliver under the declared demand and collection situations?",
+        "scope": "Four authored arrangements for one standard service package. Change prices, committed campaign quotes, joint customer and collection forecasts, available cash, reserve and delivery-period capacity. A different service structure, installment contract or refund process needs an authored extension.",
+        "supportsOwnData": false
+      }
+    },
+    {
+      "id": "assess-payment-terms-test",
+      "version": 2,
+      "name": "Assess a payment-terms test",
+      "description": "Compare choosing a fundable and deliverable growth arrangement now with a nonbinding payment-preference test and a complete response to each possible signal.",
+      "publishedAt": "2026-11-22T20:00:00.000Z",
+      "contentHash": "ac7cb54a721abda72b521a35260025b0033b1a440177c2ecad2b0d7aa5d01d58",
+      "module": {
+        "id": "payment-terms-learning",
+        "version": "1.0.0"
+      },
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth"
+      },
+      "useCase": {
+        "id": "fund-and-deliver-growth",
+        "label": "Fund and deliver growth"
+      },
+      "pattern": {
+        "id": "assess-value-of-learning/1",
+        "label": "Assess the value of learning"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "assess-value-of-learning/1",
+        "definition": {
+          "id": "assess-value-of-learning",
+          "version": "1.0.0",
+          "evaluator": "finite-learning-value/1"
+        },
+        "presentationContract": "learning-value-assessment/1"
+      },
+      "package": {
+        "path": "apps/assess-payment-terms-test/2/app.app.json",
+        "bytes": 47341,
+        "sha256": "02bef423a6c139d725db1f177d5933603598e1227541261dfe7e479a58155651"
+      },
+      "source": {
+        "path": "apps/assess-payment-terms-test/2/model.yaml",
+        "bytes": 15208,
+        "sha256": "7aec4054f423cebfcfb59adcf0b575dfe23a94c14f60228f40ffdc66f8888c25"
+      },
+      "workbook": {
+        "path": "apps/assess-payment-terms-test/2/inputs.workbook.json",
+        "bytes": 72072,
+        "sha256": "d62c902755b08181187c3d3a164fb6d79ca0098accf80b7255baf5e36b50765b"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "Could a timely preference test improve the growth choice enough to cover its cost?",
+        "supportsOwnData": false
+      }
+    },
+    {
+      "id": "compare-growth-arrangements",
+      "version": 3,
+      "name": "Compare growth arrangements",
+      "description": "Compare a current-approach baseline and three complete growth arrangements against cash by date, a required reserve, delivery capacity and a commitment cutoff. Forecast customer counts are uncertain situations, not controllable sales or probabilities. A passing arrangement is operationally supportable under these inputs; no most-profitable option is selected.",
+      "publishedAt": "2026-11-23T06:00:00.000Z",
+      "contentHash": "3f760033abf0d4f8fab4e6dc957dcb5c6b8ba41beec10445e5e48b21688b805f",
+      "module": {
+        "id": "growth-commitment",
+        "version": "1.0.2"
+      },
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth",
+        "description": "Bounded growth commitments, operating capacity and the value of further learning."
+      },
+      "useCase": {
+        "id": "growth-commitment",
+        "label": "Choose next month’s growth commitment",
+        "description": "Find which supplied growth arrangements can be funded and delivered, then inspect what their spending must achieve."
+      },
+      "pattern": {
+        "id": "complete-a-commitment/1",
+        "label": "Complete a commitment"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "complete-a-commitment/1",
+        "definition": {
+          "id": "complete-a-commitment",
+          "version": "1.0.0",
+          "evaluator": "bounded-static-commitment/1"
+        },
+        "presentationContract": "complete-a-commitment.assessment/1"
+      },
+      "package": {
+        "path": "apps/compare-growth-arrangements/3/app.app.json",
+        "bytes": 156217,
+        "sha256": "48f568c215848e5e547bd83ae31bb6fccba2464e2eeb1dd26f8341880fb9f43f"
+      },
+      "source": {
+        "path": "apps/compare-growth-arrangements/3/model.yaml",
+        "bytes": 61265,
+        "sha256": "cf0ab0e20142fc7b14e08d0df397d5ee9623310fa3690e1e560d4a9354e6d1ba"
+      },
+      "workbook": {
+        "path": "apps/compare-growth-arrangements/3/inputs.workbook.json",
+        "bytes": 179723,
+        "sha256": "21570a8cd43e44ed568c9789ab5e210cd1c0913d53d8e45943223e6a1f1a176a"
+      },
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which growth commitments can we fund and deliver under the declared demand and collection situations?",
+        "scope": "Four authored arrangements for one standard service package. Change prices, committed campaign quotes, joint customer and collection forecasts, available cash, reserve and delivery-period capacity. A different service structure, installment contract or refund process needs an authored extension.",
+        "supportsOwnData": false
+      }
+    },
+    {
+      "id": "assess-payment-terms-test",
+      "version": 3,
+      "name": "Assess a payment-terms test",
+      "description": "Compare choosing a fundable and deliverable growth arrangement now with a nonbinding payment-preference test and a complete response to each possible signal.",
+      "publishedAt": "2026-11-23T06:00:00.000Z",
+      "contentHash": "3a49de125333bbe7b46a439138bc90b2802ea8f737133532bb370c701764b876",
+      "module": {
+        "id": "payment-terms-learning",
+        "version": "1.0.0"
+      },
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth"
+      },
+      "useCase": {
+        "id": "fund-and-deliver-growth",
+        "label": "Fund and deliver growth"
+      },
+      "pattern": {
+        "id": "assess-value-of-learning/1",
+        "label": "Assess the value of learning"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "assess-value-of-learning/1",
+        "definition": {
+          "id": "assess-value-of-learning",
+          "version": "1.0.0",
+          "evaluator": "finite-learning-value/1"
+        },
+        "presentationContract": "learning-value-assessment/1"
+      },
+      "package": {
+        "path": "apps/assess-payment-terms-test/3/app.app.json",
+        "bytes": 47341,
+        "sha256": "ffa694924f2d23f5daa6aa4b4a498a01f684327cb35cba42ab4fb45163371d9c"
+      },
+      "source": {
+        "path": "apps/assess-payment-terms-test/3/model.yaml",
+        "bytes": 15208,
+        "sha256": "a8203b736ae914b47427d945e63171ff21ecdd78a57b057f72afaad7de08299d"
+      },
+      "workbook": {
+        "path": "apps/assess-payment-terms-test/3/inputs.workbook.json",
+        "bytes": 72072,
+        "sha256": "95c6baf243570f6c4332d27decd2eda9d1cb23959e8b55f4add103037bf394e6"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "Could a timely preference test improve the growth choice enough to cover its cost?",
+        "supportsOwnData": false
+      }
+    },
+    {
+      "id": "compare-growth-arrangements",
+      "version": 4,
+      "name": "Compare growth commitments",
+      "description": "Compare a current-approach baseline and three proposed growth commitments against cash by date, a required reserve, delivery capacity and a commitment cutoff. Forecast customer counts are uncertain situations, not controllable sales or probabilities. A feasible option is operationally supportable under these inputs; no most-profitable option is selected.",
+      "publishedAt": "2026-11-23T06:30:00.000Z",
+      "contentHash": "83fcee03a0c79a7619d228c7cabce9dd6a6db5ea23f17f144c1a005733ec3a35",
+      "module": {
+        "id": "growth-commitment",
+        "version": "1.0.3"
+      },
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth",
+        "description": "Bounded growth commitments, operating capacity and the value of further learning."
+      },
+      "useCase": {
+        "id": "growth-commitment",
+        "label": "Choose next month’s growth commitment",
+        "description": "Find which supplied proposed growth commitments can be funded and delivered, then inspect what their spending must achieve."
+      },
+      "pattern": {
+        "id": "complete-a-commitment/1",
+        "label": "Complete a commitment"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "complete-a-commitment/1",
+        "definition": {
+          "id": "complete-a-commitment",
+          "version": "1.0.0",
+          "evaluator": "bounded-static-commitment/1"
+        },
+        "presentationContract": "complete-a-commitment.assessment/1"
+      },
+      "package": {
+        "path": "apps/compare-growth-arrangements/4/app.app.json",
+        "bytes": 156375,
+        "sha256": "dbe8238588a6bf8d6e9b1d69cd24893b65b9dac43705f6d583c4a0c4bf00a766"
+      },
+      "source": {
+        "path": "apps/compare-growth-arrangements/4/model.yaml",
+        "bytes": 61347,
+        "sha256": "aee03ef01ddebab346545767771a7b0e997496a0f7c6d6f868a67190dcb5f95e"
+      },
+      "workbook": {
+        "path": "apps/compare-growth-arrangements/4/inputs.workbook.json",
+        "bytes": 179909,
+        "sha256": "88f342ef3eb871e3aa177a939cbc9ba8a25b0857829d5effce0930c803518f5d"
+      },
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which proposed growth commitments can we fund and deliver under the declared demand and collection situations?",
+        "scope": "A current-approach baseline and three proposed growth commitments for one standard service package. Change prices, committed campaign quotes, joint customer and collection forecasts, available cash, reserve and delivery-period capacity. A different service structure, installment contract or refund process needs an authored extension.",
+        "supportsOwnData": false
+      }
+    },
+    {
+      "id": "assess-payment-terms-test",
+      "version": 4,
+      "name": "Assess a payment-terms test",
+      "description": "Compare choosing a fundable and deliverable proposed growth commitment now with a nonbinding payment-preference test and a complete response to each possible signal.",
+      "publishedAt": "2026-11-23T06:30:00.000Z",
+      "contentHash": "dd1ee78c412b2ede0c67b1bae13d6a19c0684d6943e3acae6ac79d8cb4a99c12",
+      "module": {
+        "id": "payment-terms-learning",
+        "version": "1.0.1"
+      },
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth"
+      },
+      "useCase": {
+        "id": "fund-and-deliver-growth",
+        "label": "Fund and deliver growth"
+      },
+      "pattern": {
+        "id": "assess-value-of-learning/1",
+        "label": "Assess the value of learning"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "assess-value-of-learning/1",
+        "definition": {
+          "id": "assess-value-of-learning",
+          "version": "1.0.0",
+          "evaluator": "finite-learning-value/1"
+        },
+        "presentationContract": "learning-value-assessment/1"
+      },
+      "package": {
+        "path": "apps/assess-payment-terms-test/4/app.app.json",
+        "bytes": 47413,
+        "sha256": "24aaec77f33829e1f3745a9020ba03fd244e7e759547d967e8c93244f7c76854"
+      },
+      "source": {
+        "path": "apps/assess-payment-terms-test/4/model.yaml",
+        "bytes": 15240,
+        "sha256": "199dbad33124d1e02c9439a993fbfcb22a7b2c4cdf04ce07fecfc6a6543bd4d1"
+      },
+      "workbook": {
+        "path": "apps/assess-payment-terms-test/4/inputs.workbook.json",
+        "bytes": 72173,
+        "sha256": "9538198b23559eb29d61e90f1eb8c0542bb12159d2174c5d79e1810854582a44"
+      },
+      "experience": {
+        "inputModes": [
+          "yaml",
+          "excel"
+        ],
+        "forms": "none",
+        "question": "Could a timely preference test improve the growth choice enough to cover its cost?",
+        "supportsOwnData": false
+      }
+    },
+    {
+      "id": "complete-first-shipment",
+      "version": 6,
+      "name": "Plan the first shipment",
+      "description": "Generate complete, static shipment plans from selectable lots, workers, preparation times, release time, carrier and departure. Check each whole plan against every declared readiness and travel scenario before comparing incremental expense. This synthetic operating snapshot does not infer readiness from business records or reserve stock, staff, authority or carrier capacity.",
+      "publishedAt": "2026-11-23T16:59:01.941Z",
+      "contentHash": "4261917bd71bec4235e233565723822b1126c125191a70872a3c2c2101e1c4c5",
+      "module": {
+        "id": "plan-first-shipment",
+        "version": "1.2.2"
+      },
+      "domain": {
+        "id": "order-fulfillment",
+        "label": "Order fulfillment",
+        "description": "Plan complete deliveries against accepted readiness, resource, permission, timing and financial constraints."
+      },
+      "useCase": {
+        "id": "complete-first-shipment",
+        "label": "Complete the first shipment",
+        "description": "Compare complete shipment plans that must meet every mandatory obligation across the declared readiness and travel scenarios."
+      },
+      "pattern": {
+        "id": "complete-a-commitment/1",
+        "label": "Complete a commitment"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "complete-a-commitment/1",
+        "definition": {
+          "id": "complete-a-commitment",
+          "version": "1.0.0",
+          "evaluator": "bounded-static-commitment/1"
+        },
+        "presentationContract": "complete-a-commitment.assessment/1"
+      },
+      "package": {
+        "path": "apps/complete-first-shipment/6/app.app.json",
+        "bytes": 161925,
+        "sha256": "5d1fbda7f778eecd32fffa23ca9aaf62b27ae38e5fddbe5afe4d59d788e8cf98"
+      },
+      "source": {
+        "path": "apps/complete-first-shipment/6/model.yaml",
+        "bytes": 38535,
+        "sha256": "2287f05cf6328314ef4af49094c0fb1307dfb073f1b0e2948a56b112f644dc9c"
+      },
+      "workbook": {
+        "path": "apps/complete-first-shipment/6/inputs.workbook.json",
+        "bytes": 217413,
+        "sha256": "0a495f0253f71b7b919aec187df5c1d71891d5f9b9d59395a6fc732713b0b36f"
+      },
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Can we deliver the complete accepted order within its receipt, expense and cash limits?",
+        "scope": "A synthetic shipment with fixed lots, workers, preparation choices and carrier services. Times are synthetic days. Adapt the model for different operating catalogs.",
         "supportsOwnData": false
       }
     }
@@ -408,7 +1009,7 @@
         },
         {
           "id": "planning",
-          "name": "Review a gift-kit commitment \u2014 complete arrangements",
+          "name": "Review a gift-kit commitment — complete arrangements",
           "appId": "review-gift-kit-flexible-planning",
           "version": 3,
           "appContentHash": "c2d579b2698e443395a5f678392b368dfb98d615065c6f8f486baf0e66062cc2",
@@ -469,7 +1070,7 @@
         },
         {
           "id": "planning",
-          "name": "Review gift kits with earliest handoff priority \u2014 complete arrangements",
+          "name": "Review gift kits with earliest handoff priority — complete arrangements",
           "appId": "review-gift-kit-earliest-planning",
           "version": 3,
           "appContentHash": "36b000f793baefde7b53588a6e64408b38ac3cdc22f9ef41883e8d24816caa40",
@@ -615,6 +1216,1559 @@
         "bytes": 1720819,
         "sha256": "906adcf53958697a936c8ee0425b35a1e82a34ada7f48fc174898d9307f87b33"
       }
+    },
+    {
+      "id": "choose-next-month-growth",
+      "version": "1.0.0",
+      "name": "Choose next month’s growth commitment",
+      "description": "Compare four complete growth commitments against cash after every dated payment and receipt, a required reserve, delivery hours, collection timing and the complete obligation horizon. Show the customer contribution needed to cover committed campaign spending. Optionally compare a nonbinding preference test using explicit probability assumptions and the same complete operating checks.",
+      "publishedAt": "2026-11-22T18:00:00.000Z",
+      "contentHash": "0b0686551d4d515cac26acb74aa8870e445cb19fcdee59c1ad5a8840abda565b",
+      "definitionHash": "1fcf577cb148c59c41e6696070c7222560c1faf2c5fbc753e0fa5e4c4b9239cb",
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth"
+      },
+      "useCase": {
+        "id": "fund-and-deliver-growth",
+        "label": "Fund and deliver growth"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "planning",
+          "name": "Compare growth arrangements",
+          "appId": "compare-growth-arrangements",
+          "version": 1,
+          "appContentHash": "410b8625863103042ea7a353ef56c7a0c1474a064b25c55e30508df510d1c242",
+          "packageHash": "7a04e76f030c07d20e89d577a9c1aebb6ab9fa28c05a47d8e9afea21d379876f"
+        },
+        {
+          "id": "learning",
+          "name": "Assess a payment-terms test",
+          "appId": "assess-payment-terms-test",
+          "version": 1,
+          "appContentHash": "c2d194000415cb9cb4c4f0124fffd4464391334896645a74bdadec575ff5047b",
+          "packageHash": "521aad0c71c44b9ec3cc979e0bb0bda410cbfb1e6415b4ee82f087ec8fdac068"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which growth plan can we afford to carry out?",
+        "scope": "A fictional service business with four authored complete arrangements and one standardized package. Edit the explicit case values; adapt the app for other arrangements, payment structures, activity dependencies or services.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/choose-next-month-growth/1.0.0/workflow.workflow.json",
+        "bytes": 335363,
+        "sha256": "5b78e9546f883c5c78112610d4509c899c92a74417ea8eb4b6b2e5d44c89179c"
+      },
+      "workbook": {
+        "path": "workflows/choose-next-month-growth/1.0.0/inputs.workbook.json",
+        "bytes": 382873,
+        "sha256": "6e516e7a4f8bfa5cbd5b9a32982a4059164f90872d393e04d10abf4b64789448"
+      }
+    },
+    {
+      "id": "review-first-shipment",
+      "version": "1.9.0",
+      "name": "Compare first-shipment arrangements",
+      "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
+      "publishedAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "52e815aca62217bbe5e21e7003283d917464a438fa013cdf21196b71fc22e749",
+      "definitionHash": "33b5fca3f96cc4e0a58e3c5d84d4b1ee76ae26e74ee6575cc0c9f8ca67fa6d0e",
+      "domain": {
+        "id": "order-fulfillment",
+        "label": "Order fulfillment",
+        "description": "Plan complete deliveries against accepted readiness, resource, permission, timing and financial constraints."
+      },
+      "useCase": {
+        "id": "review-first-shipment",
+        "label": "Review a first shipment",
+        "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review ship-point registration",
+          "appId": "shipment-review-evidence",
+          "version": 1,
+          "appContentHash": "719cebdc2595450d8d0b6cd961ad32b443576bcb630cf11912d678679a305bbe",
+          "packageHash": "4ad35aeb54988d9028723f9cb846cee9e71d253160706345b0c46b47886e3010"
+        },
+        {
+          "id": "planning",
+          "name": "Plan this shipment before reservation",
+          "appId": "shipment-review-planning",
+          "version": 1,
+          "appContentHash": "754ab18d5e8d34070b4a288bc5a37ade4b2610c4d97979bd82ef358c3f5f26b1",
+          "packageHash": "3a577546ebb9aabff8ebc0c77ff56c1c1a0db57232e33808c1daaf8c4b33f22a"
+        },
+        {
+          "id": "learning",
+          "name": "Choose verification before reserving this shipment",
+          "appId": "shipment-review-learning",
+          "version": 1,
+          "appContentHash": "073b250ac87b16326210c29fdf937f9dd51511efd542c623cca4d729b2b2d08f",
+          "packageHash": "cfcf967bf16ad3c18d38d1167c8131c8957fce0c037ebaace2ca5232a0a0d681"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
+        "scope": "One shipment with the authored direct and backup arrangements, scoped registration evidence and optional timely verification. Other readiness requirements or arrangement types require adaptation.",
+        "supportsOwnData": true
+      },
+      "package": {
+        "path": "workflows/review-first-shipment/1.9.0/workflow.workflow.json",
+        "bytes": 1031850,
+        "sha256": "9e3840d8d5f830422a89369cf608ecf832e3dab8bee5dccbefc2daf108ae6ddd"
+      },
+      "workbook": {
+        "path": "workflows/review-first-shipment/1.9.0/inputs.workbook.json",
+        "bytes": 1137455,
+        "sha256": "f64a26d10310388a0060ceb4d66ae18e94ba5e602fb0c961bfa35846ebcb4d4a"
+      }
+    },
+    {
+      "id": "review-gift-kit-flexible",
+      "version": "2.8.0",
+      "name": "Plan a gift-kit commitment",
+      "description": "Compare complete gift-kit correction arrangements against the recorded configuration, work, handoff, capacity, permission and expense requirements.",
+      "publishedAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "72e6b2fcd10236ab4b5693bc37d122be4e8e551f41d584ae50fd80e6725c188f",
+      "definitionHash": "2cfbdc3f169e8eb93792cf22e76f57d8f0859c5bf4045dae8c583cfa4f3f46c2",
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations",
+        "description": "Review gift-kit evidence, corrective work and preparation commitments."
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign",
+        "description": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits."
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review gift-kit records",
+          "appId": "review-gift-kit-flexible-evidence",
+          "version": 3,
+          "appContentHash": "57810ad73e01fbfef9833c0fffcb3bbc42101ba0b30bcd668841066dde301852",
+          "packageHash": "793a5017aa587152474d8824b77fd98bfbbed1764981a5fcce64163cbc0b3358"
+        },
+        {
+          "id": "planning",
+          "name": "Review a gift-kit commitment — complete arrangements",
+          "appId": "review-gift-kit-flexible-planning",
+          "version": 3,
+          "appContentHash": "c2d579b2698e443395a5f678392b368dfb98d615065c6f8f486baf0e66062cc2",
+          "packageHash": "3c0aae0c30ec70d930625efd79fe29f740adf8df8cdacf7041b78dc483d4f6d6"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "What must we verify or correct, and can we finish before committing these gift kits?",
+        "scope": "The authored gift-kit checks and preparation arrangements within one handoff window. Supply campaign records and operating inputs; a different preparation method or rule requires adaptation.",
+        "supportsOwnData": true
+      },
+      "package": {
+        "path": "workflows/review-gift-kit-flexible/2.8.0/workflow.workflow.json",
+        "bytes": 570188,
+        "sha256": "a3a2bef2ac30280efa64b8cc10c8d016f37088d510c686dedd1de20119e0e128"
+      },
+      "workbook": {
+        "path": "workflows/review-gift-kit-flexible/2.8.0/inputs.workbook.json",
+        "bytes": 634735,
+        "sha256": "23438a99aa9f9f78822e344ed4c2a2df4b3e1abe5a8b4e6611959da0c40ef146"
+      }
+    },
+    {
+      "id": "review-gift-kit-earliest",
+      "version": "2.8.0",
+      "name": "Plan the earliest gift-kit handoff",
+      "description": "Find the earliest complete gift-kit correction arrangement meeting the recorded configuration, work, capacity, permission and expense requirements.",
+      "publishedAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "60319b59313d7462a014f4aa57e259718c8abe3117c231fff6b314773a463d39",
+      "definitionHash": "34d83ba1ad865e09c26df9dff70864ba435abeb21ac3b630a627ce5dc8a09000",
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations",
+        "description": "Review gift-kit evidence, corrective work and preparation commitments."
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign",
+        "description": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits."
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review gift-kit records",
+          "appId": "review-gift-kit-earliest-evidence",
+          "version": 3,
+          "appContentHash": "4c3fe62a6482be02b38ab7058b6d5117112983e8f04ef47a33d7a61504aa629f",
+          "packageHash": "f334819802ccf8e97d966b28e57f9867099b3db2c10c6ac8be7894f4558abbe4"
+        },
+        {
+          "id": "planning",
+          "name": "Review gift kits with earliest handoff priority — complete arrangements",
+          "appId": "review-gift-kit-earliest-planning",
+          "version": 3,
+          "appContentHash": "36b000f793baefde7b53588a6e64408b38ac3cdc22f9ef41883e8d24816caa40",
+          "packageHash": "b5016d950d6db3d59c4c4f6ef74785a5bd2f649d9a2f1c2fde26dd2d052ac2c1"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "What must we verify or correct, and can we finish before committing these gift kits?",
+        "scope": "The authored gift-kit checks and preparation arrangements, comparing earliest readiness within one handoff window. A different preparation method or rule requires adaptation.",
+        "supportsOwnData": true
+      },
+      "package": {
+        "path": "workflows/review-gift-kit-earliest/2.8.0/workflow.workflow.json",
+        "bytes": 570209,
+        "sha256": "16e4885cfc78314620c7cb3e9ad1d72d0478f5c393e979a79b226451c3619ea0"
+      },
+      "workbook": {
+        "path": "workflows/review-gift-kit-earliest/2.8.0/inputs.workbook.json",
+        "bytes": 634759,
+        "sha256": "435343eaf154da8f5b6dab3207f1f146b35bd4360787f2a128b60f00f5b85f6a"
+      }
+    },
+    {
+      "id": "street-team-deployment",
+      "version": "1.13.0",
+      "name": "Plan a street-team deployment",
+      "description": "Compare complete promotion plans against staffing, timing, recorded access and spending requirements, then calculate the additional guests needed to cover expense and separate discount loss. Choice and authorization remain outside the app; customer response is not forecast.",
+      "publishedAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "9c6f8584e6a075918b0081d4068bf2d503083770d1f97a3ca039f101c9115e70",
+      "definitionHash": "b78e1fff6580289388cf7c18a9da291ebceefb1234b5d682c2fd70c06f56660c",
+      "domain": {
+        "id": "venue-operations",
+        "label": "Venue operations"
+      },
+      "useCase": {
+        "id": "deploy-street-team",
+        "label": "Review a street-team deployment"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "operations",
+          "name": "Review a street-team deployment",
+          "appId": "street-team-operating-review",
+          "version": 3,
+          "appContentHash": "1a0e00d3e8031eba91c4209ecd6518b6e12fd3c8ce45b559d392ceedb16b8b1b",
+          "packageHash": "99ccc4d075d8a6ddef8f7ab71d8f25854995aa3b5e97dfe4259b84d227211acb"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which promotion plans can we operate, and how many additional guests would cover their costs?",
+        "scope": "The authored street-team deployments with fixed deployment charges and same-day timing. Supply venue staffing, access, spending and contribution inputs; customer response is not forecast.",
+        "supportsOwnData": true
+      },
+      "package": {
+        "path": "workflows/street-team-deployment/1.13.0/workflow.workflow.json",
+        "bytes": 256071,
+        "sha256": "9665236e76aec93941591a96696dedd873e5b20a9a4a209ae1e846c36740c98f"
+      },
+      "workbook": {
+        "path": "workflows/street-team-deployment/1.13.0/inputs.workbook.json",
+        "bytes": 287564,
+        "sha256": "9f0f301651e4581c69fc616ad35c08fc10eb508f5a9d3e7f06bd0315966f282e"
+      }
+    },
+    {
+      "id": "repair-published-restaurant-roster",
+      "version": "1.6.0",
+      "name": "Repair a published restaurant roster",
+      "description": "Compare complete repairs to a disrupted published restaurant roster across every remaining service. Check coverage, qualifications, availability, capacity, rest, hours and remaining payroll; optionally compare passing repairs by stability or payroll. The calculation compares supplied proposals and does not generate or publish a roster.",
+      "publishedAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "379c19be95672da68fe79dd8cb57d8e15b8f3e2a65788eef91f989b8d320e4cf",
+      "definitionHash": "f34a7bce24ab37f811d923cac4da778d13dce985e1e8fa961f71f0e8ae589710",
+      "domain": {
+        "id": "restaurant-operations",
+        "label": "Restaurant operations"
+      },
+      "useCase": {
+        "id": "repair-published-roster",
+        "label": "Repair a published roster"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "feasibility",
+          "name": "Repair a published restaurant roster",
+          "appId": "roster-repair-feasibility",
+          "version": 1,
+          "appContentHash": "2bc15e6ff9027b17ff3a9c2551d9c6cf7298f5fe94433d67d5d875fd13126eeb",
+          "packageHash": "81c15b280bbaed072ad420e8bcd81c270fc4c31942013941c1226e368eeec9e4"
+        },
+        {
+          "id": "stability",
+          "name": "Repair a published restaurant roster",
+          "appId": "roster-repair-stability",
+          "version": 1,
+          "appContentHash": "da734a8d5b9e5ca24ea728426c156f264364fa43ae0f7cacbe94c3f4137516ef",
+          "packageHash": "ec3bf5532079eaaa269868603c5a099b60b789e74f929e8ea691f001c2577dba"
+        },
+        {
+          "id": "cost",
+          "name": "Repair a published restaurant roster",
+          "appId": "roster-repair-cost",
+          "version": 1,
+          "appContentHash": "fe8c1d46c62c15651ebeaeb436c8e93897fc89a3ebbe2c13bedb3fbc826b02f1",
+          "packageHash": "5f42a6d960eacf94400152eab859e15daa871910144a95ba83d871231b83c8e6"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which supplied complete repairs cover every remaining service, and which fit the chosen priority?",
+        "scope": "The configured employees, service positions and four complete repair proposals. Change availability, payroll or comparison priority here; a different restaurant roster needs an adapted author profile.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/repair-published-restaurant-roster/1.6.0/workflow.workflow.json",
+        "bytes": 1642793,
+        "sha256": "da0db5adbb49806f13582a55adebd69fc5975c8d5639a4988e9d702c062bc24f"
+      },
+      "workbook": {
+        "path": "workflows/repair-published-restaurant-roster/1.6.0/inputs.workbook.json",
+        "bytes": 1721573,
+        "sha256": "0080a631971a24b2fafef1a922ad1312caf5ae98d3c766959466efbd21723f12"
+      }
+    },
+    {
+      "id": "plan-at-risk-release",
+      "version": "1.0.0",
+      "name": "Plan an at-risk release",
+      "description": "Compare four complete release arrangements against remaining validation work, scoped qualifications, working intervals, resource commitments, additional spending, recorded prerequisites and permission. Keep the original scope and deadline distinct from explicitly accepted revisions. This bounded calculation does not predict delivery probabilities or replace a ticket system.",
+      "publishedAt": "2026-11-21T18:00:00.000Z",
+      "contentHash": "ac082fed5cd44cdaa9aa134b20f9f7712651792e16b03a62758e276096b0762a",
+      "definitionHash": "01667c2381dbb14f2a9152e0e482bd3c3268efdd530370f9346f2f035fc75525",
+      "domain": {
+        "id": "software-delivery",
+        "label": "Software delivery"
+      },
+      "useCase": {
+        "id": "release-recovery",
+        "label": "Recover an at-risk release"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "planning",
+          "name": "Compare release arrangements",
+          "appId": "compare-release-arrangements",
+          "version": 1,
+          "appContentHash": "0188fd272fcd8b55d0a78e34cda4b64f19d36ff5a922ce76adf51b1e7a36aea2",
+          "packageHash": "8149c0f48faa6c27727d32984c7c137189cc91247a6b254d594c1ba70c9f84e1"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "This release is at risk. What can we still commit to?",
+        "scope": "A fictional release with four authored arrangements and fixed validation phases. Change the declared operating inputs; adapt the model for other scopes, work structures, resources or arrangements.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/plan-at-risk-release/1.0.0/workflow.workflow.json",
+        "bytes": 307132,
+        "sha256": "d9c9e866ea6c0793a31630c790b3d66eb194d5871072e52a59ae8a0d90694f72"
+      },
+      "workbook": {
+        "path": "workflows/plan-at-risk-release/1.0.0/inputs.workbook.json",
+        "bytes": 342100,
+        "sha256": "612f6c101caefd6eed93b32777d0d4ebf35d962c332941f27a670ef73c8554c0"
+      }
+    },
+    {
+      "id": "choose-next-month-growth",
+      "version": "1.0.1",
+      "name": "Choose next month’s growth commitment",
+      "description": "Compare four complete growth commitments against cash after every dated payment and receipt, a required reserve, delivery hours, collection timing and the complete obligation horizon. Show the customer contribution needed to cover committed campaign spending. Optionally compare a nonbinding preference test using explicit probability assumptions and the same complete operating checks.",
+      "publishedAt": "2026-11-22T20:00:00.000Z",
+      "contentHash": "7bc202ec8d156c28ca6bdb1aa6520c7563c45b54223430e4e48873d546f2b168",
+      "definitionHash": "7dd671cb5f9433a62973ef1802c8da4b743de555075e1f3c0a56054075459891",
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth"
+      },
+      "useCase": {
+        "id": "fund-and-deliver-growth",
+        "label": "Fund and deliver growth"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "planning",
+          "name": "Compare growth arrangements",
+          "appId": "compare-growth-arrangements",
+          "version": 2,
+          "appContentHash": "9b7b60c1654a1f200ec8c19396595752c3bfc67f72c4ce985da97f7c1347179a",
+          "packageHash": "7d965e4935d7824084750509eb923a2f4a46f1c52a88f3f9df96b89ba615c8e7"
+        },
+        {
+          "id": "learning",
+          "name": "Assess a payment-terms test",
+          "appId": "assess-payment-terms-test",
+          "version": 2,
+          "appContentHash": "ac7cb54a721abda72b521a35260025b0033b1a440177c2ecad2b0d7aa5d01d58",
+          "packageHash": "c117f37015397372b5d2ae3ce7ebfa9d6670c8d2b774cb0d5a64b021e5b9edc1"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which growth plan can we afford to carry out?",
+        "scope": "A fictional service business with four authored complete arrangements and one standardized package. Edit the explicit case values; adapt the app for other arrangements, payment structures, activity dependencies or services.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/choose-next-month-growth/1.0.1/workflow.workflow.json",
+        "bytes": 339258,
+        "sha256": "96c13e9b6b4565bb1141d3d7062a5c089bd6b8248e78c67f4f3aaacc9cb45a1a"
+      },
+      "workbook": {
+        "path": "workflows/choose-next-month-growth/1.0.1/inputs.workbook.json",
+        "bytes": 386862,
+        "sha256": "8468acdf7c6f29e0ec0cf7b348579828d04ad923b7f091a454ff215c4c9aad53"
+      }
+    },
+    {
+      "id": "review-first-shipment",
+      "version": "1.10.0",
+      "name": "Compare first-shipment arrangements",
+      "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
+      "publishedAt": "2026-11-22T23:00:00.000Z",
+      "contentHash": "839c6175d7e647097d8aa7d772d62bcd991cb935b9dd015df057c27444ccc7cc",
+      "definitionHash": "1e788ca10c1c97f6408dfa38776b3f5aed901b216bbf0952bb82983a65f2b689",
+      "domain": {
+        "id": "order-fulfillment",
+        "label": "Order fulfillment",
+        "description": "Plan complete deliveries against accepted readiness, resource, permission, timing and financial constraints."
+      },
+      "useCase": {
+        "id": "review-first-shipment",
+        "label": "Review a first shipment",
+        "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review ship-point registration",
+          "appId": "shipment-review-evidence",
+          "version": 1,
+          "appContentHash": "719cebdc2595450d8d0b6cd961ad32b443576bcb630cf11912d678679a305bbe",
+          "packageHash": "4ad35aeb54988d9028723f9cb846cee9e71d253160706345b0c46b47886e3010"
+        },
+        {
+          "id": "planning",
+          "name": "Plan this shipment before reservation",
+          "appId": "shipment-review-planning",
+          "version": 1,
+          "appContentHash": "754ab18d5e8d34070b4a288bc5a37ade4b2610c4d97979bd82ef358c3f5f26b1",
+          "packageHash": "3a577546ebb9aabff8ebc0c77ff56c1c1a0db57232e33808c1daaf8c4b33f22a"
+        },
+        {
+          "id": "learning",
+          "name": "Choose verification before reserving this shipment",
+          "appId": "shipment-review-learning",
+          "version": 1,
+          "appContentHash": "073b250ac87b16326210c29fdf937f9dd51511efd542c623cca4d729b2b2d08f",
+          "packageHash": "cfcf967bf16ad3c18d38d1167c8131c8957fce0c037ebaace2ca5232a0a0d681"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
+        "scope": "One shipment with the authored direct and backup arrangements, scoped registration evidence and optional timely verification. Other readiness requirements or arrangement types require adaptation.",
+        "supportsOwnData": true
+      },
+      "package": {
+        "path": "workflows/review-first-shipment/1.10.0/workflow.workflow.json",
+        "bytes": 1037293,
+        "sha256": "f6f1e042fe6bbcbebc2faa64346ba595d56ac3e2f3a8bd78eba5cb59b49a1254"
+      },
+      "workbook": {
+        "path": "workflows/review-first-shipment/1.10.0/inputs.workbook.json",
+        "bytes": 1143159,
+        "sha256": "e6cb1c5f6bf23a5601f341d55ab9654419374b45fcc9b49f10d451b35657ca2f"
+      }
+    },
+    {
+      "id": "review-gift-kit-flexible",
+      "version": "2.9.0",
+      "name": "Plan a gift-kit commitment",
+      "description": "Compare complete gift-kit correction arrangements against the recorded configuration, work, handoff, capacity, permission and expense requirements.",
+      "publishedAt": "2026-11-22T23:00:00.000Z",
+      "contentHash": "ced8f4c194444dd4d7f6584214bfe5e73915b421b613e98b90c086b15b5a01f3",
+      "definitionHash": "5e971ca57ddd98fa96c1a16f056b8c8dba46eb4d77da97ac5c6e27f8b144373e",
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations",
+        "description": "Review gift-kit evidence, corrective work and preparation commitments."
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign",
+        "description": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits."
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review gift-kit records",
+          "appId": "review-gift-kit-flexible-evidence",
+          "version": 3,
+          "appContentHash": "57810ad73e01fbfef9833c0fffcb3bbc42101ba0b30bcd668841066dde301852",
+          "packageHash": "793a5017aa587152474d8824b77fd98bfbbed1764981a5fcce64163cbc0b3358"
+        },
+        {
+          "id": "planning",
+          "name": "Review a gift-kit commitment — complete arrangements",
+          "appId": "review-gift-kit-flexible-planning",
+          "version": 3,
+          "appContentHash": "c2d579b2698e443395a5f678392b368dfb98d615065c6f8f486baf0e66062cc2",
+          "packageHash": "3c0aae0c30ec70d930625efd79fe29f740adf8df8cdacf7041b78dc483d4f6d6"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "What must we verify or correct, and can we finish before committing these gift kits?",
+        "scope": "The authored gift-kit checks and preparation arrangements within one handoff window. Supply campaign records and operating inputs; a different preparation method or rule requires adaptation.",
+        "supportsOwnData": true
+      },
+      "package": {
+        "path": "workflows/review-gift-kit-flexible/2.9.0/workflow.workflow.json",
+        "bytes": 574928,
+        "sha256": "628f02d799b4debc910fab528c0151887646a03f88cf4c1d1e5a911725bac931"
+      },
+      "workbook": {
+        "path": "workflows/review-gift-kit-flexible/2.9.0/inputs.workbook.json",
+        "bytes": 639753,
+        "sha256": "943154a073a30f521530c60c31a98a5c105aa62346b1f9014f9e9732d44bd7aa"
+      }
+    },
+    {
+      "id": "review-gift-kit-earliest",
+      "version": "2.9.0",
+      "name": "Plan the earliest gift-kit handoff",
+      "description": "Find the earliest complete gift-kit correction arrangement meeting the recorded configuration, work, capacity, permission and expense requirements.",
+      "publishedAt": "2026-11-22T23:00:00.000Z",
+      "contentHash": "8ac6f9ecba432739e4319268387c00bfd030042a4835d7eca2311d148376d804",
+      "definitionHash": "916d9e6dd650078fb6701aee1431fb0dcd31581fb6b936544e1fa1db2e2a519b",
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations",
+        "description": "Review gift-kit evidence, corrective work and preparation commitments."
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign",
+        "description": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits."
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review gift-kit records",
+          "appId": "review-gift-kit-earliest-evidence",
+          "version": 3,
+          "appContentHash": "4c3fe62a6482be02b38ab7058b6d5117112983e8f04ef47a33d7a61504aa629f",
+          "packageHash": "f334819802ccf8e97d966b28e57f9867099b3db2c10c6ac8be7894f4558abbe4"
+        },
+        {
+          "id": "planning",
+          "name": "Review gift kits with earliest handoff priority — complete arrangements",
+          "appId": "review-gift-kit-earliest-planning",
+          "version": 3,
+          "appContentHash": "36b000f793baefde7b53588a6e64408b38ac3cdc22f9ef41883e8d24816caa40",
+          "packageHash": "b5016d950d6db3d59c4c4f6ef74785a5bd2f649d9a2f1c2fde26dd2d052ac2c1"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "What must we verify or correct, and can we finish before committing these gift kits?",
+        "scope": "The authored gift-kit checks and preparation arrangements, comparing earliest readiness within one handoff window. A different preparation method or rule requires adaptation.",
+        "supportsOwnData": true
+      },
+      "package": {
+        "path": "workflows/review-gift-kit-earliest/2.9.0/workflow.workflow.json",
+        "bytes": 574949,
+        "sha256": "b5b4627760e61cc6447eb2d9c70c16dbe5992d05ab5136308a95ce8736a86552"
+      },
+      "workbook": {
+        "path": "workflows/review-gift-kit-earliest/2.9.0/inputs.workbook.json",
+        "bytes": 639777,
+        "sha256": "775b6ac9b0fe6c465a0fc4f6f5665e29b31730dae0471051fae845eee5923bc8"
+      }
+    },
+    {
+      "id": "street-team-deployment",
+      "version": "1.14.0",
+      "name": "Plan a street-team deployment",
+      "description": "Compare complete promotion plans against staffing, timing, recorded access and spending requirements, then calculate the additional guests needed to cover expense and separate discount loss. Choice and authorization remain outside the app; customer response is not forecast.",
+      "publishedAt": "2026-11-22T23:00:00.000Z",
+      "contentHash": "470d65736c1b64cd57c74ae46c75de511bad7606c8271087ed2966f3317882fe",
+      "definitionHash": "c8d7dced93308d861df2198fc23a8e3e5f1cc43a40a24f2fcead198a616a7715",
+      "domain": {
+        "id": "venue-operations",
+        "label": "Venue operations"
+      },
+      "useCase": {
+        "id": "deploy-street-team",
+        "label": "Review a street-team deployment"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "operations",
+          "name": "Review a street-team deployment",
+          "appId": "street-team-operating-review",
+          "version": 3,
+          "appContentHash": "1a0e00d3e8031eba91c4209ecd6518b6e12fd3c8ce45b559d392ceedb16b8b1b",
+          "packageHash": "99ccc4d075d8a6ddef8f7ab71d8f25854995aa3b5e97dfe4259b84d227211acb"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which promotion plans can we operate, and how many additional guests would cover their costs?",
+        "scope": "The authored street-team deployments with fixed deployment charges and same-day timing. Supply venue staffing, access, spending and contribution inputs; customer response is not forecast.",
+        "supportsOwnData": true
+      },
+      "package": {
+        "path": "workflows/street-team-deployment/1.14.0/workflow.workflow.json",
+        "bytes": 259068,
+        "sha256": "459f09df78935c351439a896f045f8751b7faf1db0757bf05ba6648a9f7a9f63"
+      },
+      "workbook": {
+        "path": "workflows/street-team-deployment/1.14.0/inputs.workbook.json",
+        "bytes": 290715,
+        "sha256": "e0a7f3c3cf8c95d5dc600fccdba61c671a1aa6f033f81e1cb1b4e5b6e661a006"
+      }
+    },
+    {
+      "id": "repair-published-restaurant-roster",
+      "version": "1.7.0",
+      "name": "Repair a published restaurant roster",
+      "description": "Compare complete repairs to a disrupted published restaurant roster across every remaining service. Check coverage, qualifications, availability, capacity, rest, hours and remaining payroll; optionally compare passing repairs by stability or payroll. The calculation compares supplied proposals and does not generate or publish a roster.",
+      "publishedAt": "2026-11-22T23:00:00.000Z",
+      "contentHash": "331edbdc45303c6ad911a8555aa18a8545a5ebf07ee583daa9b1c1e7398442c6",
+      "definitionHash": "3a05786abc3a865e9088f915ab9e34b0cca4cb9c4ce775d46dc58a4f7dbdce39",
+      "domain": {
+        "id": "restaurant-operations",
+        "label": "Restaurant operations"
+      },
+      "useCase": {
+        "id": "repair-published-roster",
+        "label": "Repair a published roster"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "feasibility",
+          "name": "Repair a published restaurant roster",
+          "appId": "roster-repair-feasibility",
+          "version": 1,
+          "appContentHash": "2bc15e6ff9027b17ff3a9c2551d9c6cf7298f5fe94433d67d5d875fd13126eeb",
+          "packageHash": "81c15b280bbaed072ad420e8bcd81c270fc4c31942013941c1226e368eeec9e4"
+        },
+        {
+          "id": "stability",
+          "name": "Repair a published restaurant roster",
+          "appId": "roster-repair-stability",
+          "version": 1,
+          "appContentHash": "da734a8d5b9e5ca24ea728426c156f264364fa43ae0f7cacbe94c3f4137516ef",
+          "packageHash": "ec3bf5532079eaaa269868603c5a099b60b789e74f929e8ea691f001c2577dba"
+        },
+        {
+          "id": "cost",
+          "name": "Repair a published restaurant roster",
+          "appId": "roster-repair-cost",
+          "version": 1,
+          "appContentHash": "fe8c1d46c62c15651ebeaeb436c8e93897fc89a3ebbe2c13bedb3fbc826b02f1",
+          "packageHash": "5f42a6d960eacf94400152eab859e15daa871910144a95ba83d871231b83c8e6"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which supplied complete repairs cover every remaining service, and which fit the chosen priority?",
+        "scope": "The configured employees, service positions and four complete repair proposals. Change availability, payroll or comparison priority here; a different restaurant roster needs an adapted author profile.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/repair-published-restaurant-roster/1.7.0/workflow.workflow.json",
+        "bytes": 1644264,
+        "sha256": "1e66e9b5545f0a11ec6eddbac95806c80b994b8ed4ec2a35b58dc188baf0ed2e"
+      },
+      "workbook": {
+        "path": "workflows/repair-published-restaurant-roster/1.7.0/inputs.workbook.json",
+        "bytes": 1723134,
+        "sha256": "c8a336b63ee7672a7fedbda5044d5d6e1e8236736d8aa9e621718e09f324f9f2"
+      }
+    },
+    {
+      "id": "plan-at-risk-release",
+      "version": "1.0.1",
+      "name": "Plan an at-risk release",
+      "description": "Compare four complete release arrangements against remaining validation work, scoped qualifications, working intervals, resource commitments, additional spending, recorded prerequisites and permission. Keep the original scope and deadline distinct from explicitly accepted revisions. This bounded calculation does not predict delivery probabilities or replace a ticket system.",
+      "publishedAt": "2026-11-22T23:00:00.000Z",
+      "contentHash": "764c467a0fee8ad2c49b60a9e01ab4b9ebd6ad71164a030ac19444e611cea7c9",
+      "definitionHash": "85dd8f5bcddea622ec364a9aa5833508f596920321cbbc34d51c2d5c460869d5",
+      "domain": {
+        "id": "software-delivery",
+        "label": "Software delivery"
+      },
+      "useCase": {
+        "id": "release-recovery",
+        "label": "Recover an at-risk release"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "planning",
+          "name": "Compare release arrangements",
+          "appId": "compare-release-arrangements",
+          "version": 1,
+          "appContentHash": "0188fd272fcd8b55d0a78e34cda4b64f19d36ff5a922ce76adf51b1e7a36aea2",
+          "packageHash": "8149c0f48faa6c27727d32984c7c137189cc91247a6b254d594c1ba70c9f84e1"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "This release is at risk. What can we still commit to?",
+        "scope": "A fictional release with four authored arrangements and fixed validation phases. Change the declared operating inputs; adapt the model for other scopes, work structures, resources or arrangements.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/plan-at-risk-release/1.0.1/workflow.workflow.json",
+        "bytes": 309143,
+        "sha256": "a94cba99e15fa0cc646724d8eaf941a162879bef22457423b7e15f57b8a57290"
+      },
+      "workbook": {
+        "path": "workflows/plan-at-risk-release/1.0.1/inputs.workbook.json",
+        "bytes": 344233,
+        "sha256": "9276dc9c20b6b5206f29e1f404fb7f05bdbb664a74b7b98691fcdad5a5e530e4"
+      }
+    },
+    {
+      "id": "choose-next-month-growth",
+      "version": "1.0.2",
+      "name": "Choose next month’s growth commitment",
+      "description": "Compare four complete growth commitments against cash after every dated payment and receipt, a required reserve, delivery hours, collection timing and the complete obligation horizon. Show the customer contribution needed to cover committed campaign spending. Optionally compare a nonbinding preference test using explicit probability assumptions and the same complete operating checks.",
+      "publishedAt": "2026-11-22T23:00:00.000Z",
+      "contentHash": "fd016cfede16546d7daca1d6d343086bddef5cf3a7ac30be2df1e742cb4bfc65",
+      "definitionHash": "839073e386deafd45d631e2ff971a3dfc3064c18be7a55f0420b98a399d448ee",
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth"
+      },
+      "useCase": {
+        "id": "fund-and-deliver-growth",
+        "label": "Fund and deliver growth"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "planning",
+          "name": "Compare growth arrangements",
+          "appId": "compare-growth-arrangements",
+          "version": 2,
+          "appContentHash": "9b7b60c1654a1f200ec8c19396595752c3bfc67f72c4ce985da97f7c1347179a",
+          "packageHash": "7d965e4935d7824084750509eb923a2f4a46f1c52a88f3f9df96b89ba615c8e7"
+        },
+        {
+          "id": "learning",
+          "name": "Assess a payment-terms test",
+          "appId": "assess-payment-terms-test",
+          "version": 2,
+          "appContentHash": "ac7cb54a721abda72b521a35260025b0033b1a440177c2ecad2b0d7aa5d01d58",
+          "packageHash": "c117f37015397372b5d2ae3ce7ebfa9d6670c8d2b774cb0d5a64b021e5b9edc1"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which growth plan can we afford to carry out?",
+        "scope": "A fictional service business with four authored complete arrangements and one standardized package. Edit the explicit case values; adapt the app for other arrangements, payment structures, activity dependencies or services.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/choose-next-month-growth/1.0.2/workflow.workflow.json",
+        "bytes": 341796,
+        "sha256": "f8d013f7ce7ec8899ae50023bb1b419a9ae7062c300267af3e1c98115f56b7aa"
+      },
+      "workbook": {
+        "path": "workflows/choose-next-month-growth/1.0.2/inputs.workbook.json",
+        "bytes": 389554,
+        "sha256": "6c272185bb8385689ace313d7afb743d237f90ab0f2725c446508408fd4f988a"
+      }
+    },
+    {
+      "id": "choose-next-month-growth",
+      "version": "1.1.0",
+      "name": "Choose next month’s growth commitment",
+      "description": "Compare four complete growth commitments against cash after every dated payment and receipt, a required reserve, delivery hours, collection timing and the complete obligation horizon. Show the customer contribution needed to cover committed campaign spending. Optionally compare a nonbinding preference test using explicit probability assumptions and the same complete operating checks.",
+      "publishedAt": "2026-11-23T00:00:00.000Z",
+      "contentHash": "c2af062bd6af830034998916776a46f255c5f95d0e99edcf2f373696e0749be1",
+      "definitionHash": "5af03d42eac914c5405411df5e3c4a6c8a6a15c72ca2b2c5ad1abc1688d1e4d3",
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth"
+      },
+      "useCase": {
+        "id": "fund-and-deliver-growth",
+        "label": "Fund and deliver growth"
+      },
+      "primaryPattern": {
+        "id": "complete-a-commitment/1",
+        "title": "Complete a commitment",
+        "question": "Can we complete the commitment?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "planning",
+          "name": "Compare growth arrangements",
+          "appId": "compare-growth-arrangements",
+          "version": 2,
+          "appContentHash": "9b7b60c1654a1f200ec8c19396595752c3bfc67f72c4ce985da97f7c1347179a",
+          "packageHash": "7d965e4935d7824084750509eb923a2f4a46f1c52a88f3f9df96b89ba615c8e7"
+        },
+        {
+          "id": "learning",
+          "name": "Assess a payment-terms test",
+          "appId": "assess-payment-terms-test",
+          "version": 2,
+          "appContentHash": "ac7cb54a721abda72b521a35260025b0033b1a440177c2ecad2b0d7aa5d01d58",
+          "packageHash": "c117f37015397372b5d2ae3ce7ebfa9d6670c8d2b774cb0d5a64b021e5b9edc1"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which growth plan can we afford to carry out?",
+        "scope": "A fictional service business with four authored complete arrangements and one standardized package. Edit the explicit case values; adapt the app for other arrangements, payment structures, activity dependencies or services.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/choose-next-month-growth/1.1.0/workflow.workflow.json",
+        "bytes": 341867,
+        "sha256": "40c3ec6aeef022a4c230cd7aadfc91c4373040b12b174c9d6b5dcf0f9f1522fe"
+      },
+      "workbook": {
+        "path": "workflows/choose-next-month-growth/1.1.0/inputs.workbook.json",
+        "bytes": 389631,
+        "sha256": "61325e86ac3155011119afb893b19ef74aaf942c3c32c5774f6afb058aee725c"
+      }
+    },
+    {
+      "id": "choose-next-month-growth",
+      "version": "1.2.0",
+      "name": "Choose next month’s growth commitment",
+      "description": "Compare four complete growth commitments against cash after every dated payment and receipt, a required reserve, delivery hours, collection timing and the complete obligation horizon. Show the customer contribution needed to cover committed campaign spending. Optionally compare a nonbinding preference test using explicit probability assumptions and the same complete operating checks.",
+      "publishedAt": "2026-11-23T06:00:00.000Z",
+      "contentHash": "529cbc6488f3f3a8a593824ba07216ff5b06a9e8c272892dd5edaca6053c894c",
+      "definitionHash": "02ff3e494953af2f81463eba29b0af4aee5cf1693c7b69ffb03f04d826e50655",
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth"
+      },
+      "useCase": {
+        "id": "fund-and-deliver-growth",
+        "label": "Fund and deliver growth"
+      },
+      "primaryPattern": {
+        "id": "complete-a-commitment/1",
+        "title": "Complete a commitment",
+        "question": "Can we complete the commitment?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "planning",
+          "name": "Compare growth arrangements",
+          "appId": "compare-growth-arrangements",
+          "version": 3,
+          "appContentHash": "3f760033abf0d4f8fab4e6dc957dcb5c6b8ba41beec10445e5e48b21688b805f",
+          "packageHash": "7fd439d18268ba60c6257542bbfe9f41a66b8a06f44b47955fdc600dad4cabdb"
+        },
+        {
+          "id": "learning",
+          "name": "Assess a payment-terms test",
+          "appId": "assess-payment-terms-test",
+          "version": 3,
+          "appContentHash": "3a49de125333bbe7b46a439138bc90b2802ea8f737133532bb370c701764b876",
+          "packageHash": "ec2bc9ca3d7034948c5fb4189dcdaa3d2b63d140949b0e1f43b609113bf75cb3"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which growth plan can we afford to carry out?",
+        "scope": "A fictional service business with four authored complete arrangements and one standardized package. Edit the explicit case values; adapt the app for other arrangements, payment structures, activity dependencies or services.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/choose-next-month-growth/1.2.0/workflow.workflow.json",
+        "bytes": 392186,
+        "sha256": "af318c036ae2902d01bf1810ddcae29571425ae41c849d0558a9f733491b7be1"
+      },
+      "workbook": {
+        "path": "workflows/choose-next-month-growth/1.2.0/inputs.workbook.json",
+        "bytes": 441128,
+        "sha256": "1f1b7e51bc0b5627682c1f67b0beeb2e619cbadb89ea7ae913d8e76760b9753d"
+      }
+    },
+    {
+      "id": "review-first-shipment",
+      "version": "1.11.0",
+      "name": "Compare first-shipment arrangements",
+      "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
+      "publishedAt": "2026-11-23T00:00:00.000Z",
+      "contentHash": "9e56b043e1338ca4d28caad7eb1d772cb3c185c5d90faed246a20b1a51066c2d",
+      "definitionHash": "bd5f0861b9776a92a89fd8ed22ea131e66cb4ef24a1f3a7c72259a963ca65f6e",
+      "domain": {
+        "id": "order-fulfillment",
+        "label": "Order fulfillment",
+        "description": "Plan complete deliveries against accepted readiness, resource, permission, timing and financial constraints."
+      },
+      "useCase": {
+        "id": "review-first-shipment",
+        "label": "Review a first shipment",
+        "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+      },
+      "primaryPattern": {
+        "id": "complete-a-commitment/1",
+        "title": "Complete a commitment",
+        "question": "Can we complete the commitment?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review ship-point registration",
+          "appId": "shipment-review-evidence",
+          "version": 1,
+          "appContentHash": "719cebdc2595450d8d0b6cd961ad32b443576bcb630cf11912d678679a305bbe",
+          "packageHash": "4ad35aeb54988d9028723f9cb846cee9e71d253160706345b0c46b47886e3010"
+        },
+        {
+          "id": "planning",
+          "name": "Plan this shipment before reservation",
+          "appId": "shipment-review-planning",
+          "version": 1,
+          "appContentHash": "754ab18d5e8d34070b4a288bc5a37ade4b2610c4d97979bd82ef358c3f5f26b1",
+          "packageHash": "3a577546ebb9aabff8ebc0c77ff56c1c1a0db57232e33808c1daaf8c4b33f22a"
+        },
+        {
+          "id": "learning",
+          "name": "Choose verification before reserving this shipment",
+          "appId": "shipment-review-learning",
+          "version": 1,
+          "appContentHash": "073b250ac87b16326210c29fdf937f9dd51511efd542c623cca4d729b2b2d08f",
+          "packageHash": "cfcf967bf16ad3c18d38d1167c8131c8957fce0c037ebaace2ca5232a0a0d681"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
+        "scope": "One shipment with the authored direct and backup arrangements, scoped registration evidence and optional timely verification. Other readiness requirements or arrangement types require adaptation.",
+        "supportsOwnData": true
+      },
+      "package": {
+        "path": "workflows/review-first-shipment/1.11.0/workflow.workflow.json",
+        "bytes": 1037364,
+        "sha256": "db0bfa1731ba01124808ec2a19bf3961bcda7d48c11da505a12f5ddccf95e30c"
+      },
+      "workbook": {
+        "path": "workflows/review-first-shipment/1.11.0/inputs.workbook.json",
+        "bytes": 1143236,
+        "sha256": "4365d31694f7c7f7ddac0e6b676f08af6aac7fdc0d3c2ca8c960b7e596237e02"
+      }
+    },
+    {
+      "id": "review-gift-kit-flexible",
+      "version": "2.10.0",
+      "name": "Plan a gift-kit commitment",
+      "description": "Compare complete gift-kit correction arrangements against the recorded configuration, work, handoff, capacity, permission and expense requirements.",
+      "publishedAt": "2026-11-23T00:00:00.000Z",
+      "contentHash": "1dc235ee15328140af8776278e7945e04662b06f6d829dfbb7d6bcca97e20a7a",
+      "definitionHash": "77b387481057ff82517bf901ffbf5fc60ae3e26f9e185adc458c19c277f269f5",
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations",
+        "description": "Review gift-kit evidence, corrective work and preparation commitments."
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign",
+        "description": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits."
+      },
+      "primaryPattern": {
+        "id": "complete-a-commitment/1",
+        "title": "Complete a commitment",
+        "question": "Can we complete the commitment?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review gift-kit records",
+          "appId": "review-gift-kit-flexible-evidence",
+          "version": 3,
+          "appContentHash": "57810ad73e01fbfef9833c0fffcb3bbc42101ba0b30bcd668841066dde301852",
+          "packageHash": "793a5017aa587152474d8824b77fd98bfbbed1764981a5fcce64163cbc0b3358"
+        },
+        {
+          "id": "planning",
+          "name": "Review a gift-kit commitment — complete arrangements",
+          "appId": "review-gift-kit-flexible-planning",
+          "version": 3,
+          "appContentHash": "c2d579b2698e443395a5f678392b368dfb98d615065c6f8f486baf0e66062cc2",
+          "packageHash": "3c0aae0c30ec70d930625efd79fe29f740adf8df8cdacf7041b78dc483d4f6d6"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "What must we verify or correct, and can we finish before committing these gift kits?",
+        "scope": "The authored gift-kit checks and preparation arrangements within one handoff window. Supply campaign records and operating inputs; a different preparation method or rule requires adaptation.",
+        "supportsOwnData": true
+      },
+      "package": {
+        "path": "workflows/review-gift-kit-flexible/2.10.0/workflow.workflow.json",
+        "bytes": 575000,
+        "sha256": "37a8281f9f209995ad6207e90f79e58c6ba590795dbd2c12dce16f3579c1ba75"
+      },
+      "workbook": {
+        "path": "workflows/review-gift-kit-flexible/2.10.0/inputs.workbook.json",
+        "bytes": 639832,
+        "sha256": "20eae128ed8e4ade9f497a7ac0cc82adabc66848b93685cb121d96831dfdad38"
+      }
+    },
+    {
+      "id": "review-gift-kit-earliest",
+      "version": "2.10.0",
+      "name": "Plan the earliest gift-kit handoff",
+      "description": "Find the earliest complete gift-kit correction arrangement meeting the recorded configuration, work, capacity, permission and expense requirements.",
+      "publishedAt": "2026-11-23T00:00:00.000Z",
+      "contentHash": "1c880dd20052d819793227ed485822e103fa7a99570c25385cfd63938cd1efb9",
+      "definitionHash": "beb2439ee46e85488fca448dfd1665afaebeef8e5098c5a1b531fe454b769577",
+      "domain": {
+        "id": "gifting-operations",
+        "label": "Gifting operations",
+        "description": "Review gift-kit evidence, corrective work and preparation commitments."
+      },
+      "useCase": {
+        "id": "prepare-gift-kit-campaign",
+        "label": "Prepare a gift-kit campaign",
+        "description": "Review failed preorder rehearsals and complete correction arrangements before committing gift kits."
+      },
+      "primaryPattern": {
+        "id": "complete-a-commitment/1",
+        "title": "Complete a commitment",
+        "question": "Can we complete the commitment?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review gift-kit records",
+          "appId": "review-gift-kit-earliest-evidence",
+          "version": 3,
+          "appContentHash": "4c3fe62a6482be02b38ab7058b6d5117112983e8f04ef47a33d7a61504aa629f",
+          "packageHash": "f334819802ccf8e97d966b28e57f9867099b3db2c10c6ac8be7894f4558abbe4"
+        },
+        {
+          "id": "planning",
+          "name": "Review gift kits with earliest handoff priority — complete arrangements",
+          "appId": "review-gift-kit-earliest-planning",
+          "version": 3,
+          "appContentHash": "36b000f793baefde7b53588a6e64408b38ac3cdc22f9ef41883e8d24816caa40",
+          "packageHash": "b5016d950d6db3d59c4c4f6ef74785a5bd2f649d9a2f1c2fde26dd2d052ac2c1"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "What must we verify or correct, and can we finish before committing these gift kits?",
+        "scope": "The authored gift-kit checks and preparation arrangements, comparing earliest readiness within one handoff window. A different preparation method or rule requires adaptation.",
+        "supportsOwnData": true
+      },
+      "package": {
+        "path": "workflows/review-gift-kit-earliest/2.10.0/workflow.workflow.json",
+        "bytes": 575021,
+        "sha256": "1e2bae79397772a6d89279896eadeb2a1f4f60755b94044f703b17882a15fd72"
+      },
+      "workbook": {
+        "path": "workflows/review-gift-kit-earliest/2.10.0/inputs.workbook.json",
+        "bytes": 639856,
+        "sha256": "cea15b3b3afe2e3a226389119a3b3259fcc50b71ff39eceba7c55e3e66b85c1b"
+      }
+    },
+    {
+      "id": "street-team-deployment",
+      "version": "1.15.0",
+      "name": "Plan a street-team deployment",
+      "description": "Compare complete promotion plans against staffing, timing, recorded access and spending requirements, then calculate the additional guests needed to cover expense and separate discount loss. Choice and authorization remain outside the app; customer response is not forecast.",
+      "publishedAt": "2026-11-23T00:00:00.000Z",
+      "contentHash": "61f6b44e68b760d498dce6fc4614d824933d40bfccf6b2aeea92eda7d55c6977",
+      "definitionHash": "374e5cd3315ea9d508ef8ef619b34e92368e1488790a7232ab1b34abb4e348e6",
+      "domain": {
+        "id": "venue-operations",
+        "label": "Venue operations"
+      },
+      "useCase": {
+        "id": "deploy-street-team",
+        "label": "Review a street-team deployment"
+      },
+      "primaryPattern": {
+        "id": "complete-a-commitment/1",
+        "title": "Complete a commitment",
+        "question": "Can we complete the commitment?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "operations",
+          "name": "Review a street-team deployment",
+          "appId": "street-team-operating-review",
+          "version": 3,
+          "appContentHash": "1a0e00d3e8031eba91c4209ecd6518b6e12fd3c8ce45b559d392ceedb16b8b1b",
+          "packageHash": "99ccc4d075d8a6ddef8f7ab71d8f25854995aa3b5e97dfe4259b84d227211acb"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which promotion plans can we operate, and how many additional guests would cover their costs?",
+        "scope": "The authored street-team deployments with fixed deployment charges and same-day timing. Supply venue staffing, access, spending and contribution inputs; customer response is not forecast.",
+        "supportsOwnData": true
+      },
+      "package": {
+        "path": "workflows/street-team-deployment/1.15.0/workflow.workflow.json",
+        "bytes": 259141,
+        "sha256": "ac2fc916e1a202f166b5edc90539e18861a2fa31b79dff384dfa9d5c5b66a416"
+      },
+      "workbook": {
+        "path": "workflows/street-team-deployment/1.15.0/inputs.workbook.json",
+        "bytes": 290794,
+        "sha256": "9ec6f349d7f8c43e90135802ce16a603112c8ac910746d43a5f18169c3229889"
+      }
+    },
+    {
+      "id": "repair-published-restaurant-roster",
+      "version": "1.8.0",
+      "name": "Repair a published restaurant roster",
+      "description": "Compare complete repairs to a disrupted published restaurant roster across every remaining service. Check coverage, qualifications, availability, capacity, rest, hours and remaining payroll; optionally compare passing repairs by stability or payroll. The calculation compares supplied proposals and does not generate or publish a roster.",
+      "publishedAt": "2026-11-23T00:00:00.000Z",
+      "contentHash": "e4e0bb4b6f37ae117231eb965df9b94197af4ec28b01ec835f49daf0098b7f40",
+      "definitionHash": "2db951fddd9481767f13b0e0853fa0adec13cf16f304bb58d60613b5910b5192",
+      "domain": {
+        "id": "restaurant-operations",
+        "label": "Restaurant operations"
+      },
+      "useCase": {
+        "id": "repair-published-roster",
+        "label": "Repair a published roster"
+      },
+      "primaryPattern": {
+        "id": "complete-a-commitment/1",
+        "title": "Complete a commitment",
+        "question": "Can we complete the commitment?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "feasibility",
+          "name": "Repair a published restaurant roster",
+          "appId": "roster-repair-feasibility",
+          "version": 1,
+          "appContentHash": "2bc15e6ff9027b17ff3a9c2551d9c6cf7298f5fe94433d67d5d875fd13126eeb",
+          "packageHash": "81c15b280bbaed072ad420e8bcd81c270fc4c31942013941c1226e368eeec9e4"
+        },
+        {
+          "id": "stability",
+          "name": "Repair a published restaurant roster",
+          "appId": "roster-repair-stability",
+          "version": 1,
+          "appContentHash": "da734a8d5b9e5ca24ea728426c156f264364fa43ae0f7cacbe94c3f4137516ef",
+          "packageHash": "ec3bf5532079eaaa269868603c5a099b60b789e74f929e8ea691f001c2577dba"
+        },
+        {
+          "id": "cost",
+          "name": "Repair a published restaurant roster",
+          "appId": "roster-repair-cost",
+          "version": 1,
+          "appContentHash": "fe8c1d46c62c15651ebeaeb436c8e93897fc89a3ebbe2c13bedb3fbc826b02f1",
+          "packageHash": "5f42a6d960eacf94400152eab859e15daa871910144a95ba83d871231b83c8e6"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which supplied complete repairs cover every remaining service, and which fit the chosen priority?",
+        "scope": "The configured employees, service positions and four complete repair proposals. Change availability, payroll or comparison priority here; a different restaurant roster needs an adapted author profile.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/repair-published-restaurant-roster/1.8.0/workflow.workflow.json",
+        "bytes": 1644338,
+        "sha256": "4434a2299a070799de83d49ab9797ca2131953553f140b17603c15aa9d3815fb"
+      },
+      "workbook": {
+        "path": "workflows/repair-published-restaurant-roster/1.8.0/inputs.workbook.json",
+        "bytes": 1723214,
+        "sha256": "b98b1e1dff515c3f3a75867136cf128726eaf9b557343669e0cb36514ecd1f17"
+      }
+    },
+    {
+      "id": "plan-at-risk-release",
+      "version": "1.1.0",
+      "name": "Plan an at-risk release",
+      "description": "Compare four complete release arrangements against remaining validation work, scoped qualifications, working intervals, resource commitments, additional spending, recorded prerequisites and permission. Keep the original scope and deadline distinct from explicitly accepted revisions. This bounded calculation does not predict delivery probabilities or replace a ticket system.",
+      "publishedAt": "2026-11-23T00:00:00.000Z",
+      "contentHash": "b9806550413cff5a21b61126e26db91d4cdadc3d71a0bd5af42b899e6678a948",
+      "definitionHash": "90b058067e26b9b1d3b0b81dc32aea286bc42b134793bdd609ee636b87e45f08",
+      "domain": {
+        "id": "software-delivery",
+        "label": "Software delivery"
+      },
+      "useCase": {
+        "id": "release-recovery",
+        "label": "Recover an at-risk release"
+      },
+      "primaryPattern": {
+        "id": "complete-a-commitment/1",
+        "title": "Complete a commitment",
+        "question": "Can we complete the commitment?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "planning",
+          "name": "Compare release arrangements",
+          "appId": "compare-release-arrangements",
+          "version": 1,
+          "appContentHash": "0188fd272fcd8b55d0a78e34cda4b64f19d36ff5a922ce76adf51b1e7a36aea2",
+          "packageHash": "8149c0f48faa6c27727d32984c7c137189cc91247a6b254d594c1ba70c9f84e1"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "This release is at risk. What can we still commit to?",
+        "scope": "A fictional release with four authored arrangements and fixed validation phases. Change the declared operating inputs; adapt the model for other scopes, work structures, resources or arrangements.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/plan-at-risk-release/1.1.0/workflow.workflow.json",
+        "bytes": 309214,
+        "sha256": "a6f035f73cbd229898f2fb765f5a005b3056100861202bd1c4f01e574de7200e"
+      },
+      "workbook": {
+        "path": "workflows/plan-at-risk-release/1.1.0/inputs.workbook.json",
+        "bytes": 344310,
+        "sha256": "8e0a713c8f2782cd9661e1897c9bbb86eaeffcf933fcf882b349d38574b4d806"
+      }
+    },
+    {
+      "id": "choose-next-month-growth",
+      "version": "1.2.1",
+      "name": "Choose next month’s growth commitment",
+      "description": "Compare four complete growth commitments against cash after every dated payment and receipt, a required reserve, delivery hours, collection timing and the complete obligation horizon. Show the customer contribution needed to cover committed campaign spending. Optionally compare a nonbinding preference test using explicit probability assumptions and the same complete operating checks.",
+      "publishedAt": "2026-11-23T06:30:00.000Z",
+      "contentHash": "3c4fc906f47b2703556f7319c4a5c978a81283076c29d5885f108459a27d4d82",
+      "definitionHash": "494beb00bf566a1c40764dcb299d7fc2a09a83ea698f2c5b4d20999c6f70ee4e",
+      "domain": {
+        "id": "business-growth",
+        "label": "Business growth"
+      },
+      "useCase": {
+        "id": "fund-and-deliver-growth",
+        "label": "Fund and deliver growth"
+      },
+      "primaryPattern": {
+        "id": "complete-a-commitment/1",
+        "title": "Complete a commitment",
+        "question": "Can we complete the commitment?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "planning",
+          "name": "Compare growth commitments",
+          "appId": "compare-growth-arrangements",
+          "version": 4,
+          "appContentHash": "83fcee03a0c79a7619d228c7cabce9dd6a6db5ea23f17f144c1a005733ec3a35",
+          "packageHash": "9278df399acf89bbd6eb1bf508e0597c88b6e258ee535a8559cc277c7bfea56f"
+        },
+        {
+          "id": "learning",
+          "name": "Assess a payment-terms test",
+          "appId": "assess-payment-terms-test",
+          "version": 4,
+          "appContentHash": "dd1ee78c412b2ede0c67b1bae13d6a19c0684d6943e3acae6ac79d8cb4a99c12",
+          "packageHash": "2b2f7f8f0d9c4a122fbd99fb072114a9e1f7fb915a6da77e55e8cc476ea3390c"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which growth plan can we afford to carry out?",
+        "scope": "A fictional service business with a current-approach baseline and three proposed growth commitments and one standardized package. Edit the explicit case values; adapt the app for other commitments, payment structures, activity dependencies or services.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/choose-next-month-growth/1.2.1/workflow.workflow.json",
+        "bytes": 392507,
+        "sha256": "51c2039732d4f306d67b98949ff139ce5a1b2ea372456b1cf36113559345accb"
+      },
+      "workbook": {
+        "path": "workflows/choose-next-month-growth/1.2.1/inputs.workbook.json",
+        "bytes": 441558,
+        "sha256": "32d023fa9e6feb665dc7bb95299711a9b4fe53cf727027fc31772ea76b892c0b"
+      }
+    },
+    {
+      "id": "review-first-shipment",
+      "version": "1.12.0",
+      "name": "Compare first-shipment arrangements",
+      "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
+      "publishedAt": "2026-11-23T16:59:01.941Z",
+      "contentHash": "3555061e682c8868ef5f705526f81b5c7e25edfd8c5c543a5ee94fa35b165a0a",
+      "definitionHash": "ce2f28f4de14624fa4e86859cc64d7683202618f1db5aa4c118c0e7a298a5e08",
+      "domain": {
+        "id": "order-fulfillment",
+        "label": "Order fulfillment",
+        "description": "Plan complete deliveries against accepted readiness, resource, permission, timing and financial constraints."
+      },
+      "useCase": {
+        "id": "review-first-shipment",
+        "label": "Review a first shipment",
+        "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+      },
+      "primaryPattern": {
+        "id": "complete-a-commitment/1",
+        "title": "Complete a commitment",
+        "question": "Can we complete the commitment?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Review ship-point registration",
+          "appId": "shipment-review-evidence",
+          "version": 2,
+          "appContentHash": "abca4b3cbe9a955b9198d9af205c14039d7f9e52596bb7a966de2ba6b00f5548",
+          "packageHash": "d5ad99446084533faf8fc98c3ab1b72585db707126f1dbbcf39691ae00689e9a"
+        },
+        {
+          "id": "planning",
+          "name": "Plan this shipment before reservation",
+          "appId": "shipment-review-planning",
+          "version": 2,
+          "appContentHash": "cefc45a31460914aefa20da9cf748f8e1eb37532437ffd3ecf0975dd5206d390",
+          "packageHash": "1b69b44350c5932309a0d1a384d30d4a05b1da23825b7a352860a54bd111c5fb"
+        },
+        {
+          "id": "learning",
+          "name": "Choose verification before reserving this shipment",
+          "appId": "shipment-review-learning",
+          "version": 2,
+          "appContentHash": "ea9646b35806dc5ac31b2dec8fa22fe011e2ade5843950b1dcd80bbd1360d9f9",
+          "packageHash": "d20ad41cca6edfb916481488abeff20324fcb130e2b4ae35208bb8abc9d9d8f1"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
+        "scope": "One shipment with the authored direct and backup arrangements, scoped registration evidence and optional timely verification. Other readiness requirements or arrangement types require adaptation.",
+        "supportsOwnData": true
+      },
+      "package": {
+        "path": "workflows/review-first-shipment/1.12.0/workflow.workflow.json",
+        "bytes": 1122763,
+        "sha256": "110fa2a3911ffa1749a524280767ee8880f8a5d7b1730db4c2530bc997fa4836"
+      },
+      "workbook": {
+        "path": "workflows/review-first-shipment/1.12.0/inputs.workbook.json",
+        "bytes": 1231717,
+        "sha256": "6f913d39190758e6ba0fed266ce12de5df9f5fd097f67a6c29e0ee82ff32ad2a"
+      }
     }
   ],
   "collections": [
@@ -684,6 +2838,380 @@
         "path": "collections/decision-lab/restaurant-operations/1.5.0/collection.collection.json",
         "bytes": 1361,
         "sha256": "87bafde13fe6cd3ac5fe4e7471e756391860e3d75b369db14971442d5a133573"
+      }
+    },
+    {
+      "id": "business-growth",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.0.0",
+      "title": "Business growth",
+      "description": "Compare fundable growth commitments, the performance they require and the value of a bounded payment-terms test.",
+      "createdAt": "2026-11-22T18:00:00.000Z",
+      "contentHash": "222ae78d5f2b2ef1ca4a937b7df0b6c3f5b85d3f687983090bfa32aa6d5c2b0f",
+      "package": {
+        "path": "collections/decision-lab/business-growth/1.0.0/collection.collection.json",
+        "bytes": 2253,
+        "sha256": "cfaa9781827645c7b05e1c098e27f3c81ef2345a000497ae05946aaeee75dd2f"
+      }
+    },
+    {
+      "id": "order-fulfillment",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.11.0",
+      "title": "Order fulfillment",
+      "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+      "createdAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "f30798ba36663259873574ed7f7c0cae4ff629d9231a8ac95142b628ef4b9dc9",
+      "package": {
+        "path": "collections/decision-lab/order-fulfillment/1.11.0/collection.collection.json",
+        "bytes": 2016,
+        "sha256": "3752a940230f54ee56984e7eddfa07a53ddb47276553177624c464482982edb7"
+      }
+    },
+    {
+      "id": "gifting-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "2.8.0",
+      "title": "Gifting operations",
+      "description": "Gifting operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+      "createdAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "7ec9d5de8b31b47907d54eb035f13ae4cae8dd8fc1fce8f87dfed7b9c6d0169b",
+      "package": {
+        "path": "collections/decision-lab/gifting-operations/2.8.0/collection.collection.json",
+        "bytes": 3250,
+        "sha256": "0e7b19a1de49cc2f7a1011f21508173fac0484ba586eff59c1f80d7373bd2b15"
+      }
+    },
+    {
+      "id": "venue-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.12.0",
+      "title": "Venue operations",
+      "description": "Venue operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+      "createdAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "dd28f8c4a9cfea8f679d9684bcae2dd3c35db2995e1f08100d29530b470bbd6b",
+      "package": {
+        "path": "collections/decision-lab/venue-operations/1.12.0/collection.collection.json",
+        "bytes": 1418,
+        "sha256": "f689e6b4091fdf17183acad7c5cd29186f8986b71ea5bd50e4a69016b5596a5a"
+      }
+    },
+    {
+      "id": "restaurant-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.6.0",
+      "title": "Restaurant operations",
+      "description": "Operational calculations for restaurant staffing and service commitments.",
+      "createdAt": "2026-11-22T02:08:38.561Z",
+      "contentHash": "1b11350d8a30ec19b8d0bc80e74adf380d14eaa8f31e5d6679971d714b6841f3",
+      "package": {
+        "path": "collections/decision-lab/restaurant-operations/1.6.0/collection.collection.json",
+        "bytes": 1361,
+        "sha256": "27258d5eefde843575054d1689da68a65fe6a1ea14bd39e677ba77d420614e05"
+      }
+    },
+    {
+      "id": "software-delivery",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.0.0",
+      "title": "Software delivery",
+      "description": "Bounded operational calculations for software delivery commitments, qualified capacity and explicit release changes.",
+      "createdAt": "2026-11-21T18:00:00.000Z",
+      "contentHash": "6245e216dad5de4b3bc128beba8147c166c72a6ea72a9375b0527496e3935e8c",
+      "package": {
+        "path": "collections/decision-lab/software-delivery/1.0.0/collection.collection.json",
+        "bytes": 1778,
+        "sha256": "1cc70d3946d0ee79ac64739cedfec14fd5683bf1323c6ed88fa7c30ce14fa752"
+      }
+    },
+    {
+      "id": "business-growth",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.0.1",
+      "title": "Business growth",
+      "description": "Compare fundable growth commitments, the performance they require and the value of a bounded payment-terms test.",
+      "createdAt": "2026-11-22T20:00:00.000Z",
+      "contentHash": "04ca9a2d1e36c5b3204d98f77988ab35e0c96031b706c036e3923389c061883b",
+      "package": {
+        "path": "collections/decision-lab/business-growth/1.0.1/collection.collection.json",
+        "bytes": 2253,
+        "sha256": "e741326eb1c785465298e2c31de86c8754169f974c8bb65837ac11d3d1af05b6"
+      }
+    },
+    {
+      "id": "order-fulfillment",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.12.0",
+      "title": "Order fulfillment",
+      "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+      "createdAt": "2026-11-22T23:00:00.000Z",
+      "contentHash": "59896f53b35cfbb586acd566891158dc363e91f65a636f1de5f56fc742364e63",
+      "package": {
+        "path": "collections/decision-lab/order-fulfillment/1.12.0/collection.collection.json",
+        "bytes": 2018,
+        "sha256": "019599be7efccb3072111a17500edf21ac4dc1910767abcd5bb60d4cca98af22"
+      }
+    },
+    {
+      "id": "gifting-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "2.9.0",
+      "title": "Gifting operations",
+      "description": "Gifting operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+      "createdAt": "2026-11-22T23:00:00.000Z",
+      "contentHash": "5291ccf8dd3ad4d14e2b37d4c50b7a33cb1be294248a7f023087cd8d876756bc",
+      "package": {
+        "path": "collections/decision-lab/gifting-operations/2.9.0/collection.collection.json",
+        "bytes": 3250,
+        "sha256": "a65b5652f29a48be2a23631c3ab676a06decdd8c352fed8a90ef8da275c2d80f"
+      }
+    },
+    {
+      "id": "venue-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.13.0",
+      "title": "Venue operations",
+      "description": "Venue operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+      "createdAt": "2026-11-22T23:00:00.000Z",
+      "contentHash": "2c451b9e8f19d328a33f86edff6e322ffda94ee7a9ea1d443db2fd57934c2638",
+      "package": {
+        "path": "collections/decision-lab/venue-operations/1.13.0/collection.collection.json",
+        "bytes": 1418,
+        "sha256": "ac80c9b917db907ccbdc8774da6d266f4fe56f47fd32475d2629ca0708c3d672"
+      }
+    },
+    {
+      "id": "restaurant-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.7.0",
+      "title": "Restaurant operations",
+      "description": "Operational calculations for restaurant staffing and service commitments.",
+      "createdAt": "2026-11-22T23:00:00.000Z",
+      "contentHash": "6652c1a166efce22073bb5b1951cc1d48046e2cefd1bdde9c1fa562761dab145",
+      "package": {
+        "path": "collections/decision-lab/restaurant-operations/1.7.0/collection.collection.json",
+        "bytes": 1361,
+        "sha256": "2fc50487b2c845771a705071c86d79fd7c9bd8b31a2e655111a30abc35a5727d"
+      }
+    },
+    {
+      "id": "software-delivery",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.0.1",
+      "title": "Software delivery",
+      "description": "Bounded operational calculations for software delivery commitments, qualified capacity and explicit release changes.",
+      "createdAt": "2026-11-22T23:00:00.000Z",
+      "contentHash": "ad331ef32b4d46526ba777499a501f82658497c363bcb693c67c9c180dcd8d5a",
+      "package": {
+        "path": "collections/decision-lab/software-delivery/1.0.1/collection.collection.json",
+        "bytes": 1778,
+        "sha256": "6ee4dc2b23e429cf96e35a793d348051d3f9e7d1d9245dc2a8af37e510176e75"
+      }
+    },
+    {
+      "id": "business-growth",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.0.2",
+      "title": "Business growth",
+      "description": "Compare fundable growth commitments, the performance they require and the value of a bounded payment-terms test.",
+      "createdAt": "2026-11-22T23:00:00.000Z",
+      "contentHash": "48aed24479f094071bb181350d7f3869b591ef682d08323b2ee2969055a60c29",
+      "package": {
+        "path": "collections/decision-lab/business-growth/1.0.2/collection.collection.json",
+        "bytes": 2253,
+        "sha256": "59cad6dd8ee52b7004391149cf83d1c3bd977ad011e6a292eee9111d5cc5b222"
+      }
+    },
+    {
+      "id": "business-growth",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.1.0",
+      "title": "Business growth",
+      "description": "Compare fundable growth commitments, the performance they require and the value of a bounded payment-terms test.",
+      "createdAt": "2026-11-23T00:00:00.000Z",
+      "contentHash": "a59e0b5f5b3fba3686bc2e1e1291f4ae75be3cae7c9d415137132d8a4e05190e",
+      "package": {
+        "path": "collections/decision-lab/business-growth/1.1.0/collection.collection.json",
+        "bytes": 2253,
+        "sha256": "e46c76a4f45a47c9fd57da23d7cc438366efd4a66e02c86a66748ae8eaf69877"
+      }
+    },
+    {
+      "id": "business-growth",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.2.0",
+      "title": "Business growth",
+      "description": "Compare fundable growth commitments, the performance they require and the value of a bounded payment-terms test.",
+      "createdAt": "2026-11-23T06:00:00.000Z",
+      "contentHash": "095cdd2618d7ec6bc8b11ae5203d7c1804850f0fb6429560c4d56508555dafcd",
+      "package": {
+        "path": "collections/decision-lab/business-growth/1.2.0/collection.collection.json",
+        "bytes": 2253,
+        "sha256": "ab31dd1d7d78b4194fdec8b8cda1c45c8eb460facb3e5011741855e46896a83f"
+      }
+    },
+    {
+      "id": "order-fulfillment",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.13.0",
+      "title": "Order fulfillment",
+      "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+      "createdAt": "2026-11-23T00:00:00.000Z",
+      "contentHash": "a9b0516bfc908d91dbc55f8ecfb11cce4e2e5c71df111edafd5fb414bbce543b",
+      "package": {
+        "path": "collections/decision-lab/order-fulfillment/1.13.0/collection.collection.json",
+        "bytes": 2018,
+        "sha256": "59034ed9d050c1434bb551dc39dbdee7bd2f7b502e5c12662b1e2c7723c8c572"
+      }
+    },
+    {
+      "id": "gifting-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "2.10.0",
+      "title": "Gifting operations",
+      "description": "Gifting operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+      "createdAt": "2026-11-23T00:00:00.000Z",
+      "contentHash": "a7f1e1368fb6b5ac841a64ae335388bf6890a804b8cc5f134ff0a21d5926ff3a",
+      "package": {
+        "path": "collections/decision-lab/gifting-operations/2.10.0/collection.collection.json",
+        "bytes": 3255,
+        "sha256": "af0ff0c40cbe9e991ed04f5220babe7440ace39a8dd48501b0ebfae1192e51f4"
+      }
+    },
+    {
+      "id": "venue-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.14.0",
+      "title": "Venue operations",
+      "description": "Venue operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+      "createdAt": "2026-11-23T00:00:00.000Z",
+      "contentHash": "6203aa9e7a9434a747c6b6bf78f1486bc2b3301b049a92afe9475d0e566fabee",
+      "package": {
+        "path": "collections/decision-lab/venue-operations/1.14.0/collection.collection.json",
+        "bytes": 1418,
+        "sha256": "5d1a96e779ab6a149a56ae25590d61b07cd57d3c33b978224f493a31fc8d5d45"
+      }
+    },
+    {
+      "id": "restaurant-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.8.0",
+      "title": "Restaurant operations",
+      "description": "Operational calculations for restaurant staffing and service commitments.",
+      "createdAt": "2026-11-23T00:00:00.000Z",
+      "contentHash": "eb92939ac709a27aa1c89ad7a847b14cafec45e51dbc1b1e017f83814fc43162",
+      "package": {
+        "path": "collections/decision-lab/restaurant-operations/1.8.0/collection.collection.json",
+        "bytes": 1361,
+        "sha256": "ac11ca19cbdfcd53f3251e712f7a893981df0e6a2e5ab836b250905a9867434e"
+      }
+    },
+    {
+      "id": "software-delivery",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.1.0",
+      "title": "Software delivery",
+      "description": "Bounded operational calculations for software delivery commitments, qualified capacity and explicit release changes.",
+      "createdAt": "2026-11-23T00:00:00.000Z",
+      "contentHash": "ff26cde35e9da536db5c1bc1afd2b91d2876cd0acc3d8fc9ec74a78138c709da",
+      "package": {
+        "path": "collections/decision-lab/software-delivery/1.1.0/collection.collection.json",
+        "bytes": 1778,
+        "sha256": "6558f0ec87bd0def3954197fdd8943c0665e3503e253ae9946e7cff328fcab0c"
+      }
+    },
+    {
+      "id": "business-growth",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.2.1",
+      "title": "Business growth",
+      "description": "Compare fundable growth commitments, the performance they require and the value of a bounded payment-terms test.",
+      "createdAt": "2026-11-23T06:30:00.000Z",
+      "contentHash": "3ca7b5834b924579c075dbd41490599cf966fdfc6452a4a0ca0c74ed28fb8870",
+      "package": {
+        "path": "collections/decision-lab/business-growth/1.2.1/collection.collection.json",
+        "bytes": 2253,
+        "sha256": "e5cba168cd925deb9853213d78d44a727bea75f36706ddde88585ca21f4f4f10"
+      }
+    },
+    {
+      "id": "order-fulfillment",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.14.0",
+      "title": "Order fulfillment",
+      "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+      "createdAt": "2026-11-23T16:59:01.941Z",
+      "contentHash": "2cc5ce4ba4b2d47ad0a1d9c22ea84cd5a8d99213ca5069732975fa23946a9d37",
+      "package": {
+        "path": "collections/decision-lab/order-fulfillment/1.14.0/collection.collection.json",
+        "bytes": 2018,
+        "sha256": "c18d30ca980b545ed9d5fe8c43384c603aa1c949c9ccc3e293098a2b017d3d08"
       }
     }
   ]

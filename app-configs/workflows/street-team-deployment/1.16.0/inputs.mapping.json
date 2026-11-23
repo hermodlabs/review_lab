@@ -1,0 +1,484 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-86c18027027f7c98cc77a249",
+  "version": "1.2.9",
+  "title": "Plan a street-team deployment — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case. Inputs retained outside this workbook: Recorded event access, Promotion expense and spending authority: Permissions. Event access records and delegated spending permissions are outside this workbook; enter them in Forms or YAML.",
+  "target": {
+    "type": "workflow",
+    "id": "street-team-deployment",
+    "version": "1.16.0",
+    "packageHash": "5c589123f1e76a632688dffe523404c60c7d306a372de3ae12282a66df8c54c8",
+    "definitionHash": "b407aa91ab96a4c5b8829118d1910119578fba8fb4b390c4baf998ed8038fec3"
+  },
+  "managedPaths": [
+    "/promotion/staffing/venueId",
+    "/promotion/staffing/eventId",
+    "/promotion/staffing/operatingDate",
+    "/promotion/staffing/actorId",
+    "/promotion/staffing/qualifiedStaff",
+    "/promotion/staffing/unavailableStaff",
+    "/promotion/staffing/minimumInside",
+    "/promotion/timing/reviewMinute",
+    "/promotion/timing/dispatchMinute",
+    "/promotion/timing/promotionStartMinute",
+    "/promotion/timing/eventExitMinute",
+    "/promotion/timing/contactEndMinute",
+    "/promotion/timing/staffReturnMinute",
+    "/promotion/timing/customerJourneyMinutes",
+    "/promotion/timing/latestArrivalMinute",
+    "/promotion/spending/expenseLimitMinor",
+    "/promotion/contribution/small-standard",
+    "/promotion/contribution/large-standard",
+    "/promotion/contribution/large-discount",
+    "/promotion/discountLoss/small-standard",
+    "/promotion/discountLoss/large-standard",
+    "/promotion/discountLoss/large-discount"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "The authored street-team deployments with fixed deployment charges and same-day timing. Supply venue staffing, access, spending and contribution inputs; customer response is not forecast."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "The workbook contains this case’s recorded inputs. A blank case stays blank; downloading never restores example values. A partly changed example can retain fictional inputs; inspect Input sources in Decision Lab."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "Clock fields use HH:mm on the operating date. USD fields display dollars. Customer travel remains a duration."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Qualified staffing and operatin",
+          "instructions": "Editable inputs. Same venue, event and operating date. Count only staff qualified and available throughout the complete absence; unavailable staff are subtracted once."
+        },
+        {
+          "topic": "Promotion timing",
+          "instructions": "Editable inputs. Use local minutes from midnight on the operating date. Customer travel time assumes the guest accepts the offer; it does not predict acceptance."
+        },
+        {
+          "topic": "Promotion expense and spending ",
+          "instructions": "Editable inputs. US dollars. Each plan quote includes its full additional expense. The spending limit and delegated permission are separate from approval of the chosen plan."
+        },
+        {
+          "topic": "Venue contribution per addition",
+          "instructions": "Editable inputs. US dollars retained by the venue per additional guest after the offer and variable costs. Additional means a visit caused by the promotion; returning customers can count. A visit attributed to an offer is not necessarily additional. Unknown remains unknown; zero or negative contribution cannot cover a positive cost. Break-even counts cover the plan’s additional expense plus any separate existing-customer discount loss."
+        },
+        {
+          "topic": "Separate discount loss on exist",
+          "instructions": "Editable inputs. US dollars of additional contribution lost on guests who would have attended anyway. Include only loss not already counted in guest contribution or the plan’s expense. Break-even counts cover additional expense plus this separate loss. Unknown leaves the guest target unassessed."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Qualified staffing and operatin",
+      "kind": "record",
+      "role": "floor-lead",
+      "meaning": "Same venue, event and operating date. Count only staff qualified and available throughout the complete absence; unavailable staff are subtracted once.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "promotion-staffing-venueId",
+          "label": "Venue",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/promotion/staffing/venueId"
+        },
+        {
+          "id": "promotion-staffing-eventId",
+          "label": "Event",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/promotion/staffing/eventId"
+        },
+        {
+          "id": "promotion-staffing-operatingDate",
+          "label": "Operating date",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/promotion/staffing/operatingDate"
+        },
+        {
+          "id": "promotion-staffing-actorId",
+          "label": "Responsible manager",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/promotion/staffing/actorId"
+        },
+        {
+          "id": "promotion-staffing-qualifiedStaff",
+          "label": "Qualified staff on the roster",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/promotion/staffing/qualifiedStaff",
+          "minimum": 0
+        },
+        {
+          "id": "promotion-staffing-unavailableStaff",
+          "label": "Unavailable qualified staff",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/promotion/staffing/unavailableStaff",
+          "minimum": 0
+        },
+        {
+          "id": "promotion-staffing-minimumInside",
+          "label": "Required qualified staff inside",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/promotion/staffing/minimumInside",
+          "minimum": 0
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-2",
+      "name": "Promotion timing",
+      "kind": "record",
+      "role": "event-coordinator",
+      "meaning": "Use local minutes from midnight on the operating date. Customer travel time assumes the guest accepts the offer; it does not predict acceptance.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "promotion-timing-reviewMinute",
+          "label": "Review time (HH:mm)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute after midnight",
+          "path": "/promotion/timing/reviewMinute",
+          "minimum": 0,
+          "maximum": 1439,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "time-of-day",
+            "unit": "minute"
+          }
+        },
+        {
+          "id": "promotion-timing-dispatchMinute",
+          "label": "Dispatch decision cutoff (HH:mm)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute after midnight",
+          "path": "/promotion/timing/dispatchMinute",
+          "minimum": 0,
+          "maximum": 1439,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "time-of-day",
+            "unit": "minute"
+          }
+        },
+        {
+          "id": "promotion-timing-promotionStartMinute",
+          "label": "Promotion starts (HH:mm)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute after midnight",
+          "path": "/promotion/timing/promotionStartMinute",
+          "minimum": 0,
+          "maximum": 1439,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "time-of-day",
+            "unit": "minute"
+          }
+        },
+        {
+          "id": "promotion-timing-eventExitMinute",
+          "label": "Event guests leave (HH:mm)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute after midnight",
+          "path": "/promotion/timing/eventExitMinute",
+          "minimum": 0,
+          "maximum": 1439,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "time-of-day",
+            "unit": "minute"
+          }
+        },
+        {
+          "id": "promotion-timing-contactEndMinute",
+          "label": "Useful contact window closes (HH:mm)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute after midnight",
+          "path": "/promotion/timing/contactEndMinute",
+          "minimum": 0,
+          "maximum": 1439,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "time-of-day",
+            "unit": "minute"
+          }
+        },
+        {
+          "id": "promotion-timing-staffReturnMinute",
+          "label": "Team returns (HH:mm)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute after midnight",
+          "path": "/promotion/timing/staffReturnMinute",
+          "minimum": 0,
+          "maximum": 1439,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "time-of-day",
+            "unit": "minute"
+          }
+        },
+        {
+          "id": "promotion-timing-customerJourneyMinutes",
+          "label": "Customer travel time if the offer is accepted (minutes)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute duration",
+          "path": "/promotion/timing/customerJourneyMinutes",
+          "minimum": 0,
+          "maximum": 1439
+        },
+        {
+          "id": "promotion-timing-latestArrivalMinute",
+          "label": "Latest useful guest arrival (HH:mm)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute after midnight",
+          "path": "/promotion/timing/latestArrivalMinute",
+          "minimum": 0,
+          "maximum": 1439,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "time-of-day",
+            "unit": "minute"
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-3",
+      "name": "Promotion expense and spending ",
+      "kind": "record",
+      "role": "venue-manager",
+      "meaning": "US dollars. Each plan quote includes its full additional expense. The spending limit and delegated permission are separate from approval of the chosen plan.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "promotion-spending-expenseLimitMinor",
+          "label": "Additional promotion expense limit (USD)",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "USD cent",
+          "path": "/promotion/spending/expenseLimitMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-4",
+      "name": "Venue contribution per addition",
+      "kind": "record",
+      "role": "finance-reviewer",
+      "meaning": "US dollars retained by the venue per additional guest after the offer and variable costs. Additional means a visit caused by the promotion; returning customers can count. A visit attributed to an offer is not necessarily additional. Unknown remains unknown; zero or negative contribution cannot cover a positive cost. Break-even counts cover the plan’s additional expense plus any separate existing-customer discount loss.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "promotion-contribution-small-standard",
+          "label": "One-person promotion (USD)",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "USD cent",
+          "path": "/promotion/contribution/small-standard",
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        },
+        {
+          "id": "promotion-contribution-large-standard",
+          "label": "Two-person promotion (USD)",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "USD cent",
+          "path": "/promotion/contribution/large-standard",
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        },
+        {
+          "id": "promotion-contribution-large-discount",
+          "label": "Two-person discounted promotion (USD)",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "USD cent",
+          "path": "/promotion/contribution/large-discount",
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-5",
+      "name": "Separate discount loss on exist",
+      "kind": "record",
+      "role": "finance-reviewer",
+      "meaning": "US dollars of additional contribution lost on guests who would have attended anyway. Include only loss not already counted in guest contribution or the plan’s expense. Break-even counts cover additional expense plus this separate loss. Unknown leaves the guest target unassessed.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "promotion-discountLoss-small-standard",
+          "label": "One-person promotion (USD)",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "USD cent",
+          "path": "/promotion/discountLoss/small-standard",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        },
+        {
+          "id": "promotion-discountLoss-large-standard",
+          "label": "Two-person promotion (USD)",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "USD cent",
+          "path": "/promotion/discountLoss/large-standard",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        },
+        {
+          "id": "promotion-discountLoss-large-discount",
+          "label": "Two-person discounted promotion (USD)",
+          "type": "integer",
+          "nullable": true,
+          "blank": "null",
+          "unit": "USD cent",
+          "path": "/promotion/discountLoss/large-discount",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "ad1f114a43a394aaf981701c51d2af651b4dfd1e2a6221c6d94b5cb933cc0076"
+}

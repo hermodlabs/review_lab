@@ -1,0 +1,61 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "business-growth",
+    "version": "1.2.0",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "title": "Business growth",
+    "description": "Compare fundable growth commitments, the performance they require and the value of a bounded payment-terms test.",
+    "useCases": [
+      {
+        "id": "fund-and-deliver-growth",
+        "label": "Fund and deliver growth",
+        "description": "Compare complete campaigns, payment terms, dated cash and delivery capacity under explicit sales and collection assumptions."
+      }
+    ],
+    "members": [
+      {
+        "type": "workflow",
+        "id": "choose-next-month-growth",
+        "version": "1.2.0",
+        "packageHash": "529cbc6488f3f3a8a593824ba07216ff5b06a9e8c272892dd5edaca6053c894c",
+        "useCaseId": "fund-and-deliver-growth",
+        "artifact": {
+          "path": "workflows/choose-next-month-growth/1.2.0/workflow.workflow.json",
+          "bytes": 392186,
+          "sha256": "af318c036ae2902d01bf1810ddcae29571425ae41c849d0558a9f733491b7be1"
+        }
+      },
+      {
+        "type": "app",
+        "id": "compare-growth-arrangements",
+        "version": 3,
+        "packageHash": "7fd439d18268ba60c6257542bbfe9f41a66b8a06f44b47955fdc600dad4cabdb",
+        "useCaseId": "fund-and-deliver-growth",
+        "artifact": {
+          "path": "apps/compare-growth-arrangements/3/app.app.json",
+          "bytes": 156217,
+          "sha256": "48f568c215848e5e547bd83ae31bb6fccba2464e2eeb1dd26f8341880fb9f43f"
+        }
+      },
+      {
+        "type": "app",
+        "id": "assess-payment-terms-test",
+        "version": 3,
+        "packageHash": "ec2bc9ca3d7034948c5fb4189dcdaa3d2b63d140949b0e1f43b609113bf75cb3",
+        "useCaseId": "fund-and-deliver-growth",
+        "artifact": {
+          "path": "apps/assess-payment-terms-test/3/app.app.json",
+          "bytes": 47341,
+          "sha256": "ffa694924f2d23f5daa6aa4b4a498a01f684327cb35cba42ab4fb45163371d9c"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-23T06:00:00.000Z",
+  "contentHash": "095cdd2618d7ec6bc8b11ae5203d7c1804850f0fb6429560c4d56508555dafcd"
+}

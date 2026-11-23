@@ -1,11 +1,14 @@
 {
   "format": "decision-lab-workflow/1",
   "id": "review-first-shipment",
-  "version": "1.9.0",
+  "version": "1.11.0",
   "title": "Compare first-shipment arrangements",
   "question": "Can we meet this delivery commitment, and what should we verify before committing money?",
   "description": "Compare complete shipment arrangements against delivery, resource, access and spending requirements. Optionally calculate whether timely verification improves the choice.",
   "metadata": {
+    "patternContext": {
+      "primaryStepId": "planning"
+    },
     "profile": {
       "format": "first-shipment-review.profile/1",
       "id": "first-shipment-review",
@@ -655,6 +658,136 @@
           ]
         },
         "decisionSummary": {
+          "actionDetails": [
+            {
+              "actionId": "review-records",
+              "description": "Supply the records needed to establish shipment readiness. Keep unsupported or unknown readiness visible before comparing arrangements.",
+              "links": [
+                {
+                  "kind": "input",
+                  "questionId": "observations",
+                  "label": "Update observed records"
+                },
+                {
+                  "kind": "report",
+                  "tabId": "records",
+                  "label": "Inspect evidence"
+                }
+              ]
+            },
+            {
+              "actionId": "resolve-record-conflict",
+              "description": "Inspect the conflicting records, correct their scope or contents as appropriate, then calculate again before choosing an arrangement.",
+              "links": [
+                {
+                  "kind": "report",
+                  "tabId": "records",
+                  "label": "Inspect conflicting records"
+                },
+                {
+                  "kind": "input",
+                  "questionId": "observations",
+                  "label": "Update observed records"
+                }
+              ]
+            },
+            {
+              "actionId": "review-planning",
+              "description": "Use the current shipment facts, complete arrangements and recorded authority to calculate which arrangements meet every declared requirement.",
+              "links": [
+                {
+                  "kind": "input",
+                  "questionId": "arrangements",
+                  "label": "Check complete arrangements"
+                },
+                {
+                  "kind": "input",
+                  "questionId": "authority",
+                  "label": "Check spending authority"
+                }
+              ]
+            },
+            {
+              "actionId": "revise-commitment",
+              "description": "Inspect the unmet requirements. Change the supplied arrangements or shipment commitment, then calculate again; failure of the listed arrangements does not rule out every possible shipment plan.",
+              "links": [
+                {
+                  "kind": "summary",
+                  "sectionId": "assumptions",
+                  "label": "Inspect unmet requirements"
+                },
+                {
+                  "kind": "input",
+                  "questionId": "arrangements",
+                  "label": "Change complete arrangements"
+                }
+              ]
+            },
+            {
+              "actionId": "review-verification",
+              "description": "Compare the complete verification-and-response policy with reserving now, using the supplied probability, expense and timing assumptions.",
+              "links": [
+                {
+                  "kind": "report",
+                  "tabId": "learning",
+                  "label": "Inspect further verification"
+                },
+                {
+                  "kind": "input",
+                  "questionId": "probabilities",
+                  "label": "Check probability assumptions"
+                }
+              ]
+            },
+            {
+              "actionId": "consider-probabilities",
+              "description": "Supply defensible probabilities only if the unresolved readiness question could change the arrangement choice while an alternative remains available.",
+              "links": [
+                {
+                  "kind": "input",
+                  "questionId": "probabilities",
+                  "label": "Supply probability assumptions"
+                },
+                {
+                  "kind": "input",
+                  "questionId": "investigations",
+                  "label": "Check verification offers"
+                }
+              ]
+            },
+            {
+              "actionId": "propose-arrangement",
+              "description": "Compare the supported arrangements, their complete expense and delivery timing before selecting an operating commitment.",
+              "links": [
+                {
+                  "kind": "summary",
+                  "sectionId": "options",
+                  "label": "Compare shipment options"
+                },
+                {
+                  "kind": "report",
+                  "tabId": "schedules",
+                  "label": "Inspect work and timing"
+                }
+              ]
+            },
+            {
+              "actionId": "propose-reviewed-choice",
+              "description": "Compare reserving now with obtaining timely verification and following its complete response policy. The calculation does not reserve freight or establish readiness.",
+              "links": [
+                {
+                  "kind": "report",
+                  "tabId": "learning",
+                  "label": "Inspect verification comparison"
+                },
+                {
+                  "kind": "summary",
+                  "sectionId": "options",
+                  "label": "Compare shipment options"
+                }
+              ]
+            }
+          ],
           "format": "workflow-decision-summary/1",
           "sectionId": "decision-summary",
           "sourceStepIds": [
@@ -21022,5 +21155,5 @@
       }
     ]
   },
-  "contentHash": "33b5fca3f96cc4e0a58e3c5d84d4b1ee76ae26e74ee6575cc0c9f8ca67fa6d0e"
+  "contentHash": "bd5f0861b9776a92a89fd8ed22ea131e66cb4ef24a1f3a7c72259a963ca65f6e"
 }

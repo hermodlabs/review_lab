@@ -1,0 +1,37 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "venue-operations",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "version": "1.14.0",
+    "title": "Venue operations",
+    "description": "Venue operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+    "useCases": [
+      {
+        "id": "deploy-street-team",
+        "label": "Review a street-team deployment",
+        "description": "Compare promotion plans against staffing, timing, recorded access and spending requirements, and calculate conditional expense-recovery guest counts. Choice and authorization remain outside the app."
+      }
+    ],
+    "members": [
+      {
+        "type": "workflow",
+        "id": "street-team-deployment",
+        "version": "1.15.0",
+        "packageHash": "61f6b44e68b760d498dce6fc4614d824933d40bfccf6b2aeea92eda7d55c6977",
+        "useCaseId": "deploy-street-team",
+        "artifact": {
+          "path": "workflows/street-team-deployment/1.15.0/workflow.workflow.json",
+          "bytes": 259141,
+          "sha256": "ac2fc916e1a202f166b5edc90539e18861a2fa31b79dff384dfa9d5c5b66a416"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-23T00:00:00.000Z",
+  "contentHash": "6203aa9e7a9434a747c6b6bf78f1486bc2b3301b049a92afe9475d0e566fabee"
+}

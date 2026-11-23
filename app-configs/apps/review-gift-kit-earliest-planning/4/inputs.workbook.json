@@ -1,0 +1,4313 @@
+{
+  "format": "decision-lab-workbook-release/1",
+  "target": {
+    "format": "decision-lab-app/1",
+    "template": {
+      "format": "decision-lab-template/1",
+      "definition": {
+        "format": "decision-lab-template-definition/1",
+        "templateId": "complete-a-commitment",
+        "version": "1.0.0",
+        "pattern": "complete-a-commitment/1",
+        "title": "Complete a commitment",
+        "description": "Shared installed reasoning contract; gifting meaning is supplied by the module.",
+        "authoring": {
+          "requiredModuleFields": [],
+          "guidance": ""
+        },
+        "contract": {
+          "format": "decision-lab-installed-contract/1",
+          "pattern": "complete-a-commitment/1",
+          "definition": {
+            "id": "complete-a-commitment",
+            "version": "1.0.0",
+            "evaluator": "bounded-static-commitment/1",
+            "title": "Complete a commitment",
+            "responsibility": "Find one complete static operating choice that satisfies every mandatory obligation across every explicitly admitted joint scenario, then compare feasible choices.",
+            "invariants": [
+              "Choices are finite, input-only controls. One complete assignment is shared across every admitted scenario and obligation.",
+              "Admitted joint scenarios are explicit facts; neither independence, probabilities nor unlisted scenarios are inferred.",
+              "An empty admitted basis is inconsistent, never a vacuous feasibility result.",
+              "Typed acyclic expressions separate static controls, scenario consequences and post-scenario preference aggregates.",
+              "Activities, calendars, bookings and permission validity use half-open intervals; adjacent intervals do not overlap.",
+              "Capacity is the sum of simultaneous renewable demands. A scoped grant must cover its entire required operation.",
+              "Expense sums nonrefundable charges. Refundable holds affect cash only; simultaneous cash events are netted before peak cash is measured.",
+              "Every mandatory condition must pass for the same choice in every admitted scenario. Preference cannot compensate for failure.",
+              "Ranking is lexicographic over feasible choices only; genuine ties are retained and identifiers only stabilize display order.",
+              "A fully checked witness establishes existence during partial search. No-plan and optimality claims require complete relevant coverage.",
+              "Missing data, unresolved lookups, unsafe arithmetic and unsupported declarations are invalid input, never invented facts.",
+              "Calculated feasibility is conditional on accepted facts and fixed assumptions, not permission, reservation or evidence of actual completion."
+            ],
+            "expressionLanguage": {
+              "id": "typed-static-commitment-expressions/1",
+              "literals": "Finite scalar or homogeneous scalar-array data; no executable code.",
+              "references": [
+                "parameter",
+                "choice",
+                "scenario",
+                "derived",
+                "activity",
+                "finance",
+                "row (inside exists.test)"
+              ],
+              "operators": {
+                "eq": "Two compatible scalars -> boolean",
+                "ne": "Two compatible scalars -> boolean",
+                "lt": "Two compatible numbers -> boolean",
+                "lte": "Two compatible numbers -> boolean",
+                "gt": "Two compatible numbers -> boolean",
+                "gte": "Two compatible numbers -> boolean",
+                "add": "At least two compatible numbers -> number",
+                "sub": "Two compatible numbers -> number",
+                "mul": "Two numbers with at most one dimensional operand -> number; count is a multiplicity",
+                "and": "At least two booleans -> boolean",
+                "or": "At least two booleans -> boolean",
+                "not": "One boolean -> boolean",
+                "in": "Scalar and compatible scalar-array -> boolean",
+                "lookup": "Complete primary-key binding in a typed input table -> exactly one selected scalar; missing or ambiguous lookup is invalid",
+                "exists": "Typed equality bindings plus optional row-scoped predicate -> boolean; no match is false",
+                "interval-covered": "Typed selected calendar rows and a positive half-open interval -> boolean; adjacent coverage may combine",
+                "worst-case": "Numeric expression -> maximum across admitted scenarios for preference only; nested or unreduced scenario aggregates are invalid"
+              }
+            }
+          },
+          "schema": {
+            "kind": "installed-validator-descriptor/1",
+            "modelFormat": "complete-a-commitment/1",
+            "moduleValidator": "assertCommitmentModule",
+            "caseValidator": "validateCommitmentCase",
+            "requiredModelFields": [
+              "format",
+              "module",
+              "case"
+            ],
+            "requiredModuleFields": [
+              "id",
+              "title",
+              "template",
+              "units",
+              "inputs",
+              "choices",
+              "scenarioDomain",
+              "derived",
+              "activities",
+              "resources",
+              "requirements",
+              "constraints",
+              "finance",
+              "preference",
+              "labels"
+            ],
+            "moduleFields": [
+              "id",
+              "title",
+              "template",
+              "template.id",
+              "template.version",
+              "description",
+              "question",
+              "assumptions",
+              "units",
+              "units.time",
+              "units.timeOrigin",
+              "units.money",
+              "inputs",
+              "inputs.parameters",
+              "inputs.tables",
+              "choices",
+              "scenarioDomain",
+              "derived",
+              "activities",
+              "resources",
+              "resources.definitions",
+              "resources.bookings",
+              "requirements",
+              "constraints",
+              "finance",
+              "finance.mode",
+              "finance.charges",
+              "finance.holds",
+              "preference",
+              "preference.direction",
+              "preference.expression",
+              "preference.then",
+              "labels",
+              "lookupCoverage"
+            ],
+            "requiredCaseFields": [
+              "id",
+              "parameters",
+              "tables",
+              "provenance"
+            ],
+            "optionalCaseFields": [],
+            "caseDerivation": [
+              "All case parameters and keyed input rows use the frozen module.inputs types, units, bounds, keys and references; no missing-value defaults or coercion are inferred.",
+              "Finite choices draw only from input arrays, input table columns or fixed literal domains; the same assignment applies to every scenario.",
+              "The scenarioDomain table explicitly lists admitted joint scenarios; an empty table is an inconsistent basis rather than vacuous feasibility.",
+              "Activity graphs, constraints, mandatory obligations, resource mappings, financial mode and preference remain frozen module declarations.",
+              "Provenance describes accepted factual sources; identifying a source does not authenticate it or infer readiness."
+            ],
+            "description": "Installed closed typed declaration and case-admission validators; this descriptor is not a complete JSON Schema. Publication checks admission, not computed feasibility."
+          },
+          "structuralSlots": [
+            {
+              "path": "units",
+              "owner": "module-author",
+              "description": "Declare one time origin, common time and money units, and additional numeric units."
+            },
+            {
+              "path": "inputs",
+              "owner": "module-author",
+              "description": "Declare required typed parameters and keyed relations."
+            },
+            {
+              "path": "choices",
+              "owner": "module-author",
+              "description": "Declare finite static controls from input-only domains."
+            },
+            {
+              "path": "scenarioDomain",
+              "owner": "module-author",
+              "description": "Bind the input relation containing explicit joint scenarios."
+            },
+            {
+              "path": "derived",
+              "owner": "module-author",
+              "description": "Bind typed acyclic consequences using the installed expression language."
+            },
+            {
+              "path": "activities",
+              "owner": "module-author",
+              "description": "Declare static activity actors, timing and renewable resource demands."
+            },
+            {
+              "path": "resources",
+              "owner": "module-author",
+              "description": "Map resource capacities and existing bookings."
+            },
+            {
+              "path": "requirements",
+              "owner": "module-author",
+              "description": "Name and explain every mandatory commitment obligation."
+            },
+            {
+              "path": "constraints",
+              "owner": "module-author",
+              "description": "Bind predicates and shared resource-capacity checks to obligations."
+            },
+            {
+              "path": "finance",
+              "owner": "module-author",
+              "description": "Declare nonrefundable charges and optional timed refundable holds."
+            },
+            {
+              "path": "preference",
+              "owner": "module-author",
+              "description": "Declare feasible-only lexicographic comparison."
+            },
+            {
+              "path": "lookupCoverage",
+              "owner": "module-author",
+              "description": "Optionally require complete finite lookup coverage."
+            },
+            {
+              "path": "labels",
+              "owner": "module-author",
+              "description": "Supply domain vocabulary without changing calculations."
+            },
+            {
+              "path": "assumptions",
+              "owner": "module-author",
+              "description": "State accepted premises and the applicability boundary."
+            }
+          ],
+          "caseInputs": [
+            {
+              "path": "id",
+              "owner": "case-worker",
+              "description": "Identify this case."
+            },
+            {
+              "path": "parameters",
+              "owner": "case-worker",
+              "description": "Supply every declared parameter, including finite choice grids and current limits."
+            },
+            {
+              "path": "tables",
+              "owner": "case-worker",
+              "description": "Supply typed records, accepted scenarios, calendars, grants, resources and other declared facts."
+            },
+            {
+              "path": "provenance",
+              "owner": "case-worker",
+              "description": "Record the accepted source and scope of supplied information."
+            }
+          ],
+          "capabilities": {
+            "language": "typed-static-commitment-expressions/1",
+            "supported": [
+              "finite-static-plans",
+              "explicit-joint-scenarios",
+              "typed-acyclic-expressions",
+              "variable-activity-graphs",
+              "half-open-intervals",
+              "renewable-capacity",
+              "scoped-permission-predicates",
+              "expense-and-cash-accounting",
+              "all-scenario-conjunction",
+              "coverage-qualified-findings",
+              "feasible-only-lexicographic-preference"
+            ],
+            "unsupported": [
+              "conditional-policy-synthesis",
+              "continuous-time-optimization",
+              "inferred-readiness-or-probabilities",
+              "live-reservations",
+              "permission-issuance",
+              "arbitrary-code"
+            ]
+          },
+          "limits": {
+            "admission": {
+              "nodes": 250000,
+              "depth": 80,
+              "list": 10000,
+              "text": 200000,
+              "expressions": 20000,
+              "expressionDepth": 64,
+              "dependencyDepth": 64,
+              "lookupTuples": 100000,
+              "errors": 200
+            },
+            "defaults": {
+              "maxPlans": 10000,
+              "maxScenarioChecks": 100000,
+              "maxOperations": 10000000
+            },
+            "hard": {
+              "maxPlans": 100000,
+              "maxScenarioChecks": 1000000,
+              "maxOperations": 50000000
+            }
+          },
+          "reportResponsibilities": {
+            "assessmentContract": "complete-a-commitment.assessment/1",
+            "reportIds": [],
+            "responsibilities": [
+              "Complete candidate assignments and all checked scenarios",
+              "Feasibility, coverage and feasible-only preference",
+              "Activities, interval/resource checks and scoped permission traces",
+              "Expense, timed cash events and peak cash where declared",
+              "Mandatory obligation results and blockers",
+              "Accepted basis and calculation provenance"
+            ],
+            "completeReportDocument": "Unavailable for this pattern until milestone 5. Public assessment artifacts expose complete calculation data without claiming renderer-ready report support."
+          }
+        }
+      },
+      "createdAt": "2026-11-17T20:00:00.000Z",
+      "contentHash": "1b3c51e805899ae2e0811c24552f611eecc1c739844c56d71d61504ddd29dc08"
+    },
+    "app": {
+      "schemaVersion": 5,
+      "kind": "hermod-published-app",
+      "runtime": "diagnostic-evidence",
+      "id": "review-gift-kit-earliest-planning",
+      "version": 4,
+      "name": "Review gift kits with earliest handoff priority — complete arrangements",
+      "description": "Compare one authored correction package across every remaining fault configuration, including simultaneous faults. Prospective correction is distinct from completed work.",
+      "source": "{\"format\":\"complete-a-commitment/1\",\"module\":{\"id\":\"review-gift-kit-earliest-planning\",\"version\":\"2.0.2\",\"title\":\"Prepare gift kits before commitment\",\"template\":{\"id\":\"complete-a-commitment\",\"version\":1},\"question\":\"Which complete correction package addresses every remaining explanation and can finish before we commit the gift kits?\",\"description\":\"Compare one authored correction package across every remaining fault configuration, including simultaneous faults. Prospective correction is distinct from completed work.\",\"metadata\":{\"decisionPresentation\":{\"format\":\"decision-presentation/1\",\"title\":\"Complete gift-kit arrangements\",\"priorityLabel\":\"Earliest handoff, then lowest complete package cost\",\"moneyFormat\":{\"currency\":\"USD\",\"divisor\":100},\"columns\":[{\"id\":\"plan\",\"label\":\"Complete arrangement\"},{\"id\":\"status\",\"label\":\"Operating result\"},{\"id\":\"handoff\",\"source\":{\"kind\":\"activity\",\"id\":\"handoff\",\"field\":\"end\"},\"label\":\"Handoff complete\",\"format\":{\"kind\":\"time\",\"suffix\":\"minutes after the declared origin\"}},{\"id\":\"expense\",\"label\":\"Complete package cost\"},{\"id\":\"blockers\",\"label\":\"Conditions needing attention\"}],\"comparisonFields\":[{\"id\":\"package\",\"source\":\"choice:packageId\",\"label\":\"Package\",\"valueLabels\":{\"rehearse-unchanged\":\"Prepare, rehearse and hand off unchanged kits\",\"reprint\":\"Replace the printed inserts\",\"repair-journey\":\"Correct the destination and checkout\",\"replace-and-repair\":\"Replace inserts and repair the journey\",\"external-replace-and-repair\":\"External replacement and journey repair\"}},{\"id\":\"start\",\"source\":\"choice:startMinute\",\"label\":\"Start\",\"format\":{\"kind\":\"time\",\"suffix\":\"minutes after the declared origin\"}}],\"alternativeLabel\":{\"columnIds\":[\"package\",\"start\"]}},\"catalog\":{\"domain\":{\"id\":\"gifting-operations\",\"label\":\"Gifting operations\"},\"useCase\":{\"id\":\"prepare-gift-kit-campaign\",\"label\":\"Prepare a gift-kit campaign\"}},\"gifting\":{\"profileId\":\"gift-kit-readiness\",\"profileVersion\":\"1.0.0\",\"packages\":[{\"id\":\"rehearse-unchanged\",\"label\":\"Prepare, rehearse and hand off unchanged kits\",\"corrects\":[],\"requiresConfirmation\":false},{\"id\":\"reprint\",\"label\":\"Replace the printed inserts\",\"corrects\":[\"replace-insert\"],\"requiresConfirmation\":false},{\"id\":\"repair-journey\",\"label\":\"Correct the destination and checkout\",\"corrects\":[\"correct-destination\",\"fix-checkout\"],\"requiresConfirmation\":false},{\"id\":\"replace-and-repair\",\"label\":\"Replace inserts and repair the journey\",\"corrects\":[\"replace-insert\",\"correct-destination\",\"fix-checkout\"],\"requiresConfirmation\":false},{\"id\":\"external-replace-and-repair\",\"label\":\"External replacement and journey repair\",\"corrects\":[\"replace-insert\",\"correct-destination\",\"fix-checkout\"],\"requiresConfirmation\":true}],\"checks\":[{\"id\":\"declared-fault-state\",\"requirement\":\"COVERAGE\",\"label\":\"Use an admitted configuration from the published fault catalog\",\"evidence\":\"A current scoped evidence assessment admitting this fault configuration.\"},{\"id\":\"published-package-effects\",\"requirement\":\"COVERAGE\",\"label\":\"Retain the published correction effects of the selected package\",\"evidence\":\"The author-fixed correction effects from this exact published package version.\"},{\"id\":\"correct-fault-0\",\"requirement\":\"SUFFICIENCY\",\"label\":\"Address The printed code cannot be read whenever it remains possible\",\"evidence\":\"A complete package addressing The printed code cannot be read, or scoped evidence excluding that fault.\"},{\"id\":\"correct-fault-1\",\"requirement\":\"SUFFICIENCY\",\"label\":\"Address The code leads to the wrong destination whenever it remains possible\",\"evidence\":\"A complete package addressing The code leads to the wrong destination, or scoped evidence excluding that fault.\"},{\"id\":\"correct-fault-2\",\"requirement\":\"SUFFICIENCY\",\"label\":\"Address The intended checkout is restricted whenever it remains possible\",\"evidence\":\"A complete package addressing The intended checkout is restricted, or scoped evidence excluding that fault.\"},{\"id\":\"known-owner\",\"requirement\":\"ACCESS\",\"label\":\"Assign the complete work to a recorded responsible person\",\"evidence\":\"A recorded person responsible for this complete correction package.\"},{\"id\":\"scoped-package-permission\",\"requirement\":\"ACCESS\",\"label\":\"Hold recorded authority for this package, person, exact configuration, and whole working interval\",\"evidence\":\"A sourced permission for the selected package and person, matching all six scope fields and covering correction through handoff.\"},{\"id\":\"resource-calendar\",\"requirement\":\"ACCESS\",\"label\":\"Keep the full correction, rehearsal, and handoff within resource availability\",\"evidence\":\"An availability interval covering the complete proposed work.\"},{\"id\":\"resource-capacity\",\"requirement\":\"ACCESS\",\"label\":\"Keep all proposed work within recorded resource capacity\",\"evidence\":\"Enough recorded resource capacity throughout the proposed work.\"},{\"id\":\"not-in-past\",\"requirement\":\"TIME\",\"label\":\"Start correction at or after the current review time\",\"evidence\":\"A current proposed start time.\"},{\"id\":\"handoff-by-cutoff\",\"requirement\":\"TIME\",\"label\":\"Finish correction, scoped rehearsal, and handoff before the kit commitment cutoff\",\"evidence\":\"Durations and resource availability that fit the cutoff, or a revised commitment.\"},{\"id\":\"package-within-budget\",\"requirement\":\"COST\",\"label\":\"Keep the complete proposed package within the recorded spending ceiling\",\"evidence\":\"A current package quote within the spending ceiling, or an approved revised ceiling.\"},{\"id\":\"quoted-quantity\",\"requirement\":\"SUFFICIENCY\",\"label\":\"Use a complete-package quote for the current kit quantity\",\"evidence\":\"A current complete-package quote and duration explicitly covering the stated kit quantity.\"},{\"id\":\"minimum-rehearsal\",\"requirement\":\"SUFFICIENCY\",\"label\":\"Allow at least the published minimum duration for the scoped rehearsal\",\"evidence\":\"A proposed scoped rehearsal duration meeting the published minimum. This remains a plan, not evidence that rehearsal passed.\"},{\"id\":\"scoped-package-confirmation\",\"requirement\":\"CONFIRMATION\",\"label\":\"Confirm the selected arrangement for this exact gift-kit configuration\",\"evidence\":\"A sourced positive package confirmation, recorded by a named person, for this exact batch, insert, destination, checkout, device and account, effective at the planned start and valid through handoff.\"}]},\"supportingReports\":{\"format\":\"supporting-reports/1\",\"reports\":[{\"id\":\"complete-options\",\"label\":\"Complete options\",\"question\":\"How do the complete options compare against the operating requirements?\",\"template\":\"comparison/1\",\"source\":{\"kind\":\"report-dataset\",\"datasetId\":\"commitment:comparison\"},\"bindings\":{\"columns\":[{\"key\":\"plan\",\"label\":\"Complete gift-kit correction arrangement\"},{\"key\":\"status\",\"label\":\"Operating fit\"},{\"key\":\"expense\",\"label\":\"Complete package cost\",\"format\":{\"type\":\"money\",\"currency\":\"USD\",\"scale\":100}},{\"key\":\"cash\",\"label\":\"Peak cash in use\",\"format\":{\"type\":\"money\",\"currency\":\"USD\",\"scale\":100}},{\"key\":\"blockers\",\"label\":\"Unmet checks\",\"format\":\"number\"}]}},{\"id\":\"work-and-timing\",\"label\":\"Work and timing\",\"question\":\"When does each complete plan perform the selected activity?\",\"template\":\"timeline/1\",\"source\":{\"kind\":\"commitment-schedules\"},\"representations\":[\"table\",\"timeline\"],\"defaultRepresentation\":\"table\",\"bindings\":{\"timeline\":{\"extent\":\"activities\",\"label\":\"Operating activities\"}}},{\"id\":\"requirements\",\"label\":\"Requirements\",\"question\":\"Which mandatory requirements must every complete option meet?\",\"template\":\"records/1\",\"source\":{\"kind\":\"report-dataset\",\"datasetId\":\"commitment:requirements\"},\"bindings\":{\"columns\":[{\"key\":\"requirement\",\"label\":\"Requirement\"},{\"key\":\"meaning\",\"label\":\"Operating meaning\"},{\"key\":\"coverage\",\"label\":\"Complete plans passing in every situation\",\"format\":\"number\"},{\"key\":\"waivable\",\"label\":\"Can be waived\",\"format\":\"boolean\"}]}}]},\"inputDesign\":{\"version\":1,\"form\":{\"type\":\"object\",\"label\":\"Case inputs\",\"fields\":{\"parameters\":{\"type\":\"object\",\"label\":\"Parameters\",\"fields\":{\"batchId\":{\"type\":\"string\",\"label\":\"Batch Id\"},\"insertRevision\":{\"type\":\"string\",\"label\":\"Insert Revision\"},\"destinationRevision\":{\"type\":\"string\",\"label\":\"Destination Revision\"},\"checkoutRevision\":{\"type\":\"string\",\"label\":\"Checkout Revision\"},\"deviceScope\":{\"type\":\"string\",\"label\":\"Device Scope\"},\"accountScope\":{\"type\":\"string\",\"label\":\"Account Scope\"},\"actorId\":{\"type\":\"string\",\"label\":\"Actor Id\"},\"quantity\":{\"type\":\"number\",\"label\":\"Quantity\",\"integer\":true,\"unit\":\"gift kit\",\"minimum\":1},\"nowMinute\":{\"type\":\"number\",\"label\":\"Now Minute\",\"integer\":true,\"unit\":\"minute\",\"minimum\":0},\"handoffDeadlineMinute\":{\"type\":\"number\",\"label\":\"Handoff Deadline Minute\",\"integer\":true,\"unit\":\"minute\",\"minimum\":0},\"budgetMinor\":{\"type\":\"number\",\"label\":\"Budget Minor\",\"integer\":true,\"unit\":\"USD cent\",\"minimum\":0},\"rehearsalMinutes\":{\"type\":\"number\",\"label\":\"Rehearsal Minutes\",\"integer\":true,\"unit\":\"minute\",\"minimum\":1},\"handoffMinutes\":{\"type\":\"number\",\"label\":\"Handoff Minutes\",\"integer\":true,\"unit\":\"minute\",\"minimum\":1},\"startOptions\":{\"type\":\"array\",\"label\":\"Start Options\",\"items\":{\"type\":\"number\",\"label\":\"Start Options record\",\"integer\":true,\"unit\":\"time\",\"minimum\":0}}}},\"tables\":{\"type\":\"object\",\"label\":\"Tables\",\"fields\":{\"packages\":{\"type\":\"array\",\"label\":\"Packages\",\"items\":{\"type\":\"object\",\"label\":\"Packages record\",\"fields\":{\"id\":{\"type\":\"string\",\"label\":\"Id\"},\"quantity\":{\"type\":\"number\",\"label\":\"Quantity\",\"integer\":true,\"unit\":\"gift kit\",\"minimum\":1},\"repairMinutes\":{\"type\":\"number\",\"label\":\"Repair Minutes\",\"integer\":true,\"unit\":\"minute\",\"minimum\":1},\"repairCostMinor\":{\"type\":\"number\",\"label\":\"Repair Cost Minor\",\"integer\":true,\"unit\":\"USD cent\",\"minimum\":0},\"fixes0\":{\"type\":\"boolean\",\"label\":\"Fixes0\"},\"fixes1\":{\"type\":\"boolean\",\"label\":\"Fixes1\"},\"fixes2\":{\"type\":\"boolean\",\"label\":\"Fixes2\"}}},\"keyFields\":[\"id\"]},\"scenarios\":{\"type\":\"array\",\"label\":\"Scenarios\",\"items\":{\"type\":\"object\",\"label\":\"Scenarios record\",\"fields\":{\"id\":{\"type\":\"string\",\"label\":\"Id\"},\"fault0\":{\"type\":\"boolean\",\"label\":\"Fault0\"},\"fault1\":{\"type\":\"boolean\",\"label\":\"Fault1\"},\"fault2\":{\"type\":\"boolean\",\"label\":\"Fault2\"}}},\"keyFields\":[\"id\"]},\"people\":{\"type\":\"array\",\"label\":\"People\",\"items\":{\"type\":\"object\",\"label\":\"People record\",\"fields\":{\"id\":{\"type\":\"string\",\"label\":\"Id\"},\"name\":{\"type\":\"string\",\"label\":\"Name\"},\"role\":{\"type\":\"string\",\"label\":\"Role\"}}},\"keyFields\":[\"id\"]},\"permissions\":{\"type\":\"array\",\"label\":\"Permissions\",\"items\":{\"type\":\"object\",\"label\":\"Permissions record\",\"fields\":{\"batchId\":{\"type\":\"string\",\"label\":\"Batch Id\"},\"insertRevision\":{\"type\":\"string\",\"label\":\"Insert Revision\"},\"destinationRevision\":{\"type\":\"string\",\"label\":\"Destination Revision\"},\"checkoutRevision\":{\"type\":\"string\",\"label\":\"Checkout Revision\"},\"deviceScope\":{\"type\":\"string\",\"label\":\"Device Scope\"},\"accountScope\":{\"type\":\"string\",\"label\":\"Account Scope\"},\"id\":{\"type\":\"string\",\"label\":\"Id\"},\"packageId\":{\"type\":\"string\",\"label\":\"Package Id\"},\"actorId\":{\"type\":\"string\",\"label\":\"Actor Id\"},\"validFrom\":{\"type\":\"number\",\"label\":\"Valid From\",\"integer\":true,\"unit\":\"minute\",\"minimum\":0},\"validThrough\":{\"type\":\"number\",\"label\":\"Valid Through\",\"integer\":true,\"unit\":\"minute\",\"minimum\":0},\"source\":{\"type\":\"string\",\"label\":\"Source\"}}},\"keyFields\":[\"id\"]},\"resources\":{\"type\":\"array\",\"label\":\"Resources\",\"items\":{\"type\":\"object\",\"label\":\"Resources record\",\"fields\":{\"id\":{\"type\":\"string\",\"label\":\"Id\"},\"capacity\":{\"type\":\"number\",\"label\":\"Capacity\",\"integer\":true,\"unit\":\"unit of resource capacity\",\"minimum\":0}}},\"keyFields\":[\"id\"]},\"calendars\":{\"type\":\"array\",\"label\":\"Calendars\",\"items\":{\"type\":\"object\",\"label\":\"Calendars record\",\"fields\":{\"resource\":{\"type\":\"string\",\"label\":\"Resource\"},\"start\":{\"type\":\"number\",\"label\":\"Start\",\"integer\":true,\"unit\":\"minute\",\"minimum\":0},\"end\":{\"type\":\"number\",\"label\":\"End\",\"integer\":true,\"unit\":\"minute\",\"minimum\":0}}},\"keyFields\":[\"resource\",\"start\",\"end\"]},\"bookings\":{\"type\":\"array\",\"label\":\"Bookings\",\"items\":{\"type\":\"object\",\"label\":\"Bookings record\",\"fields\":{\"id\":{\"type\":\"string\",\"label\":\"Id\"},\"resource\":{\"type\":\"string\",\"label\":\"Resource\"},\"start\":{\"type\":\"number\",\"label\":\"Start\",\"integer\":true,\"unit\":\"minute\",\"minimum\":0},\"end\":{\"type\":\"number\",\"label\":\"End\",\"integer\":true,\"unit\":\"minute\",\"minimum\":0},\"amount\":{\"type\":\"number\",\"label\":\"Amount\",\"integer\":true,\"unit\":\"unit of resource capacity\",\"minimum\":1}}},\"keyFields\":[\"id\"]},\"confirmations\":{\"type\":\"array\",\"label\":\"Recorded exact-configuration confirmations\",\"items\":{\"type\":\"object\",\"label\":\"Confirmations record\",\"fields\":{\"id\":{\"type\":\"string\",\"label\":\"Id\"},\"packageId\":{\"type\":\"string\",\"label\":\"Package Id\"},\"batchId\":{\"type\":\"string\",\"label\":\"Batch Id\"},\"insertRevision\":{\"type\":\"string\",\"label\":\"Insert Revision\"},\"destinationRevision\":{\"type\":\"string\",\"label\":\"Destination Revision\"},\"checkoutRevision\":{\"type\":\"string\",\"label\":\"Checkout Revision\"},\"deviceScope\":{\"type\":\"string\",\"label\":\"Device Scope\"},\"accountScope\":{\"type\":\"string\",\"label\":\"Account Scope\"},\"confirmed\":{\"type\":\"boolean\",\"label\":\"Confirmed\"},\"validFrom\":{\"type\":\"number\",\"label\":\"Valid From\",\"integer\":true,\"unit\":\"minute\",\"minimum\":0},\"validThrough\":{\"type\":\"number\",\"label\":\"Valid Through\",\"integer\":true,\"unit\":\"minute\",\"minimum\":0},\"recordedAt\":{\"type\":\"number\",\"label\":\"Recorded At\",\"integer\":true,\"unit\":\"minute\",\"minimum\":0},\"source\":{\"type\":\"string\",\"label\":\"Source\"},\"recordedBy\":{\"type\":\"string\",\"label\":\"Recorded By\"}}},\"keyFields\":[\"id\"]}}}}},\"groups\":[{\"id\":\"operating-parameters\",\"label\":\"Commitment and limits\",\"question\":\"Which quantities, deadlines and limits should the calculation use?\",\"subtabs\":[{\"id\":\"parameters\",\"label\":\"Operating parameters\",\"fieldPaths\":[\"/parameters\"]}]},{\"id\":\"operating-records\",\"label\":\"Operating records\",\"question\":\"Which operating records and possibilities apply to this commitment?\",\"subtabs\":[{\"id\":\"packages\",\"label\":\"Packages\",\"fieldPaths\":[\"/tables/packages\"]},{\"id\":\"scenarios\",\"label\":\"Scenarios\",\"fieldPaths\":[\"/tables/scenarios\"]},{\"id\":\"people\",\"label\":\"People\",\"fieldPaths\":[\"/tables/people\"]},{\"id\":\"permissions\",\"label\":\"Permissions\",\"fieldPaths\":[\"/tables/permissions\"]},{\"id\":\"resources\",\"label\":\"Resources\",\"fieldPaths\":[\"/tables/resources\"]},{\"id\":\"calendars\",\"label\":\"Calendars\",\"fieldPaths\":[\"/tables/calendars\"]},{\"id\":\"bookings\",\"label\":\"Bookings\",\"fieldPaths\":[\"/tables/bookings\"]},{\"id\":\"confirmations\",\"label\":\"Recorded exact-configuration confirmations\",\"fieldPaths\":[\"/tables/confirmations\"]}]}]}},\"units\":{\"time\":\"minute\",\"timeOrigin\":\"Start of this gift-kit preparation review\",\"money\":\"USD cent\",\"count\":\"unit of resource capacity\",\"quantity\":\"gift kit\"},\"assumptions\":[\"The module author declares the complete fault catalog and the deterministic prospective correction effects of each package. These are reviewed modeling premises, not evidence that correction finished.\",\"One static complete package must work across all admitted configurations. This model does not synthesize sequential investigations or choose a different package for each possible fault configuration.\",\"Quoted repair cost is the complete prospective package charge in this bounded profile. Rehearsal and handoff have recorded durations and no separate monetary charge.\",\"The supplied permission registry is complete. An empty registry supplies no permission; evaluating a plan grants no authority.\",\"The same recorded person and production resource perform correction, scoped rehearsal, and handoff in that order. Resource intervals are half-open; permission valid-through includes the endpoint.\",\"Quantity scopes this review but does not scale time or expense automatically. Each complete-package quote must explicitly match the stated kit quantity; changing quantity requires a matching quote and duration.\",\"An unchanged-kit package may have a positive preparation duration and no correction effects or monetary charge. Its preparation is not a repair or evidence of a successful rehearsal.\"],\"inputs\":{\"parameters\":{\"batchId\":{\"type\":\"string\"},\"insertRevision\":{\"type\":\"string\"},\"destinationRevision\":{\"type\":\"string\"},\"checkoutRevision\":{\"type\":\"string\"},\"deviceScope\":{\"type\":\"string\"},\"accountScope\":{\"type\":\"string\"},\"actorId\":{\"type\":\"string\"},\"quantity\":{\"type\":\"integer\",\"unit\":\"quantity\",\"minimum\":1},\"nowMinute\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":0},\"handoffDeadlineMinute\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":0},\"budgetMinor\":{\"type\":\"integer\",\"unit\":\"money\",\"minimum\":0},\"rehearsalMinutes\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":1},\"handoffMinutes\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":1},\"startOptions\":{\"type\":\"array\",\"items\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":0}}},\"tables\":{\"packages\":{\"key\":[\"id\"],\"columns\":{\"id\":{\"type\":\"string\"},\"quantity\":{\"type\":\"integer\",\"unit\":\"quantity\",\"minimum\":1},\"repairMinutes\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":1},\"repairCostMinor\":{\"type\":\"integer\",\"unit\":\"money\",\"minimum\":0},\"fixes0\":{\"type\":\"boolean\"},\"fixes1\":{\"type\":\"boolean\"},\"fixes2\":{\"type\":\"boolean\"}}},\"scenarios\":{\"key\":[\"id\"],\"columns\":{\"id\":{\"type\":\"string\"},\"fault0\":{\"type\":\"boolean\"},\"fault1\":{\"type\":\"boolean\"},\"fault2\":{\"type\":\"boolean\"}}},\"people\":{\"key\":[\"id\"],\"columns\":{\"id\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"role\":{\"type\":\"string\"}}},\"permissions\":{\"key\":[\"id\"],\"columns\":{\"batchId\":{\"type\":\"string\"},\"insertRevision\":{\"type\":\"string\"},\"destinationRevision\":{\"type\":\"string\"},\"checkoutRevision\":{\"type\":\"string\"},\"deviceScope\":{\"type\":\"string\"},\"accountScope\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"packageId\":{\"type\":\"string\"},\"actorId\":{\"type\":\"string\"},\"validFrom\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":0},\"validThrough\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":0},\"source\":{\"type\":\"string\"}}},\"resources\":{\"key\":[\"id\"],\"columns\":{\"id\":{\"type\":\"string\"},\"capacity\":{\"type\":\"integer\",\"unit\":\"count\",\"minimum\":0}}},\"calendars\":{\"key\":[\"resource\",\"start\",\"end\"],\"columns\":{\"resource\":{\"type\":\"string\"},\"start\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":0},\"end\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":0}}},\"bookings\":{\"key\":[\"id\"],\"columns\":{\"id\":{\"type\":\"string\"},\"resource\":{\"type\":\"string\"},\"start\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":0},\"end\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":0},\"amount\":{\"type\":\"integer\",\"unit\":\"count\",\"minimum\":1}}},\"confirmations\":{\"key\":[\"id\"],\"columns\":{\"id\":{\"type\":\"string\"},\"packageId\":{\"type\":\"string\"},\"batchId\":{\"type\":\"string\"},\"insertRevision\":{\"type\":\"string\"},\"destinationRevision\":{\"type\":\"string\"},\"checkoutRevision\":{\"type\":\"string\"},\"deviceScope\":{\"type\":\"string\"},\"accountScope\":{\"type\":\"string\"},\"confirmed\":{\"type\":\"boolean\"},\"validFrom\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":0},\"validThrough\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":0},\"recordedAt\":{\"type\":\"integer\",\"unit\":\"time\",\"minimum\":0},\"source\":{\"type\":\"string\"},\"recordedBy\":{\"type\":\"string\"}}}}},\"choices\":[{\"id\":\"packageId\",\"domain\":{\"values\":[\"rehearse-unchanged\",\"reprint\",\"repair-journey\",\"replace-and-repair\",\"external-replace-and-repair\"]}},{\"id\":\"startMinute\",\"domain\":{\"parameter\":\"startOptions\"}}],\"scenarioDomain\":{\"table\":\"scenarios\"},\"derived\":[],\"activities\":[{\"id\":\"correct\",\"actor\":{\"ref\":\"parameter.actorId\"},\"start\":{\"ref\":\"choice.startMinute\"},\"duration\":{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"repairMinutes\"},\"resources\":[{\"resource\":{\"literal\":\"production-team\"},\"amount\":{\"literal\":1}}]},{\"id\":\"rehearse\",\"actor\":{\"ref\":\"parameter.actorId\"},\"start\":{\"ref\":\"activity.correct.end\"},\"duration\":{\"ref\":\"parameter.rehearsalMinutes\"},\"resources\":[{\"resource\":{\"literal\":\"production-team\"},\"amount\":{\"literal\":1}}]},{\"id\":\"handoff\",\"actor\":{\"ref\":\"parameter.actorId\"},\"start\":{\"ref\":\"activity.rehearse.end\"},\"duration\":{\"ref\":\"parameter.handoffMinutes\"},\"resources\":[{\"resource\":{\"literal\":\"production-team\"},\"amount\":{\"literal\":1}}]}],\"resources\":{\"definitions\":{\"table\":\"resources\",\"idColumn\":\"id\",\"capacityColumn\":\"capacity\"},\"bookings\":{\"table\":\"bookings\",\"resourceColumn\":\"resource\",\"startColumn\":\"start\",\"endColumn\":\"end\",\"amountColumn\":\"amount\"}},\"requirements\":[{\"id\":\"SUFFICIENCY\",\"label\":\"Complete correction\",\"meaning\":\"The selected complete package addresses each fault in every remaining explanation.\",\"waivable\":false},{\"id\":\"COVERAGE\",\"label\":\"Remaining explanations\",\"meaning\":\"Every scenario comes from the author-declared fault catalog and the engine checks the whole admitted relation.\",\"waivable\":false},{\"id\":\"ACCESS\",\"label\":\"People, resources, and permissions\",\"meaning\":\"The proposed work has a known owner, resource capacity and availability, and recorded exact-scope permission.\",\"waivable\":false},{\"id\":\"TIME\",\"label\":\"Commitment cutoff\",\"meaning\":\"The complete prospective work fits between now and the kit commitment cutoff.\",\"waivable\":false},{\"id\":\"COST\",\"label\":\"Spending ceiling\",\"meaning\":\"The complete package cost fits the recorded spending ceiling.\",\"waivable\":false},{\"id\":\"CONFIRMATION\",\"label\":\"Confirm the selected arrangement for this exact gift-kit configuration\",\"meaning\":\"For any author-designated package, retain a named, sourced positive confirmation matching its package and all six configuration fields, recorded by the current review time, effective when correction starts, and valid through handoff.\",\"waivable\":false}],\"constraints\":[{\"id\":\"declared-fault-state\",\"requirement\":\"COVERAGE\",\"kind\":\"predicate\",\"predicate\":{\"op\":\"or\",\"args\":[{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.id\"},{\"literal\":\"none\"}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault0\"},{\"literal\":false}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault1\"},{\"literal\":false}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault2\"},{\"literal\":false}]}]},{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.id\"},{\"literal\":\"print\"}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault0\"},{\"literal\":true}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault1\"},{\"literal\":false}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault2\"},{\"literal\":false}]}]},{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.id\"},{\"literal\":\"destination\"}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault0\"},{\"literal\":false}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault1\"},{\"literal\":true}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault2\"},{\"literal\":false}]}]},{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.id\"},{\"literal\":\"print-destination\"}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault0\"},{\"literal\":true}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault1\"},{\"literal\":true}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault2\"},{\"literal\":false}]}]},{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.id\"},{\"literal\":\"checkout\"}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault0\"},{\"literal\":false}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault1\"},{\"literal\":false}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault2\"},{\"literal\":true}]}]},{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.id\"},{\"literal\":\"print-checkout\"}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault0\"},{\"literal\":true}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault1\"},{\"literal\":false}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault2\"},{\"literal\":true}]}]},{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.id\"},{\"literal\":\"destination-checkout\"}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault0\"},{\"literal\":false}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault1\"},{\"literal\":true}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault2\"},{\"literal\":true}]}]},{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.id\"},{\"literal\":\"print-destination-checkout\"}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault0\"},{\"literal\":true}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault1\"},{\"literal\":true}]},{\"op\":\"eq\",\"args\":[{\"ref\":\"scenario.fault2\"},{\"literal\":true}]}]}]}},{\"id\":\"published-package-effects\",\"requirement\":\"COVERAGE\",\"kind\":\"predicate\",\"predicate\":{\"op\":\"or\",\"args\":[{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"args\":[{\"ref\":\"choice.packageId\"},{\"literal\":\"rehearse-unchanged\"}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes0\"},{\"literal\":false}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes1\"},{\"literal\":false}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes2\"},{\"literal\":false}]}]},{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"args\":[{\"ref\":\"choice.packageId\"},{\"literal\":\"reprint\"}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes0\"},{\"literal\":true}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes1\"},{\"literal\":false}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes2\"},{\"literal\":false}]}]},{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"args\":[{\"ref\":\"choice.packageId\"},{\"literal\":\"repair-journey\"}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes0\"},{\"literal\":false}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes1\"},{\"literal\":true}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes2\"},{\"literal\":true}]}]},{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"args\":[{\"ref\":\"choice.packageId\"},{\"literal\":\"replace-and-repair\"}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes0\"},{\"literal\":true}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes1\"},{\"literal\":true}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes2\"},{\"literal\":true}]}]},{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"args\":[{\"ref\":\"choice.packageId\"},{\"literal\":\"external-replace-and-repair\"}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes0\"},{\"literal\":true}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes1\"},{\"literal\":true}]},{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes2\"},{\"literal\":true}]}]}]}},{\"id\":\"correct-fault-0\",\"requirement\":\"SUFFICIENCY\",\"kind\":\"predicate\",\"predicate\":{\"op\":\"or\",\"args\":[{\"op\":\"not\",\"args\":[{\"ref\":\"scenario.fault0\"}]},{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes0\"}]}},{\"id\":\"correct-fault-1\",\"requirement\":\"SUFFICIENCY\",\"kind\":\"predicate\",\"predicate\":{\"op\":\"or\",\"args\":[{\"op\":\"not\",\"args\":[{\"ref\":\"scenario.fault1\"}]},{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes1\"}]}},{\"id\":\"correct-fault-2\",\"requirement\":\"SUFFICIENCY\",\"kind\":\"predicate\",\"predicate\":{\"op\":\"or\",\"args\":[{\"op\":\"not\",\"args\":[{\"ref\":\"scenario.fault2\"}]},{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"fixes2\"}]}},{\"id\":\"known-owner\",\"requirement\":\"ACCESS\",\"kind\":\"predicate\",\"predicate\":{\"op\":\"exists\",\"table\":\"people\",\"where\":{\"id\":{\"ref\":\"parameter.actorId\"}},\"test\":{\"op\":\"and\",\"args\":[{\"op\":\"ne\",\"args\":[{\"ref\":\"row.name\"},{\"literal\":\"\"}]},{\"op\":\"ne\",\"args\":[{\"ref\":\"row.role\"},{\"literal\":\"\"}]}]}}},{\"id\":\"scoped-package-permission\",\"requirement\":\"ACCESS\",\"kind\":\"predicate\",\"predicate\":{\"op\":\"exists\",\"table\":\"permissions\",\"where\":{\"batchId\":{\"ref\":\"parameter.batchId\"},\"insertRevision\":{\"ref\":\"parameter.insertRevision\"},\"destinationRevision\":{\"ref\":\"parameter.destinationRevision\"},\"checkoutRevision\":{\"ref\":\"parameter.checkoutRevision\"},\"deviceScope\":{\"ref\":\"parameter.deviceScope\"},\"accountScope\":{\"ref\":\"parameter.accountScope\"},\"packageId\":{\"ref\":\"choice.packageId\"},\"actorId\":{\"ref\":\"parameter.actorId\"}},\"test\":{\"op\":\"and\",\"args\":[{\"op\":\"ne\",\"args\":[{\"ref\":\"row.source\"},{\"literal\":\"\"}]},{\"op\":\"lte\",\"args\":[{\"ref\":\"row.validFrom\"},{\"ref\":\"activity.correct.start\"}]},{\"op\":\"gte\",\"args\":[{\"ref\":\"row.validThrough\"},{\"ref\":\"activity.handoff.end\"}]}]}}},{\"id\":\"resource-calendar\",\"requirement\":\"ACCESS\",\"kind\":\"predicate\",\"predicate\":{\"op\":\"interval-covered\",\"table\":\"calendars\",\"where\":{\"resource\":{\"literal\":\"production-team\"}},\"start\":{\"ref\":\"activity.correct.start\"},\"end\":{\"ref\":\"activity.handoff.end\"},\"startColumn\":\"start\",\"endColumn\":\"end\"}},{\"id\":\"resource-capacity\",\"requirement\":\"ACCESS\",\"kind\":\"resource-capacity\"},{\"id\":\"not-in-past\",\"requirement\":\"TIME\",\"kind\":\"predicate\",\"predicate\":{\"op\":\"gte\",\"args\":[{\"ref\":\"activity.correct.start\"},{\"ref\":\"parameter.nowMinute\"}]}},{\"id\":\"handoff-by-cutoff\",\"requirement\":\"TIME\",\"kind\":\"predicate\",\"predicate\":{\"op\":\"lte\",\"args\":[{\"ref\":\"activity.handoff.end\"},{\"ref\":\"parameter.handoffDeadlineMinute\"}]}},{\"id\":\"package-within-budget\",\"requirement\":\"COST\",\"kind\":\"predicate\",\"predicate\":{\"op\":\"lte\",\"args\":[{\"ref\":\"finance.expense\"},{\"ref\":\"parameter.budgetMinor\"}]}},{\"id\":\"quoted-quantity\",\"requirement\":\"SUFFICIENCY\",\"kind\":\"predicate\",\"predicate\":{\"op\":\"eq\",\"args\":[{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"quantity\"},{\"ref\":\"parameter.quantity\"}]}},{\"id\":\"minimum-rehearsal\",\"requirement\":\"SUFFICIENCY\",\"kind\":\"predicate\",\"predicate\":{\"op\":\"gte\",\"args\":[{\"ref\":\"parameter.rehearsalMinutes\"},{\"literal\":5}]}},{\"id\":\"scoped-package-confirmation\",\"requirement\":\"CONFIRMATION\",\"kind\":\"predicate\",\"predicate\":{\"op\":\"or\",\"args\":[{\"literal\":false},{\"op\":\"not\",\"args\":[{\"op\":\"in\",\"args\":[{\"ref\":\"choice.packageId\"},{\"literal\":[\"external-replace-and-repair\"]}]}]},{\"op\":\"exists\",\"table\":\"confirmations\",\"where\":{\"packageId\":{\"ref\":\"choice.packageId\"},\"batchId\":{\"ref\":\"parameter.batchId\"},\"insertRevision\":{\"ref\":\"parameter.insertRevision\"},\"destinationRevision\":{\"ref\":\"parameter.destinationRevision\"},\"checkoutRevision\":{\"ref\":\"parameter.checkoutRevision\"},\"deviceScope\":{\"ref\":\"parameter.deviceScope\"},\"accountScope\":{\"ref\":\"parameter.accountScope\"}},\"test\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"args\":[{\"ref\":\"row.confirmed\"},{\"literal\":true}]},{\"op\":\"ne\",\"args\":[{\"ref\":\"row.source\"},{\"literal\":\"\"}]},{\"op\":\"ne\",\"args\":[{\"ref\":\"row.recordedBy\"},{\"literal\":\"\"}]},{\"op\":\"lte\",\"args\":[{\"ref\":\"row.recordedAt\"},{\"ref\":\"parameter.nowMinute\"}]},{\"op\":\"lte\",\"args\":[{\"ref\":\"row.validFrom\"},{\"ref\":\"activity.correct.start\"}]},{\"op\":\"gte\",\"args\":[{\"ref\":\"row.validThrough\"},{\"ref\":\"activity.handoff.end\"}]}]}}]}}],\"finance\":{\"mode\":\"expense\",\"charges\":[{\"id\":\"complete-correction-package\",\"amount\":{\"op\":\"lookup\",\"table\":\"packages\",\"where\":{\"id\":{\"ref\":\"choice.packageId\"}},\"column\":\"repairCostMinor\"}}],\"holds\":[]},\"preference\":{\"direction\":\"min\",\"expression\":{\"ref\":\"activity.handoff.end\"},\"then\":[{\"direction\":\"min\",\"expression\":{\"ref\":\"finance.expense\"}}]},\"labels\":{\"plan\":\"Complete gift-kit correction arrangement\",\"actor\":\"Responsible person\",\"expense\":\"Complete package cost\",\"choice.packageId\":\"Preparation or correction package\",\"choice.startMinute\":\"Proposed start minute\",\"activity.correct\":\"Prepare or correct the gift-kit arrangement\",\"activity.rehearse\":\"Repeat the scoped gift journey rehearsal\",\"activity.handoff\":\"Prepare and complete the kit handoff\",\"activity.handoff.end\":\"Handoff completion\",\"constraint.declared-fault-state\":\"Use an admitted configuration from the published fault catalog\",\"constraint.published-package-effects\":\"Retain the published correction effects of the selected package\",\"constraint.correct-fault-0\":\"Address The printed code cannot be read whenever it remains possible\",\"constraint.correct-fault-1\":\"Address The code leads to the wrong destination whenever it remains possible\",\"constraint.correct-fault-2\":\"Address The intended checkout is restricted whenever it remains possible\",\"constraint.known-owner\":\"Assign the complete work to a recorded responsible person\",\"constraint.scoped-package-permission\":\"Hold recorded authority for this package, person, exact configuration, and whole working interval\",\"constraint.resource-calendar\":\"Keep the full correction, rehearsal, and handoff within resource availability\",\"constraint.resource-capacity\":\"Keep all proposed work within recorded resource capacity\",\"constraint.not-in-past\":\"Start correction at or after the current review time\",\"constraint.handoff-by-cutoff\":\"Finish correction, scoped rehearsal, and handoff before the kit commitment cutoff\",\"constraint.package-within-budget\":\"Keep the complete proposed package within the recorded spending ceiling\",\"constraint.quoted-quantity\":\"Use a complete-package quote for the current kit quantity\",\"constraint.minimum-rehearsal\":\"Allow at least the published minimum duration for the scoped rehearsal\",\"constraint.scoped-package-confirmation\":\"Confirm the selected arrangement for this exact gift-kit configuration\",\"table.confirmations\":\"Recorded exact-configuration confirmations\"}},\"case\":{\"id\":\"gift-campaign-example-planning\",\"parameters\":{\"batchId\":\"GIFT-120\",\"insertRevision\":\"insert-3\",\"destinationRevision\":\"destination-2\",\"checkoutRevision\":\"checkout-1\",\"deviceScope\":\"campaign-test-phone\",\"accountScope\":\"intended-recipient-account\",\"actorId\":\"campaign-owner-1\",\"quantity\":120,\"nowMinute\":0,\"handoffDeadlineMinute\":60,\"budgetMinor\":60000,\"rehearsalMinutes\":5,\"handoffMinutes\":5,\"startOptions\":[0]},\"tables\":{\"packages\":[{\"id\":\"rehearse-unchanged\",\"quantity\":120,\"repairMinutes\":1,\"repairCostMinor\":0,\"fixes0\":false,\"fixes1\":false,\"fixes2\":false},{\"id\":\"reprint\",\"quantity\":120,\"repairMinutes\":10,\"repairCostMinor\":10000,\"fixes0\":true,\"fixes1\":false,\"fixes2\":false},{\"id\":\"repair-journey\",\"quantity\":120,\"repairMinutes\":15,\"repairCostMinor\":18000,\"fixes0\":false,\"fixes1\":true,\"fixes2\":true},{\"id\":\"replace-and-repair\",\"quantity\":120,\"repairMinutes\":25,\"repairCostMinor\":30000,\"fixes0\":true,\"fixes1\":true,\"fixes2\":true},{\"id\":\"external-replace-and-repair\",\"quantity\":120,\"repairMinutes\":10,\"repairCostMinor\":40000,\"fixes0\":true,\"fixes1\":true,\"fixes2\":true}],\"scenarios\":[{\"id\":\"none\",\"fault0\":false,\"fault1\":false,\"fault2\":false},{\"id\":\"print\",\"fault0\":true,\"fault1\":false,\"fault2\":false},{\"id\":\"destination\",\"fault0\":false,\"fault1\":true,\"fault2\":false},{\"id\":\"print-destination\",\"fault0\":true,\"fault1\":true,\"fault2\":false},{\"id\":\"checkout\",\"fault0\":false,\"fault1\":false,\"fault2\":true},{\"id\":\"print-checkout\",\"fault0\":true,\"fault1\":false,\"fault2\":true},{\"id\":\"destination-checkout\",\"fault0\":false,\"fault1\":true,\"fault2\":true},{\"id\":\"print-destination-checkout\",\"fault0\":true,\"fault1\":true,\"fault2\":true}],\"people\":[{\"id\":\"campaign-owner-1\",\"name\":\"Fictional campaign owner\",\"role\":\"campaign-owner\"}],\"permissions\":[{\"batchId\":\"GIFT-120\",\"insertRevision\":\"insert-3\",\"destinationRevision\":\"destination-2\",\"checkoutRevision\":\"checkout-1\",\"deviceScope\":\"campaign-test-phone\",\"accountScope\":\"intended-recipient-account\",\"id\":\"PERMISSION-rehearse-unchanged\",\"packageId\":\"rehearse-unchanged\",\"actorId\":\"campaign-owner-1\",\"validFrom\":0,\"validThrough\":120,\"source\":\"Fictional recorded campaign authorization\"},{\"batchId\":\"GIFT-120\",\"insertRevision\":\"insert-3\",\"destinationRevision\":\"destination-2\",\"checkoutRevision\":\"checkout-1\",\"deviceScope\":\"campaign-test-phone\",\"accountScope\":\"intended-recipient-account\",\"id\":\"PERMISSION-reprint\",\"packageId\":\"reprint\",\"actorId\":\"campaign-owner-1\",\"validFrom\":0,\"validThrough\":120,\"source\":\"Fictional recorded campaign authorization\"},{\"batchId\":\"GIFT-120\",\"insertRevision\":\"insert-3\",\"destinationRevision\":\"destination-2\",\"checkoutRevision\":\"checkout-1\",\"deviceScope\":\"campaign-test-phone\",\"accountScope\":\"intended-recipient-account\",\"id\":\"PERMISSION-repair-journey\",\"packageId\":\"repair-journey\",\"actorId\":\"campaign-owner-1\",\"validFrom\":0,\"validThrough\":120,\"source\":\"Fictional recorded campaign authorization\"},{\"batchId\":\"GIFT-120\",\"insertRevision\":\"insert-3\",\"destinationRevision\":\"destination-2\",\"checkoutRevision\":\"checkout-1\",\"deviceScope\":\"campaign-test-phone\",\"accountScope\":\"intended-recipient-account\",\"id\":\"PERMISSION-replace-and-repair\",\"packageId\":\"replace-and-repair\",\"actorId\":\"campaign-owner-1\",\"validFrom\":0,\"validThrough\":120,\"source\":\"Fictional recorded campaign authorization\"},{\"batchId\":\"GIFT-120\",\"insertRevision\":\"insert-3\",\"destinationRevision\":\"destination-2\",\"checkoutRevision\":\"checkout-1\",\"deviceScope\":\"campaign-test-phone\",\"accountScope\":\"intended-recipient-account\",\"id\":\"PERMISSION-external\",\"packageId\":\"external-replace-and-repair\",\"actorId\":\"campaign-owner-1\",\"validFrom\":0,\"validThrough\":120,\"source\":\"Fictional recorded campaign authorization\"}],\"resources\":[{\"id\":\"production-team\",\"capacity\":1}],\"calendars\":[{\"resource\":\"production-team\",\"start\":0,\"end\":120}],\"bookings\":[],\"confirmations\":[]},\"provenance\":[]}}",
+      "sourceHash": "43eed72fcb2576d7d3ff674188d684232e12996e7518fb04a03f9a395ac38fa2",
+      "definitionHash": "681928cdfc0f220a5a206dfbabd76b2bb410406cbba7afc4fbbff0dae9831972",
+      "definitionContract": {
+        "id": "complete-a-commitment",
+        "version": "1.0.0",
+        "evaluator": "bounded-static-commitment/1",
+        "title": "Complete a commitment",
+        "responsibility": "Find one complete static operating choice that satisfies every mandatory obligation across every explicitly admitted joint scenario, then compare feasible choices.",
+        "invariants": [
+          "Choices are finite, input-only controls. One complete assignment is shared across every admitted scenario and obligation.",
+          "Admitted joint scenarios are explicit facts; neither independence, probabilities nor unlisted scenarios are inferred.",
+          "An empty admitted basis is inconsistent, never a vacuous feasibility result.",
+          "Typed acyclic expressions separate static controls, scenario consequences and post-scenario preference aggregates.",
+          "Activities, calendars, bookings and permission validity use half-open intervals; adjacent intervals do not overlap.",
+          "Capacity is the sum of simultaneous renewable demands. A scoped grant must cover its entire required operation.",
+          "Expense sums nonrefundable charges. Refundable holds affect cash only; simultaneous cash events are netted before peak cash is measured.",
+          "Every mandatory condition must pass for the same choice in every admitted scenario. Preference cannot compensate for failure.",
+          "Ranking is lexicographic over feasible choices only; genuine ties are retained and identifiers only stabilize display order.",
+          "A fully checked witness establishes existence during partial search. No-plan and optimality claims require complete relevant coverage.",
+          "Missing data, unresolved lookups, unsafe arithmetic and unsupported declarations are invalid input, never invented facts.",
+          "Calculated feasibility is conditional on accepted facts and fixed assumptions, not permission, reservation or evidence of actual completion."
+        ],
+        "expressionLanguage": {
+          "id": "typed-static-commitment-expressions/1",
+          "literals": "Finite scalar or homogeneous scalar-array data; no executable code.",
+          "references": [
+            "parameter",
+            "choice",
+            "scenario",
+            "derived",
+            "activity",
+            "finance",
+            "row (inside exists.test)"
+          ],
+          "operators": {
+            "eq": "Two compatible scalars -> boolean",
+            "ne": "Two compatible scalars -> boolean",
+            "lt": "Two compatible numbers -> boolean",
+            "lte": "Two compatible numbers -> boolean",
+            "gt": "Two compatible numbers -> boolean",
+            "gte": "Two compatible numbers -> boolean",
+            "add": "At least two compatible numbers -> number",
+            "sub": "Two compatible numbers -> number",
+            "mul": "Two numbers with at most one dimensional operand -> number; count is a multiplicity",
+            "and": "At least two booleans -> boolean",
+            "or": "At least two booleans -> boolean",
+            "not": "One boolean -> boolean",
+            "in": "Scalar and compatible scalar-array -> boolean",
+            "lookup": "Complete primary-key binding in a typed input table -> exactly one selected scalar; missing or ambiguous lookup is invalid",
+            "exists": "Typed equality bindings plus optional row-scoped predicate -> boolean; no match is false",
+            "interval-covered": "Typed selected calendar rows and a positive half-open interval -> boolean; adjacent coverage may combine",
+            "worst-case": "Numeric expression -> maximum across admitted scenarios for preference only; nested or unreduced scenario aggregates are invalid"
+          }
+        }
+      },
+      "model": {
+        "format": "complete-a-commitment/1",
+        "module": {
+          "id": "review-gift-kit-earliest-planning",
+          "version": "2.0.2",
+          "title": "Prepare gift kits before commitment",
+          "template": {
+            "id": "complete-a-commitment",
+            "version": 1
+          },
+          "question": "Which complete correction package addresses every remaining explanation and can finish before we commit the gift kits?",
+          "description": "Compare one authored correction package across every remaining fault configuration, including simultaneous faults. Prospective correction is distinct from completed work.",
+          "metadata": {
+            "decisionPresentation": {
+              "format": "decision-presentation/1",
+              "title": "Complete gift-kit arrangements",
+              "priorityLabel": "Earliest handoff, then lowest complete package cost",
+              "moneyFormat": {
+                "currency": "USD",
+                "divisor": 100
+              },
+              "columns": [
+                {
+                  "id": "plan",
+                  "label": "Complete arrangement"
+                },
+                {
+                  "id": "status",
+                  "label": "Operating result"
+                },
+                {
+                  "id": "handoff",
+                  "source": {
+                    "kind": "activity",
+                    "id": "handoff",
+                    "field": "end"
+                  },
+                  "label": "Handoff complete",
+                  "format": {
+                    "kind": "time",
+                    "suffix": "minutes after the declared origin"
+                  }
+                },
+                {
+                  "id": "expense",
+                  "label": "Complete package cost"
+                },
+                {
+                  "id": "blockers",
+                  "label": "Conditions needing attention"
+                }
+              ],
+              "comparisonFields": [
+                {
+                  "id": "package",
+                  "source": "choice:packageId",
+                  "label": "Package",
+                  "valueLabels": {
+                    "rehearse-unchanged": "Prepare, rehearse and hand off unchanged kits",
+                    "reprint": "Replace the printed inserts",
+                    "repair-journey": "Correct the destination and checkout",
+                    "replace-and-repair": "Replace inserts and repair the journey",
+                    "external-replace-and-repair": "External replacement and journey repair"
+                  }
+                },
+                {
+                  "id": "start",
+                  "source": "choice:startMinute",
+                  "label": "Start",
+                  "format": {
+                    "kind": "time",
+                    "suffix": "minutes after the declared origin"
+                  }
+                }
+              ],
+              "alternativeLabel": {
+                "columnIds": [
+                  "package",
+                  "start"
+                ]
+              }
+            },
+            "catalog": {
+              "domain": {
+                "id": "gifting-operations",
+                "label": "Gifting operations"
+              },
+              "useCase": {
+                "id": "prepare-gift-kit-campaign",
+                "label": "Prepare a gift-kit campaign"
+              }
+            },
+            "gifting": {
+              "profileId": "gift-kit-readiness",
+              "profileVersion": "1.0.0",
+              "packages": [
+                {
+                  "id": "rehearse-unchanged",
+                  "label": "Prepare, rehearse and hand off unchanged kits",
+                  "corrects": [],
+                  "requiresConfirmation": false
+                },
+                {
+                  "id": "reprint",
+                  "label": "Replace the printed inserts",
+                  "corrects": [
+                    "replace-insert"
+                  ],
+                  "requiresConfirmation": false
+                },
+                {
+                  "id": "repair-journey",
+                  "label": "Correct the destination and checkout",
+                  "corrects": [
+                    "correct-destination",
+                    "fix-checkout"
+                  ],
+                  "requiresConfirmation": false
+                },
+                {
+                  "id": "replace-and-repair",
+                  "label": "Replace inserts and repair the journey",
+                  "corrects": [
+                    "replace-insert",
+                    "correct-destination",
+                    "fix-checkout"
+                  ],
+                  "requiresConfirmation": false
+                },
+                {
+                  "id": "external-replace-and-repair",
+                  "label": "External replacement and journey repair",
+                  "corrects": [
+                    "replace-insert",
+                    "correct-destination",
+                    "fix-checkout"
+                  ],
+                  "requiresConfirmation": true
+                }
+              ],
+              "checks": [
+                {
+                  "id": "declared-fault-state",
+                  "requirement": "COVERAGE",
+                  "label": "Use an admitted configuration from the published fault catalog",
+                  "evidence": "A current scoped evidence assessment admitting this fault configuration."
+                },
+                {
+                  "id": "published-package-effects",
+                  "requirement": "COVERAGE",
+                  "label": "Retain the published correction effects of the selected package",
+                  "evidence": "The author-fixed correction effects from this exact published package version."
+                },
+                {
+                  "id": "correct-fault-0",
+                  "requirement": "SUFFICIENCY",
+                  "label": "Address The printed code cannot be read whenever it remains possible",
+                  "evidence": "A complete package addressing The printed code cannot be read, or scoped evidence excluding that fault."
+                },
+                {
+                  "id": "correct-fault-1",
+                  "requirement": "SUFFICIENCY",
+                  "label": "Address The code leads to the wrong destination whenever it remains possible",
+                  "evidence": "A complete package addressing The code leads to the wrong destination, or scoped evidence excluding that fault."
+                },
+                {
+                  "id": "correct-fault-2",
+                  "requirement": "SUFFICIENCY",
+                  "label": "Address The intended checkout is restricted whenever it remains possible",
+                  "evidence": "A complete package addressing The intended checkout is restricted, or scoped evidence excluding that fault."
+                },
+                {
+                  "id": "known-owner",
+                  "requirement": "ACCESS",
+                  "label": "Assign the complete work to a recorded responsible person",
+                  "evidence": "A recorded person responsible for this complete correction package."
+                },
+                {
+                  "id": "scoped-package-permission",
+                  "requirement": "ACCESS",
+                  "label": "Hold recorded authority for this package, person, exact configuration, and whole working interval",
+                  "evidence": "A sourced permission for the selected package and person, matching all six scope fields and covering correction through handoff."
+                },
+                {
+                  "id": "resource-calendar",
+                  "requirement": "ACCESS",
+                  "label": "Keep the full correction, rehearsal, and handoff within resource availability",
+                  "evidence": "An availability interval covering the complete proposed work."
+                },
+                {
+                  "id": "resource-capacity",
+                  "requirement": "ACCESS",
+                  "label": "Keep all proposed work within recorded resource capacity",
+                  "evidence": "Enough recorded resource capacity throughout the proposed work."
+                },
+                {
+                  "id": "not-in-past",
+                  "requirement": "TIME",
+                  "label": "Start correction at or after the current review time",
+                  "evidence": "A current proposed start time."
+                },
+                {
+                  "id": "handoff-by-cutoff",
+                  "requirement": "TIME",
+                  "label": "Finish correction, scoped rehearsal, and handoff before the kit commitment cutoff",
+                  "evidence": "Durations and resource availability that fit the cutoff, or a revised commitment."
+                },
+                {
+                  "id": "package-within-budget",
+                  "requirement": "COST",
+                  "label": "Keep the complete proposed package within the recorded spending ceiling",
+                  "evidence": "A current package quote within the spending ceiling, or an approved revised ceiling."
+                },
+                {
+                  "id": "quoted-quantity",
+                  "requirement": "SUFFICIENCY",
+                  "label": "Use a complete-package quote for the current kit quantity",
+                  "evidence": "A current complete-package quote and duration explicitly covering the stated kit quantity."
+                },
+                {
+                  "id": "minimum-rehearsal",
+                  "requirement": "SUFFICIENCY",
+                  "label": "Allow at least the published minimum duration for the scoped rehearsal",
+                  "evidence": "A proposed scoped rehearsal duration meeting the published minimum. This remains a plan, not evidence that rehearsal passed."
+                },
+                {
+                  "id": "scoped-package-confirmation",
+                  "requirement": "CONFIRMATION",
+                  "label": "Confirm the selected arrangement for this exact gift-kit configuration",
+                  "evidence": "A sourced positive package confirmation, recorded by a named person, for this exact batch, insert, destination, checkout, device and account, effective at the planned start and valid through handoff."
+                }
+              ]
+            },
+            "supportingReports": {
+              "format": "supporting-reports/1",
+              "reports": [
+                {
+                  "id": "complete-options",
+                  "label": "Complete options",
+                  "question": "How do the complete options compare against the operating requirements?",
+                  "template": "comparison/1",
+                  "source": {
+                    "kind": "report-dataset",
+                    "datasetId": "commitment:comparison"
+                  },
+                  "bindings": {
+                    "columns": [
+                      {
+                        "key": "plan",
+                        "label": "Complete gift-kit correction arrangement"
+                      },
+                      {
+                        "key": "status",
+                        "label": "Operating fit"
+                      },
+                      {
+                        "key": "expense",
+                        "label": "Complete package cost",
+                        "format": {
+                          "type": "money",
+                          "currency": "USD",
+                          "scale": 100
+                        }
+                      },
+                      {
+                        "key": "cash",
+                        "label": "Peak cash in use",
+                        "format": {
+                          "type": "money",
+                          "currency": "USD",
+                          "scale": 100
+                        }
+                      },
+                      {
+                        "key": "blockers",
+                        "label": "Unmet checks",
+                        "format": "number"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": "work-and-timing",
+                  "label": "Work and timing",
+                  "question": "When does each complete plan perform the selected activity?",
+                  "template": "timeline/1",
+                  "source": {
+                    "kind": "commitment-schedules"
+                  },
+                  "representations": [
+                    "table",
+                    "timeline"
+                  ],
+                  "defaultRepresentation": "table",
+                  "bindings": {
+                    "timeline": {
+                      "extent": "activities",
+                      "label": "Operating activities"
+                    }
+                  }
+                },
+                {
+                  "id": "requirements",
+                  "label": "Requirements",
+                  "question": "Which mandatory requirements must every complete option meet?",
+                  "template": "records/1",
+                  "source": {
+                    "kind": "report-dataset",
+                    "datasetId": "commitment:requirements"
+                  },
+                  "bindings": {
+                    "columns": [
+                      {
+                        "key": "requirement",
+                        "label": "Requirement"
+                      },
+                      {
+                        "key": "meaning",
+                        "label": "Operating meaning"
+                      },
+                      {
+                        "key": "coverage",
+                        "label": "Complete plans passing in every situation",
+                        "format": "number"
+                      },
+                      {
+                        "key": "waivable",
+                        "label": "Can be waived",
+                        "format": "boolean"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "inputDesign": {
+              "version": 1,
+              "form": {
+                "type": "object",
+                "label": "Case inputs",
+                "fields": {
+                  "parameters": {
+                    "type": "object",
+                    "label": "Parameters",
+                    "fields": {
+                      "batchId": {
+                        "type": "string",
+                        "label": "Batch Id"
+                      },
+                      "insertRevision": {
+                        "type": "string",
+                        "label": "Insert Revision"
+                      },
+                      "destinationRevision": {
+                        "type": "string",
+                        "label": "Destination Revision"
+                      },
+                      "checkoutRevision": {
+                        "type": "string",
+                        "label": "Checkout Revision"
+                      },
+                      "deviceScope": {
+                        "type": "string",
+                        "label": "Device Scope"
+                      },
+                      "accountScope": {
+                        "type": "string",
+                        "label": "Account Scope"
+                      },
+                      "actorId": {
+                        "type": "string",
+                        "label": "Actor Id"
+                      },
+                      "quantity": {
+                        "type": "number",
+                        "label": "Quantity",
+                        "integer": true,
+                        "unit": "gift kit",
+                        "minimum": 1
+                      },
+                      "nowMinute": {
+                        "type": "number",
+                        "label": "Now Minute",
+                        "integer": true,
+                        "unit": "minute",
+                        "minimum": 0
+                      },
+                      "handoffDeadlineMinute": {
+                        "type": "number",
+                        "label": "Handoff Deadline Minute",
+                        "integer": true,
+                        "unit": "minute",
+                        "minimum": 0
+                      },
+                      "budgetMinor": {
+                        "type": "number",
+                        "label": "Budget Minor",
+                        "integer": true,
+                        "unit": "USD cent",
+                        "minimum": 0
+                      },
+                      "rehearsalMinutes": {
+                        "type": "number",
+                        "label": "Rehearsal Minutes",
+                        "integer": true,
+                        "unit": "minute",
+                        "minimum": 1
+                      },
+                      "handoffMinutes": {
+                        "type": "number",
+                        "label": "Handoff Minutes",
+                        "integer": true,
+                        "unit": "minute",
+                        "minimum": 1
+                      },
+                      "startOptions": {
+                        "type": "array",
+                        "label": "Start Options",
+                        "items": {
+                          "type": "number",
+                          "label": "Start Options record",
+                          "integer": true,
+                          "unit": "time",
+                          "minimum": 0
+                        }
+                      }
+                    }
+                  },
+                  "tables": {
+                    "type": "object",
+                    "label": "Tables",
+                    "fields": {
+                      "packages": {
+                        "type": "array",
+                        "label": "Packages",
+                        "items": {
+                          "type": "object",
+                          "label": "Packages record",
+                          "fields": {
+                            "id": {
+                              "type": "string",
+                              "label": "Id"
+                            },
+                            "quantity": {
+                              "type": "number",
+                              "label": "Quantity",
+                              "integer": true,
+                              "unit": "gift kit",
+                              "minimum": 1
+                            },
+                            "repairMinutes": {
+                              "type": "number",
+                              "label": "Repair Minutes",
+                              "integer": true,
+                              "unit": "minute",
+                              "minimum": 1
+                            },
+                            "repairCostMinor": {
+                              "type": "number",
+                              "label": "Repair Cost Minor",
+                              "integer": true,
+                              "unit": "USD cent",
+                              "minimum": 0
+                            },
+                            "fixes0": {
+                              "type": "boolean",
+                              "label": "Fixes0"
+                            },
+                            "fixes1": {
+                              "type": "boolean",
+                              "label": "Fixes1"
+                            },
+                            "fixes2": {
+                              "type": "boolean",
+                              "label": "Fixes2"
+                            }
+                          }
+                        },
+                        "keyFields": [
+                          "id"
+                        ]
+                      },
+                      "scenarios": {
+                        "type": "array",
+                        "label": "Scenarios",
+                        "items": {
+                          "type": "object",
+                          "label": "Scenarios record",
+                          "fields": {
+                            "id": {
+                              "type": "string",
+                              "label": "Id"
+                            },
+                            "fault0": {
+                              "type": "boolean",
+                              "label": "Fault0"
+                            },
+                            "fault1": {
+                              "type": "boolean",
+                              "label": "Fault1"
+                            },
+                            "fault2": {
+                              "type": "boolean",
+                              "label": "Fault2"
+                            }
+                          }
+                        },
+                        "keyFields": [
+                          "id"
+                        ]
+                      },
+                      "people": {
+                        "type": "array",
+                        "label": "People",
+                        "items": {
+                          "type": "object",
+                          "label": "People record",
+                          "fields": {
+                            "id": {
+                              "type": "string",
+                              "label": "Id"
+                            },
+                            "name": {
+                              "type": "string",
+                              "label": "Name"
+                            },
+                            "role": {
+                              "type": "string",
+                              "label": "Role"
+                            }
+                          }
+                        },
+                        "keyFields": [
+                          "id"
+                        ]
+                      },
+                      "permissions": {
+                        "type": "array",
+                        "label": "Permissions",
+                        "items": {
+                          "type": "object",
+                          "label": "Permissions record",
+                          "fields": {
+                            "batchId": {
+                              "type": "string",
+                              "label": "Batch Id"
+                            },
+                            "insertRevision": {
+                              "type": "string",
+                              "label": "Insert Revision"
+                            },
+                            "destinationRevision": {
+                              "type": "string",
+                              "label": "Destination Revision"
+                            },
+                            "checkoutRevision": {
+                              "type": "string",
+                              "label": "Checkout Revision"
+                            },
+                            "deviceScope": {
+                              "type": "string",
+                              "label": "Device Scope"
+                            },
+                            "accountScope": {
+                              "type": "string",
+                              "label": "Account Scope"
+                            },
+                            "id": {
+                              "type": "string",
+                              "label": "Id"
+                            },
+                            "packageId": {
+                              "type": "string",
+                              "label": "Package Id"
+                            },
+                            "actorId": {
+                              "type": "string",
+                              "label": "Actor Id"
+                            },
+                            "validFrom": {
+                              "type": "number",
+                              "label": "Valid From",
+                              "integer": true,
+                              "unit": "minute",
+                              "minimum": 0
+                            },
+                            "validThrough": {
+                              "type": "number",
+                              "label": "Valid Through",
+                              "integer": true,
+                              "unit": "minute",
+                              "minimum": 0
+                            },
+                            "source": {
+                              "type": "string",
+                              "label": "Source"
+                            }
+                          }
+                        },
+                        "keyFields": [
+                          "id"
+                        ]
+                      },
+                      "resources": {
+                        "type": "array",
+                        "label": "Resources",
+                        "items": {
+                          "type": "object",
+                          "label": "Resources record",
+                          "fields": {
+                            "id": {
+                              "type": "string",
+                              "label": "Id"
+                            },
+                            "capacity": {
+                              "type": "number",
+                              "label": "Capacity",
+                              "integer": true,
+                              "unit": "unit of resource capacity",
+                              "minimum": 0
+                            }
+                          }
+                        },
+                        "keyFields": [
+                          "id"
+                        ]
+                      },
+                      "calendars": {
+                        "type": "array",
+                        "label": "Calendars",
+                        "items": {
+                          "type": "object",
+                          "label": "Calendars record",
+                          "fields": {
+                            "resource": {
+                              "type": "string",
+                              "label": "Resource"
+                            },
+                            "start": {
+                              "type": "number",
+                              "label": "Start",
+                              "integer": true,
+                              "unit": "minute",
+                              "minimum": 0
+                            },
+                            "end": {
+                              "type": "number",
+                              "label": "End",
+                              "integer": true,
+                              "unit": "minute",
+                              "minimum": 0
+                            }
+                          }
+                        },
+                        "keyFields": [
+                          "resource",
+                          "start",
+                          "end"
+                        ]
+                      },
+                      "bookings": {
+                        "type": "array",
+                        "label": "Bookings",
+                        "items": {
+                          "type": "object",
+                          "label": "Bookings record",
+                          "fields": {
+                            "id": {
+                              "type": "string",
+                              "label": "Id"
+                            },
+                            "resource": {
+                              "type": "string",
+                              "label": "Resource"
+                            },
+                            "start": {
+                              "type": "number",
+                              "label": "Start",
+                              "integer": true,
+                              "unit": "minute",
+                              "minimum": 0
+                            },
+                            "end": {
+                              "type": "number",
+                              "label": "End",
+                              "integer": true,
+                              "unit": "minute",
+                              "minimum": 0
+                            },
+                            "amount": {
+                              "type": "number",
+                              "label": "Amount",
+                              "integer": true,
+                              "unit": "unit of resource capacity",
+                              "minimum": 1
+                            }
+                          }
+                        },
+                        "keyFields": [
+                          "id"
+                        ]
+                      },
+                      "confirmations": {
+                        "type": "array",
+                        "label": "Recorded exact-configuration confirmations",
+                        "items": {
+                          "type": "object",
+                          "label": "Confirmations record",
+                          "fields": {
+                            "id": {
+                              "type": "string",
+                              "label": "Id"
+                            },
+                            "packageId": {
+                              "type": "string",
+                              "label": "Package Id"
+                            },
+                            "batchId": {
+                              "type": "string",
+                              "label": "Batch Id"
+                            },
+                            "insertRevision": {
+                              "type": "string",
+                              "label": "Insert Revision"
+                            },
+                            "destinationRevision": {
+                              "type": "string",
+                              "label": "Destination Revision"
+                            },
+                            "checkoutRevision": {
+                              "type": "string",
+                              "label": "Checkout Revision"
+                            },
+                            "deviceScope": {
+                              "type": "string",
+                              "label": "Device Scope"
+                            },
+                            "accountScope": {
+                              "type": "string",
+                              "label": "Account Scope"
+                            },
+                            "confirmed": {
+                              "type": "boolean",
+                              "label": "Confirmed"
+                            },
+                            "validFrom": {
+                              "type": "number",
+                              "label": "Valid From",
+                              "integer": true,
+                              "unit": "minute",
+                              "minimum": 0
+                            },
+                            "validThrough": {
+                              "type": "number",
+                              "label": "Valid Through",
+                              "integer": true,
+                              "unit": "minute",
+                              "minimum": 0
+                            },
+                            "recordedAt": {
+                              "type": "number",
+                              "label": "Recorded At",
+                              "integer": true,
+                              "unit": "minute",
+                              "minimum": 0
+                            },
+                            "source": {
+                              "type": "string",
+                              "label": "Source"
+                            },
+                            "recordedBy": {
+                              "type": "string",
+                              "label": "Recorded By"
+                            }
+                          }
+                        },
+                        "keyFields": [
+                          "id"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "groups": [
+                {
+                  "id": "operating-parameters",
+                  "label": "Commitment and limits",
+                  "question": "Which quantities, deadlines and limits should the calculation use?",
+                  "subtabs": [
+                    {
+                      "id": "parameters",
+                      "label": "Operating parameters",
+                      "fieldPaths": [
+                        "/parameters"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "operating-records",
+                  "label": "Operating records",
+                  "question": "Which operating records and possibilities apply to this commitment?",
+                  "subtabs": [
+                    {
+                      "id": "packages",
+                      "label": "Packages",
+                      "fieldPaths": [
+                        "/tables/packages"
+                      ]
+                    },
+                    {
+                      "id": "scenarios",
+                      "label": "Scenarios",
+                      "fieldPaths": [
+                        "/tables/scenarios"
+                      ]
+                    },
+                    {
+                      "id": "people",
+                      "label": "People",
+                      "fieldPaths": [
+                        "/tables/people"
+                      ]
+                    },
+                    {
+                      "id": "permissions",
+                      "label": "Permissions",
+                      "fieldPaths": [
+                        "/tables/permissions"
+                      ]
+                    },
+                    {
+                      "id": "resources",
+                      "label": "Resources",
+                      "fieldPaths": [
+                        "/tables/resources"
+                      ]
+                    },
+                    {
+                      "id": "calendars",
+                      "label": "Calendars",
+                      "fieldPaths": [
+                        "/tables/calendars"
+                      ]
+                    },
+                    {
+                      "id": "bookings",
+                      "label": "Bookings",
+                      "fieldPaths": [
+                        "/tables/bookings"
+                      ]
+                    },
+                    {
+                      "id": "confirmations",
+                      "label": "Recorded exact-configuration confirmations",
+                      "fieldPaths": [
+                        "/tables/confirmations"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "units": {
+            "time": "minute",
+            "timeOrigin": "Start of this gift-kit preparation review",
+            "money": "USD cent",
+            "count": "unit of resource capacity",
+            "quantity": "gift kit"
+          },
+          "assumptions": [
+            "The module author declares the complete fault catalog and the deterministic prospective correction effects of each package. These are reviewed modeling premises, not evidence that correction finished.",
+            "One static complete package must work across all admitted configurations. This model does not synthesize sequential investigations or choose a different package for each possible fault configuration.",
+            "Quoted repair cost is the complete prospective package charge in this bounded profile. Rehearsal and handoff have recorded durations and no separate monetary charge.",
+            "The supplied permission registry is complete. An empty registry supplies no permission; evaluating a plan grants no authority.",
+            "The same recorded person and production resource perform correction, scoped rehearsal, and handoff in that order. Resource intervals are half-open; permission valid-through includes the endpoint.",
+            "Quantity scopes this review but does not scale time or expense automatically. Each complete-package quote must explicitly match the stated kit quantity; changing quantity requires a matching quote and duration.",
+            "An unchanged-kit package may have a positive preparation duration and no correction effects or monetary charge. Its preparation is not a repair or evidence of a successful rehearsal."
+          ],
+          "inputs": {
+            "parameters": {
+              "batchId": {
+                "type": "string"
+              },
+              "insertRevision": {
+                "type": "string"
+              },
+              "destinationRevision": {
+                "type": "string"
+              },
+              "checkoutRevision": {
+                "type": "string"
+              },
+              "deviceScope": {
+                "type": "string"
+              },
+              "accountScope": {
+                "type": "string"
+              },
+              "actorId": {
+                "type": "string"
+              },
+              "quantity": {
+                "type": "integer",
+                "unit": "quantity",
+                "minimum": 1
+              },
+              "nowMinute": {
+                "type": "integer",
+                "unit": "time",
+                "minimum": 0
+              },
+              "handoffDeadlineMinute": {
+                "type": "integer",
+                "unit": "time",
+                "minimum": 0
+              },
+              "budgetMinor": {
+                "type": "integer",
+                "unit": "money",
+                "minimum": 0
+              },
+              "rehearsalMinutes": {
+                "type": "integer",
+                "unit": "time",
+                "minimum": 1
+              },
+              "handoffMinutes": {
+                "type": "integer",
+                "unit": "time",
+                "minimum": 1
+              },
+              "startOptions": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "unit": "time",
+                  "minimum": 0
+                }
+              }
+            },
+            "tables": {
+              "packages": {
+                "key": [
+                  "id"
+                ],
+                "columns": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "unit": "quantity",
+                    "minimum": 1
+                  },
+                  "repairMinutes": {
+                    "type": "integer",
+                    "unit": "time",
+                    "minimum": 1
+                  },
+                  "repairCostMinor": {
+                    "type": "integer",
+                    "unit": "money",
+                    "minimum": 0
+                  },
+                  "fixes0": {
+                    "type": "boolean"
+                  },
+                  "fixes1": {
+                    "type": "boolean"
+                  },
+                  "fixes2": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "scenarios": {
+                "key": [
+                  "id"
+                ],
+                "columns": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "fault0": {
+                    "type": "boolean"
+                  },
+                  "fault1": {
+                    "type": "boolean"
+                  },
+                  "fault2": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "people": {
+                "key": [
+                  "id"
+                ],
+                "columns": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  }
+                }
+              },
+              "permissions": {
+                "key": [
+                  "id"
+                ],
+                "columns": {
+                  "batchId": {
+                    "type": "string"
+                  },
+                  "insertRevision": {
+                    "type": "string"
+                  },
+                  "destinationRevision": {
+                    "type": "string"
+                  },
+                  "checkoutRevision": {
+                    "type": "string"
+                  },
+                  "deviceScope": {
+                    "type": "string"
+                  },
+                  "accountScope": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "packageId": {
+                    "type": "string"
+                  },
+                  "actorId": {
+                    "type": "string"
+                  },
+                  "validFrom": {
+                    "type": "integer",
+                    "unit": "time",
+                    "minimum": 0
+                  },
+                  "validThrough": {
+                    "type": "integer",
+                    "unit": "time",
+                    "minimum": 0
+                  },
+                  "source": {
+                    "type": "string"
+                  }
+                }
+              },
+              "resources": {
+                "key": [
+                  "id"
+                ],
+                "columns": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "capacity": {
+                    "type": "integer",
+                    "unit": "count",
+                    "minimum": 0
+                  }
+                }
+              },
+              "calendars": {
+                "key": [
+                  "resource",
+                  "start",
+                  "end"
+                ],
+                "columns": {
+                  "resource": {
+                    "type": "string"
+                  },
+                  "start": {
+                    "type": "integer",
+                    "unit": "time",
+                    "minimum": 0
+                  },
+                  "end": {
+                    "type": "integer",
+                    "unit": "time",
+                    "minimum": 0
+                  }
+                }
+              },
+              "bookings": {
+                "key": [
+                  "id"
+                ],
+                "columns": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "resource": {
+                    "type": "string"
+                  },
+                  "start": {
+                    "type": "integer",
+                    "unit": "time",
+                    "minimum": 0
+                  },
+                  "end": {
+                    "type": "integer",
+                    "unit": "time",
+                    "minimum": 0
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "unit": "count",
+                    "minimum": 1
+                  }
+                }
+              },
+              "confirmations": {
+                "key": [
+                  "id"
+                ],
+                "columns": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "packageId": {
+                    "type": "string"
+                  },
+                  "batchId": {
+                    "type": "string"
+                  },
+                  "insertRevision": {
+                    "type": "string"
+                  },
+                  "destinationRevision": {
+                    "type": "string"
+                  },
+                  "checkoutRevision": {
+                    "type": "string"
+                  },
+                  "deviceScope": {
+                    "type": "string"
+                  },
+                  "accountScope": {
+                    "type": "string"
+                  },
+                  "confirmed": {
+                    "type": "boolean"
+                  },
+                  "validFrom": {
+                    "type": "integer",
+                    "unit": "time",
+                    "minimum": 0
+                  },
+                  "validThrough": {
+                    "type": "integer",
+                    "unit": "time",
+                    "minimum": 0
+                  },
+                  "recordedAt": {
+                    "type": "integer",
+                    "unit": "time",
+                    "minimum": 0
+                  },
+                  "source": {
+                    "type": "string"
+                  },
+                  "recordedBy": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "choices": [
+            {
+              "id": "packageId",
+              "domain": {
+                "values": [
+                  "rehearse-unchanged",
+                  "reprint",
+                  "repair-journey",
+                  "replace-and-repair",
+                  "external-replace-and-repair"
+                ]
+              }
+            },
+            {
+              "id": "startMinute",
+              "domain": {
+                "parameter": "startOptions"
+              }
+            }
+          ],
+          "scenarioDomain": {
+            "table": "scenarios"
+          },
+          "derived": [],
+          "activities": [
+            {
+              "id": "correct",
+              "actor": {
+                "ref": "parameter.actorId"
+              },
+              "start": {
+                "ref": "choice.startMinute"
+              },
+              "duration": {
+                "op": "lookup",
+                "table": "packages",
+                "where": {
+                  "id": {
+                    "ref": "choice.packageId"
+                  }
+                },
+                "column": "repairMinutes"
+              },
+              "resources": [
+                {
+                  "resource": {
+                    "literal": "production-team"
+                  },
+                  "amount": {
+                    "literal": 1
+                  }
+                }
+              ]
+            },
+            {
+              "id": "rehearse",
+              "actor": {
+                "ref": "parameter.actorId"
+              },
+              "start": {
+                "ref": "activity.correct.end"
+              },
+              "duration": {
+                "ref": "parameter.rehearsalMinutes"
+              },
+              "resources": [
+                {
+                  "resource": {
+                    "literal": "production-team"
+                  },
+                  "amount": {
+                    "literal": 1
+                  }
+                }
+              ]
+            },
+            {
+              "id": "handoff",
+              "actor": {
+                "ref": "parameter.actorId"
+              },
+              "start": {
+                "ref": "activity.rehearse.end"
+              },
+              "duration": {
+                "ref": "parameter.handoffMinutes"
+              },
+              "resources": [
+                {
+                  "resource": {
+                    "literal": "production-team"
+                  },
+                  "amount": {
+                    "literal": 1
+                  }
+                }
+              ]
+            }
+          ],
+          "resources": {
+            "definitions": {
+              "table": "resources",
+              "idColumn": "id",
+              "capacityColumn": "capacity"
+            },
+            "bookings": {
+              "table": "bookings",
+              "resourceColumn": "resource",
+              "startColumn": "start",
+              "endColumn": "end",
+              "amountColumn": "amount"
+            }
+          },
+          "requirements": [
+            {
+              "id": "SUFFICIENCY",
+              "label": "Complete correction",
+              "meaning": "The selected complete package addresses each fault in every remaining explanation.",
+              "waivable": false
+            },
+            {
+              "id": "COVERAGE",
+              "label": "Remaining explanations",
+              "meaning": "Every scenario comes from the author-declared fault catalog and the engine checks the whole admitted relation.",
+              "waivable": false
+            },
+            {
+              "id": "ACCESS",
+              "label": "People, resources, and permissions",
+              "meaning": "The proposed work has a known owner, resource capacity and availability, and recorded exact-scope permission.",
+              "waivable": false
+            },
+            {
+              "id": "TIME",
+              "label": "Commitment cutoff",
+              "meaning": "The complete prospective work fits between now and the kit commitment cutoff.",
+              "waivable": false
+            },
+            {
+              "id": "COST",
+              "label": "Spending ceiling",
+              "meaning": "The complete package cost fits the recorded spending ceiling.",
+              "waivable": false
+            },
+            {
+              "id": "CONFIRMATION",
+              "label": "Confirm the selected arrangement for this exact gift-kit configuration",
+              "meaning": "For any author-designated package, retain a named, sourced positive confirmation matching its package and all six configuration fields, recorded by the current review time, effective when correction starts, and valid through handoff.",
+              "waivable": false
+            }
+          ],
+          "constraints": [
+            {
+              "id": "declared-fault-state",
+              "requirement": "COVERAGE",
+              "kind": "predicate",
+              "predicate": {
+                "op": "or",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.id"
+                          },
+                          {
+                            "literal": "none"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault0"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault1"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault2"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.id"
+                          },
+                          {
+                            "literal": "print"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault0"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault1"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault2"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.id"
+                          },
+                          {
+                            "literal": "destination"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault0"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault1"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault2"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.id"
+                          },
+                          {
+                            "literal": "print-destination"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault0"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault1"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault2"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.id"
+                          },
+                          {
+                            "literal": "checkout"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault0"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault1"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault2"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.id"
+                          },
+                          {
+                            "literal": "print-checkout"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault0"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault1"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault2"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.id"
+                          },
+                          {
+                            "literal": "destination-checkout"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault0"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault1"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault2"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.id"
+                          },
+                          {
+                            "literal": "print-destination-checkout"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault0"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault1"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "scenario.fault2"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "id": "published-package-effects",
+              "requirement": "COVERAGE",
+              "kind": "predicate",
+              "predicate": {
+                "op": "or",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "choice.packageId"
+                          },
+                          {
+                            "literal": "rehearse-unchanged"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes0"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes1"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes2"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "choice.packageId"
+                          },
+                          {
+                            "literal": "reprint"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes0"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes1"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes2"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "choice.packageId"
+                          },
+                          {
+                            "literal": "repair-journey"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes0"
+                          },
+                          {
+                            "literal": false
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes1"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes2"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "choice.packageId"
+                          },
+                          {
+                            "literal": "replace-and-repair"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes0"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes1"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes2"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "choice.packageId"
+                          },
+                          {
+                            "literal": "external-replace-and-repair"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes0"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes1"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "table": "packages",
+                            "where": {
+                              "id": {
+                                "ref": "choice.packageId"
+                              }
+                            },
+                            "column": "fixes2"
+                          },
+                          {
+                            "literal": true
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "id": "correct-fault-0",
+              "requirement": "SUFFICIENCY",
+              "kind": "predicate",
+              "predicate": {
+                "op": "or",
+                "args": [
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "ref": "scenario.fault0"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "lookup",
+                    "table": "packages",
+                    "where": {
+                      "id": {
+                        "ref": "choice.packageId"
+                      }
+                    },
+                    "column": "fixes0"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "correct-fault-1",
+              "requirement": "SUFFICIENCY",
+              "kind": "predicate",
+              "predicate": {
+                "op": "or",
+                "args": [
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "ref": "scenario.fault1"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "lookup",
+                    "table": "packages",
+                    "where": {
+                      "id": {
+                        "ref": "choice.packageId"
+                      }
+                    },
+                    "column": "fixes1"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "correct-fault-2",
+              "requirement": "SUFFICIENCY",
+              "kind": "predicate",
+              "predicate": {
+                "op": "or",
+                "args": [
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "ref": "scenario.fault2"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "lookup",
+                    "table": "packages",
+                    "where": {
+                      "id": {
+                        "ref": "choice.packageId"
+                      }
+                    },
+                    "column": "fixes2"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "known-owner",
+              "requirement": "ACCESS",
+              "kind": "predicate",
+              "predicate": {
+                "op": "exists",
+                "table": "people",
+                "where": {
+                  "id": {
+                    "ref": "parameter.actorId"
+                  }
+                },
+                "test": {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "ne",
+                      "args": [
+                        {
+                          "ref": "row.name"
+                        },
+                        {
+                          "literal": ""
+                        }
+                      ]
+                    },
+                    {
+                      "op": "ne",
+                      "args": [
+                        {
+                          "ref": "row.role"
+                        },
+                        {
+                          "literal": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": "scoped-package-permission",
+              "requirement": "ACCESS",
+              "kind": "predicate",
+              "predicate": {
+                "op": "exists",
+                "table": "permissions",
+                "where": {
+                  "batchId": {
+                    "ref": "parameter.batchId"
+                  },
+                  "insertRevision": {
+                    "ref": "parameter.insertRevision"
+                  },
+                  "destinationRevision": {
+                    "ref": "parameter.destinationRevision"
+                  },
+                  "checkoutRevision": {
+                    "ref": "parameter.checkoutRevision"
+                  },
+                  "deviceScope": {
+                    "ref": "parameter.deviceScope"
+                  },
+                  "accountScope": {
+                    "ref": "parameter.accountScope"
+                  },
+                  "packageId": {
+                    "ref": "choice.packageId"
+                  },
+                  "actorId": {
+                    "ref": "parameter.actorId"
+                  }
+                },
+                "test": {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "ne",
+                      "args": [
+                        {
+                          "ref": "row.source"
+                        },
+                        {
+                          "literal": ""
+                        }
+                      ]
+                    },
+                    {
+                      "op": "lte",
+                      "args": [
+                        {
+                          "ref": "row.validFrom"
+                        },
+                        {
+                          "ref": "activity.correct.start"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "gte",
+                      "args": [
+                        {
+                          "ref": "row.validThrough"
+                        },
+                        {
+                          "ref": "activity.handoff.end"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": "resource-calendar",
+              "requirement": "ACCESS",
+              "kind": "predicate",
+              "predicate": {
+                "op": "interval-covered",
+                "table": "calendars",
+                "where": {
+                  "resource": {
+                    "literal": "production-team"
+                  }
+                },
+                "start": {
+                  "ref": "activity.correct.start"
+                },
+                "end": {
+                  "ref": "activity.handoff.end"
+                },
+                "startColumn": "start",
+                "endColumn": "end"
+              }
+            },
+            {
+              "id": "resource-capacity",
+              "requirement": "ACCESS",
+              "kind": "resource-capacity"
+            },
+            {
+              "id": "not-in-past",
+              "requirement": "TIME",
+              "kind": "predicate",
+              "predicate": {
+                "op": "gte",
+                "args": [
+                  {
+                    "ref": "activity.correct.start"
+                  },
+                  {
+                    "ref": "parameter.nowMinute"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "handoff-by-cutoff",
+              "requirement": "TIME",
+              "kind": "predicate",
+              "predicate": {
+                "op": "lte",
+                "args": [
+                  {
+                    "ref": "activity.handoff.end"
+                  },
+                  {
+                    "ref": "parameter.handoffDeadlineMinute"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "package-within-budget",
+              "requirement": "COST",
+              "kind": "predicate",
+              "predicate": {
+                "op": "lte",
+                "args": [
+                  {
+                    "ref": "finance.expense"
+                  },
+                  {
+                    "ref": "parameter.budgetMinor"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "quoted-quantity",
+              "requirement": "SUFFICIENCY",
+              "kind": "predicate",
+              "predicate": {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "lookup",
+                    "table": "packages",
+                    "where": {
+                      "id": {
+                        "ref": "choice.packageId"
+                      }
+                    },
+                    "column": "quantity"
+                  },
+                  {
+                    "ref": "parameter.quantity"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "minimum-rehearsal",
+              "requirement": "SUFFICIENCY",
+              "kind": "predicate",
+              "predicate": {
+                "op": "gte",
+                "args": [
+                  {
+                    "ref": "parameter.rehearsalMinutes"
+                  },
+                  {
+                    "literal": 5
+                  }
+                ]
+              }
+            },
+            {
+              "id": "scoped-package-confirmation",
+              "requirement": "CONFIRMATION",
+              "kind": "predicate",
+              "predicate": {
+                "op": "or",
+                "args": [
+                  {
+                    "literal": false
+                  },
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "ref": "choice.packageId"
+                          },
+                          {
+                            "literal": [
+                              "external-replace-and-repair"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "exists",
+                    "table": "confirmations",
+                    "where": {
+                      "packageId": {
+                        "ref": "choice.packageId"
+                      },
+                      "batchId": {
+                        "ref": "parameter.batchId"
+                      },
+                      "insertRevision": {
+                        "ref": "parameter.insertRevision"
+                      },
+                      "destinationRevision": {
+                        "ref": "parameter.destinationRevision"
+                      },
+                      "checkoutRevision": {
+                        "ref": "parameter.checkoutRevision"
+                      },
+                      "deviceScope": {
+                        "ref": "parameter.deviceScope"
+                      },
+                      "accountScope": {
+                        "ref": "parameter.accountScope"
+                      }
+                    },
+                    "test": {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "row.confirmed"
+                            },
+                            {
+                              "literal": true
+                            }
+                          ]
+                        },
+                        {
+                          "op": "ne",
+                          "args": [
+                            {
+                              "ref": "row.source"
+                            },
+                            {
+                              "literal": ""
+                            }
+                          ]
+                        },
+                        {
+                          "op": "ne",
+                          "args": [
+                            {
+                              "ref": "row.recordedBy"
+                            },
+                            {
+                              "literal": ""
+                            }
+                          ]
+                        },
+                        {
+                          "op": "lte",
+                          "args": [
+                            {
+                              "ref": "row.recordedAt"
+                            },
+                            {
+                              "ref": "parameter.nowMinute"
+                            }
+                          ]
+                        },
+                        {
+                          "op": "lte",
+                          "args": [
+                            {
+                              "ref": "row.validFrom"
+                            },
+                            {
+                              "ref": "activity.correct.start"
+                            }
+                          ]
+                        },
+                        {
+                          "op": "gte",
+                          "args": [
+                            {
+                              "ref": "row.validThrough"
+                            },
+                            {
+                              "ref": "activity.handoff.end"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "finance": {
+            "mode": "expense",
+            "charges": [
+              {
+                "id": "complete-correction-package",
+                "amount": {
+                  "op": "lookup",
+                  "table": "packages",
+                  "where": {
+                    "id": {
+                      "ref": "choice.packageId"
+                    }
+                  },
+                  "column": "repairCostMinor"
+                }
+              }
+            ],
+            "holds": []
+          },
+          "preference": {
+            "direction": "min",
+            "expression": {
+              "ref": "activity.handoff.end"
+            },
+            "then": [
+              {
+                "direction": "min",
+                "expression": {
+                  "ref": "finance.expense"
+                }
+              }
+            ]
+          },
+          "labels": {
+            "plan": "Complete gift-kit correction arrangement",
+            "actor": "Responsible person",
+            "expense": "Complete package cost",
+            "choice.packageId": "Preparation or correction package",
+            "choice.startMinute": "Proposed start minute",
+            "activity.correct": "Prepare or correct the gift-kit arrangement",
+            "activity.rehearse": "Repeat the scoped gift journey rehearsal",
+            "activity.handoff": "Prepare and complete the kit handoff",
+            "activity.handoff.end": "Handoff completion",
+            "constraint.declared-fault-state": "Use an admitted configuration from the published fault catalog",
+            "constraint.published-package-effects": "Retain the published correction effects of the selected package",
+            "constraint.correct-fault-0": "Address The printed code cannot be read whenever it remains possible",
+            "constraint.correct-fault-1": "Address The code leads to the wrong destination whenever it remains possible",
+            "constraint.correct-fault-2": "Address The intended checkout is restricted whenever it remains possible",
+            "constraint.known-owner": "Assign the complete work to a recorded responsible person",
+            "constraint.scoped-package-permission": "Hold recorded authority for this package, person, exact configuration, and whole working interval",
+            "constraint.resource-calendar": "Keep the full correction, rehearsal, and handoff within resource availability",
+            "constraint.resource-capacity": "Keep all proposed work within recorded resource capacity",
+            "constraint.not-in-past": "Start correction at or after the current review time",
+            "constraint.handoff-by-cutoff": "Finish correction, scoped rehearsal, and handoff before the kit commitment cutoff",
+            "constraint.package-within-budget": "Keep the complete proposed package within the recorded spending ceiling",
+            "constraint.quoted-quantity": "Use a complete-package quote for the current kit quantity",
+            "constraint.minimum-rehearsal": "Allow at least the published minimum duration for the scoped rehearsal",
+            "constraint.scoped-package-confirmation": "Confirm the selected arrangement for this exact gift-kit configuration",
+            "table.confirmations": "Recorded exact-configuration confirmations"
+          }
+        },
+        "case": {
+          "id": "gift-campaign-example-planning",
+          "parameters": {
+            "batchId": "GIFT-120",
+            "insertRevision": "insert-3",
+            "destinationRevision": "destination-2",
+            "checkoutRevision": "checkout-1",
+            "deviceScope": "campaign-test-phone",
+            "accountScope": "intended-recipient-account",
+            "actorId": "campaign-owner-1",
+            "quantity": 120,
+            "nowMinute": 0,
+            "handoffDeadlineMinute": 60,
+            "budgetMinor": 60000,
+            "rehearsalMinutes": 5,
+            "handoffMinutes": 5,
+            "startOptions": [
+              0
+            ]
+          },
+          "tables": {
+            "packages": [
+              {
+                "id": "rehearse-unchanged",
+                "quantity": 120,
+                "repairMinutes": 1,
+                "repairCostMinor": 0,
+                "fixes0": false,
+                "fixes1": false,
+                "fixes2": false
+              },
+              {
+                "id": "reprint",
+                "quantity": 120,
+                "repairMinutes": 10,
+                "repairCostMinor": 10000,
+                "fixes0": true,
+                "fixes1": false,
+                "fixes2": false
+              },
+              {
+                "id": "repair-journey",
+                "quantity": 120,
+                "repairMinutes": 15,
+                "repairCostMinor": 18000,
+                "fixes0": false,
+                "fixes1": true,
+                "fixes2": true
+              },
+              {
+                "id": "replace-and-repair",
+                "quantity": 120,
+                "repairMinutes": 25,
+                "repairCostMinor": 30000,
+                "fixes0": true,
+                "fixes1": true,
+                "fixes2": true
+              },
+              {
+                "id": "external-replace-and-repair",
+                "quantity": 120,
+                "repairMinutes": 10,
+                "repairCostMinor": 40000,
+                "fixes0": true,
+                "fixes1": true,
+                "fixes2": true
+              }
+            ],
+            "scenarios": [
+              {
+                "id": "none",
+                "fault0": false,
+                "fault1": false,
+                "fault2": false
+              },
+              {
+                "id": "print",
+                "fault0": true,
+                "fault1": false,
+                "fault2": false
+              },
+              {
+                "id": "destination",
+                "fault0": false,
+                "fault1": true,
+                "fault2": false
+              },
+              {
+                "id": "print-destination",
+                "fault0": true,
+                "fault1": true,
+                "fault2": false
+              },
+              {
+                "id": "checkout",
+                "fault0": false,
+                "fault1": false,
+                "fault2": true
+              },
+              {
+                "id": "print-checkout",
+                "fault0": true,
+                "fault1": false,
+                "fault2": true
+              },
+              {
+                "id": "destination-checkout",
+                "fault0": false,
+                "fault1": true,
+                "fault2": true
+              },
+              {
+                "id": "print-destination-checkout",
+                "fault0": true,
+                "fault1": true,
+                "fault2": true
+              }
+            ],
+            "people": [
+              {
+                "id": "campaign-owner-1",
+                "name": "Fictional campaign owner",
+                "role": "campaign-owner"
+              }
+            ],
+            "permissions": [
+              {
+                "batchId": "GIFT-120",
+                "insertRevision": "insert-3",
+                "destinationRevision": "destination-2",
+                "checkoutRevision": "checkout-1",
+                "deviceScope": "campaign-test-phone",
+                "accountScope": "intended-recipient-account",
+                "id": "PERMISSION-rehearse-unchanged",
+                "packageId": "rehearse-unchanged",
+                "actorId": "campaign-owner-1",
+                "validFrom": 0,
+                "validThrough": 120,
+                "source": "Fictional recorded campaign authorization"
+              },
+              {
+                "batchId": "GIFT-120",
+                "insertRevision": "insert-3",
+                "destinationRevision": "destination-2",
+                "checkoutRevision": "checkout-1",
+                "deviceScope": "campaign-test-phone",
+                "accountScope": "intended-recipient-account",
+                "id": "PERMISSION-reprint",
+                "packageId": "reprint",
+                "actorId": "campaign-owner-1",
+                "validFrom": 0,
+                "validThrough": 120,
+                "source": "Fictional recorded campaign authorization"
+              },
+              {
+                "batchId": "GIFT-120",
+                "insertRevision": "insert-3",
+                "destinationRevision": "destination-2",
+                "checkoutRevision": "checkout-1",
+                "deviceScope": "campaign-test-phone",
+                "accountScope": "intended-recipient-account",
+                "id": "PERMISSION-repair-journey",
+                "packageId": "repair-journey",
+                "actorId": "campaign-owner-1",
+                "validFrom": 0,
+                "validThrough": 120,
+                "source": "Fictional recorded campaign authorization"
+              },
+              {
+                "batchId": "GIFT-120",
+                "insertRevision": "insert-3",
+                "destinationRevision": "destination-2",
+                "checkoutRevision": "checkout-1",
+                "deviceScope": "campaign-test-phone",
+                "accountScope": "intended-recipient-account",
+                "id": "PERMISSION-replace-and-repair",
+                "packageId": "replace-and-repair",
+                "actorId": "campaign-owner-1",
+                "validFrom": 0,
+                "validThrough": 120,
+                "source": "Fictional recorded campaign authorization"
+              },
+              {
+                "batchId": "GIFT-120",
+                "insertRevision": "insert-3",
+                "destinationRevision": "destination-2",
+                "checkoutRevision": "checkout-1",
+                "deviceScope": "campaign-test-phone",
+                "accountScope": "intended-recipient-account",
+                "id": "PERMISSION-external",
+                "packageId": "external-replace-and-repair",
+                "actorId": "campaign-owner-1",
+                "validFrom": 0,
+                "validThrough": 120,
+                "source": "Fictional recorded campaign authorization"
+              }
+            ],
+            "resources": [
+              {
+                "id": "production-team",
+                "capacity": 1
+              }
+            ],
+            "calendars": [
+              {
+                "resource": "production-team",
+                "start": 0,
+                "end": 120
+              }
+            ],
+            "bookings": [],
+            "confirmations": []
+          },
+          "provenance": []
+        }
+      },
+      "presentation": {
+        "schemaVersion": 1,
+        "provider": "native-commitment-planning",
+        "contract": "complete-a-commitment.assessment/1",
+        "views": []
+      },
+      "viewContracts": [],
+      "fields": [],
+      "reports": [],
+      "defaultReport": null,
+      "originWorkspaceId": null,
+      "createdAt": "2026-11-23T16:59:01.941Z",
+      "contentHash": "2349e46d0b69098ddfcf58aa2b6c07743dd65f8c736f67d2ae691a2565e9c7a4"
+    },
+    "sourceProvenance": "supplied",
+    "contentHash": "f9937e43b0c57bc72f1eae573729479d17ffa5525693e859b942e27d937f61bc"
+  },
+  "mapping": {
+    "format": "decision-lab-case-workbook-mapping/1",
+    "id": "workbook-5588d149e79e5948f02bf847",
+    "version": "1.1.2",
+    "title": "Review gift kits with earliest handoff priority — complete arrangements — Excel inputs",
+    "description": "Edit the named worksheets. Other inputs remain in the saved case.",
+    "target": {
+      "type": "app",
+      "id": "review-gift-kit-earliest-planning",
+      "release": 4,
+      "pattern": "complete-a-commitment/1",
+      "packageHash": "f9937e43b0c57bc72f1eae573729479d17ffa5525693e859b942e27d937f61bc",
+      "moduleHash": "e7db1a758585ecebad1b7201128d526133038c9d12c7a3e8a86dc9b0b82228eb"
+    },
+    "managedPaths": [
+      "/parameters/startOptions",
+      "/parameters/batchId",
+      "/parameters/insertRevision",
+      "/parameters/destinationRevision",
+      "/parameters/checkoutRevision",
+      "/parameters/deviceScope",
+      "/parameters/accountScope",
+      "/parameters/actorId",
+      "/parameters/quantity",
+      "/parameters/nowMinute",
+      "/parameters/handoffDeadlineMinute",
+      "/parameters/budgetMinor",
+      "/parameters/rehearsalMinutes",
+      "/parameters/handoffMinutes",
+      "/tables/packages",
+      "/tables/scenarios",
+      "/tables/people",
+      "/tables/permissions",
+      "/tables/resources",
+      "/tables/calendars",
+      "/tables/bookings",
+      "/tables/confirmations"
+    ],
+    "sheets": [
+      {
+        "id": "read-me",
+        "name": "Read me",
+        "kind": "reference",
+        "role": "case-worker",
+        "key": [
+          "topic"
+        ],
+        "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+        "columns": [
+          {
+            "id": "topic",
+            "label": "Topic",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "text"
+          },
+          {
+            "id": "instructions",
+            "label": "Instructions",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "text"
+          }
+        ],
+        "referenceData": [
+          {
+            "topic": "Scope",
+            "instructions": "Compare one authored correction package across every remaining fault configuration, including simultaneous faults. Prospective correction is distinct from completed work."
+          },
+          {
+            "topic": "Starting values",
+            "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+          },
+          {
+            "topic": "Editing",
+            "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+          },
+          {
+            "topic": "Units and time",
+            "instructions": "Use the units shown in each column. Durations and elapsed operating times are not calendar dates."
+          },
+          {
+            "topic": "Import",
+            "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+          },
+          {
+            "topic": "Start Options",
+            "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+          },
+          {
+            "topic": "Parameters",
+            "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+          },
+          {
+            "topic": "Packages",
+            "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+          },
+          {
+            "topic": "Scenarios",
+            "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+          },
+          {
+            "topic": "People",
+            "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+          },
+          {
+            "topic": "Permissions",
+            "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+          },
+          {
+            "topic": "Resources",
+            "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+          },
+          {
+            "topic": "Calendars",
+            "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+          },
+          {
+            "topic": "Bookings",
+            "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+          },
+          {
+            "topic": "Recorded exact-configuration co",
+            "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+          }
+        ]
+      },
+      {
+        "id": "inputs-1",
+        "name": "Start Options",
+        "kind": "scalar-list",
+        "role": "case-worker",
+        "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+        "binding": {
+          "path": "/parameters/startOptions"
+        },
+        "columns": [
+          {
+            "id": "value",
+            "label": "Value",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "time",
+            "minimum": 0
+          }
+        ],
+        "key": [
+          "value"
+        ]
+      },
+      {
+        "id": "inputs-2",
+        "name": "Parameters",
+        "kind": "record",
+        "role": "case-worker",
+        "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+        "binding": {
+          "path": ""
+        },
+        "columns": [
+          {
+            "id": "parameters-batchId",
+            "label": "Parameters batch Id",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/parameters/batchId"
+          },
+          {
+            "id": "parameters-insertRevision",
+            "label": "Parameters insert Revision",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/parameters/insertRevision"
+          },
+          {
+            "id": "parameters-destinationRevision",
+            "label": "Parameters destination Revision",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/parameters/destinationRevision"
+          },
+          {
+            "id": "parameters-checkoutRevision",
+            "label": "Parameters checkout Revision",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/parameters/checkoutRevision"
+          },
+          {
+            "id": "parameters-deviceScope",
+            "label": "Parameters device Scope",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/parameters/deviceScope"
+          },
+          {
+            "id": "parameters-accountScope",
+            "label": "Parameters account Scope",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/parameters/accountScope"
+          },
+          {
+            "id": "parameters-actorId",
+            "label": "Parameters actor Id",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/parameters/actorId"
+          },
+          {
+            "id": "parameters-quantity",
+            "label": "Parameters quantity",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "gift kit",
+            "path": "/parameters/quantity",
+            "minimum": 1
+          },
+          {
+            "id": "parameters-nowMinute",
+            "label": "Parameters now Minute",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "minute",
+            "path": "/parameters/nowMinute",
+            "minimum": 0
+          },
+          {
+            "id": "parameters-handoffDeadlineMinute",
+            "label": "Parameters handoff Deadline Minute",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "minute",
+            "path": "/parameters/handoffDeadlineMinute",
+            "minimum": 0
+          },
+          {
+            "id": "parameters-budgetMinor",
+            "label": "Parameters budget Minor",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "USD cent",
+            "path": "/parameters/budgetMinor",
+            "minimum": 0
+          },
+          {
+            "id": "parameters-rehearsalMinutes",
+            "label": "Parameters rehearsal Minutes",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "minute",
+            "path": "/parameters/rehearsalMinutes",
+            "minimum": 1
+          },
+          {
+            "id": "parameters-handoffMinutes",
+            "label": "Parameters handoff Minutes",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "minute",
+            "path": "/parameters/handoffMinutes",
+            "minimum": 1
+          }
+        ],
+        "key": []
+      },
+      {
+        "id": "inputs-3",
+        "name": "Packages",
+        "kind": "table",
+        "role": "case-worker",
+        "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+        "binding": {
+          "path": "/tables/packages"
+        },
+        "columns": [
+          {
+            "id": "id",
+            "label": "Id",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/id"
+          },
+          {
+            "id": "quantity",
+            "label": "Quantity",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "gift kit",
+            "path": "/quantity",
+            "minimum": 1
+          },
+          {
+            "id": "repairMinutes",
+            "label": "Repair Minutes",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "minute",
+            "path": "/repairMinutes",
+            "minimum": 1
+          },
+          {
+            "id": "repairCostMinor",
+            "label": "Repair Cost Minor",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "USD cent",
+            "path": "/repairCostMinor",
+            "minimum": 0
+          },
+          {
+            "id": "fixes0",
+            "label": "Fixes0",
+            "type": "boolean",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/fixes0"
+          },
+          {
+            "id": "fixes1",
+            "label": "Fixes1",
+            "type": "boolean",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/fixes1"
+          },
+          {
+            "id": "fixes2",
+            "label": "Fixes2",
+            "type": "boolean",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/fixes2"
+          }
+        ],
+        "key": [
+          "id"
+        ]
+      },
+      {
+        "id": "inputs-4",
+        "name": "Scenarios",
+        "kind": "table",
+        "role": "case-worker",
+        "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+        "binding": {
+          "path": "/tables/scenarios"
+        },
+        "columns": [
+          {
+            "id": "id",
+            "label": "Id",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/id"
+          },
+          {
+            "id": "fault0",
+            "label": "Fault0",
+            "type": "boolean",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/fault0"
+          },
+          {
+            "id": "fault1",
+            "label": "Fault1",
+            "type": "boolean",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/fault1"
+          },
+          {
+            "id": "fault2",
+            "label": "Fault2",
+            "type": "boolean",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/fault2"
+          }
+        ],
+        "key": [
+          "id"
+        ]
+      },
+      {
+        "id": "inputs-5",
+        "name": "People",
+        "kind": "table",
+        "role": "case-worker",
+        "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+        "binding": {
+          "path": "/tables/people"
+        },
+        "columns": [
+          {
+            "id": "id",
+            "label": "Id",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/id"
+          },
+          {
+            "id": "name",
+            "label": "Name",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/name"
+          },
+          {
+            "id": "role",
+            "label": "Role",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/role"
+          }
+        ],
+        "key": [
+          "id"
+        ]
+      },
+      {
+        "id": "inputs-6",
+        "name": "Permissions",
+        "kind": "table",
+        "role": "case-worker",
+        "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+        "binding": {
+          "path": "/tables/permissions"
+        },
+        "columns": [
+          {
+            "id": "batchId",
+            "label": "Batch Id",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/batchId"
+          },
+          {
+            "id": "insertRevision",
+            "label": "Insert Revision",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/insertRevision"
+          },
+          {
+            "id": "destinationRevision",
+            "label": "Destination Revision",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/destinationRevision"
+          },
+          {
+            "id": "checkoutRevision",
+            "label": "Checkout Revision",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/checkoutRevision"
+          },
+          {
+            "id": "deviceScope",
+            "label": "Device Scope",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/deviceScope"
+          },
+          {
+            "id": "accountScope",
+            "label": "Account Scope",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/accountScope"
+          },
+          {
+            "id": "id",
+            "label": "Id",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/id"
+          },
+          {
+            "id": "packageId",
+            "label": "Package Id",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/packageId"
+          },
+          {
+            "id": "actorId",
+            "label": "Actor Id",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/actorId"
+          },
+          {
+            "id": "validFrom",
+            "label": "Valid From",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "minute",
+            "path": "/validFrom",
+            "minimum": 0
+          },
+          {
+            "id": "validThrough",
+            "label": "Valid Through",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "minute",
+            "path": "/validThrough",
+            "minimum": 0
+          },
+          {
+            "id": "source",
+            "label": "Source",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/source"
+          }
+        ],
+        "key": [
+          "id"
+        ]
+      },
+      {
+        "id": "inputs-7",
+        "name": "Resources",
+        "kind": "table",
+        "role": "case-worker",
+        "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+        "binding": {
+          "path": "/tables/resources"
+        },
+        "columns": [
+          {
+            "id": "id",
+            "label": "Id",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/id"
+          },
+          {
+            "id": "capacity",
+            "label": "Capacity",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "unit of resource capacity",
+            "path": "/capacity",
+            "minimum": 0
+          }
+        ],
+        "key": [
+          "id"
+        ]
+      },
+      {
+        "id": "inputs-8",
+        "name": "Calendars",
+        "kind": "table",
+        "role": "case-worker",
+        "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+        "binding": {
+          "path": "/tables/calendars"
+        },
+        "columns": [
+          {
+            "id": "resource",
+            "label": "Resource",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/resource"
+          },
+          {
+            "id": "start",
+            "label": "Start",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "minute",
+            "path": "/start",
+            "minimum": 0
+          },
+          {
+            "id": "end",
+            "label": "End",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "minute",
+            "path": "/end",
+            "minimum": 0
+          }
+        ],
+        "key": [
+          "resource",
+          "start",
+          "end"
+        ]
+      },
+      {
+        "id": "inputs-9",
+        "name": "Bookings",
+        "kind": "table",
+        "role": "case-worker",
+        "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+        "binding": {
+          "path": "/tables/bookings"
+        },
+        "columns": [
+          {
+            "id": "id",
+            "label": "Id",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/id"
+          },
+          {
+            "id": "resource",
+            "label": "Resource",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/resource"
+          },
+          {
+            "id": "start",
+            "label": "Start",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "minute",
+            "path": "/start",
+            "minimum": 0
+          },
+          {
+            "id": "end",
+            "label": "End",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "minute",
+            "path": "/end",
+            "minimum": 0
+          },
+          {
+            "id": "amount",
+            "label": "Amount",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "unit of resource capacity",
+            "path": "/amount",
+            "minimum": 1
+          }
+        ],
+        "key": [
+          "id"
+        ]
+      },
+      {
+        "id": "inputs-10",
+        "name": "Recorded exact-configuration co",
+        "kind": "table",
+        "role": "case-worker",
+        "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+        "binding": {
+          "path": "/tables/confirmations"
+        },
+        "columns": [
+          {
+            "id": "id",
+            "label": "Id",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/id"
+          },
+          {
+            "id": "packageId",
+            "label": "Package Id",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/packageId"
+          },
+          {
+            "id": "batchId",
+            "label": "Batch Id",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/batchId"
+          },
+          {
+            "id": "insertRevision",
+            "label": "Insert Revision",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/insertRevision"
+          },
+          {
+            "id": "destinationRevision",
+            "label": "Destination Revision",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/destinationRevision"
+          },
+          {
+            "id": "checkoutRevision",
+            "label": "Checkout Revision",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/checkoutRevision"
+          },
+          {
+            "id": "deviceScope",
+            "label": "Device Scope",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/deviceScope"
+          },
+          {
+            "id": "accountScope",
+            "label": "Account Scope",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/accountScope"
+          },
+          {
+            "id": "confirmed",
+            "label": "Confirmed",
+            "type": "boolean",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/confirmed"
+          },
+          {
+            "id": "validFrom",
+            "label": "Valid From",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "minute",
+            "path": "/validFrom",
+            "minimum": 0
+          },
+          {
+            "id": "validThrough",
+            "label": "Valid Through",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "minute",
+            "path": "/validThrough",
+            "minimum": 0
+          },
+          {
+            "id": "recordedAt",
+            "label": "Recorded At",
+            "type": "integer",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "minute",
+            "path": "/recordedAt",
+            "minimum": 0
+          },
+          {
+            "id": "source",
+            "label": "Source",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/source"
+          },
+          {
+            "id": "recordedBy",
+            "label": "Recorded By",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "value",
+            "path": "/recordedBy"
+          }
+        ],
+        "key": [
+          "id"
+        ]
+      }
+    ],
+    "references": [],
+    "importPolicy": {
+      "mode": "replace-managed-snapshot",
+      "missingSheet": "reject",
+      "unknownSheets": "reject",
+      "unknownColumns": "reject",
+      "formulas": "reject",
+      "coercion": "none",
+      "missingMetadata": "reject"
+    },
+    "contentHash": "89f5a9e66e55b139d66b4f274cffbc6e97e9460c49331d2ec9bb51a7599d9cd0"
+  },
+  "starter": {
+    "id": "gift-campaign-example-planning",
+    "parameters": {
+      "batchId": "GIFT-120",
+      "insertRevision": "insert-3",
+      "destinationRevision": "destination-2",
+      "checkoutRevision": "checkout-1",
+      "deviceScope": "campaign-test-phone",
+      "accountScope": "intended-recipient-account",
+      "actorId": "campaign-owner-1",
+      "quantity": 120,
+      "nowMinute": 0,
+      "handoffDeadlineMinute": 60,
+      "budgetMinor": 60000,
+      "rehearsalMinutes": 5,
+      "handoffMinutes": 5,
+      "startOptions": [
+        0
+      ]
+    },
+    "tables": {
+      "packages": [
+        {
+          "id": "rehearse-unchanged",
+          "quantity": 120,
+          "repairMinutes": 1,
+          "repairCostMinor": 0,
+          "fixes0": false,
+          "fixes1": false,
+          "fixes2": false
+        },
+        {
+          "id": "reprint",
+          "quantity": 120,
+          "repairMinutes": 10,
+          "repairCostMinor": 10000,
+          "fixes0": true,
+          "fixes1": false,
+          "fixes2": false
+        },
+        {
+          "id": "repair-journey",
+          "quantity": 120,
+          "repairMinutes": 15,
+          "repairCostMinor": 18000,
+          "fixes0": false,
+          "fixes1": true,
+          "fixes2": true
+        },
+        {
+          "id": "replace-and-repair",
+          "quantity": 120,
+          "repairMinutes": 25,
+          "repairCostMinor": 30000,
+          "fixes0": true,
+          "fixes1": true,
+          "fixes2": true
+        },
+        {
+          "id": "external-replace-and-repair",
+          "quantity": 120,
+          "repairMinutes": 10,
+          "repairCostMinor": 40000,
+          "fixes0": true,
+          "fixes1": true,
+          "fixes2": true
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "none",
+          "fault0": false,
+          "fault1": false,
+          "fault2": false
+        },
+        {
+          "id": "print",
+          "fault0": true,
+          "fault1": false,
+          "fault2": false
+        },
+        {
+          "id": "destination",
+          "fault0": false,
+          "fault1": true,
+          "fault2": false
+        },
+        {
+          "id": "print-destination",
+          "fault0": true,
+          "fault1": true,
+          "fault2": false
+        },
+        {
+          "id": "checkout",
+          "fault0": false,
+          "fault1": false,
+          "fault2": true
+        },
+        {
+          "id": "print-checkout",
+          "fault0": true,
+          "fault1": false,
+          "fault2": true
+        },
+        {
+          "id": "destination-checkout",
+          "fault0": false,
+          "fault1": true,
+          "fault2": true
+        },
+        {
+          "id": "print-destination-checkout",
+          "fault0": true,
+          "fault1": true,
+          "fault2": true
+        }
+      ],
+      "people": [
+        {
+          "id": "campaign-owner-1",
+          "name": "Fictional campaign owner",
+          "role": "campaign-owner"
+        }
+      ],
+      "permissions": [
+        {
+          "batchId": "GIFT-120",
+          "insertRevision": "insert-3",
+          "destinationRevision": "destination-2",
+          "checkoutRevision": "checkout-1",
+          "deviceScope": "campaign-test-phone",
+          "accountScope": "intended-recipient-account",
+          "id": "PERMISSION-rehearse-unchanged",
+          "packageId": "rehearse-unchanged",
+          "actorId": "campaign-owner-1",
+          "validFrom": 0,
+          "validThrough": 120,
+          "source": "Fictional recorded campaign authorization"
+        },
+        {
+          "batchId": "GIFT-120",
+          "insertRevision": "insert-3",
+          "destinationRevision": "destination-2",
+          "checkoutRevision": "checkout-1",
+          "deviceScope": "campaign-test-phone",
+          "accountScope": "intended-recipient-account",
+          "id": "PERMISSION-reprint",
+          "packageId": "reprint",
+          "actorId": "campaign-owner-1",
+          "validFrom": 0,
+          "validThrough": 120,
+          "source": "Fictional recorded campaign authorization"
+        },
+        {
+          "batchId": "GIFT-120",
+          "insertRevision": "insert-3",
+          "destinationRevision": "destination-2",
+          "checkoutRevision": "checkout-1",
+          "deviceScope": "campaign-test-phone",
+          "accountScope": "intended-recipient-account",
+          "id": "PERMISSION-repair-journey",
+          "packageId": "repair-journey",
+          "actorId": "campaign-owner-1",
+          "validFrom": 0,
+          "validThrough": 120,
+          "source": "Fictional recorded campaign authorization"
+        },
+        {
+          "batchId": "GIFT-120",
+          "insertRevision": "insert-3",
+          "destinationRevision": "destination-2",
+          "checkoutRevision": "checkout-1",
+          "deviceScope": "campaign-test-phone",
+          "accountScope": "intended-recipient-account",
+          "id": "PERMISSION-replace-and-repair",
+          "packageId": "replace-and-repair",
+          "actorId": "campaign-owner-1",
+          "validFrom": 0,
+          "validThrough": 120,
+          "source": "Fictional recorded campaign authorization"
+        },
+        {
+          "batchId": "GIFT-120",
+          "insertRevision": "insert-3",
+          "destinationRevision": "destination-2",
+          "checkoutRevision": "checkout-1",
+          "deviceScope": "campaign-test-phone",
+          "accountScope": "intended-recipient-account",
+          "id": "PERMISSION-external",
+          "packageId": "external-replace-and-repair",
+          "actorId": "campaign-owner-1",
+          "validFrom": 0,
+          "validThrough": 120,
+          "source": "Fictional recorded campaign authorization"
+        }
+      ],
+      "resources": [
+        {
+          "id": "production-team",
+          "capacity": 1
+        }
+      ],
+      "calendars": [
+        {
+          "resource": "production-team",
+          "start": 0,
+          "end": 120
+        }
+      ],
+      "bookings": [],
+      "confirmations": []
+    },
+    "provenance": []
+  },
+  "starterMeaning": "example",
+  "contentHash": "c3a328fd3377fe2418927d9043faa5a4f2199bd1f6086e600dd697709fbb6eaa"
+}

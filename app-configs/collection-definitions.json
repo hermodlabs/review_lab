@@ -8,7 +8,7 @@
           "id": "decision-lab",
           "label": "Decision Lab"
         },
-        "version": "1.11.0",
+        "version": "1.15.0",
         "title": "Order fulfillment",
         "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
         "useCases": [
@@ -27,31 +27,31 @@
           {
             "type": "app",
             "id": "complete-first-shipment",
-            "version": 5,
-            "packageHash": "3f0fe808738c4a9868fd4590fb4c2db74542a9c99b0c883f7ed0bf086f4e58bf",
+            "version": 6,
+            "packageHash": "e4f0a1d1c4b438bf21f87b69f7f1e9b3f6113e2913c0274fac6e249ce124d9ae",
             "useCaseId": "complete-first-shipment",
             "artifact": {
-              "path": "apps/complete-first-shipment/5/app.app.json",
-              "bytes": 120983,
-              "sha256": "3b853cf9c081714f49e5381c553ddc410152506004d05078c967cc35cac8046f"
+              "path": "apps/complete-first-shipment/6/app.app.json",
+              "bytes": 161925,
+              "sha256": "5d1fbda7f778eecd32fffa23ca9aaf62b27ae38e5fddbe5afe4d59d788e8cf98"
             }
           },
           {
             "type": "workflow",
             "id": "review-first-shipment",
-            "version": "1.9.0",
-            "packageHash": "52e815aca62217bbe5e21e7003283d917464a438fa013cdf21196b71fc22e749",
+            "version": "1.13.0",
+            "packageHash": "987022485a17e03d3f8a40e03d05ab82a79cb9352fc44f3eaac757429fd05f8e",
             "useCaseId": "review-first-shipment",
             "artifact": {
-              "path": "workflows/review-first-shipment/1.9.0/workflow.workflow.json",
-              "bytes": 1031850,
-              "sha256": "9e3840d8d5f830422a89369cf608ecf832e3dab8bee5dccbefc2daf108ae6ddd"
+              "path": "workflows/review-first-shipment/1.13.0/workflow.workflow.json",
+              "bytes": 1122767,
+              "sha256": "302b8c287f59494f252cf5f4bbfe47ca97c083e9d7237ba7795ecd60b58a4389"
             }
           }
         ],
         "format": "decision-lab-collection-definition/1"
       },
-      "createdAt": "2026-11-22T02:08:38.561Z"
+      "createdAt": "2026-11-23T17:16:26.670Z"
     },
     {
       "definition": {
@@ -60,7 +60,7 @@
           "id": "decision-lab",
           "label": "Decision Lab"
         },
-        "version": "2.8.0",
+        "version": "2.11.0",
         "title": "Gifting operations",
         "description": "Gifting operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
         "useCases": [
@@ -74,67 +74,79 @@
           {
             "type": "workflow",
             "id": "review-gift-kit-flexible",
-            "version": "2.8.0",
-            "packageHash": "72e6b2fcd10236ab4b5693bc37d122be4e8e551f41d584ae50fd80e6725c188f",
+            "version": "2.11.0",
+            "packageHash": "65b4cea81db6f78b84b3eabe96f1efc9f5b49898ae4426e1d349f5adf51d9db9",
             "useCaseId": "prepare-gift-kit-campaign",
             "artifact": {
-              "path": "workflows/review-gift-kit-flexible/2.8.0/workflow.workflow.json",
-              "bytes": 570188,
-              "sha256": "a3a2bef2ac30280efa64b8cc10c8d016f37088d510c686dedd1de20119e0e128"
+              "path": "workflows/review-gift-kit-flexible/2.11.0/workflow.workflow.json",
+              "bytes": 628258,
+              "sha256": "942e334923db1eb83c5deb14f46bcfc1be22706453c704132218a7ea10372f3f"
             }
           },
           {
             "type": "app",
             "id": "review-gift-kit-flexible-evidence",
-            "version": 3,
-            "packageHash": "793a5017aa587152474d8824b77fd98bfbbed1764981a5fcce64163cbc0b3358",
+            "version": 4,
+            "packageHash": "1a0b6d5519121315e2e0c229972137dda5033fd1e09d6b9b540c95faa1d56f32",
             "useCaseId": "prepare-gift-kit-campaign",
             "artifact": {
-              "path": "apps/review-gift-kit-flexible-evidence/3/app.app.json",
-              "bytes": 140906,
-              "sha256": "744a163698afa837cd3795a1f3fda383da638aba9e88e3bc69a2b20a581e9e2f"
+              "path": "apps/review-gift-kit-flexible-evidence/4/app.app.json",
+              "bytes": 159484,
+              "sha256": "f245cba22548230b4f69e7dfece076a1cc3d5873b7ff436e576fa0bf21d43d4c"
             }
           },
           {
             "type": "app",
             "id": "review-gift-kit-flexible-planning",
-            "version": 3,
-            "packageHash": "3c0aae0c30ec70d930625efd79fe29f740adf8df8cdacf7041b78dc483d4f6d6",
+            "version": 4,
+            "packageHash": "9162e13abe114321455cd7138fada5d2c59b26bd90e3abf0f100ab47bcd0e792",
             "useCaseId": "prepare-gift-kit-campaign",
             "artifact": {
-              "path": "apps/review-gift-kit-flexible-planning/3/app.app.json",
-              "bytes": 128558,
-              "sha256": "7d7ebcde477e69d9a489032b4c1a886047d9392e1049f09597f3b6f0c65ea07d"
+              "path": "apps/review-gift-kit-flexible-planning/4/app.app.json",
+              "bytes": 154446,
+              "sha256": "278f87001c4ea2fc5cd679326305e0d880699363eb8115b5f4d4b7863d6b00c5"
             }
           },
           {
             "type": "workflow",
             "id": "review-gift-kit-earliest",
-            "version": "2.8.0",
-            "packageHash": "60319b59313d7462a014f4aa57e259718c8abe3117c231fff6b314773a463d39",
+            "version": "2.11.0",
+            "packageHash": "8370f476241f60191e79275054068fdbe30ceed7d5f9a2238010ee80c2c27818",
             "useCaseId": "prepare-gift-kit-campaign",
             "artifact": {
-              "path": "workflows/review-gift-kit-earliest/2.8.0/workflow.workflow.json",
-              "bytes": 570209,
-              "sha256": "16e4885cfc78314620c7cb3e9ad1d72d0478f5c393e979a79b226451c3619ea0"
+              "path": "workflows/review-gift-kit-earliest/2.11.0/workflow.workflow.json",
+              "bytes": 628300,
+              "sha256": "83af849d6b62b1826dcae5f517f1f7421c5a89ff0e30bcb8fe179d06429b0971"
             }
           },
           {
             "type": "app",
             "id": "review-gift-kit-earliest-planning",
-            "version": 3,
-            "packageHash": "b5016d950d6db3d59c4c4f6ef74785a5bd2f649d9a2f1c2fde26dd2d052ac2c1",
+            "version": 4,
+            "packageHash": "f9937e43b0c57bc72f1eae573729479d17ffa5525693e859b942e27d937f61bc",
             "useCaseId": "prepare-gift-kit-campaign",
             "artifact": {
-              "path": "apps/review-gift-kit-earliest-planning/3/app.app.json",
-              "bytes": 128577,
-              "sha256": "1194a1001ca1bb74c122646677bb6d0b3cb0957aa1b8fcb01b2ee30201ae37d7"
+              "path": "apps/review-gift-kit-earliest-planning/4/app.app.json",
+              "bytes": 154465,
+              "sha256": "b0a2b6b251297809eff76997959dc0210c15c7d3fbbbedbdbce07efe36606dc8"
+            }
+          },
+          {
+            "type": "app",
+            "id": "review-gift-kit-earliest-evidence",
+            "version": 4,
+            "packageHash": "49aed1b4fc05add4230e782f423b5777a97bb9852c1d9e69db59ac962bc3bdf2",
+            "useCaseId": "prepare-gift-kit-campaign",
+            "artifact": {
+              "path": "apps/review-gift-kit-earliest-evidence/4/app.app.json",
+              "bytes": 159505,
+              "sha256": "6f94a3e2d69bf49c9f6e8aa14ae2c92c46de50fe0284cd6f9e927f0e36b1e469"
             }
           }
         ],
         "format": "decision-lab-collection-definition/1"
       },
-      "createdAt": "2026-11-22T02:08:38.561Z"
+      "createdAt": "2026-11-23T16:59:01.941Z"
     },
     {
       "definition": {
@@ -143,7 +155,7 @@
           "id": "decision-lab",
           "label": "Decision Lab"
         },
-        "version": "1.12.0",
+        "version": "1.15.0",
         "title": "Venue operations",
         "description": "Venue operations: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
         "useCases": [
@@ -157,24 +169,24 @@
           {
             "type": "workflow",
             "id": "street-team-deployment",
-            "version": "1.13.0",
-            "packageHash": "9c6f8584e6a075918b0081d4068bf2d503083770d1f97a3ca039f101c9115e70",
+            "version": "1.16.0",
+            "packageHash": "5c589123f1e76a632688dffe523404c60c7d306a372de3ae12282a66df8c54c8",
             "useCaseId": "deploy-street-team",
             "artifact": {
-              "path": "workflows/street-team-deployment/1.13.0/workflow.workflow.json",
-              "bytes": 256071,
-              "sha256": "9665236e76aec93941591a96696dedd873e5b20a9a4a209ae1e846c36740c98f"
+              "path": "workflows/street-team-deployment/1.16.0/workflow.workflow.json",
+              "bytes": 287269,
+              "sha256": "7fb64203f36dbe8e48ed3386233694ae7ab1c9d639e45b9bc9e304b70f8d8314"
             }
           }
         ],
         "format": "decision-lab-collection-definition/1"
       },
-      "createdAt": "2026-11-22T02:08:38.561Z"
+      "createdAt": "2026-11-23T16:59:01.941Z"
     },
     {
       "definition": {
         "id": "restaurant-operations",
-        "version": "1.6.0",
+        "version": "1.9.0",
         "publisher": {
           "id": "decision-lab",
           "label": "Decision Lab"
@@ -192,24 +204,24 @@
           {
             "type": "workflow",
             "id": "repair-published-restaurant-roster",
-            "version": "1.6.0",
-            "packageHash": "379c19be95672da68fe79dd8cb57d8e15b8f3e2a65788eef91f989b8d320e4cf",
+            "version": "1.9.0",
+            "packageHash": "f9e0ff2a7a0631ce0b2046bf8a015ac6f4c784b7afa443890e190d0424f0b33b",
             "useCaseId": "repair-published-roster",
             "artifact": {
-              "path": "workflows/repair-published-restaurant-roster/1.6.0/workflow.workflow.json",
-              "bytes": 1642793,
-              "sha256": "da0db5adbb49806f13582a55adebd69fc5975c8d5639a4988e9d702c062bc24f"
+              "path": "workflows/repair-published-restaurant-roster/1.9.0/workflow.workflow.json",
+              "bytes": 1427793,
+              "sha256": "5931d14df20eb3953ed01238f8438a670f59df4eed50d3fae7ef7029094d0ea4"
             }
           }
         ],
         "format": "decision-lab-collection-definition/1"
       },
-      "createdAt": "2026-11-22T02:08:38.561Z"
+      "createdAt": "2026-11-23T16:59:01.941Z"
     },
     {
       "definition": {
         "id": "software-delivery",
-        "version": "1.0.0",
+        "version": "1.2.0",
         "publisher": {
           "id": "decision-lab",
           "label": "Decision Lab"
@@ -227,36 +239,36 @@
           {
             "type": "workflow",
             "id": "plan-at-risk-release",
-            "version": "1.0.0",
-            "packageHash": "ac082fed5cd44cdaa9aa134b20f9f7712651792e16b03a62758e276096b0762a",
+            "version": "1.2.0",
+            "packageHash": "083c5bfeaf149f46fc097f86ea0c22d81a316e03080a3887c6a121bed2224948",
             "useCaseId": "release-recovery",
             "artifact": {
-              "path": "workflows/plan-at-risk-release/1.0.0/workflow.workflow.json",
-              "bytes": 307132,
-              "sha256": "d9c9e866ea6c0793a31630c790b3d66eb194d5871072e52a59ae8a0d90694f72"
+              "path": "workflows/plan-at-risk-release/1.2.0/workflow.workflow.json",
+              "bytes": 304429,
+              "sha256": "5c0ca7d5ab5a4c6bec040742dc87c3535c7610eb8a50328c9933d8d2039d2632"
             }
           },
           {
             "type": "app",
             "id": "compare-release-arrangements",
-            "version": 1,
-            "packageHash": "8149c0f48faa6c27727d32984c7c137189cc91247a6b254d594c1ba70c9f84e1",
+            "version": 2,
+            "packageHash": "039b149cd946f93bdba302363fe69749b7ca30487c985241329dc6f489e7f6f1",
             "useCaseId": "release-recovery",
             "artifact": {
-              "path": "apps/compare-release-arrangements/1/app.app.json",
-              "bytes": 178620,
-              "sha256": "d71b9cf38923ad30f271414bedf8c4e105de68873422e813128f5f04ff7937f4"
+              "path": "apps/compare-release-arrangements/2/app.app.json",
+              "bytes": 163583,
+              "sha256": "98e5830167fc5e5abb00285516ecfc66be3b5894e5829c5c5fb186f357b87c0d"
             }
           }
         ],
         "format": "decision-lab-collection-definition/1"
       },
-      "createdAt": "2026-11-21T18:00:00.000Z"
+      "createdAt": "2026-11-23T16:59:01.941Z"
     },
     {
       "definition": {
         "id": "business-growth",
-        "version": "1.0.0",
+        "version": "1.3.0",
         "publisher": {
           "id": "decision-lab",
           "label": "Decision Lab"
@@ -274,43 +286,43 @@
           {
             "type": "workflow",
             "id": "choose-next-month-growth",
-            "version": "1.0.0",
-            "packageHash": "0b0686551d4d515cac26acb74aa8870e445cb19fcdee59c1ad5a8840abda565b",
+            "version": "1.3.0",
+            "packageHash": "bea17b5881ba2e2c2e61d8b77b72cc805a1b97ea80bcdf18089304fa51cf2e29",
             "useCaseId": "fund-and-deliver-growth",
             "artifact": {
-              "path": "workflows/choose-next-month-growth/1.0.0/workflow.workflow.json",
-              "bytes": 335363,
-              "sha256": "5b78e9546f883c5c78112610d4509c899c92a74417ea8eb4b6b2e5d44c89179c"
+              "path": "workflows/choose-next-month-growth/1.3.0/workflow.workflow.json",
+              "bytes": 383505,
+              "sha256": "34feff39808a68747b72a22c021d8fd9824870724e628df2bb5619f341ecd238"
             }
           },
           {
             "type": "app",
             "id": "compare-growth-arrangements",
-            "version": 1,
-            "packageHash": "7a04e76f030c07d20e89d577a9c1aebb6ab9fa28c05a47d8e9afea21d379876f",
+            "version": 5,
+            "packageHash": "10525bc742b0adc3e0fc26cc63a8852fcef276f9c1497cb7c7788d3daad7be94",
             "useCaseId": "fund-and-deliver-growth",
             "artifact": {
-              "path": "apps/compare-growth-arrangements/1/app.app.json",
-              "bytes": 111921,
-              "sha256": "360de70934ab89714fc412c02b91a90f814bd76f02edc15b735c03ba6b3bcfb0"
+              "path": "apps/compare-growth-arrangements/5/app.app.json",
+              "bytes": 129665,
+              "sha256": "b5291cada634a2644017c866970572b993296cc6a81ecfe80d818f355653a9c7"
             }
           },
           {
             "type": "app",
             "id": "assess-payment-terms-test",
-            "version": 1,
-            "packageHash": "521aad0c71c44b9ec3cc979e0bb0bda410cbfb1e6415b4ee82f087ec8fdac068",
+            "version": 5,
+            "packageHash": "c3de8d5b02ae0dda831945451b9d71e0984a8ce5a2a556dc6d01d686bceb34a0",
             "useCaseId": "fund-and-deliver-growth",
             "artifact": {
-              "path": "apps/assess-payment-terms-test/1/app.app.json",
-              "bytes": 47341,
-              "sha256": "f018bd0c24a1345dc58a54a6a48b5faf40f74a178dc649ac1a2c22cb36991a36"
+              "path": "apps/assess-payment-terms-test/5/app.app.json",
+              "bytes": 59693,
+              "sha256": "eb58c96eadf1722f9a2c08de9ff9e21504ba73aeddec1e67dd4a30ad8efea331"
             }
           }
         ],
         "format": "decision-lab-collection-definition/1"
       },
-      "createdAt": "2026-11-22T18:00:00.000Z"
+      "createdAt": "2026-11-23T16:59:01.941Z"
     }
   ]
 }

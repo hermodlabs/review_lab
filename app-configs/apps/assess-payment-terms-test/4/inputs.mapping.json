@@ -1,0 +1,416 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-474a22d3e0a0af2adfab6553",
+  "version": "1.0.0",
+  "title": "Assess a payment-terms test — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case.",
+  "target": {
+    "type": "app",
+    "id": "assess-payment-terms-test",
+    "release": 4,
+    "pattern": "assess-value-of-learning/1",
+    "packageHash": "2b2f7f8f0d9c4a122fbd99fb072114a9e1f7fb915a6da77e55e8cc476ea3390c",
+    "moduleHash": "03579964c1a60683acd99be9a2c7c2c48c9002d2b87683b6734bf44f8e272983"
+  },
+  "managedPaths": [
+    "/probabilityBasis/source",
+    "/probabilityBasis/scope",
+    "/priors",
+    "/actions",
+    "/payoffs",
+    "/studies",
+    "/scope",
+    "/currentTime",
+    "/cashBudget"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "A fictional service business with a current-approach baseline and three proposed growth commitments and one standardized package. Edit the explicit case values; adapt the app for other commitments, payment structures, activity dependencies or services."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "Whole elapsed days from the declared planning origin; event order distinguishes payments within a day. Monetary inputs use integer USD cents, displayed as dollars where labelled. Opening cash is unrestricted incremental growth funding after existing obligations. Reserve funds are deducted by the cash-balance requirement once. Forecast sales and collection dates are supplied assumptions, not predictions."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Probability Basis",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Prior probabilities",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Available choices",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Choice payoffs",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Study costs and timing",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Report likelihoods",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Case details",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Probability Basis",
+      "kind": "record",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "probabilityBasis-source",
+          "label": "Probability Basis source",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/probabilityBasis/source"
+        },
+        {
+          "id": "probabilityBasis-scope",
+          "label": "Probability Basis scope",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/probabilityBasis/scope"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-2",
+      "name": "Prior probabilities",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/priors"
+      },
+      "columns": [
+        {
+          "id": "state",
+          "label": "State",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "path": "/state"
+        },
+        {
+          "id": "probability",
+          "label": "Probability",
+          "type": "probability",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "probability",
+          "path": "/probability"
+        }
+      ],
+      "key": [
+        "state"
+      ]
+    },
+    {
+      "id": "inputs-3",
+      "name": "Available choices",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/actions"
+      },
+      "columns": [
+        {
+          "id": "action",
+          "label": "Action",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "path": "/action"
+        },
+        {
+          "id": "deadline",
+          "label": "Deadline",
+          "type": "number",
+          "nullable": true,
+          "blank": "null",
+          "unit": "day",
+          "path": "/deadline",
+          "minimum": 0
+        },
+        {
+          "id": "cash",
+          "label": "Cash",
+          "type": "number",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "USD cent",
+          "path": "/cash",
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "action"
+      ]
+    },
+    {
+      "id": "inputs-4",
+      "name": "Choice payoffs",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/payoffs"
+      },
+      "columns": [
+        {
+          "id": "action",
+          "label": "Action",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "path": "/action"
+        },
+        {
+          "id": "state",
+          "label": "State",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "path": "/state"
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "number",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "USD cent",
+          "path": "/value"
+        }
+      ],
+      "key": [
+        "action",
+        "state"
+      ]
+    },
+    {
+      "id": "inputs-5",
+      "name": "Study costs and timing",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/studies"
+      },
+      "columns": [
+        {
+          "id": "study",
+          "label": "Study",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "path": "/study"
+        },
+        {
+          "id": "fee",
+          "label": "Fee",
+          "type": "number",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "USD cent",
+          "path": "/fee",
+          "minimum": 0
+        },
+        {
+          "id": "duration",
+          "label": "Duration",
+          "type": "number",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "day",
+          "path": "/duration",
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "study"
+      ]
+    },
+    {
+      "id": "inputs-6",
+      "name": "Report likelihoods",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "parent": {
+          "sheet": "inputs-5",
+          "local": [
+            "parent-1"
+          ],
+          "foreign": [
+            "study"
+          ]
+        },
+        "childrenPath": "/likelihoods"
+      },
+      "columns": [
+        {
+          "id": "parent-1",
+          "label": "Study costs and timing: Study",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "parentKey": true
+        },
+        {
+          "id": "state",
+          "label": "State",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "path": "/state"
+        },
+        {
+          "id": "report",
+          "label": "Report",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "path": "/report"
+        },
+        {
+          "id": "probability",
+          "label": "Probability",
+          "type": "probability",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "probability",
+          "path": "/probability"
+        }
+      ],
+      "key": [
+        "parent-1",
+        "state",
+        "report"
+      ]
+    },
+    {
+      "id": "inputs-7",
+      "name": "Case details",
+      "kind": "record",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "scope",
+          "label": "Scope",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/scope"
+        },
+        {
+          "id": "currentTime",
+          "label": "Current Time",
+          "type": "number",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "day",
+          "path": "/currentTime",
+          "minimum": 0
+        },
+        {
+          "id": "cashBudget",
+          "label": "Cash Budget",
+          "type": "number",
+          "nullable": true,
+          "blank": "null",
+          "unit": "USD cent",
+          "path": "/cashBudget",
+          "minimum": 0
+        }
+      ],
+      "key": []
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "8e416961997b9b3cd11f5a2f96d1a46ef5376c87eda47f0239fcddf823770543"
+}
