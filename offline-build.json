@@ -1,7 +1,7 @@
 {
-  "version": "89b8868f3ba3b17a7846",
+  "version": "4d0d1d022c9b32f6b1c0",
   "appVersion": "0.2.0",
-  "totalBytes": 65547339,
+  "totalBytes": 65547513,
   "assets": [
     {
       "url": "app-configs/README.txt",
@@ -1189,14 +1189,14 @@
       "bytes": 287269
     },
     {
-      "url": "assets/exceljs.min-DSKup1ZH.js",
-      "sha256": "0299559988614693e269b6c141ddd680610b1f72b2f25e9325cf9e1eb677884b",
+      "url": "assets/exceljs.min-BXD7uh4J.js",
+      "sha256": "6d9d429eea59bd1df26695775b84415266ac33d62db63daf10f980fbdfcd7b7e",
       "bytes": 929558
     },
     {
-      "url": "assets/index-3LyvQvxZ.js",
-      "sha256": "3481a5340b5580f8d5cb3f9cc51daccd6369dfba009ec8b1eae6a724a0b0bfbe",
-      "bytes": 2126963
+      "url": "assets/index-BLw3bIwV.js",
+      "sha256": "cdb3e43eca47d02a549f930d1e6931be2cbdb76e8bfdc16c1207d50dd0438df0",
+      "bytes": 2127137
     },
     {
       "url": "assets/index-ijKymv1r.css",
@@ -1204,8 +1204,8 @@
       "bytes": 237064
     },
     {
-      "url": "assets/jszip.min-HkrzDCee.js",
-      "sha256": "6e1411d5ce990db87fd995a63961cbb14e56be8f8608f16c324672094547e798",
+      "url": "assets/jszip.min-Dt9bB8g2.js",
+      "sha256": "ade0a8e32a929a25024c1ee57c03955599857890fcb8e765b9b9c872734ba825",
       "bytes": 95949
     },
     {
@@ -1240,7 +1240,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "c36eb0e5c4a2cd4c5cfc1f2b5a400f0b6d1fa46593de04bbe8447324804bf7b8",
+      "sha256": "92ee014e75ef832546ddda0af7f992939efead2c73a7275342c5d4eb4d658c1b",
       "bytes": 1023
     },
     {
