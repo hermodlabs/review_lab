@@ -64,6 +64,10 @@
     {
       "target": "workflows/restaurant-staffing-learning/1.0.0/workflow.workflow.json",
       "mapping": "workflows/restaurant-staffing-learning/1.0.0/inputs.mapping.json"
+    },
+    {
+      "target": "workflows/test-ai-sales-report-improvements/1.1.0/workflow.workflow.json",
+      "mapping": "workflows/test-ai-sales-report-improvements/1.1.0/inputs.mapping.json"
     }
   ]
 }

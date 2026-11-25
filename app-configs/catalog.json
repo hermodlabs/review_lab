@@ -3,7 +3,7 @@
   "kind": "decision-lab-app-catalog",
   "title": "Decision Lab marketplace",
   "description": "Operational calculations organized into collections and use cases.",
-  "exportedAt": "2026-11-24T22:00:00.000Z",
+  "exportedAt": "2026-11-25T18:00:00.000Z",
   "scope": "current-product",
   "apps": [
     {
@@ -1028,6 +1028,102 @@
         "bytes": 881501,
         "sha256": "edf8f4d2d232cd3e036125261d2bff49b6fcd63a2c89d57206c094882ed47c0a"
       }
+    },
+    {
+      "id": "test-ai-sales-report-improvements",
+      "version": "1.1.0",
+      "name": "Test reporting improvements before changing staffing",
+      "description": "Make reconciliation and exception work visible, test prompt and data improvements, and compare original and measured pilot workloads with complete team options. Experiment qualification and ongoing operating capacity remain separate. All supplied records are fictional.",
+      "publishedAt": "2026-11-25T18:00:00.000Z",
+      "contentHash": "6de1a186974380ff655955ce39018fbe423f3c016ae0f61779c87d8cc0056bff",
+      "definitionHash": "7f021c88857660280758d6db7ee96d0df8d2ccc6570443a1d781eafbd7587b1a",
+      "domain": {
+        "id": "ai-reporting",
+        "label": "AI reporting and evaluation"
+      },
+      "useCase": {
+        "id": "improve-business-report",
+        "label": "Improve a business report"
+      },
+      "primaryPattern": {
+        "id": "screen-process-improvements/1",
+        "title": "Test process improvements",
+        "question": "Which improvements deserve further testing?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "baseline",
+          "name": "Compare prompt and data changes",
+          "appId": "ai-report-baseline",
+          "version": 1,
+          "appContentHash": "950b9f231de0b9d85582da47c5af5610953e72811cc66b3411366a8dd2b09a8f",
+          "packageHash": "22b5bdeef107f823a4e315b6ba26957bb08d9201fdd74b161de6fb9d0bdde591"
+        },
+        {
+          "id": "screening",
+          "name": "Screen report improvements",
+          "appId": "ai-report-screening",
+          "version": 1,
+          "appContentHash": "55d5b9d03bd750247c7d63688cadd7d5b1129b07dcc0bdafe587bf8237085890",
+          "packageHash": "d613103c62940de79cb07b9bace3003faa62ff091198fd1d9e1cdfc93b603ade"
+        },
+        {
+          "id": "confirmation",
+          "name": "Confirm the prompt and data combination",
+          "appId": "ai-report-confirmation",
+          "version": 1,
+          "appContentHash": "707d543054e5287fd8e26ce1ccdd1bd5292de3a05526ddbb092d88372f3ff67e",
+          "packageHash": "d9364928e694cca8e06346e7d516f144be4f96fe1fd60a433719631fdf197a2c"
+        },
+        {
+          "id": "validation",
+          "name": "Validate on fresh reporting cases",
+          "appId": "ai-report-validation",
+          "version": 1,
+          "appContentHash": "c4903c86c56702f818696ceac3bd2b1c931d5dc261fad4b1db2344675c8b81f8",
+          "packageHash": "6ec98e7f7edca9dbca3e6485aca38ea6eea6243f1795e0982270df512159576c"
+        },
+        {
+          "id": "experiment",
+          "name": "Check reporting-experiment execution limits",
+          "appId": "ai-reporting-experiment-limits",
+          "version": 1,
+          "appContentHash": "fbb663109f9133f7ad29bc431e8036c9ae056a8987f1e3567ae7a87e568ce9b4",
+          "packageHash": "8dfbbd9500a298dff7c7df96a18b7a00770745407367158f4ad9c81b18e381ff"
+        },
+        {
+          "id": "reporting",
+          "name": "Compare reporting-team options",
+          "appId": "ai-reporting-team-capacity",
+          "version": 1,
+          "appContentHash": "a62d44415d5b980a673b07820e285070fafcf25cc5b953b8b0092c4bfa609d09",
+          "packageHash": "047da9caed24418e0e46f8aa964cd72e2f6152016233f4ca5b33f44852666f94"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which reporting improvements qualify, and which team options can cover the remaining work?",
+        "scope": "Fictional net direct ad bookings cases with authored factor levels, outcome rubric and separately observed original/pilot work. Adapt the app for a different task, factors or scoring contract.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/test-ai-sales-report-improvements/1.1.0/workflow.workflow.json",
+        "bytes": 1647053,
+        "sha256": "53bf41b6602b61a1a9fb7a2da33a3079daa51b2cf3b8a02e3d65447b309b96d4"
+      },
+      "workbook": {
+        "path": "workflows/test-ai-sales-report-improvements/1.1.0/inputs.workbook.json",
+        "bytes": 2079815,
+        "sha256": "5c1518dcf286efac3a4c48ddd297f8ba3fd297d01c49a1a293ccbbc4c0d3d536"
+      }
     }
   ],
   "collections": [
@@ -1132,11 +1228,28 @@
         "bytes": 2253,
         "sha256": "cdb1103c697285cb3719f9da36b91a00eb6508c439bee4ddb8a7518334fc6931"
       }
+    },
+    {
+      "id": "ai-reporting",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.1.0",
+      "title": "AI reporting and evaluation",
+      "description": "Make reporting work visible, test improvements, and compare the team options that cover the measured remaining work.",
+      "createdAt": "2026-11-25T18:00:00.000Z",
+      "contentHash": "47c6ee130c869a728dd6d9fc467a287a6c34ba5c4abbb8d57f4085ac008cfc4c",
+      "package": {
+        "path": "collections/decision-lab/ai-reporting/1.1.0/collection.collection.json",
+        "bytes": 1366,
+        "sha256": "df8cbaae9632667aa9f16275b9efe3a699d26475f6092f1c28a3e54f4970d5f4"
+      }
     }
   ],
   "historyCatalog": {
     "path": "release-history.catalog.json",
-    "bytes": 141768,
-    "sha256": "bce61bbdd8145153433a873fc9b95c3cd02dbeaaa02b78cc2c486efe45b32c65"
+    "bytes": 146441,
+    "sha256": "7469426117451b68dff95a9097a903ac7d36726af1f77f77dbcf004ad99ed94a"
   }
 }

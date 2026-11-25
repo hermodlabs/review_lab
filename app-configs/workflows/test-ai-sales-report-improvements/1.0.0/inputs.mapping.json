@@ -1,0 +1,1286 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-e43ab1f4c764d4ab984967a0",
+  "version": "1.0.0",
+  "title": "Test improvements to an AI sales report — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case.",
+  "target": {
+    "type": "workflow",
+    "id": "test-ai-sales-report-improvements",
+    "version": "1.0.0",
+    "packageHash": "d8a53e2f43dbe6bcef14a2a06bd733b5290dda8570fe50146fd1c6bca853e4ef",
+    "definitionHash": "98bf1013faa925d2105b3bafe813d53b260dc0797009ad3482ae1c5ef44afef8"
+  },
+  "managedPaths": [
+    "/baseline/system/id",
+    "/baseline/system/version",
+    "/baseline/system/promptVersion",
+    "/baseline/system/settingsVersion",
+    "/baseline/cases",
+    "/baseline/observations",
+    "/screening/system/id",
+    "/screening/system/version",
+    "/screening/system/promptVersion",
+    "/screening/system/settingsVersion",
+    "/screening/cases",
+    "/screening/observations",
+    "/confirmation/system/id",
+    "/confirmation/system/version",
+    "/confirmation/system/promptVersion",
+    "/confirmation/system/settingsVersion",
+    "/confirmation/cases",
+    "/confirmation/observations",
+    "/validation/system/id",
+    "/validation/system/version",
+    "/validation/system/promptVersion",
+    "/validation/system/settingsVersion",
+    "/validation/cases",
+    "/validation/observations",
+    "/operations/parameters/experimentAccess",
+    "/operations/parameters/experimentExpenseMinor",
+    "/operations/parameters/experimentBudgetMinor",
+    "/operations/parameters/experimentHours",
+    "/operations/parameters/experimentHoursAvailable",
+    "/operations/parameters/experimentFinishDay",
+    "/operations/parameters/selectionCutoffDay",
+    "/operations/parameters/reportingWorkloadHours",
+    "/operations/parameters/managerHours",
+    "/operations/parameters/analystHours",
+    "/operations/parameters/evidenceAccess",
+    "/operations/parameters/reportReadyMinute",
+    "/operations/parameters/reportDeadlineMinute"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "Authored fictional AI reporting experiments with separate fixed reference cases, scored execution records and operating measurements."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "Report times are minutes after midnight (09:00 = 540). Experiment planning uses elapsed days. Workload and available capacity are hours per week. Money is integer USD cents. All bundled observations are fictional; replace scored records, not the frozen factor or outcome rules."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Prompt and data comparison · Sy",
+          "instructions": "Editable inputs. Record exact build and settings. Do not pool different systems as if they were repetitions."
+        },
+        {
+          "topic": "cases",
+          "instructions": "Editable inputs. Same task and reference for each configuration; validation cases must be separate from development cases."
+        },
+        {
+          "topic": "observations",
+          "instructions": "Editable inputs. One scored output per case, configuration and repetition. Keep failures visible; do not silently omit them."
+        },
+        {
+          "topic": "Screening records · System iden",
+          "instructions": "Editable inputs. Record exact build and settings. Do not pool different systems as if they were repetitions."
+        },
+        {
+          "topic": "cases 2",
+          "instructions": "Editable inputs. Same task and reference for each configuration; validation cases must be separate from development cases."
+        },
+        {
+          "topic": "observations 2",
+          "instructions": "Editable inputs. One scored output per case, configuration and repetition. Keep failures visible; do not silently omit them."
+        },
+        {
+          "topic": "Confirmation records · System i",
+          "instructions": "Editable inputs. Record exact build and settings. Do not pool different systems as if they were repetitions."
+        },
+        {
+          "topic": "cases 3",
+          "instructions": "Editable inputs. Same task and reference for each configuration; validation cases must be separate from development cases."
+        },
+        {
+          "topic": "observations 3",
+          "instructions": "Editable inputs. One scored output per case, configuration and repetition. Keep failures visible; do not silently omit them."
+        },
+        {
+          "topic": "Fresh-case validation · System ",
+          "instructions": "Editable inputs. Record exact build and settings. Do not pool different systems as if they were repetitions."
+        },
+        {
+          "topic": "cases 4",
+          "instructions": "Editable inputs. Same task and reference for each configuration; validation cases must be separate from development cases."
+        },
+        {
+          "topic": "observations 4",
+          "instructions": "Editable inputs. One scored output per case, configuration and repetition. Keep failures visible; do not silently omit them."
+        },
+        {
+          "topic": "Access to execute the experimen",
+          "instructions": "Editable inputs. A supplied operating limit or measured workload; this value is not estimated by the experimental comparison."
+        },
+        {
+          "topic": "Complete experiment expense (US",
+          "instructions": "Editable inputs. A supplied operating limit or measured workload; this value is not estimated by the experimental comparison."
+        },
+        {
+          "topic": "Experiment spending limit (USD ",
+          "instructions": "Editable inputs. A supplied operating limit or measured workload; this value is not estimated by the experimental comparison."
+        },
+        {
+          "topic": "Complete experimental effort (h",
+          "instructions": "Editable inputs. A supplied operating limit or measured workload; this value is not estimated by the experimental comparison."
+        },
+        {
+          "topic": "Hours available for the experim",
+          "instructions": "Editable inputs. A supplied operating limit or measured workload; this value is not estimated by the experimental comparison."
+        },
+        {
+          "topic": "Experimental results available ",
+          "instructions": "Editable inputs. A supplied operating limit or measured workload; this value is not estimated by the experimental comparison."
+        },
+        {
+          "topic": "Experiment selection cutoff (da",
+          "instructions": "Editable inputs. A supplied operating limit or measured workload; this value is not estimated by the experimental comparison."
+        },
+        {
+          "topic": "Separately supplied reporting w",
+          "instructions": "Editable inputs. A supplied operating limit or measured workload; this value is not estimated by the experimental comparison."
+        },
+        {
+          "topic": "Reporting manager availability ",
+          "instructions": "Editable inputs. A supplied operating limit or measured workload; this value is not estimated by the experimental comparison."
+        },
+        {
+          "topic": "Reporting availability per anal",
+          "instructions": "Editable inputs. A supplied operating limit or measured workload; this value is not estimated by the experimental comparison."
+        },
+        {
+          "topic": "Required reporting evidence acc",
+          "instructions": "Editable inputs. A supplied operating limit or measured workload; this value is not estimated by the experimental comparison."
+        },
+        {
+          "topic": "Report ready (local minute)",
+          "instructions": "Editable inputs. A supplied operating limit or measured workload; this value is not estimated by the experimental comparison."
+        },
+        {
+          "topic": "Reporting decision cutoff (loca",
+          "instructions": "Editable inputs. A supplied operating limit or measured workload; this value is not estimated by the experimental comparison."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Prompt and data comparison · Sy",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "Record exact build and settings. Do not pool different systems as if they were repetitions.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "baseline-system-id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/baseline/system/id"
+        },
+        {
+          "id": "baseline-system-version",
+          "label": "version",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/baseline/system/version"
+        },
+        {
+          "id": "baseline-system-promptVersion",
+          "label": "promptVersion",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/baseline/system/promptVersion"
+        },
+        {
+          "id": "baseline-system-settingsVersion",
+          "label": "settingsVersion",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/baseline/system/settingsVersion"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-2",
+      "name": "cases",
+      "kind": "table",
+      "role": "report-owner",
+      "meaning": "Same task and reference for each configuration; validation cases must be separate from development cases.",
+      "binding": {
+        "path": "/baseline/cases"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "label",
+          "label": "label",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/label"
+        },
+        {
+          "id": "reference",
+          "label": "reference",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/reference"
+        },
+        {
+          "id": "source",
+          "label": "source",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/source"
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-3",
+      "name": "observations",
+      "kind": "table",
+      "role": "report-owner",
+      "meaning": "One scored output per case, configuration and repetition. Keep failures visible; do not silently omit them.",
+      "binding": {
+        "path": "/baseline/observations"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "caseId",
+          "label": "caseId",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/caseId"
+        },
+        {
+          "id": "configurationId",
+          "label": "configurationId",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/configurationId"
+        },
+        {
+          "id": "repetition",
+          "label": "repetition",
+          "type": "number",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/repetition"
+        },
+        {
+          "id": "status",
+          "label": "status",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/status"
+        },
+        {
+          "id": "outcomes-evidence-handling",
+          "label": "evidence-handling",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/outcomes/evidence-handling"
+        },
+        {
+          "id": "outcomes-task-completion",
+          "label": "task-completion",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/outcomes/task-completion"
+        },
+        {
+          "id": "outcomes-unsupported-claims",
+          "label": "unsupported-claims",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/outcomes/unsupported-claims"
+        },
+        {
+          "id": "source",
+          "label": "source",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/source"
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-4",
+      "name": "Screening records · System iden",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "Record exact build and settings. Do not pool different systems as if they were repetitions.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "screening-system-id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/screening/system/id"
+        },
+        {
+          "id": "screening-system-version",
+          "label": "version",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/screening/system/version"
+        },
+        {
+          "id": "screening-system-promptVersion",
+          "label": "promptVersion",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/screening/system/promptVersion"
+        },
+        {
+          "id": "screening-system-settingsVersion",
+          "label": "settingsVersion",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/screening/system/settingsVersion"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-5",
+      "name": "cases 2",
+      "kind": "table",
+      "role": "report-owner",
+      "meaning": "Same task and reference for each configuration; validation cases must be separate from development cases.",
+      "binding": {
+        "path": "/screening/cases"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "label",
+          "label": "label",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/label"
+        },
+        {
+          "id": "reference",
+          "label": "reference",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/reference"
+        },
+        {
+          "id": "source",
+          "label": "source",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/source"
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-6",
+      "name": "observations 2",
+      "kind": "table",
+      "role": "report-owner",
+      "meaning": "One scored output per case, configuration and repetition. Keep failures visible; do not silently omit them.",
+      "binding": {
+        "path": "/screening/observations"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "caseId",
+          "label": "caseId",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/caseId"
+        },
+        {
+          "id": "configurationId",
+          "label": "configurationId",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/configurationId"
+        },
+        {
+          "id": "repetition",
+          "label": "repetition",
+          "type": "number",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/repetition"
+        },
+        {
+          "id": "status",
+          "label": "status",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/status"
+        },
+        {
+          "id": "outcomes-evidence-handling",
+          "label": "evidence-handling",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/outcomes/evidence-handling"
+        },
+        {
+          "id": "outcomes-task-completion",
+          "label": "task-completion",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/outcomes/task-completion"
+        },
+        {
+          "id": "outcomes-unsupported-claims",
+          "label": "unsupported-claims",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/outcomes/unsupported-claims"
+        },
+        {
+          "id": "source",
+          "label": "source",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/source"
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-7",
+      "name": "Confirmation records · System i",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "Record exact build and settings. Do not pool different systems as if they were repetitions.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "confirmation-system-id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/confirmation/system/id"
+        },
+        {
+          "id": "confirmation-system-version",
+          "label": "version",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/confirmation/system/version"
+        },
+        {
+          "id": "confirmation-system-promptVersion",
+          "label": "promptVersion",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/confirmation/system/promptVersion"
+        },
+        {
+          "id": "confirmation-system-settingsVersion",
+          "label": "settingsVersion",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/confirmation/system/settingsVersion"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-8",
+      "name": "cases 3",
+      "kind": "table",
+      "role": "report-owner",
+      "meaning": "Same task and reference for each configuration; validation cases must be separate from development cases.",
+      "binding": {
+        "path": "/confirmation/cases"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "label",
+          "label": "label",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/label"
+        },
+        {
+          "id": "reference",
+          "label": "reference",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/reference"
+        },
+        {
+          "id": "source",
+          "label": "source",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/source"
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-9",
+      "name": "observations 3",
+      "kind": "table",
+      "role": "report-owner",
+      "meaning": "One scored output per case, configuration and repetition. Keep failures visible; do not silently omit them.",
+      "binding": {
+        "path": "/confirmation/observations"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "caseId",
+          "label": "caseId",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/caseId"
+        },
+        {
+          "id": "configurationId",
+          "label": "configurationId",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/configurationId"
+        },
+        {
+          "id": "repetition",
+          "label": "repetition",
+          "type": "number",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/repetition"
+        },
+        {
+          "id": "status",
+          "label": "status",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/status"
+        },
+        {
+          "id": "outcomes-evidence-handling",
+          "label": "evidence-handling",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/outcomes/evidence-handling"
+        },
+        {
+          "id": "outcomes-task-completion",
+          "label": "task-completion",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/outcomes/task-completion"
+        },
+        {
+          "id": "outcomes-unsupported-claims",
+          "label": "unsupported-claims",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/outcomes/unsupported-claims"
+        },
+        {
+          "id": "source",
+          "label": "source",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/source"
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-10",
+      "name": "Fresh-case validation · System ",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "Record exact build and settings. Do not pool different systems as if they were repetitions.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "validation-system-id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/validation/system/id"
+        },
+        {
+          "id": "validation-system-version",
+          "label": "version",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/validation/system/version"
+        },
+        {
+          "id": "validation-system-promptVersion",
+          "label": "promptVersion",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/validation/system/promptVersion"
+        },
+        {
+          "id": "validation-system-settingsVersion",
+          "label": "settingsVersion",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/validation/system/settingsVersion"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-11",
+      "name": "cases 4",
+      "kind": "table",
+      "role": "report-owner",
+      "meaning": "Same task and reference for each configuration; validation cases must be separate from development cases.",
+      "binding": {
+        "path": "/validation/cases"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "label",
+          "label": "label",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/label"
+        },
+        {
+          "id": "reference",
+          "label": "reference",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/reference"
+        },
+        {
+          "id": "source",
+          "label": "source",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/source"
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-12",
+      "name": "observations 4",
+      "kind": "table",
+      "role": "report-owner",
+      "meaning": "One scored output per case, configuration and repetition. Keep failures visible; do not silently omit them.",
+      "binding": {
+        "path": "/validation/observations"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "caseId",
+          "label": "caseId",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/caseId"
+        },
+        {
+          "id": "configurationId",
+          "label": "configurationId",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/configurationId"
+        },
+        {
+          "id": "repetition",
+          "label": "repetition",
+          "type": "number",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/repetition"
+        },
+        {
+          "id": "status",
+          "label": "status",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/status"
+        },
+        {
+          "id": "outcomes-evidence-handling",
+          "label": "evidence-handling",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/outcomes/evidence-handling"
+        },
+        {
+          "id": "outcomes-task-completion",
+          "label": "task-completion",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/outcomes/task-completion"
+        },
+        {
+          "id": "outcomes-unsupported-claims",
+          "label": "unsupported-claims",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/outcomes/unsupported-claims"
+        },
+        {
+          "id": "source",
+          "label": "source",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/source"
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-13",
+      "name": "Access to execute the experimen",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "A supplied operating limit or measured workload; this value is not estimated by the experimental comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "operations-parameters-experimentAccess",
+          "label": "experimentAccess",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/operations/parameters/experimentAccess"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-14",
+      "name": "Complete experiment expense (US",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "A supplied operating limit or measured workload; this value is not estimated by the experimental comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "operations-parameters-experimentExpenseMinor",
+          "label": "experimentExpenseMinor",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/operations/parameters/experimentExpenseMinor"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-15",
+      "name": "Experiment spending limit (USD ",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "A supplied operating limit or measured workload; this value is not estimated by the experimental comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "operations-parameters-experimentBudgetMinor",
+          "label": "experimentBudgetMinor",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/operations/parameters/experimentBudgetMinor"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-16",
+      "name": "Complete experimental effort (h",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "A supplied operating limit or measured workload; this value is not estimated by the experimental comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "operations-parameters-experimentHours",
+          "label": "experimentHours",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/operations/parameters/experimentHours"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-17",
+      "name": "Hours available for the experim",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "A supplied operating limit or measured workload; this value is not estimated by the experimental comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "operations-parameters-experimentHoursAvailable",
+          "label": "experimentHoursAvailable",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/operations/parameters/experimentHoursAvailable"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-18",
+      "name": "Experimental results available ",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "A supplied operating limit or measured workload; this value is not estimated by the experimental comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "operations-parameters-experimentFinishDay",
+          "label": "experimentFinishDay",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/operations/parameters/experimentFinishDay"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-19",
+      "name": "Experiment selection cutoff (da",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "A supplied operating limit or measured workload; this value is not estimated by the experimental comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "operations-parameters-selectionCutoffDay",
+          "label": "selectionCutoffDay",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/operations/parameters/selectionCutoffDay"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-20",
+      "name": "Separately supplied reporting w",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "A supplied operating limit or measured workload; this value is not estimated by the experimental comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "operations-parameters-reportingWorkloadHours",
+          "label": "reportingWorkloadHours",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/operations/parameters/reportingWorkloadHours"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-21",
+      "name": "Reporting manager availability ",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "A supplied operating limit or measured workload; this value is not estimated by the experimental comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "operations-parameters-managerHours",
+          "label": "managerHours",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/operations/parameters/managerHours"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-22",
+      "name": "Reporting availability per anal",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "A supplied operating limit or measured workload; this value is not estimated by the experimental comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "operations-parameters-analystHours",
+          "label": "analystHours",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/operations/parameters/analystHours"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-23",
+      "name": "Required reporting evidence acc",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "A supplied operating limit or measured workload; this value is not estimated by the experimental comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "operations-parameters-evidenceAccess",
+          "label": "evidenceAccess",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/operations/parameters/evidenceAccess"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-24",
+      "name": "Report ready (local minute)",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "A supplied operating limit or measured workload; this value is not estimated by the experimental comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "operations-parameters-reportReadyMinute",
+          "label": "reportReadyMinute",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/operations/parameters/reportReadyMinute"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-25",
+      "name": "Reporting decision cutoff (loca",
+      "kind": "record",
+      "role": "report-owner",
+      "meaning": "A supplied operating limit or measured workload; this value is not estimated by the experimental comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "operations-parameters-reportDeadlineMinute",
+          "label": "reportDeadlineMinute",
+          "type": "number",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/operations/parameters/reportDeadlineMinute"
+        }
+      ],
+      "key": []
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "32b1bacef33d6a2cce93294b673034a4c0fc6596be32c666cb5feb696c6ce525"
+}

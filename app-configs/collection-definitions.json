@@ -340,6 +340,41 @@
         "format": "decision-lab-collection-definition/1"
       },
       "createdAt": "2026-11-23T16:59:01.941Z"
+    },
+    {
+      "definition": {
+        "id": "ai-reporting",
+        "version": "1.1.0",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "title": "AI reporting and evaluation",
+        "description": "Make reporting work visible, test improvements, and compare the team options that cover the measured remaining work.",
+        "useCases": [
+          {
+            "id": "improve-business-report",
+            "label": "Improve a business report",
+            "description": "Compare current and pilot work, qualify an improvement on separate outcomes, and inspect conditional reporting capacity."
+          }
+        ],
+        "members": [
+          {
+            "type": "workflow",
+            "id": "test-ai-sales-report-improvements",
+            "version": "1.1.0",
+            "packageHash": "6de1a186974380ff655955ce39018fbe423f3c016ae0f61779c87d8cc0056bff",
+            "useCaseId": "improve-business-report",
+            "artifact": {
+              "path": "workflows/test-ai-sales-report-improvements/1.1.0/workflow.workflow.json",
+              "bytes": 1647053,
+              "sha256": "53bf41b6602b61a1a9fb7a2da33a3079daa51b2cf3b8a02e3d65447b309b96d4"
+            }
+          }
+        ],
+        "format": "decision-lab-collection-definition/1"
+      },
+      "createdAt": "2026-11-25T18:00:00.000Z"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
-  "version": "72149d2ff1e28cefbdf2",
+  "version": "ebcfde47597daef6010f",
   "appVersion": "0.2.0",
-  "totalBytes": 67280618,
+  "totalBytes": 74597043,
   "assets": [
     {
       "url": "app-configs/README.txt",
@@ -450,13 +450,23 @@
     },
     {
       "url": "app-configs/catalog.json",
-      "sha256": "a25d9d2bb79ba712bc20808924bfcbf6f6e6772122e8f5f464b8479a1b527d8d",
-      "bytes": 48835
+      "sha256": "e6ecc2320a905131470327302fdc01786ff23c64b73e8328e60e536465275550",
+      "bytes": 53897
     },
     {
       "url": "app-configs/collection-definitions.json",
-      "sha256": "c567c95469532cf767490751dbccb72face3181608ef0f8e2dac41e3e98ce185",
-      "bytes": 14007
+      "sha256": "6d936ad4e1d95d7424f133a09f8a45453c00aad2635d14764e3d5f8340b28cc7",
+      "bytes": 15388
+    },
+    {
+      "url": "app-configs/collections/decision-lab/ai-reporting/1.0.0/collection.collection.json",
+      "sha256": "9e6d5803dd5fbd92366e349a2ae563caefe96063c8eda25b809e3d2292e7d55a",
+      "bytes": 1359
+    },
+    {
+      "url": "app-configs/collections/decision-lab/ai-reporting/1.1.0/collection.collection.json",
+      "sha256": "df8cbaae9632667aa9f16275b9efe3a699d26475f6092f1c28a3e54f4970d5f4",
+      "bytes": 1366
     },
     {
       "url": "app-configs/collections/decision-lab/business-growth/1.0.0/collection.collection.json",
@@ -630,13 +640,13 @@
     },
     {
       "url": "app-configs/release-history.catalog.json",
-      "sha256": "bce61bbdd8145153433a873fc9b95c3cd02dbeaaa02b78cc2c486efe45b32c65",
-      "bytes": 141768
+      "sha256": "7469426117451b68dff95a9097a903ac7d36726af1f77f77dbcf004ad99ed94a",
+      "bytes": 146441
     },
     {
       "url": "app-configs/workbook-definitions.json",
-      "sha256": "123644bc659ea7002eb5d98803837d77311160a09a7081072b1e0c80f5625a32",
-      "bytes": 2766
+      "sha256": "256587f039f7647d2159d294b77f823212ad998440d3315f71d4f76ddd8f4998",
+      "bytes": 2960
     },
     {
       "url": "app-configs/workflows/choose-next-month-growth/1.0.0/inputs.mapping.json",
@@ -1209,14 +1219,44 @@
       "bytes": 287269
     },
     {
-      "url": "assets/exceljs.min-BXD7uh4J.js",
-      "sha256": "6d9d429eea59bd1df26695775b84415266ac33d62db63daf10f980fbdfcd7b7e",
+      "url": "app-configs/workflows/test-ai-sales-report-improvements/1.0.0/inputs.mapping.json",
+      "sha256": "297edcc5f402e5342d59da8744627450cab2afa84c5570d5fc412d5882879505",
+      "bytes": 38781
+    },
+    {
+      "url": "app-configs/workflows/test-ai-sales-report-improvements/1.0.0/inputs.workbook.json",
+      "sha256": "f8f5d135eb08dc4e570c81078cd52290e872a8a48fee45461f2bdf3b46b3dd4f",
+      "bytes": 1894899
+    },
+    {
+      "url": "app-configs/workflows/test-ai-sales-report-improvements/1.0.0/workflow.workflow.json",
+      "sha256": "95315a57563902c9a8eeff737b75120583e09a43f280645bb63c381e807b7d30",
+      "bytes": 1491208
+    },
+    {
+      "url": "app-configs/workflows/test-ai-sales-report-improvements/1.1.0/inputs.mapping.json",
+      "sha256": "851db3cda250637a970147c77fb4889fe8fe107df01979077552dbec138e2fe0",
+      "bytes": 55947
+    },
+    {
+      "url": "app-configs/workflows/test-ai-sales-report-improvements/1.1.0/inputs.workbook.json",
+      "sha256": "5c1518dcf286efac3a4c48ddd297f8ba3fd297d01c49a1a293ccbbc4c0d3d536",
+      "bytes": 2079815
+    },
+    {
+      "url": "app-configs/workflows/test-ai-sales-report-improvements/1.1.0/workflow.workflow.json",
+      "sha256": "53bf41b6602b61a1a9fb7a2da33a3079daa51b2cf3b8a02e3d65447b309b96d4",
+      "bytes": 1647053
+    },
+    {
+      "url": "assets/exceljs.min-neuyymy3.js",
+      "sha256": "e30c8810173089ea1a10f9a386372044b5be7401788d28c36fe3149405b81ea2",
       "bytes": 929558
     },
     {
-      "url": "assets/index-BLw3bIwV.js",
-      "sha256": "cdb3e43eca47d02a549f930d1e6931be2cbdb76e8bfdc16c1207d50dd0438df0",
-      "bytes": 2127137
+      "url": "assets/index-CuUdom1e.js",
+      "sha256": "1fdad23eaa5508c749e942e89debc5150ef678e68f8daa5c12b84271eb0f05c5",
+      "bytes": 2185860
     },
     {
       "url": "assets/index-ijKymv1r.css",
@@ -1224,14 +1264,14 @@
       "bytes": 237064
     },
     {
-      "url": "assets/jszip.min-Dt9bB8g2.js",
-      "sha256": "ade0a8e32a929a25024c1ee57c03955599857890fcb8e765b9b9c872734ba825",
+      "url": "assets/jszip.min-Cn9lsPPJ.js",
+      "sha256": "b1214128fe7f5154fa640a37ab2a83f6dde748f023bcdf8c8f5d16d73fce113c",
       "bytes": 95949
     },
     {
-      "url": "assets/worker-DrDy9EP2.js",
-      "sha256": "40c2ba75c7e4a8aca7eaf4efae6d02ff36f20eebbcdee5ee427772285f250b39",
-      "bytes": 530254
+      "url": "assets/worker-B5cfXO2O.js",
+      "sha256": "d090e984fc408d4beba591fa4a0b538c012c592692014853baa5fd550cd1e58b",
+      "bytes": 566218
     },
     {
       "url": "icons/apple-touch-icon.png",
@@ -1260,7 +1300,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "0150c3294a49f544c3390e2147e157f8351f258006b91031b34f7f8ea38e2a4a",
+      "sha256": "08c0c468ea2df855ef9de1c1849b6e3e39f14ba211f6004b2024160cdc509783",
       "bytes": 1023
     },
     {

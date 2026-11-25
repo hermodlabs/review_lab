@@ -1,0 +1,37 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "ai-reporting",
+    "version": "1.0.0",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "title": "AI reporting and evaluation",
+    "description": "Test prompt and data changes against an independent reporting reference before changing the operating process.",
+    "useCases": [
+      {
+        "id": "improve-business-report",
+        "label": "Improve a business report",
+        "description": "Screen candidate improvements, confirm interactions, validate fresh cases and check the reporting operation separately."
+      }
+    ],
+    "members": [
+      {
+        "type": "workflow",
+        "id": "test-ai-sales-report-improvements",
+        "version": "1.0.0",
+        "packageHash": "d8a53e2f43dbe6bcef14a2a06bd733b5290dda8570fe50146fd1c6bca853e4ef",
+        "useCaseId": "improve-business-report",
+        "artifact": {
+          "path": "workflows/test-ai-sales-report-improvements/1.0.0/workflow.workflow.json",
+          "bytes": 1491208,
+          "sha256": "95315a57563902c9a8eeff737b75120583e09a43f280645bb63c381e807b7d30"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-25T18:00:00.000Z",
+  "contentHash": "0a2c04fc4d61571ee312ceeb54c1e24af0296a79fbbebfcc9294b0f7629c3cc4"
+}

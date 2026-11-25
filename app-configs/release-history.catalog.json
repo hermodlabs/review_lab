@@ -2769,6 +2769,94 @@
         "bytes": 1231717,
         "sha256": "6f913d39190758e6ba0fed266ce12de5df9f5fd097f67a6c29e0ee82ff32ad2a"
       }
+    },
+    {
+      "id": "test-ai-sales-report-improvements",
+      "version": "1.0.0",
+      "name": "Test improvements to an AI sales report",
+      "description": "Compare prompt and data changes on a fixed net-bookings task, screen eight candidate changes, confirm their joint effect and validate on fresh cases. Separately check workload, source access and reporting deadlines. All supplied observations are fictional.",
+      "publishedAt": "2026-11-25T18:00:00.000Z",
+      "contentHash": "d8a53e2f43dbe6bcef14a2a06bd733b5290dda8570fe50146fd1c6bca853e4ef",
+      "definitionHash": "98bf1013faa925d2105b3bafe813d53b260dc0797009ad3482ae1c5ef44afef8",
+      "domain": {
+        "id": "ai-reporting",
+        "label": "AI reporting and evaluation"
+      },
+      "useCase": {
+        "id": "improve-business-report",
+        "label": "Improve a business report"
+      },
+      "primaryPattern": {
+        "id": "screen-process-improvements/1",
+        "title": "Test process improvements",
+        "question": "Which improvements deserve further testing?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "baseline",
+          "name": "Compare prompt and data changes",
+          "appId": "ai-report-baseline",
+          "version": 1,
+          "appContentHash": "950b9f231de0b9d85582da47c5af5610953e72811cc66b3411366a8dd2b09a8f",
+          "packageHash": "22b5bdeef107f823a4e315b6ba26957bb08d9201fdd74b161de6fb9d0bdde591"
+        },
+        {
+          "id": "screening",
+          "name": "Screen report improvements",
+          "appId": "ai-report-screening",
+          "version": 1,
+          "appContentHash": "55d5b9d03bd750247c7d63688cadd7d5b1129b07dcc0bdafe587bf8237085890",
+          "packageHash": "d613103c62940de79cb07b9bace3003faa62ff091198fd1d9e1cdfc93b603ade"
+        },
+        {
+          "id": "confirmation",
+          "name": "Confirm the prompt and data combination",
+          "appId": "ai-report-confirmation",
+          "version": 1,
+          "appContentHash": "707d543054e5287fd8e26ce1ccdd1bd5292de3a05526ddbb092d88372f3ff67e",
+          "packageHash": "d9364928e694cca8e06346e7d516f144be4f96fe1fd60a433719631fdf197a2c"
+        },
+        {
+          "id": "validation",
+          "name": "Validate on fresh reporting cases",
+          "appId": "ai-report-validation",
+          "version": 1,
+          "appContentHash": "c4903c86c56702f818696ceac3bd2b1c931d5dc261fad4b1db2344675c8b81f8",
+          "packageHash": "6ec98e7f7edca9dbca3e6485aca38ea6eea6243f1795e0982270df512159576c"
+        },
+        {
+          "id": "operating",
+          "name": "Compare complete reporting arrangements",
+          "appId": "ai-reporting-operating-capacity",
+          "version": 1,
+          "appContentHash": "80f46a8d46238e8e1b0ef1913d5ff6e55a68592edff8b052913a7566646f80d5",
+          "packageHash": "0f39ca4d4ed0865beb5e061e8e3c0848e49c6784003e775154b64404ca39326d"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which report improvements survive confirmation, and what can the reporting team still complete?",
+        "scope": "Fictional net direct ad bookings reporting cases with authored factor levels, outcome rubric and independent operating measurements. Adapt the app for a different task, factors or scoring contract.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/test-ai-sales-report-improvements/1.0.0/workflow.workflow.json",
+        "bytes": 1491208,
+        "sha256": "95315a57563902c9a8eeff737b75120583e09a43f280645bb63c381e807b7d30"
+      },
+      "workbook": {
+        "path": "workflows/test-ai-sales-report-improvements/1.0.0/inputs.workbook.json",
+        "bytes": 1894899,
+        "sha256": "f8f5d135eb08dc4e570c81078cd52290e872a8a48fee45461f2bdf3b46b3dd4f"
+      }
     }
   ],
   "collections": [
@@ -3229,6 +3317,23 @@
         "path": "collections/decision-lab/restaurant-operations/1.9.0/collection.collection.json",
         "bytes": 1361,
         "sha256": "978d0181bc1a87a7e87cac6f3de663585e277dc525d68e55caac6cb4ed2815c7"
+      }
+    },
+    {
+      "id": "ai-reporting",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.0.0",
+      "title": "AI reporting and evaluation",
+      "description": "Test prompt and data changes against an independent reporting reference before changing the operating process.",
+      "createdAt": "2026-11-25T18:00:00.000Z",
+      "contentHash": "0a2c04fc4d61571ee312ceeb54c1e24af0296a79fbbebfcc9294b0f7629c3cc4",
+      "package": {
+        "path": "collections/decision-lab/ai-reporting/1.0.0/collection.collection.json",
+        "bytes": 1359,
+        "sha256": "9e6d5803dd5fbd92366e349a2ae563caefe96063c8eda25b809e3d2292e7d55a"
       }
     }
   ]
