@@ -3,7 +3,7 @@
   "kind": "decision-lab-app-catalog",
   "title": "Decision Lab marketplace",
   "description": "Operational calculations organized into collections and use cases.",
-  "exportedAt": "2026-11-23T17:16:26.670Z",
+  "exportedAt": "2026-11-24T22:00:00.000Z",
   "scope": "current-product",
   "apps": [
     {
@@ -948,6 +948,86 @@
         "bytes": 433548,
         "sha256": "9cbfe7bcb1843e7eb7017ce95ecfd053f9158052052e8ef84cd9e80523316c3f"
       }
+    },
+    {
+      "id": "restaurant-staffing-learning",
+      "version": "1.0.0",
+      "name": "Choose evidence before changing restaurant staffing",
+      "description": "Compare choosing staffing now with a records audit or a complete four-dinner trial. Import all study-and-response operating constraints, charge each full evidence price once, and value noisy report responses over the stated future dinner horizon. Audit an optional actual report before reconsidering the remaining dinners from its original conditional probabilities.",
+      "publishedAt": "2026-11-24T22:00:00.000Z",
+      "contentHash": "3b1bce07e762383e12c3ee6adadacf48bf1c76ee9bba3f90d84ad803073570d6",
+      "definitionHash": "e88647180fe460ddfb3daadd2ec8137d4207054228a03f4530c91b09dba01e2d",
+      "domain": {
+        "id": "restaurant-operations",
+        "label": "Restaurant operations"
+      },
+      "useCase": {
+        "id": "evaluate-staffing-change",
+        "label": "Evaluate a staffing change"
+      },
+      "primaryPattern": {
+        "id": "assess-value-of-learning/1",
+        "title": "Assess the value of learning",
+        "question": "What is a question worth?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "planning",
+          "name": "Complete a restaurant staffing test and response",
+          "appId": "restaurant-staffing-learning-operations",
+          "version": 1,
+          "appContentHash": "3cce41f654333f8ca29d5da1eea4fd35ab13a23ff32778ce98251ad0bdb9feab",
+          "packageHash": "b0a0bc7f90a42355b06bc213b35fcaae0d237744e9a5fc82e17a60248bea2ea3"
+        },
+        {
+          "id": "learning",
+          "name": "Assess evidence before changing restaurant staffing",
+          "appId": "restaurant-staffing-learning-value",
+          "version": 1,
+          "appContentHash": "d8789c2472a93aa69c7f542e6e878f60cdcb4bfe7080df2ac713e7447ef43103",
+          "packageHash": "f48983a3999d8bd7f33c41d358c31d8c0b0950dedee2f0d19556c5faace587db"
+        },
+        {
+          "id": "result-audit",
+          "name": "Review a received staffing signal",
+          "appId": "staffing-result-audit",
+          "version": 1,
+          "appContentHash": "e3e90b0a6b90f652458db55b46961ea2c1e53b151c3924bb58e799c501dbb4b6",
+          "packageHash": "1f23a7032ecb44e3856d8ee58d769331c14ec878d1ef0abe5e2174cb848503d7"
+        },
+        {
+          "id": "reconsider",
+          "name": "Reconsider restaurant staffing after a usable answer",
+          "appId": "restaurant-staffing-reconsideration",
+          "version": 1,
+          "appContentHash": "a81d887342208b250661a5115117d1a18895f3836e7366cdb63c245908250d39",
+          "packageHash": "b87f23a7ee9fcc3026172593bbeb7dedfcba25ad6d2b57fd5c9dc4d708ca6a96"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "What is a question worth before changing restaurant staffing?",
+        "scope": "A fictional runner staffing decision with two admitted situations, an existing-record audit and one fixed four-service trial. Changing the design, role or service structure requires adapting and publishing the app.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/restaurant-staffing-learning/1.0.0/workflow.workflow.json",
+        "bytes": 811659,
+        "sha256": "9f5449b0915d8253074d6550bd53004e8b5f90cbc67883a6221f2f347cc7c5af"
+      },
+      "workbook": {
+        "path": "workflows/restaurant-staffing-learning/1.0.0/inputs.workbook.json",
+        "bytes": 881501,
+        "sha256": "edf8f4d2d232cd3e036125261d2bff49b6fcd63a2c89d57206c094882ed47c0a"
+      }
     }
   ],
   "collections": [
@@ -1008,15 +1088,15 @@
         "id": "decision-lab",
         "label": "Decision Lab"
       },
-      "version": "1.9.0",
+      "version": "1.10.0",
       "title": "Restaurant operations",
       "description": "Operational calculations for restaurant staffing and service commitments.",
-      "createdAt": "2026-11-23T16:59:01.941Z",
-      "contentHash": "25cb890fd69a16564d9d008b2a928f039f80f1507af4e04d9824a47df3ecb77c",
+      "createdAt": "2026-11-24T22:00:00.000Z",
+      "contentHash": "66ee4982b6d6dad38571b591d47971e736bddc95548aef5b1ef07ba679c8b6a2",
       "package": {
-        "path": "collections/decision-lab/restaurant-operations/1.9.0/collection.collection.json",
-        "bytes": 1361,
-        "sha256": "978d0181bc1a87a7e87cac6f3de663585e277dc525d68e55caac6cb4ed2815c7"
+        "path": "collections/decision-lab/restaurant-operations/1.10.0/collection.collection.json",
+        "bytes": 2125,
+        "sha256": "7480e57e3f36b51c5bc046a053d05d2b626a0ae6c5f858a7f8ffc0aefd4b7522"
       }
     },
     {
@@ -1056,7 +1136,7 @@
   ],
   "historyCatalog": {
     "path": "release-history.catalog.json",
-    "bytes": 141092,
-    "sha256": "5f08978e7ced980b21ac9528a4a3bf6bc269ffec2d37bb0da926a6576ea63420"
+    "bytes": 141768,
+    "sha256": "bce61bbdd8145153433a873fc9b95c3cd02dbeaaa02b78cc2c486efe45b32c65"
   }
 }

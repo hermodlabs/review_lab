@@ -1,7 +1,7 @@
 {
-  "version": "4d0d1d022c9b32f6b1c0",
+  "version": "72149d2ff1e28cefbdf2",
   "appVersion": "0.2.0",
-  "totalBytes": 65547513,
+  "totalBytes": 67280618,
   "assets": [
     {
       "url": "app-configs/README.txt",
@@ -450,13 +450,13 @@
     },
     {
       "url": "app-configs/catalog.json",
-      "sha256": "310163c2b8880af4c73b206e43caa2a1da07c413c619ae73138dd730204f087b",
-      "bytes": 45059
+      "sha256": "a25d9d2bb79ba712bc20808924bfcbf6f6e6772122e8f5f464b8479a1b527d8d",
+      "bytes": 48835
     },
     {
       "url": "app-configs/collection-definitions.json",
-      "sha256": "cd3363f56ccc03503a1eca0c1db2159175692324a29252b5367e32235623e0c9",
-      "bytes": 13175
+      "sha256": "c567c95469532cf767490751dbccb72face3181608ef0f8e2dac41e3e98ce185",
+      "bytes": 14007
     },
     {
       "url": "app-configs/collections/decision-lab/business-growth/1.0.0/collection.collection.json",
@@ -549,6 +549,11 @@
       "bytes": 2018
     },
     {
+      "url": "app-configs/collections/decision-lab/restaurant-operations/1.10.0/collection.collection.json",
+      "sha256": "7480e57e3f36b51c5bc046a053d05d2b626a0ae6c5f858a7f8ffc0aefd4b7522",
+      "bytes": 2125
+    },
+    {
       "url": "app-configs/collections/decision-lab/restaurant-operations/1.5.0/collection.collection.json",
       "sha256": "87bafde13fe6cd3ac5fe4e7471e756391860e3d75b369db14971442d5a133573",
       "bytes": 1361
@@ -625,13 +630,13 @@
     },
     {
       "url": "app-configs/release-history.catalog.json",
-      "sha256": "5f08978e7ced980b21ac9528a4a3bf6bc269ffec2d37bb0da926a6576ea63420",
-      "bytes": 141092
+      "sha256": "bce61bbdd8145153433a873fc9b95c3cd02dbeaaa02b78cc2c486efe45b32c65",
+      "bytes": 141768
     },
     {
       "url": "app-configs/workbook-definitions.json",
-      "sha256": "4c10698cde12ce5e9fc36a1df3f16b0b9c99c60c5a0449efa273d277736b90e1",
-      "bytes": 2582
+      "sha256": "123644bc659ea7002eb5d98803837d77311160a09a7081072b1e0c80f5625a32",
+      "bytes": 2766
     },
     {
       "url": "app-configs/workflows/choose-next-month-growth/1.0.0/inputs.mapping.json",
@@ -872,6 +877,21 @@
       "url": "app-configs/workflows/repair-published-restaurant-roster/1.9.0/workflow.workflow.json",
       "sha256": "5931d14df20eb3953ed01238f8438a670f59df4eed50d3fae7ef7029094d0ea4",
       "bytes": 1427793
+    },
+    {
+      "url": "app-configs/workflows/restaurant-staffing-learning/1.0.0/inputs.mapping.json",
+      "sha256": "fbf09b718b22395c556ada32a472a85fb26d75ad182f441c3ff7d3f7378ccff3",
+      "bytes": 32352
+    },
+    {
+      "url": "app-configs/workflows/restaurant-staffing-learning/1.0.0/inputs.workbook.json",
+      "sha256": "edf8f4d2d232cd3e036125261d2bff49b6fcd63a2c89d57206c094882ed47c0a",
+      "bytes": 881501
+    },
+    {
+      "url": "app-configs/workflows/restaurant-staffing-learning/1.0.0/workflow.workflow.json",
+      "sha256": "9f5449b0915d8253074d6550bd53004e8b5f90cbc67883a6221f2f347cc7c5af",
+      "bytes": 811659
     },
     {
       "url": "app-configs/workflows/review-first-shipment/1.10.0/inputs.mapping.json",
@@ -1240,7 +1260,7 @@
     },
     {
       "url": "index.html",
-      "sha256": "92ee014e75ef832546ddda0af7f992939efead2c73a7275342c5d4eb4d658c1b",
+      "sha256": "0150c3294a49f544c3390e2147e157f8351f258006b91031b34f7f8ea38e2a4a",
       "bytes": 1023
     },
     {

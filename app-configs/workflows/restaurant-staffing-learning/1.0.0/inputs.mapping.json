@@ -1,0 +1,1068 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-db06af5d807fa1d3f97e7586",
+  "version": "1.0.0",
+  "title": "Choose evidence before changing restaurant staffing — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case.",
+  "target": {
+    "type": "workflow",
+    "id": "restaurant-staffing-learning",
+    "version": "1.0.0",
+    "packageHash": "3b1bce07e762383e12c3ee6adadacf48bf1c76ee9bba3f90d84ad803073570d6",
+    "definitionHash": "e88647180fe460ddfb3daadd2ec8137d4207054228a03f4530c91b09dba01e2d"
+  },
+  "managedPaths": [
+    "/staffing/futureDinnerCount",
+    "/staffing/runnerHourlyRateMinor",
+    "/staffing/observerHourlyRateMinor",
+    "/staffing/serviceHours",
+    "/staffing/observerIsHost",
+    "/staffing/trialPriceComplete",
+    "/staffing/auditPriceComplete",
+    "/staffing/auditFeeMinor",
+    "/staffing/studyBudgetMinor",
+    "/staffing/currentTime",
+    "/staffing/decisionDeadline",
+    "/staffing/auditDuration",
+    "/staffing/trialAnswerTime",
+    "/staffing/runnerAvailable",
+    "/staffing/upsidePerDinnerMinor",
+    "/staffing/downsidePerDinnerMinor",
+    "/staffing/bookings",
+    "/learning/probabilityBasis/source",
+    "/learning/probabilityBasis/scope",
+    "/learning/priors",
+    "/learning/studies",
+    "/receipt/received",
+    "/receipt/study",
+    "/receipt/report",
+    "/receipt/source",
+    "/receipt/reportSource",
+    "/receipt/scopeId",
+    "/receipt/designId",
+    "/receipt/designVersion",
+    "/receipt/workerRole",
+    "/receipt/serviceWindow",
+    "/receipt/studyServiceCount",
+    "/receipt/startDate",
+    "/receipt/endDate",
+    "/receipt/receivedDate",
+    "/receipt/reviewDate",
+    "/receipt/receivedAt",
+    "/receipt/recordsComplete",
+    "/receipt/fullObservationCoverage",
+    "/receipt/recordCount",
+    "/receipt/remainingDinners"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "A bounded restaurant evidence-purchase and staffing decision, four planned study services and explicitly declared future comparable dinners."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "Elapsed minutes from 2026-11-13T00:00:00-06:00, America/Chicago. Study services are Nov 13, 20, 27 and Dec 4 at 18:00. Additional fictional timing premises: initial assessment Nov 13 noon, two-hour audit, trial answer Dec 5 at 21:00, commitment cutoff Dec 7 noon. Money is integer USD cents. Future operating payoffs already include runner wages; study prices are separate. Future dinner count is distinct from four study services."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Future dinners",
+          "instructions": "Editable inputs. Only dinners still affected by the decision belong in the prospective payoff horizon."
+        },
+        {
+          "topic": "Runner hourly rate",
+          "instructions": "Editable inputs. The accepted complete hourly expense in USD cents. Trial runner expense is counted for both trial dinners."
+        },
+        {
+          "topic": "Observer hourly rate",
+          "instructions": "Editable inputs. The accepted complete hourly expense in USD cents. Observation covers all four authored dinners."
+        },
+        {
+          "topic": "Complete three-hour dinner serv",
+          "instructions": "Editable inputs. This published evidence design fixes complete service at 18:00–21:00. A different duration requires an adapted design and a new published workflow."
+        },
+        {
+          "topic": "Use the working host as observe",
+          "instructions": "Editable inputs. Using the host creates a real concurrent resource demand during the same dinner service. A free price does not establish available capacity."
+        },
+        {
+          "topic": "Trial price complete",
+          "instructions": "Editable inputs. Incomplete trial pricing prevents the paid design from being treated as a workable complete study."
+        },
+        {
+          "topic": "Audit price complete",
+          "instructions": "Editable inputs. A partial quote cannot establish the full purchase expense."
+        },
+        {
+          "topic": "Complete audit fee",
+          "instructions": "Editable inputs. The full audit price in USD cents, charged once by the learning comparison."
+        },
+        {
+          "topic": "Study purchase authority",
+          "instructions": "Editable inputs. A study purchase limit in USD cents. This is not a cash balance for future restaurant operations."
+        },
+        {
+          "topic": "Current decision time",
+          "instructions": "Editable inputs. Elapsed minutes from the authored calendar origin."
+        },
+        {
+          "topic": "Staffing decision cutoff",
+          "instructions": "Editable inputs. The usable answer and the future runner decision must arrive by this elapsed-minute cutoff."
+        },
+        {
+          "topic": "Audit turnaround",
+          "instructions": "Editable inputs. Elapsed minutes from purchase to a usable audit answer."
+        },
+        {
+          "topic": "Trial answer time",
+          "instructions": "Editable inputs. The absolute elapsed minute when the complete trial report is available."
+        },
+        {
+          "topic": "Future runner availability",
+          "instructions": "Editable inputs. A favorable report never supplies absent operating capacity."
+        },
+        {
+          "topic": "Runner net upside per dinner",
+          "instructions": "Editable inputs. Net incremental contribution after future runner wages. The complete future payoff is this amount multiplied by the number of future dinners."
+        },
+        {
+          "topic": "Runner net downside per dinner",
+          "instructions": "Editable inputs. Net incremental contribution after future runner wages, usually negative. Future wages must not be subtracted a second time."
+        },
+        {
+          "topic": "Other staff commitments",
+          "instructions": "Editable inputs. Complete recorded outside commitments remain part of every study-and-response operating check."
+        },
+        {
+          "topic": "Explicit probability basis",
+          "instructions": "Editable inputs. A stated source and exact scope for probability judgments. Evidence interpretation counts do not supply probabilities."
+        },
+        {
+          "topic": "Prior staffing probabilities",
+          "instructions": "Editable inputs. One explicit probability for each authored situation, summing to one."
+        },
+        {
+          "topic": "Study likelihood assumptions",
+          "instructions": "Editable inputs. A complete likelihood matrix for both designs, including no usable answer. These judgments remain separate from the actual evidence audit."
+        },
+        {
+          "topic": "Report likelihoods",
+          "instructions": "Editable inputs. A complete likelihood matrix for both designs, including no usable answer. These judgments remain separate from the actual evidence audit."
+        },
+        {
+          "topic": "Optional actual report and rema",
+          "instructions": "Editable inputs. Optional received records and remaining operating horizon. Receipt alone never establishes the staffing situation or authorizes a staffing change."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Future dinners",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "Only dinners still affected by the decision belong in the prospective payoff horizon.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-futureDinnerCount",
+          "label": "Future dinners",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "dinner or paid work-hour",
+          "path": "/staffing/futureDinnerCount",
+          "minimum": 0
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-2",
+      "name": "Runner hourly rate",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "The accepted complete hourly expense in USD cents. Trial runner expense is counted for both trial dinners.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-runnerHourlyRateMinor",
+          "label": "Runner hourly rate",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "USD cent",
+          "path": "/staffing/runnerHourlyRateMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-3",
+      "name": "Observer hourly rate",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "The accepted complete hourly expense in USD cents. Observation covers all four authored dinners.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-observerHourlyRateMinor",
+          "label": "Observer hourly rate",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "USD cent",
+          "path": "/staffing/observerHourlyRateMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-4",
+      "name": "Complete three-hour dinner serv",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "This published evidence design fixes complete service at 18:00–21:00. A different duration requires an adapted design and a new published workflow.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-serviceHours",
+          "label": "Complete three-hour dinner service",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "hour",
+          "path": "/staffing/serviceHours",
+          "minimum": 3,
+          "maximum": 3
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-5",
+      "name": "Use the working host as observe",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "Using the host creates a real concurrent resource demand during the same dinner service. A free price does not establish available capacity.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-observerIsHost",
+          "label": "Use the working host as observer",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/staffing/observerIsHost"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-6",
+      "name": "Trial price complete",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "Incomplete trial pricing prevents the paid design from being treated as a workable complete study.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-trialPriceComplete",
+          "label": "Trial price complete",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/staffing/trialPriceComplete"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-7",
+      "name": "Audit price complete",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "A partial quote cannot establish the full purchase expense.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-auditPriceComplete",
+          "label": "Audit price complete",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/staffing/auditPriceComplete"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-8",
+      "name": "Complete audit fee",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "The full audit price in USD cents, charged once by the learning comparison.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-auditFeeMinor",
+          "label": "Complete audit fee",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "USD cent",
+          "path": "/staffing/auditFeeMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-9",
+      "name": "Study purchase authority",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "A study purchase limit in USD cents. This is not a cash balance for future restaurant operations.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-studyBudgetMinor",
+          "label": "Study purchase authority",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "USD cent",
+          "path": "/staffing/studyBudgetMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-10",
+      "name": "Current decision time",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "Elapsed minutes from the authored calendar origin.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-currentTime",
+          "label": "Current decision time",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute",
+          "path": "/staffing/currentTime",
+          "minimum": 0
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-11",
+      "name": "Staffing decision cutoff",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "The usable answer and the future runner decision must arrive by this elapsed-minute cutoff.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-decisionDeadline",
+          "label": "Staffing decision cutoff",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute",
+          "path": "/staffing/decisionDeadline",
+          "minimum": 0
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-12",
+      "name": "Audit turnaround",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "Elapsed minutes from purchase to a usable audit answer.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-auditDuration",
+          "label": "Audit turnaround",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute",
+          "path": "/staffing/auditDuration",
+          "minimum": 0
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-13",
+      "name": "Trial answer time",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "The absolute elapsed minute when the complete trial report is available.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-trialAnswerTime",
+          "label": "Trial answer time",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute",
+          "path": "/staffing/trialAnswerTime",
+          "minimum": 0
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-14",
+      "name": "Future runner availability",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "A favorable report never supplies absent operating capacity.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-runnerAvailable",
+          "label": "Future runner availability",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/staffing/runnerAvailable"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-15",
+      "name": "Runner net upside per dinner",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "Net incremental contribution after future runner wages. The complete future payoff is this amount multiplied by the number of future dinners.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-upsidePerDinnerMinor",
+          "label": "Runner net upside per dinner",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "USD cent",
+          "path": "/staffing/upsidePerDinnerMinor",
+          "minimum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-16",
+      "name": "Runner net downside per dinner",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "Net incremental contribution after future runner wages, usually negative. Future wages must not be subtracted a second time.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "staffing-downsidePerDinnerMinor",
+          "label": "Runner net downside per dinner",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "USD cent",
+          "path": "/staffing/downsidePerDinnerMinor",
+          "maximum": 0,
+          "display": {
+            "format": "workbook-column-display/1",
+            "kind": "money",
+            "currency": "USD",
+            "divisor": 100
+          }
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-17",
+      "name": "Other staff commitments",
+      "kind": "table",
+      "role": "restaurant-owner",
+      "meaning": "Complete recorded outside commitments remain part of every study-and-response operating check.",
+      "binding": {
+        "path": "/staffing/bookings"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "resource",
+          "label": "resource",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/resource",
+          "enum": [
+            "host",
+            "observer",
+            "runner",
+            "unassigned-observation",
+            "unassigned-runner"
+          ]
+        },
+        {
+          "id": "from",
+          "label": "from",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/from",
+          "minimum": 0
+        },
+        {
+          "id": "through",
+          "label": "through",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/through",
+          "minimum": 0
+        },
+        {
+          "id": "amount",
+          "label": "amount",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "dinner or paid work-hour",
+          "path": "/amount",
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-18",
+      "name": "Explicit probability basis",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "A stated source and exact scope for probability judgments. Evidence interpretation counts do not supply probabilities.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "learning-probabilityBasis-source",
+          "label": "Source and assessment basis",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/learning/probabilityBasis/source"
+        },
+        {
+          "id": "learning-probabilityBasis-scope",
+          "label": "Assessment scope",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/learning/probabilityBasis/scope"
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-19",
+      "name": "Prior staffing probabilities",
+      "kind": "table",
+      "role": "restaurant-owner",
+      "meaning": "One explicit probability for each authored situation, summing to one.",
+      "binding": {
+        "path": "/learning/priors"
+      },
+      "columns": [
+        {
+          "id": "state",
+          "label": "Staffing situation",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "path": "/state",
+          "enum": [
+            "worthwhile",
+            "not-worthwhile"
+          ]
+        },
+        {
+          "id": "probability",
+          "label": "Explicit probability",
+          "type": "number",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "probability",
+          "path": "/probability",
+          "minimum": 0,
+          "maximum": 1
+        }
+      ],
+      "key": [
+        "state"
+      ]
+    },
+    {
+      "id": "inputs-20",
+      "name": "Study likelihood assumptions",
+      "kind": "table",
+      "role": "restaurant-owner",
+      "meaning": "A complete likelihood matrix for both designs, including no usable answer. These judgments remain separate from the actual evidence audit.",
+      "binding": {
+        "path": "/learning/studies"
+      },
+      "columns": [
+        {
+          "id": "study",
+          "label": "Study design",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "path": "/study",
+          "enum": [
+            "audit",
+            "trial"
+          ]
+        }
+      ],
+      "key": [
+        "study"
+      ]
+    },
+    {
+      "id": "inputs-21",
+      "name": "Report likelihoods",
+      "kind": "table",
+      "role": "restaurant-owner",
+      "meaning": "A complete likelihood matrix for both designs, including no usable answer. These judgments remain separate from the actual evidence audit.",
+      "binding": {
+        "parent": {
+          "sheet": "inputs-20",
+          "local": [
+            "parent-1"
+          ],
+          "foreign": [
+            "study"
+          ]
+        },
+        "childrenPath": "/likelihoods"
+      },
+      "columns": [
+        {
+          "id": "parent-1",
+          "label": "Study likelihood assumptions: Study design",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "enum": [
+            "audit",
+            "trial"
+          ],
+          "parentKey": true
+        },
+        {
+          "id": "state",
+          "label": "Staffing situation",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "path": "/state",
+          "enum": [
+            "worthwhile",
+            "not-worthwhile"
+          ]
+        },
+        {
+          "id": "report",
+          "label": "Possible report",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "path": "/report",
+          "enum": [
+            "favorable",
+            "unfavorable",
+            "unusable"
+          ]
+        },
+        {
+          "id": "probability",
+          "label": "Explicit probability",
+          "type": "number",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "probability",
+          "path": "/probability",
+          "minimum": 0,
+          "maximum": 1
+        }
+      ],
+      "key": [
+        "parent-1",
+        "state",
+        "report"
+      ]
+    },
+    {
+      "id": "inputs-22",
+      "name": "Optional actual report and rema",
+      "kind": "record",
+      "role": "restaurant-owner",
+      "meaning": "Optional received records and remaining operating horizon. Receipt alone never establishes the staffing situation or authorizes a staffing change.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "receipt-received",
+          "label": "received",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/receipt/received"
+        },
+        {
+          "id": "receipt-study",
+          "label": "study",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "identifier",
+          "path": "/receipt/study",
+          "enum": [
+            "audit",
+            "trial"
+          ]
+        },
+        {
+          "id": "receipt-report",
+          "label": "report",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "identifier",
+          "path": "/receipt/report",
+          "enum": [
+            "favorable",
+            "unfavorable",
+            "unusable"
+          ]
+        },
+        {
+          "id": "receipt-source",
+          "label": "source",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/receipt/source"
+        },
+        {
+          "id": "receipt-reportSource",
+          "label": "reportSource",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/receipt/reportSource"
+        },
+        {
+          "id": "receipt-scopeId",
+          "label": "scopeId",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/receipt/scopeId"
+        },
+        {
+          "id": "receipt-designId",
+          "label": "designId",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/receipt/designId"
+        },
+        {
+          "id": "receipt-designVersion",
+          "label": "designVersion",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/receipt/designVersion"
+        },
+        {
+          "id": "receipt-workerRole",
+          "label": "workerRole",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/receipt/workerRole"
+        },
+        {
+          "id": "receipt-serviceWindow",
+          "label": "serviceWindow",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/receipt/serviceWindow"
+        },
+        {
+          "id": "receipt-studyServiceCount",
+          "label": "studyServiceCount",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "count",
+          "path": "/receipt/studyServiceCount",
+          "minimum": 0
+        },
+        {
+          "id": "receipt-startDate",
+          "label": "startDate",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "YYYYMMDD",
+          "path": "/receipt/startDate",
+          "minimum": 19000101,
+          "maximum": 29991231
+        },
+        {
+          "id": "receipt-endDate",
+          "label": "endDate",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "YYYYMMDD",
+          "path": "/receipt/endDate",
+          "minimum": 19000101,
+          "maximum": 29991231
+        },
+        {
+          "id": "receipt-receivedDate",
+          "label": "receivedDate",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "YYYYMMDD",
+          "path": "/receipt/receivedDate",
+          "minimum": 19000101,
+          "maximum": 29991231
+        },
+        {
+          "id": "receipt-reviewDate",
+          "label": "reviewDate",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "YYYYMMDD",
+          "path": "/receipt/reviewDate",
+          "minimum": 19000101,
+          "maximum": 29991231
+        },
+        {
+          "id": "receipt-receivedAt",
+          "label": "receivedAt",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "minute",
+          "path": "/receipt/receivedAt",
+          "minimum": 0
+        },
+        {
+          "id": "receipt-recordsComplete",
+          "label": "recordsComplete",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/receipt/recordsComplete"
+        },
+        {
+          "id": "receipt-fullObservationCoverage",
+          "label": "fullObservationCoverage",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/receipt/fullObservationCoverage"
+        },
+        {
+          "id": "receipt-recordCount",
+          "label": "recordCount",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "count",
+          "path": "/receipt/recordCount",
+          "minimum": 0
+        },
+        {
+          "id": "receipt-remainingDinners",
+          "label": "remainingDinners",
+          "type": "integer",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "count",
+          "path": "/receipt/remainingDinners",
+          "minimum": 0
+        }
+      ],
+      "key": []
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "03e39da9d8b1e0613b292f230470398164409e5435d75f148d05f4d45a26d0ae"
+}

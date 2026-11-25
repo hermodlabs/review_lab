@@ -3213,6 +3213,23 @@
         "bytes": 2018,
         "sha256": "c18d30ca980b545ed9d5fe8c43384c603aa1c949c9ccc3e293098a2b017d3d08"
       }
+    },
+    {
+      "id": "restaurant-operations",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.9.0",
+      "title": "Restaurant operations",
+      "description": "Operational calculations for restaurant staffing and service commitments.",
+      "createdAt": "2026-11-23T16:59:01.941Z",
+      "contentHash": "25cb890fd69a16564d9d008b2a928f039f80f1507af4e04d9824a47df3ecb77c",
+      "package": {
+        "path": "collections/decision-lab/restaurant-operations/1.9.0/collection.collection.json",
+        "bytes": 1361,
+        "sha256": "978d0181bc1a87a7e87cac6f3de663585e277dc525d68e55caac6cb4ed2815c7"
+      }
     }
   ]
 }

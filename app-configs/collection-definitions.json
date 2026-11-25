@@ -186,7 +186,7 @@
     {
       "definition": {
         "id": "restaurant-operations",
-        "version": "1.9.0",
+        "version": "1.10.0",
         "publisher": {
           "id": "decision-lab",
           "label": "Decision Lab"
@@ -198,6 +198,11 @@
             "id": "repair-published-roster",
             "label": "Repair a published roster",
             "description": "Compare supplied complete roster repairs across all remaining services, with explicit staffing requirements and optional stability or payroll priorities."
+          },
+          {
+            "id": "evaluate-staffing-change",
+            "label": "Evaluate a staffing change",
+            "description": "Compare complete learning purchases before changing staffing, then reconsider the operating choice when a scoped answer actually arrives."
           }
         ],
         "members": [
@@ -212,11 +217,23 @@
               "bytes": 1427793,
               "sha256": "5931d14df20eb3953ed01238f8438a670f59df4eed50d3fae7ef7029094d0ea4"
             }
+          },
+          {
+            "type": "workflow",
+            "id": "restaurant-staffing-learning",
+            "version": "1.0.0",
+            "packageHash": "3b1bce07e762383e12c3ee6adadacf48bf1c76ee9bba3f90d84ad803073570d6",
+            "useCaseId": "evaluate-staffing-change",
+            "artifact": {
+              "path": "workflows/restaurant-staffing-learning/1.0.0/workflow.workflow.json",
+              "bytes": 811659,
+              "sha256": "9f5449b0915d8253074d6550bd53004e8b5f90cbc67883a6221f2f347cc7c5af"
+            }
           }
         ],
         "format": "decision-lab-collection-definition/1"
       },
-      "createdAt": "2026-11-23T16:59:01.941Z"
+      "createdAt": "2026-11-24T22:00:00.000Z"
     },
     {
       "definition": {
