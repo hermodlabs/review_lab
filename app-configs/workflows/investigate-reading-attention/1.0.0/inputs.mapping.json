@@ -1,0 +1,106 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-003ccb4f656af02e56b99811",
+  "version": "1.0.0",
+  "title": "Understand reading and attention concerns — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case. Inputs retained outside this workbook: Child and assessment episode, Presenting concerns, Professional findings, Professional record scope.",
+  "target": {
+    "type": "workflow",
+    "id": "investigate-reading-attention",
+    "version": "1.0.0",
+    "packageHash": "ab29529e10c7fc9ae0264db18dd6bb13cebaff66487a1e7672797be03af8bbfe",
+    "definitionHash": "deb5082eff89cb10054b4f455a606bb3f314dafef24debec409f90c8d6de703d"
+  },
+  "managedPaths": [
+    "/assessment/scope"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "A fictional record-review example, not a diagnostic instrument. The finite catalogue describes possible professionally recorded reading and attention assessment conclusions, including coexistence and uncharacterized concerns. It is not an exhaustive catalogue of causes of poor grades. Only explicitly accepted, current records for the declared child, assessment episode and context constrain those possibilities. Logical agreement does not authenticate a record, establish clinical validity, attribute the cause of grades, prescribe support or estimate diagnostic probabilities."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "observedDay is a nonnegative fictional provenance day, not a clinical expiry rule. currentStatus records a human judgment of currency: current, stale or unknown. accepted records an explicit human applicability judgment, not authentication of identity or clinical validity. Empty lists mean no records supplied; unknown and not-assessed findings are not negative findings."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Question and limits",
+          "instructions": "Editable inputs. A fictional record-review example, not a diagnostic instrument. The finite catalogue describes possible professionally recorded reading and attention assessment conclusions, including coexistence and uncharacterized concerns. It is not an exhaustive catalogue of causes of poor grades. Only explicitly accepted, current records for the declared child, assessment episode and context constrain those possibilities. Logical agreement does not authenticate a record, establish clinical validity, attribute the cause of grades, prescribe support or estimate diagnostic probabilities."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Question and limits",
+      "kind": "record",
+      "role": "support-coordinator",
+      "meaning": "A fictional record-review example, not a diagnostic instrument. The finite catalogue describes possible professionally recorded reading and attention assessment conclusions, including coexistence and uncharacterized concerns. It is not an exhaustive catalogue of causes of poor grades. Only explicitly accepted, current records for the declared child, assessment episode and context constrain those possibilities. Logical agreement does not authenticate a record, establish clinical validity, attribute the cause of grades, prescribe support or estimate diagnostic probabilities.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "assessment-scope",
+          "label": "Scope",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/assessment/scope"
+        }
+      ],
+      "key": []
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "5e9bc2a6edb900f9bcf88c34c7ef5f3a72e1e40678c8f9085ea75379068ba27d"
+}

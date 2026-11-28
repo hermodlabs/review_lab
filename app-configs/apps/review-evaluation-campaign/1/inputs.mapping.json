@@ -1,0 +1,262 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-0985580dbac5db9d88ca7dbf",
+  "version": "1.0.0",
+  "title": "Review a release evaluation campaign — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case.",
+  "target": {
+    "type": "app",
+    "id": "review-evaluation-campaign",
+    "release": 1,
+    "pattern": "complete-a-commitment/1",
+    "packageHash": "a15cf99b4f6d8e8858d0c0f98db9c7e9376d7877ee279b30414912392967203e",
+    "moduleHash": "66891834e6fafdb643405aecfc5f560cd74b3c5d8c1574d4dacdf157b9d0f434"
+  },
+  "managedPaths": [
+    "/parameters/deadlineMinutes",
+    "/parameters/slotCount",
+    "/parameters/compatibleGpuAssumed",
+    "/parameters/job1Minutes",
+    "/parameters/job2Minutes",
+    "/parameters/job3Minutes",
+    "/parameters/job4Minutes",
+    "/tables/bookings"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "Four sourced accuracy configurations and four authored policies. Change the deadline, slot count, timing estimates, compatibility assumption or bookings. Adapt the app for a different required workload. All starting timings are unmeasured estimates."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "Elapsed integer minutes from campaign start. All example durations are illustrative, unmeasured planning estimates, not published vLLM runtimes. Supply setup and teardown in the reserved duration."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Parameters",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Bookings",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Parameters",
+      "kind": "record",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "parameters-deadlineMinutes",
+          "label": "Parameters deadline Minutes",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/parameters/deadlineMinutes",
+          "minimum": 1,
+          "maximum": 10080
+        },
+        {
+          "id": "parameters-slotCount",
+          "label": "Parameters slot Count",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "resource",
+          "path": "/parameters/slotCount",
+          "enum": [
+            1,
+            2,
+            4
+          ],
+          "minimum": 0
+        },
+        {
+          "id": "parameters-compatibleGpuAssumed",
+          "label": "Parameters compatible Gpu Assumed",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/parameters/compatibleGpuAssumed"
+        },
+        {
+          "id": "parameters-job1Minutes",
+          "label": "Parameters job1 Minutes",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/parameters/job1Minutes",
+          "minimum": 1,
+          "maximum": 1440
+        },
+        {
+          "id": "parameters-job2Minutes",
+          "label": "Parameters job2 Minutes",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/parameters/job2Minutes",
+          "minimum": 1,
+          "maximum": 1440
+        },
+        {
+          "id": "parameters-job3Minutes",
+          "label": "Parameters job3 Minutes",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/parameters/job3Minutes",
+          "minimum": 1,
+          "maximum": 1440
+        },
+        {
+          "id": "parameters-job4Minutes",
+          "label": "Parameters job4 Minutes",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/parameters/job4Minutes",
+          "minimum": 1,
+          "maximum": 1440
+        }
+      ],
+      "key": []
+    },
+    {
+      "id": "inputs-4",
+      "name": "Bookings",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/tables/bookings"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "resource",
+          "label": "Resource",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/resource",
+          "enum": [
+            "gpu-1",
+            "gpu-2",
+            "gpu-3",
+            "gpu-4"
+          ]
+        },
+        {
+          "id": "start",
+          "label": "Start",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/start",
+          "minimum": 0,
+          "maximum": 1440
+        },
+        {
+          "id": "end",
+          "label": "End",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "minute",
+          "path": "/end",
+          "minimum": 1,
+          "maximum": 1440
+        },
+        {
+          "id": "amount",
+          "label": "Amount",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "resource",
+          "path": "/amount",
+          "enum": [
+            1
+          ],
+          "minimum": 0
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "3ff595e09186925e1fa95318b3f71c425b7b737599bce187225b22f9a27e1ebd"
+}

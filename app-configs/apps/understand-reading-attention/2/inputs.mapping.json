@@ -1,0 +1,497 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-46d0e99ed69583d503bc79a9",
+  "version": "1.0.0",
+  "title": "Understand reading, attention and language findings — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case.",
+  "target": {
+    "type": "app",
+    "id": "understand-reading-attention",
+    "release": 2,
+    "pattern": "evidence-review/1",
+    "packageHash": "f0da71cc3698d51eb0b593abbfab38e212d7b5fde7d9bb7a562883d8acc59dfc",
+    "moduleHash": "e26bbedd053d9f0ed61ec2bb2e2ab9e5ff78cc7c9370bef271422e89bb6f1171"
+  },
+  "managedPaths": [
+    "/basis/expectedScope",
+    "/basis/possibility",
+    "/basis/assessmentDomain",
+    "/evidence/concern",
+    "/evidence/finding",
+    "/evidence/recordScope",
+    "/queryIds",
+    "/scope",
+    "/title"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "A fictional record-review example, not a diagnostic instrument. The finite catalogue describes possible professionally recorded reading, attention and language assessment conclusions, including coexistence and uncharacterized concerns. It is not an exhaustive catalogue of causes of poor grades. Only explicitly accepted, current records for the declared child, assessment episode and context constrain those possibilities. Logical agreement does not authenticate a record, establish clinical validity, attribute the cause of grades, prescribe support or estimate diagnostic probabilities."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "observedDay is a nonnegative fictional provenance day, not a clinical expiry rule. currentStatus records a human judgment of currency: current, stale or unknown. accepted records an explicit human applicability judgment, not authentication of identity or clinical validity. Empty lists mean no records supplied; unknown and not-assessed findings are not negative findings."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Expected Scope",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Possibility",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Assessment Domain",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Concern",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Finding",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Record Scope",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Query Ids",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Case details",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Expected Scope",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/basis/expectedScope"
+      },
+      "columns": [
+        {
+          "id": "field",
+          "label": "Field",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/field"
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/value"
+        }
+      ],
+      "key": [
+        "field"
+      ]
+    },
+    {
+      "id": "inputs-2",
+      "name": "Possibility",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/basis/possibility"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "label",
+          "label": "Label",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/label"
+        },
+        {
+          "id": "reading",
+          "label": "Reading",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/reading"
+        },
+        {
+          "id": "attention",
+          "label": "Attention",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/attention"
+        },
+        {
+          "id": "language",
+          "label": "Language",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/language"
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-3",
+      "name": "Assessment Domain",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/basis/assessmentDomain"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "label",
+          "label": "Label",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/label"
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-4",
+      "name": "Concern",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/evidence/concern"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "domain",
+          "label": "Domain",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/domain"
+        },
+        {
+          "id": "description",
+          "label": "Description",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/description"
+        },
+        {
+          "id": "source",
+          "label": "Source",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/source"
+        },
+        {
+          "id": "observedDay",
+          "label": "Observed Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/observedDay"
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-5",
+      "name": "Finding",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/evidence/finding"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/id"
+        },
+        {
+          "id": "domain",
+          "label": "Domain",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/domain"
+        },
+        {
+          "id": "status",
+          "label": "Status",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/status"
+        },
+        {
+          "id": "professional",
+          "label": "Professional",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/professional"
+        },
+        {
+          "id": "source",
+          "label": "Source",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/source"
+        },
+        {
+          "id": "observedDay",
+          "label": "Observed Day",
+          "type": "integer",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/observedDay"
+        },
+        {
+          "id": "currentStatus",
+          "label": "Current Status",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/currentStatus"
+        },
+        {
+          "id": "accepted",
+          "label": "Accepted",
+          "type": "boolean",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/accepted"
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-6",
+      "name": "Record Scope",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/evidence/recordScope"
+      },
+      "columns": [
+        {
+          "id": "record",
+          "label": "Record",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/record"
+        },
+        {
+          "id": "field",
+          "label": "Field",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/field"
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/value"
+        }
+      ],
+      "key": [
+        "record",
+        "field"
+      ]
+    },
+    {
+      "id": "inputs-7",
+      "name": "Query Ids",
+      "kind": "scalar-list",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/queryIds"
+      },
+      "columns": [
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "enum": [
+            "reading-finding",
+            "attention-finding",
+            "language-finding",
+            "supported-findings"
+          ]
+        }
+      ],
+      "key": [
+        "value"
+      ]
+    },
+    {
+      "id": "inputs-8",
+      "name": "Case details",
+      "kind": "record",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "scope",
+          "label": "Scope",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/scope"
+        },
+        {
+          "id": "title",
+          "label": "Title",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/title"
+        }
+      ],
+      "key": []
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "3e7f00aeda29fcc3555e5d51b5d28b22cf818d7a1dcfef2723f8aee6bc52489d"
+}

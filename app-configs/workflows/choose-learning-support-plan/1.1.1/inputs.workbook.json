@@ -1,0 +1,3634 @@
+{
+  "format": "decision-lab-workbook-release/1",
+  "target": {
+    "format": "decision-lab-workflow-package/1",
+    "workflow": {
+      "format": "decision-lab-workflow/1",
+      "id": "choose-learning-support-plan",
+      "version": "1.1.1",
+      "title": "Choose a learning-support plan",
+      "question": "Which support plan will help this child—and what improvement would show that it is working?",
+      "description": "Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.",
+      "execution": {
+        "mode": "calculation"
+      },
+      "dependencies": [
+        {
+          "id": "comparison",
+          "app": {
+            "format": "decision-lab-app/1",
+            "template": {
+              "format": "decision-lab-template/1",
+              "definition": {
+                "format": "decision-lab-template-definition/1",
+                "templateId": "compare-outcomes",
+                "version": "1.0.0",
+                "pattern": "compare-outcomes/1",
+                "title": "Compare outcomes under uncertainty",
+                "description": "Compare separate nonfinancial outcomes using supplied response ranges, explicit goals and priorities. Preserve unresolved choices, evidence applicability, sensitivity and progress measures.",
+                "authoring": {
+                  "requiredModuleFields": [],
+                  "guidance": ""
+                },
+                "contract": {
+                  "format": "decision-lab-installed-contract/1",
+                  "pattern": "compare-outcomes/1",
+                  "definition": {
+                    "id": "compare-outcomes",
+                    "version": "1.0.0",
+                    "evaluator": "bounded-outcome-comparison/1",
+                    "title": "Compare outcomes under uncertainty",
+                    "responsibility": "Compare supplied outcome ranges and explicit priorities, expose unresolved tradeoffs, and define observations that could change the choice.",
+                    "invariants": [
+                      "Outcome units and directions remain separate; no combined score or implicit monetary value is inferred.",
+                      "Ranges are supplied assumptions, not confidence intervals, causal effects, or predicted individual responses.",
+                      "Missing estimates and uncertain applicability remain unknown and never become zero or a reason to prefer another option by absence.",
+                      "A robust preference requires conservative interval separation at the first priority that differs; overlapping priority ranges cannot be bypassed.",
+                      "Declared targets express aspirations, not clinical suitability, observed success, or authorization.",
+                      "Sensitivity scenarios compare declared assumptions; they do not estimate probabilities or discover new evidence."
+                    ]
+                  },
+                  "schema": {
+                    "kind": "installed-validator-descriptor/1",
+                    "modelFormat": "compare-outcomes/1",
+                    "moduleValidator": "assertOutcomeModule",
+                    "caseValidator": "validateOutcomeCase",
+                    "requiredModelFields": [
+                      "format",
+                      "module",
+                      "case"
+                    ],
+                    "requiredModuleFields": [
+                      "id",
+                      "version",
+                      "title",
+                      "description",
+                      "question",
+                      "boundary",
+                      "alternatives",
+                      "outcomes"
+                    ],
+                    "moduleFields": [
+                      "id",
+                      "version",
+                      "title",
+                      "description",
+                      "question",
+                      "boundary",
+                      "alternatives",
+                      "outcomes",
+                      "assumptions",
+                      "metadata",
+                      "presentation",
+                      "metadata.catalog",
+                      "metadata.catalog.domain",
+                      "metadata.catalog.domain.id",
+                      "metadata.catalog.domain.label",
+                      "metadata.catalog.domain.description",
+                      "metadata.catalog.useCase",
+                      "metadata.catalog.useCase.id",
+                      "metadata.catalog.useCase.label",
+                      "metadata.catalog.useCase.description"
+                    ],
+                    "requiredCaseFields": [
+                      "id",
+                      "scope",
+                      "sources",
+                      "estimates",
+                      "preferences",
+                      "sensitivity",
+                      "monitoring"
+                    ],
+                    "optionalCaseFields": [
+                      "title"
+                    ],
+                    "caseDerivation": [
+                      "Alternative identities and separate outcome units, directions and bounds remain frozen.",
+                      "Case workers supply explicit estimate ranges and source applicability judgments; missing or unsupported estimates remain unknown.",
+                      "Explicit priorities and aspirations define the conditional comparison; no implicit weights, money conversion or causal effects are inferred."
+                    ],
+                    "description": "Installed finite nonfinancial outcome comparison and applicability validators; not a complete JSON Schema."
+                  },
+                  "structuralSlots": [
+                    {
+                      "path": "alternatives",
+                      "owner": "module-author",
+                      "description": "Define complete support alternatives without assuming a combined plan is best."
+                    },
+                    {
+                      "path": "outcomes",
+                      "owner": "module-author",
+                      "description": "Define separate effects and burden, units, direction, bounds and meaning."
+                    },
+                    {
+                      "path": "assumptions",
+                      "owner": "module-author",
+                      "description": "State scope and inference boundaries."
+                    },
+                    {
+                      "path": "metadata",
+                      "owner": "module-author",
+                      "description": "Bind vocabulary, inputs and reusable report definitions."
+                    }
+                  ],
+                  "caseInputs": [
+                    {
+                      "path": "id",
+                      "owner": "case-worker",
+                      "description": "Identify the comparison."
+                    },
+                    {
+                      "path": "scope",
+                      "owner": "case-worker",
+                      "description": "Describe the intended choice and horizon."
+                    },
+                    {
+                      "path": "sources",
+                      "owner": "case-worker",
+                      "description": "Retain evidence origin, citation and explicit applicability judgment."
+                    },
+                    {
+                      "path": "estimates",
+                      "owner": "case-worker",
+                      "description": "Supply bounded assumptions for each alternative/outcome cell or retain unknown values."
+                    },
+                    {
+                      "path": "preferences",
+                      "owner": "case-worker",
+                      "description": "Declare priorities and aspirations explicitly."
+                    },
+                    {
+                      "path": "sensitivity",
+                      "owner": "case-worker",
+                      "description": "Declare alternative assumptions and priorities to compare."
+                    },
+                    {
+                      "path": "monitoring",
+                      "owner": "case-worker",
+                      "description": "Define observations that could inform a later choice."
+                    }
+                  ],
+                  "capabilities": {
+                    "language": "finite-outcome-comparison/1",
+                    "supported": [
+                      "separate-nonfinancial-outcomes",
+                      "explicit-interval-estimates",
+                      "conservative-dominance",
+                      "lexicographic-priorities",
+                      "aspiration-targets",
+                      "unresolved-tradeoffs",
+                      "source-applicability",
+                      "declared-sensitivity",
+                      "monitoring-definitions"
+                    ],
+                    "unsupported": [
+                      "inferred-causal-effects",
+                      "individual-response-prediction",
+                      "implicit-outcome-weights",
+                      "monetary-coercion",
+                      "diagnosis",
+                      "automatic-treatment-selection",
+                      "automatic-study-design"
+                    ]
+                  },
+                  "limits": {
+                    "alternatives": 16,
+                    "outcomes": 16,
+                    "sources": 128,
+                    "sensitivity": 32,
+                    "monitoring": 64,
+                    "text": 20000
+                  },
+                  "reportResponsibilities": {
+                    "assessmentContract": "outcome-comparison-assessment/1",
+                    "reportIds": [
+                      "comparison",
+                      "estimates",
+                      "evidence",
+                      "sensitivity",
+                      "monitoring",
+                      "basis"
+                    ],
+                    "responsibilities": [
+                      "Separate outcome ranges and source applicability",
+                      "Conditional preferences and unresolved tradeoffs",
+                      "Explicit priorities, aspirations and sensitivity scenarios",
+                      "Monitoring definitions and conclusion boundaries"
+                    ],
+                    "completeReportDocument": "Retains complete assessment and generic metadata-driven report datasets for SDK, CLI and UI."
+                  }
+                }
+              },
+              "createdAt": "2026-11-25T22:00:00.000Z",
+              "contentHash": "8d104d3f661c84bf1bbd0d25548e0a9ac30017a72f5b1415c303afa8f13f2e55"
+            },
+            "app": {
+              "schemaVersion": 5,
+              "kind": "hermod-published-app",
+              "runtime": "diagnostic-evidence",
+              "id": "compare-learning-support-plans",
+              "version": 3,
+              "name": "Compare learning-support plans",
+              "description": "Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.",
+              "source": "{\n  \"format\": \"compare-outcomes/1\",\n  \"module\": {\n    \"id\": \"learning-support-outcomes\",\n    \"version\": \"1.1.0\",\n    \"title\": \"Compare learning-support plans\",\n    \"description\": \"Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.\",\n    \"question\": \"Which support plan will help this child—and what improvement would show that it is working?\",\n    \"boundary\": \"Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.\",\n    \"alternatives\": [\n      {\n        \"id\": \"reading-support\",\n        \"label\": \"Targeted word-reading support\",\n        \"description\": \"A complete word-reading support package for this comparison. Its assumed decoding benefit does not automatically establish improvement in attention-related classroom difficulties.\"\n      },\n      {\n        \"id\": \"classroom-support\",\n        \"label\": \"Classroom support for attention-related difficulties\",\n        \"description\": \"A complete classroom-support package for this comparison, not a complete clinical ADHD treatment. Completing more work is not treated as evidence of better word decoding.\"\n      },\n      {\n        \"id\": \"coordinated-support\",\n        \"label\": \"Coordinated support\",\n        \"description\": \"A coordinated package addressing both recorded needs, with greater weekly burden. It is not assumed to dominate the focused alternatives.\"\n      }\n    ],\n    \"outcomes\": [\n      {\n        \"id\": \"word-reading\",\n        \"label\": \"Word-reading improvement\",\n        \"unit\": \"change in correct items on a fixed 20-item decoding probe\",\n        \"direction\": \"maximize\",\n        \"minimum\": -6,\n        \"maximum\": 14,\n        \"description\": \"Change from this fictional case’s baseline of 6 correct items out of 20. Negative change remains possible. The fixed baseline defines the permitted change range; another baseline requires an adapted model. It is separate from work completed.\"\n      },\n      {\n        \"id\": \"participation\",\n        \"label\": \"Classroom-participation improvement\",\n        \"unit\": \"percentage-point change in engaged observation intervals\",\n        \"direction\": \"maximize\",\n        \"minimum\": -45,\n        \"maximum\": 55,\n        \"description\": \"Change from this fictional case’s baseline of 45% under a fixed classroom observation protocol. Negative change remains possible. It is not an ADHD diagnosis or a measure of decoding.\"\n      },\n      {\n        \"id\": \"weekly-burden\",\n        \"label\": \"Additional weekly burden\",\n        \"unit\": \"minutes per week\",\n        \"direction\": \"minimize\",\n        \"minimum\": 0,\n        \"maximum\": 600,\n        \"description\": \"Additional practice and coordination time borne by the child and family. It is kept separate from improvement rather than converted into money.\"\n      }\n    ],\n    \"assumptions\": [\n      \"Dyslexia and ADHD have already been professionally assessed in this fictional case; the calculation does not diagnose them or determine clinical suitability.\",\n      \"The decision concerns the next six-week support block. Better classroom participation does not by itself establish that the decoding need is sufficiently addressed; decoding improvement does not by itself establish adequate classroom functioning.\",\n      \"All alternatives are complete authored support descriptions for this bounded comparison. Classroom support for attention-related difficulties is not a complete clinical ADHD treatment. The range comparison does not prescribe medication, infer clinical efficacy or produce a probability of benefit.\",\n      \"Targets and priority order are explicit human judgments. A preferred option is conditional on supplied estimates, applicability and preferences; overlapping ranges can leave the choice unresolved.\",\n      \"The six-week horizon and baseline values are fictional teaching inputs. Qualified professionals must choose appropriate measures and reconsideration criteria.\"\n    ],\n    \"metadata\": {\n      \"catalog\": {\n        \"domain\": {\n          \"id\": \"learning-support\",\n          \"label\": \"Learning support\"\n        },\n        \"useCase\": {\n          \"id\": \"choose-learning-support\",\n          \"label\": \"Choose learning support\"\n        }\n      },\n      \"caseStart\": {\n        \"starterMeaning\": \"example\",\n        \"supportsOwnData\": false,\n        \"scope\": \"Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.\"\n      },\n      \"decisionPresentation\": {\n        \"format\": \"decision-presentation/1\",\n        \"title\": \"Choose learning support\",\n        \"question\": \"Which support plan will help this child—and what improvement would show that it is working?\",\n        \"priorityLabel\": \"Explicit outcome goals and a declared priority order; no combined benefit score.\",\n        \"sections\": [\n          {\n            \"id\": \"options\",\n            \"label\": \"Options\",\n            \"question\": \"Which support plans meet the stated outcome goals under the supplied assumptions?\"\n          },\n          {\n            \"id\": \"next-actions\",\n            \"label\": \"Next actions\",\n            \"question\": \"What should we clarify or inspect before choosing support?\"\n          },\n          {\n            \"id\": \"assumptions\",\n            \"label\": \"Assumptions\",\n            \"question\": \"Which response, applicability and priority judgments could change this choice?\"\n          },\n          {\n            \"id\": \"questions\",\n            \"label\": \"Questions\",\n            \"question\": \"What remains unknown about benefit and progress?\"\n          }\n        ]\n      },\n      \"supportingReports\": {\n        \"format\": \"supporting-reports/1\",\n        \"reports\": [\n          {\n            \"id\": \"outcomes\",\n            \"label\": \"Expected outcomes\",\n            \"question\": \"What might each support plan improve, and what remains uncertain?\",\n            \"template\": \"records/1\",\n            \"source\": {\n              \"kind\": \"report-dataset\",\n              \"datasetId\": \"outcomes:estimates\"\n            },\n            \"bindings\": {\n              \"columns\": [\n                {\n                  \"key\": \"alternative\",\n                  \"label\": \"Support plan\"\n                },\n                {\n                  \"key\": \"outcome\",\n                  \"label\": \"Outcome\"\n                },\n                {\n                  \"key\": \"range\",\n                  \"label\": \"Supplied range\"\n                },\n                {\n                  \"key\": \"target\",\n                  \"label\": \"Stated goal\"\n                },\n                {\n                  \"key\": \"targetStatus\",\n                  \"label\": \"Goal finding\"\n                },\n                {\n                  \"key\": \"availability\",\n                  \"label\": \"Applicability\"\n                }\n              ]\n            }\n          },\n          {\n            \"id\": \"evidence\",\n            \"label\": \"Evidence and applicability\",\n            \"question\": \"What supports these expectations, and how applicable is it here?\",\n            \"template\": \"records/1\",\n            \"source\": {\n              \"kind\": \"report-dataset\",\n              \"datasetId\": \"outcomes:evidence\"\n            },\n            \"bindings\": {\n              \"columns\": [\n                {\n                  \"key\": \"label\",\n                  \"label\": \"Source\"\n                },\n                {\n                  \"key\": \"kind\",\n                  \"label\": \"Kind of basis\"\n                },\n                {\n                  \"key\": \"citation\",\n                  \"label\": \"Citation\"\n                },\n                {\n                  \"key\": \"applicability\",\n                  \"label\": \"Applicability judgment\"\n                },\n                {\n                  \"key\": \"applicabilityStatus\",\n                  \"label\": \"Applicability status\"\n                }\n              ]\n            }\n          },\n          {\n            \"id\": \"sensitivity\",\n            \"label\": \"Test the choice\",\n            \"question\": \"Which changed assumptions or priorities would change the preferred plan?\",\n            \"template\": \"records/1\",\n            \"source\": {\n              \"kind\": \"report-dataset\",\n              \"datasetId\": \"outcomes:sensitivity\"\n            },\n            \"bindings\": {\n              \"columns\": [\n                {\n                  \"key\": \"label\",\n                  \"label\": \"Changed assumption or priority\"\n                },\n                {\n                  \"key\": \"status\",\n                  \"label\": \"Comparison finding\"\n                },\n                {\n                  \"key\": \"preferred\",\n                  \"label\": \"Conditional preference\"\n                },\n                {\n                  \"key\": \"changed\",\n                  \"label\": \"Preference changed\"\n                },\n                {\n                  \"key\": \"explanation\",\n                  \"label\": \"Reason\"\n                }\n              ]\n            }\n          },\n          {\n            \"id\": \"monitoring\",\n            \"label\": \"Learn from progress\",\n            \"question\": \"What observations would support continuing or changing the plan?\",\n            \"template\": \"records/1\",\n            \"source\": {\n              \"kind\": \"report-dataset\",\n              \"datasetId\": \"outcomes:monitoring\"\n            },\n            \"bindings\": {\n              \"columns\": [\n                {\n                  \"key\": \"outcome\",\n                  \"label\": \"Outcome\"\n                },\n                {\n                  \"key\": \"measure\",\n                  \"label\": \"Baseline and measure\"\n                },\n                {\n                  \"key\": \"when\",\n                  \"label\": \"Observation and reconsideration horizon\"\n                },\n                {\n                  \"key\": \"interpretation\",\n                  \"label\": \"Reason to reconsider\"\n                }\n              ]\n            }\n          }\n        ]\n      },\n      \"inputDesign\": {\n        \"version\": 1,\n        \"form\": {\n          \"type\": \"object\",\n          \"label\": \"Case inputs\",\n          \"fields\": {\n            \"scope\": {\n              \"type\": \"string\",\n              \"label\": \"Scope\"\n            },\n            \"sources\": {\n              \"type\": \"array\",\n              \"label\": \"Sources and applicability\",\n              \"items\": {\n                \"type\": \"object\",\n                \"label\": \"Sources record\",\n                \"fields\": {\n                  \"id\": {\n                    \"type\": \"string\",\n                    \"label\": \"Id\",\n                    \"unit\": \"identifier\"\n                  },\n                  \"label\": {\n                    \"type\": \"string\",\n                    \"label\": \"Label\"\n                  },\n                  \"kind\": {\n                    \"type\": \"string\",\n                    \"label\": \"Kind\",\n                    \"options\": [\n                      \"fictional-assumption\",\n                      \"research\",\n                      \"observation\",\n                      \"expert-judgment\"\n                    ]\n                  },\n                  \"citation\": {\n                    \"type\": \"string\",\n                    \"label\": \"Citation\"\n                  },\n                  \"applicability\": {\n                    \"type\": \"string\",\n                    \"label\": \"Applicability\"\n                  },\n                  \"applicabilityStatus\": {\n                    \"type\": \"string\",\n                    \"label\": \"Applicability Status\",\n                    \"options\": [\n                      \"accepted\",\n                      \"uncertain\",\n                      \"not-applicable\"\n                    ]\n                  }\n                }\n              },\n              \"keyFields\": [\n                \"id\"\n              ]\n            },\n            \"estimates\": {\n              \"type\": \"array\",\n              \"label\": \"Separate outcome estimate ranges\",\n              \"items\": {\n                \"type\": \"object\",\n                \"label\": \"Estimates record\",\n                \"fields\": {\n                  \"alternativeId\": {\n                    \"type\": \"string\",\n                    \"label\": \"Alternative Id\",\n                    \"unit\": \"identifier\",\n                    \"options\": [\n                      \"reading-support\",\n                      \"classroom-support\",\n                      \"coordinated-support\"\n                    ]\n                  },\n                  \"outcomeId\": {\n                    \"type\": \"string\",\n                    \"label\": \"Outcome Id\",\n                    \"unit\": \"identifier\",\n                    \"options\": [\n                      \"word-reading\",\n                      \"participation\",\n                      \"weekly-burden\"\n                    ]\n                  },\n                  \"lower\": {\n                    \"type\": \"number\",\n                    \"label\": \"Lower\",\n                    \"nullable\": true\n                  },\n                  \"upper\": {\n                    \"type\": \"number\",\n                    \"label\": \"Upper\",\n                    \"nullable\": true\n                  },\n                  \"sourceIds\": {\n                    \"type\": \"array\",\n                    \"label\": \"Source Ids\",\n                    \"items\": {\n                      \"type\": \"string\",\n                      \"label\": \"Source Ids record\",\n                      \"unit\": \"identifier\"\n                    }\n                  },\n                  \"rationale\": {\n                    \"type\": \"string\",\n                    \"label\": \"Rationale\"\n                  }\n                }\n              },\n              \"keyFields\": [\n                \"alternativeId\",\n                \"outcomeId\"\n              ]\n            },\n            \"preferences\": {\n              \"type\": \"object\",\n              \"label\": \"Preferences\",\n              \"fields\": {\n                \"priorities\": {\n                  \"type\": \"array\",\n                  \"label\": \"Priorities\",\n                  \"items\": {\n                    \"type\": \"string\",\n                    \"label\": \"Priorities record\",\n                    \"unit\": \"identifier\",\n                    \"options\": [\n                      \"word-reading\",\n                      \"participation\",\n                      \"weekly-burden\"\n                    ]\n                  }\n                },\n                \"targets\": {\n                  \"type\": \"array\",\n                  \"label\": \"Authored aspirations\",\n                  \"items\": {\n                    \"type\": \"object\",\n                    \"label\": \"Targets record\",\n                    \"fields\": {\n                      \"outcomeId\": {\n                        \"type\": \"string\",\n                        \"label\": \"Outcome Id\",\n                        \"unit\": \"identifier\",\n                        \"options\": [\n                          \"word-reading\",\n                          \"participation\",\n                          \"weekly-burden\"\n                        ]\n                      },\n                      \"value\": {\n                        \"type\": \"number\",\n                        \"label\": \"Value\"\n                      }\n                    }\n                  },\n                  \"keyFields\": [\n                    \"outcomeId\"\n                  ]\n                }\n              }\n            },\n            \"sensitivity\": {\n              \"type\": \"array\",\n              \"label\": \"Declared sensitivity scenarios\",\n              \"items\": {\n                \"type\": \"object\",\n                \"label\": \"Sensitivity record\",\n                \"fields\": {\n                  \"id\": {\n                    \"type\": \"string\",\n                    \"label\": \"Id\",\n                    \"unit\": \"identifier\"\n                  },\n                  \"label\": {\n                    \"type\": \"string\",\n                    \"label\": \"Label\"\n                  },\n                  \"preferences\": {\n                    \"type\": \"object\",\n                    \"label\": \"Preferences\",\n                    \"optional\": true,\n                    \"fields\": {\n                      \"priorities\": {\n                        \"type\": \"array\",\n                        \"label\": \"Priorities\",\n                        \"items\": {\n                          \"type\": \"string\",\n                          \"label\": \"Priorities record\",\n                          \"unit\": \"identifier\",\n                          \"options\": [\n                            \"word-reading\",\n                            \"participation\",\n                            \"weekly-burden\"\n                          ]\n                        }\n                      },\n                      \"targets\": {\n                        \"type\": \"array\",\n                        \"label\": \"Authored aspirations\",\n                        \"items\": {\n                          \"type\": \"object\",\n                          \"label\": \"Targets record\",\n                          \"fields\": {\n                            \"outcomeId\": {\n                              \"type\": \"string\",\n                              \"label\": \"Outcome Id\",\n                              \"unit\": \"identifier\",\n                              \"options\": [\n                                \"word-reading\",\n                                \"participation\",\n                                \"weekly-burden\"\n                              ]\n                            },\n                            \"value\": {\n                              \"type\": \"number\",\n                              \"label\": \"Value\"\n                            }\n                          }\n                        },\n                        \"keyFields\": [\n                          \"outcomeId\"\n                        ]\n                      }\n                    }\n                  },\n                  \"estimates\": {\n                    \"type\": \"array\",\n                    \"label\": \"Estimates\",\n                    \"optional\": true,\n                    \"items\": {\n                      \"type\": \"object\",\n                      \"label\": \"Estimates record\",\n                      \"fields\": {\n                        \"alternativeId\": {\n                          \"type\": \"string\",\n                          \"label\": \"Alternative Id\",\n                          \"unit\": \"identifier\",\n                          \"options\": [\n                            \"reading-support\",\n                            \"classroom-support\",\n                            \"coordinated-support\"\n                          ]\n                        },\n                        \"outcomeId\": {\n                          \"type\": \"string\",\n                          \"label\": \"Outcome Id\",\n                          \"unit\": \"identifier\",\n                          \"options\": [\n                            \"word-reading\",\n                            \"participation\",\n                            \"weekly-burden\"\n                          ]\n                        },\n                        \"lower\": {\n                          \"type\": \"number\",\n                          \"label\": \"Lower\",\n                          \"nullable\": true\n                        },\n                        \"upper\": {\n                          \"type\": \"number\",\n                          \"label\": \"Upper\",\n                          \"nullable\": true\n                        },\n                        \"sourceIds\": {\n                          \"type\": \"array\",\n                          \"label\": \"Source Ids\",\n                          \"items\": {\n                            \"type\": \"string\",\n                            \"label\": \"Source Ids record\",\n                            \"unit\": \"identifier\"\n                          }\n                        },\n                        \"rationale\": {\n                          \"type\": \"string\",\n                          \"label\": \"Rationale\"\n                        }\n                      }\n                    },\n                    \"keyFields\": [\n                      \"alternativeId\",\n                      \"outcomeId\"\n                    ]\n                  }\n                }\n              },\n              \"keyFields\": [\n                \"id\"\n              ]\n            },\n            \"monitoring\": {\n              \"type\": \"array\",\n              \"label\": \"Proposed progress observations\",\n              \"items\": {\n                \"type\": \"object\",\n                \"label\": \"Monitoring record\",\n                \"fields\": {\n                  \"outcomeId\": {\n                    \"type\": \"string\",\n                    \"label\": \"Outcome Id\",\n                    \"unit\": \"identifier\",\n                    \"options\": [\n                      \"word-reading\",\n                      \"participation\",\n                      \"weekly-burden\"\n                    ]\n                  },\n                  \"measure\": {\n                    \"type\": \"string\",\n                    \"label\": \"Measure\"\n                  },\n                  \"when\": {\n                    \"type\": \"string\",\n                    \"label\": \"When\"\n                  },\n                  \"interpretation\": {\n                    \"type\": \"string\",\n                    \"label\": \"Interpretation\"\n                  },\n                  \"sourceIds\": {\n                    \"type\": \"array\",\n                    \"label\": \"Source Ids\",\n                    \"items\": {\n                      \"type\": \"string\",\n                      \"label\": \"Source Ids record\",\n                      \"unit\": \"identifier\"\n                    }\n                  }\n                }\n              },\n              \"keyFields\": [\n                \"outcomeId\",\n                \"measure\"\n              ]\n            },\n            \"title\": {\n              \"type\": \"string\",\n              \"label\": \"Title\"\n            }\n          }\n        },\n        \"groups\": [\n          {\n            \"id\": \"decision-context\",\n            \"label\": \"Decision context\",\n            \"question\": \"Whose outcomes and which decision does this comparison concern?\",\n            \"subtabs\": [\n              {\n                \"id\": \"scope\",\n                \"label\": \"Question and scope\",\n                \"fieldPaths\": [\n                  \"/scope\",\n                  \"/title\"\n                ]\n              }\n            ]\n          },\n          {\n            \"id\": \"response-estimates\",\n            \"label\": \"Response assumptions\",\n            \"question\": \"What separate outcome ranges should this comparison use?\",\n            \"subtabs\": [\n              {\n                \"id\": \"estimates\",\n                \"label\": \"Outcome estimates\",\n                \"fieldPaths\": [\n                  \"/estimates\"\n                ]\n              }\n            ]\n          },\n          {\n            \"id\": \"goals-and-priorities\",\n            \"label\": \"Goals and priorities\",\n            \"question\": \"Which outcomes matter, and what aspirations should guide the choice?\",\n            \"subtabs\": [\n              {\n                \"id\": \"preferences\",\n                \"label\": \"Goals and priorities\",\n                \"fieldPaths\": [\n                  \"/preferences\"\n                ]\n              }\n            ]\n          },\n          {\n            \"id\": \"evidence-and-uncertainty\",\n            \"label\": \"Evidence and uncertainty\",\n            \"question\": \"What supplies the estimates and which assumptions should be varied?\",\n            \"subtabs\": [\n              {\n                \"id\": \"sources\",\n                \"label\": \"Sources and applicability\",\n                \"fieldPaths\": [\n                  \"/sources\"\n                ]\n              },\n              {\n                \"id\": \"sensitivity\",\n                \"label\": \"Declared sensitivity scenarios\",\n                \"fieldPaths\": [\n                  \"/sensitivity\"\n                ]\n              }\n            ]\n          },\n          {\n            \"id\": \"progress-observations\",\n            \"label\": \"Progress observations\",\n            \"question\": \"What should be observed before reconsidering the choice?\",\n            \"subtabs\": [\n              {\n                \"id\": \"monitoring\",\n                \"label\": \"Monitoring plan\",\n                \"fieldPaths\": [\n                  \"/monitoring\"\n                ]\n              }\n            ]\n          }\n        ]\n      }\n    }\n  },\n  \"case\": {\n    \"id\": \"fictional-sam-support\",\n    \"title\": \"Fictional support comparison for Sam, age eight\",\n    \"scope\": \"Sam is a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. Lisa, the support coordinator, is helping the child, family and professionals choose his next six-week support block. His teacher sees improved participation while unfamiliar words remain difficult to decode. A single reassuring “working” judgment could renew a plan without addressing that remaining difficulty. The comparison keeps both needs and the child’s and family’s burden visible. Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.\",\n    \"sources\": [\n      {\n        \"id\": \"fictional-response-assumptions\",\n        \"label\": \"Authored fictional response assumptions\",\n        \"kind\": \"fictional-assumption\",\n        \"citation\": \"Teaching fixture in model.mjs; no individual response values are derived from a study.\",\n        \"applicabilityStatus\": \"accepted\",\n        \"applicability\": \"Accepted only as explicit assumptions for this fictional exercise. A real use needs qualified evidence and a documented applicability judgment for the child, support and outcome.\"\n      },\n      {\n        \"id\": \"trial-context\",\n        \"label\": \"Research context: distinct reading and ADHD outcomes\",\n        \"kind\": \"research\",\n        \"citation\": \"Tamm et al., 2017. Comparing Treatments for Children with ADHD and Word Reading Difficulties: A Randomized Clinical Trial. https://pubmed.ncbi.nlm.nih.gov/28333510/\",\n        \"applicabilityStatus\": \"uncertain\",\n        \"applicability\": \"Context for separating target outcomes, not a source of the fictional ranges. The trial ADHD treatment included medication and parent training; it does not validate this classroom-only package or predict this child’s response.\"\n      }\n    ],\n    \"estimates\": [\n      {\n        \"alternativeId\": \"reading-support\",\n        \"outcomeId\": \"word-reading\",\n        \"lower\": 7,\n        \"upper\": 9,\n        \"sourceIds\": [\n          \"fictional-response-assumptions\"\n        ],\n        \"rationale\": \"Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding.\"\n      },\n      {\n        \"alternativeId\": \"reading-support\",\n        \"outcomeId\": \"participation\",\n        \"lower\": 2,\n        \"upper\": 4,\n        \"sourceIds\": [\n          \"fictional-response-assumptions\"\n        ],\n        \"rationale\": \"Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding.\"\n      },\n      {\n        \"alternativeId\": \"reading-support\",\n        \"outcomeId\": \"weekly-burden\",\n        \"lower\": 90,\n        \"upper\": 120,\n        \"sourceIds\": [\n          \"fictional-response-assumptions\"\n        ],\n        \"rationale\": \"Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding.\"\n      },\n      {\n        \"alternativeId\": \"classroom-support\",\n        \"outcomeId\": \"word-reading\",\n        \"lower\": 0,\n        \"upper\": 2,\n        \"sourceIds\": [\n          \"fictional-response-assumptions\"\n        ],\n        \"rationale\": \"Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding.\"\n      },\n      {\n        \"alternativeId\": \"classroom-support\",\n        \"outcomeId\": \"participation\",\n        \"lower\": 15,\n        \"upper\": 20,\n        \"sourceIds\": [\n          \"fictional-response-assumptions\"\n        ],\n        \"rationale\": \"Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding.\"\n      },\n      {\n        \"alternativeId\": \"classroom-support\",\n        \"outcomeId\": \"weekly-burden\",\n        \"lower\": 30,\n        \"upper\": 45,\n        \"sourceIds\": [\n          \"fictional-response-assumptions\"\n        ],\n        \"rationale\": \"Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding.\"\n      },\n      {\n        \"alternativeId\": \"coordinated-support\",\n        \"outcomeId\": \"word-reading\",\n        \"lower\": 4,\n        \"upper\": 6,\n        \"sourceIds\": [\n          \"fictional-response-assumptions\"\n        ],\n        \"rationale\": \"Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding.\"\n      },\n      {\n        \"alternativeId\": \"coordinated-support\",\n        \"outcomeId\": \"participation\",\n        \"lower\": 10,\n        \"upper\": 14,\n        \"sourceIds\": [\n          \"fictional-response-assumptions\"\n        ],\n        \"rationale\": \"Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding.\"\n      },\n      {\n        \"alternativeId\": \"coordinated-support\",\n        \"outcomeId\": \"weekly-burden\",\n        \"lower\": 150,\n        \"upper\": 180,\n        \"sourceIds\": [\n          \"fictional-response-assumptions\"\n        ],\n        \"rationale\": \"Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding.\"\n      }\n    ],\n    \"preferences\": {\n      \"priorities\": [\n        \"word-reading\",\n        \"participation\",\n        \"weekly-burden\"\n      ],\n      \"targets\": [\n        {\n          \"outcomeId\": \"word-reading\",\n          \"value\": 4\n        },\n        {\n          \"outcomeId\": \"participation\",\n          \"value\": 8\n        }\n      ]\n    },\n    \"sensitivity\": [\n      {\n        \"id\": \"reading-first\",\n        \"label\": \"If reading is the first priority and minimum goals are relaxed\",\n        \"preferences\": {\n          \"priorities\": [\n            \"word-reading\",\n            \"participation\",\n            \"weekly-burden\"\n          ],\n          \"targets\": []\n        }\n      },\n      {\n        \"id\": \"participation-first\",\n        \"label\": \"If participation is the first priority and minimum goals are relaxed\",\n        \"preferences\": {\n          \"priorities\": [\n            \"participation\",\n            \"word-reading\",\n            \"weekly-burden\"\n          ],\n          \"targets\": []\n        }\n      },\n      {\n        \"id\": \"burden-limit\",\n        \"label\": \"If additional weekly burden cannot exceed two hours\",\n        \"preferences\": {\n          \"priorities\": [\n            \"word-reading\",\n            \"participation\",\n            \"weekly-burden\"\n          ],\n          \"targets\": [\n            {\n              \"outcomeId\": \"word-reading\",\n              \"value\": 4\n            },\n            {\n              \"outcomeId\": \"participation\",\n              \"value\": 8\n            },\n            {\n              \"outcomeId\": \"weekly-burden\",\n              \"value\": 120\n            }\n          ]\n        }\n      },\n      {\n        \"id\": \"overlapping-responses\",\n        \"label\": \"If the leading reading ranges overlap and minimum goals are relaxed\",\n        \"preferences\": {\n          \"priorities\": [\n            \"word-reading\",\n            \"participation\",\n            \"weekly-burden\"\n          ],\n          \"targets\": []\n        },\n        \"estimates\": [\n          {\n            \"alternativeId\": \"coordinated-support\",\n            \"outcomeId\": \"word-reading\",\n            \"lower\": 6,\n            \"upper\": 10,\n            \"sourceIds\": [\n              \"fictional-response-assumptions\"\n            ],\n            \"rationale\": \"An authored fictional alternative assumption overlaps Targeted word-reading support. Lower priorities cannot settle an uncertain first priority.\"\n          }\n        ]\n      }\n    ],\n    \"monitoring\": [\n      {\n        \"outcomeId\": \"word-reading\",\n        \"measure\": \"Baseline: 6 correct items on the declared 20-item unfamiliar-word probe. Record correct items on comparable probes using the same scoring protocol; a qualified professional determines an appropriate measure.\",\n        \"when\": \"Baseline before support, weekly observations, and a six-week reconsideration point.\",\n        \"interpretation\": \"Reconsider the assumed reading benefit if observed change fails to approach the agreed four-item goal or the measure is not suitable. Improvement in participation cannot substitute. Repeated measurements alone do not establish treatment causality.\",\n        \"sourceIds\": []\n      },\n      {\n        \"outcomeId\": \"participation\",\n        \"measure\": \"Baseline: engaged in 45% of fixed classroom observation intervals. Record engagement under a declared observation protocol, with lesson and observer context.\",\n        \"when\": \"Baseline before support, weekly observations, and a six-week reconsideration point.\",\n        \"interpretation\": \"Reconsider the assumed participation benefit if change does not approach the agreed eight-percentage-point goal, contexts differ, or observations conflict. Do not infer decoding improvement or a diagnosis from engagement.\",\n        \"sourceIds\": []\n      },\n      {\n        \"outcomeId\": \"weekly-burden\",\n        \"measure\": \"Baseline: zero additional minutes attributable to the proposed package. Record actual additional child and family practice and coordination time.\",\n        \"when\": \"Record weekly, including incomplete sessions and family feedback; reconsider at six weeks or earlier if burden is unacceptable.\",\n        \"interpretation\": \"Reconsider the package if actual burden exceeds the accepted bound or the child or family finds it unacceptable, even when another outcome improves. These observations do not measure efficacy.\",\n        \"sourceIds\": []\n      }\n    ]\n  }\n}\n",
+              "sourceHash": "b33133722f3105ead12a857cadbb3e9e280999e98497e305a0ee76e61780e08c",
+              "definitionHash": "ed591930c1ed667f5268b4981a35b25c7287f9014ba031d016b755d4d0be2141",
+              "definitionContract": {
+                "id": "compare-outcomes",
+                "version": "1.0.0",
+                "evaluator": "bounded-outcome-comparison/1",
+                "title": "Compare outcomes under uncertainty",
+                "responsibility": "Compare supplied outcome ranges and explicit priorities, expose unresolved tradeoffs, and define observations that could change the choice.",
+                "invariants": [
+                  "Outcome units and directions remain separate; no combined score or implicit monetary value is inferred.",
+                  "Ranges are supplied assumptions, not confidence intervals, causal effects, or predicted individual responses.",
+                  "Missing estimates and uncertain applicability remain unknown and never become zero or a reason to prefer another option by absence.",
+                  "A robust preference requires conservative interval separation at the first priority that differs; overlapping priority ranges cannot be bypassed.",
+                  "Declared targets express aspirations, not clinical suitability, observed success, or authorization.",
+                  "Sensitivity scenarios compare declared assumptions; they do not estimate probabilities or discover new evidence."
+                ]
+              },
+              "model": {
+                "format": "compare-outcomes/1",
+                "module": {
+                  "id": "learning-support-outcomes",
+                  "version": "1.1.0",
+                  "title": "Compare learning-support plans",
+                  "description": "Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.",
+                  "question": "Which support plan will help this child—and what improvement would show that it is working?",
+                  "boundary": "Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.",
+                  "alternatives": [
+                    {
+                      "id": "reading-support",
+                      "label": "Targeted word-reading support",
+                      "description": "A complete word-reading support package for this comparison. Its assumed decoding benefit does not automatically establish improvement in attention-related classroom difficulties."
+                    },
+                    {
+                      "id": "classroom-support",
+                      "label": "Classroom support for attention-related difficulties",
+                      "description": "A complete classroom-support package for this comparison, not a complete clinical ADHD treatment. Completing more work is not treated as evidence of better word decoding."
+                    },
+                    {
+                      "id": "coordinated-support",
+                      "label": "Coordinated support",
+                      "description": "A coordinated package addressing both recorded needs, with greater weekly burden. It is not assumed to dominate the focused alternatives."
+                    }
+                  ],
+                  "outcomes": [
+                    {
+                      "id": "word-reading",
+                      "label": "Word-reading improvement",
+                      "unit": "change in correct items on a fixed 20-item decoding probe",
+                      "direction": "maximize",
+                      "minimum": -6,
+                      "maximum": 14,
+                      "description": "Change from this fictional case’s baseline of 6 correct items out of 20. Negative change remains possible. The fixed baseline defines the permitted change range; another baseline requires an adapted model. It is separate from work completed."
+                    },
+                    {
+                      "id": "participation",
+                      "label": "Classroom-participation improvement",
+                      "unit": "percentage-point change in engaged observation intervals",
+                      "direction": "maximize",
+                      "minimum": -45,
+                      "maximum": 55,
+                      "description": "Change from this fictional case’s baseline of 45% under a fixed classroom observation protocol. Negative change remains possible. It is not an ADHD diagnosis or a measure of decoding."
+                    },
+                    {
+                      "id": "weekly-burden",
+                      "label": "Additional weekly burden",
+                      "unit": "minutes per week",
+                      "direction": "minimize",
+                      "minimum": 0,
+                      "maximum": 600,
+                      "description": "Additional practice and coordination time borne by the child and family. It is kept separate from improvement rather than converted into money."
+                    }
+                  ],
+                  "assumptions": [
+                    "Dyslexia and ADHD have already been professionally assessed in this fictional case; the calculation does not diagnose them or determine clinical suitability.",
+                    "The decision concerns the next six-week support block. Better classroom participation does not by itself establish that the decoding need is sufficiently addressed; decoding improvement does not by itself establish adequate classroom functioning.",
+                    "All alternatives are complete authored support descriptions for this bounded comparison. Classroom support for attention-related difficulties is not a complete clinical ADHD treatment. The range comparison does not prescribe medication, infer clinical efficacy or produce a probability of benefit.",
+                    "Targets and priority order are explicit human judgments. A preferred option is conditional on supplied estimates, applicability and preferences; overlapping ranges can leave the choice unresolved.",
+                    "The six-week horizon and baseline values are fictional teaching inputs. Qualified professionals must choose appropriate measures and reconsideration criteria."
+                  ],
+                  "metadata": {
+                    "catalog": {
+                      "domain": {
+                        "id": "learning-support",
+                        "label": "Learning support"
+                      },
+                      "useCase": {
+                        "id": "choose-learning-support",
+                        "label": "Choose learning support"
+                      }
+                    },
+                    "caseStart": {
+                      "starterMeaning": "example",
+                      "supportsOwnData": false,
+                      "scope": "Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect."
+                    },
+                    "decisionPresentation": {
+                      "format": "decision-presentation/1",
+                      "title": "Choose learning support",
+                      "question": "Which support plan will help this child—and what improvement would show that it is working?",
+                      "priorityLabel": "Explicit outcome goals and a declared priority order; no combined benefit score.",
+                      "sections": [
+                        {
+                          "id": "options",
+                          "label": "Options",
+                          "question": "Which support plans meet the stated outcome goals under the supplied assumptions?"
+                        },
+                        {
+                          "id": "next-actions",
+                          "label": "Next actions",
+                          "question": "What should we clarify or inspect before choosing support?"
+                        },
+                        {
+                          "id": "assumptions",
+                          "label": "Assumptions",
+                          "question": "Which response, applicability and priority judgments could change this choice?"
+                        },
+                        {
+                          "id": "questions",
+                          "label": "Questions",
+                          "question": "What remains unknown about benefit and progress?"
+                        }
+                      ]
+                    },
+                    "supportingReports": {
+                      "format": "supporting-reports/1",
+                      "reports": [
+                        {
+                          "id": "outcomes",
+                          "label": "Expected outcomes",
+                          "question": "What might each support plan improve, and what remains uncertain?",
+                          "template": "records/1",
+                          "source": {
+                            "kind": "report-dataset",
+                            "datasetId": "outcomes:estimates"
+                          },
+                          "bindings": {
+                            "columns": [
+                              {
+                                "key": "alternative",
+                                "label": "Support plan"
+                              },
+                              {
+                                "key": "outcome",
+                                "label": "Outcome"
+                              },
+                              {
+                                "key": "range",
+                                "label": "Supplied range"
+                              },
+                              {
+                                "key": "target",
+                                "label": "Stated goal"
+                              },
+                              {
+                                "key": "targetStatus",
+                                "label": "Goal finding"
+                              },
+                              {
+                                "key": "availability",
+                                "label": "Applicability"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "id": "evidence",
+                          "label": "Evidence and applicability",
+                          "question": "What supports these expectations, and how applicable is it here?",
+                          "template": "records/1",
+                          "source": {
+                            "kind": "report-dataset",
+                            "datasetId": "outcomes:evidence"
+                          },
+                          "bindings": {
+                            "columns": [
+                              {
+                                "key": "label",
+                                "label": "Source"
+                              },
+                              {
+                                "key": "kind",
+                                "label": "Kind of basis"
+                              },
+                              {
+                                "key": "citation",
+                                "label": "Citation"
+                              },
+                              {
+                                "key": "applicability",
+                                "label": "Applicability judgment"
+                              },
+                              {
+                                "key": "applicabilityStatus",
+                                "label": "Applicability status"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "id": "sensitivity",
+                          "label": "Test the choice",
+                          "question": "Which changed assumptions or priorities would change the preferred plan?",
+                          "template": "records/1",
+                          "source": {
+                            "kind": "report-dataset",
+                            "datasetId": "outcomes:sensitivity"
+                          },
+                          "bindings": {
+                            "columns": [
+                              {
+                                "key": "label",
+                                "label": "Changed assumption or priority"
+                              },
+                              {
+                                "key": "status",
+                                "label": "Comparison finding"
+                              },
+                              {
+                                "key": "preferred",
+                                "label": "Conditional preference"
+                              },
+                              {
+                                "key": "changed",
+                                "label": "Preference changed"
+                              },
+                              {
+                                "key": "explanation",
+                                "label": "Reason"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "id": "monitoring",
+                          "label": "Learn from progress",
+                          "question": "What observations would support continuing or changing the plan?",
+                          "template": "records/1",
+                          "source": {
+                            "kind": "report-dataset",
+                            "datasetId": "outcomes:monitoring"
+                          },
+                          "bindings": {
+                            "columns": [
+                              {
+                                "key": "outcome",
+                                "label": "Outcome"
+                              },
+                              {
+                                "key": "measure",
+                                "label": "Baseline and measure"
+                              },
+                              {
+                                "key": "when",
+                                "label": "Observation and reconsideration horizon"
+                              },
+                              {
+                                "key": "interpretation",
+                                "label": "Reason to reconsider"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    },
+                    "inputDesign": {
+                      "version": 1,
+                      "form": {
+                        "type": "object",
+                        "label": "Case inputs",
+                        "fields": {
+                          "scope": {
+                            "type": "string",
+                            "label": "Scope"
+                          },
+                          "sources": {
+                            "type": "array",
+                            "label": "Sources and applicability",
+                            "items": {
+                              "type": "object",
+                              "label": "Sources record",
+                              "fields": {
+                                "id": {
+                                  "type": "string",
+                                  "label": "Id",
+                                  "unit": "identifier"
+                                },
+                                "label": {
+                                  "type": "string",
+                                  "label": "Label"
+                                },
+                                "kind": {
+                                  "type": "string",
+                                  "label": "Kind",
+                                  "options": [
+                                    "fictional-assumption",
+                                    "research",
+                                    "observation",
+                                    "expert-judgment"
+                                  ]
+                                },
+                                "citation": {
+                                  "type": "string",
+                                  "label": "Citation"
+                                },
+                                "applicability": {
+                                  "type": "string",
+                                  "label": "Applicability"
+                                },
+                                "applicabilityStatus": {
+                                  "type": "string",
+                                  "label": "Applicability Status",
+                                  "options": [
+                                    "accepted",
+                                    "uncertain",
+                                    "not-applicable"
+                                  ]
+                                }
+                              }
+                            },
+                            "keyFields": [
+                              "id"
+                            ]
+                          },
+                          "estimates": {
+                            "type": "array",
+                            "label": "Separate outcome estimate ranges",
+                            "items": {
+                              "type": "object",
+                              "label": "Estimates record",
+                              "fields": {
+                                "alternativeId": {
+                                  "type": "string",
+                                  "label": "Alternative Id",
+                                  "unit": "identifier",
+                                  "options": [
+                                    "reading-support",
+                                    "classroom-support",
+                                    "coordinated-support"
+                                  ]
+                                },
+                                "outcomeId": {
+                                  "type": "string",
+                                  "label": "Outcome Id",
+                                  "unit": "identifier",
+                                  "options": [
+                                    "word-reading",
+                                    "participation",
+                                    "weekly-burden"
+                                  ]
+                                },
+                                "lower": {
+                                  "type": "number",
+                                  "label": "Lower",
+                                  "nullable": true
+                                },
+                                "upper": {
+                                  "type": "number",
+                                  "label": "Upper",
+                                  "nullable": true
+                                },
+                                "sourceIds": {
+                                  "type": "array",
+                                  "label": "Source Ids",
+                                  "items": {
+                                    "type": "string",
+                                    "label": "Source Ids record",
+                                    "unit": "identifier"
+                                  }
+                                },
+                                "rationale": {
+                                  "type": "string",
+                                  "label": "Rationale"
+                                }
+                              }
+                            },
+                            "keyFields": [
+                              "alternativeId",
+                              "outcomeId"
+                            ]
+                          },
+                          "preferences": {
+                            "type": "object",
+                            "label": "Preferences",
+                            "fields": {
+                              "priorities": {
+                                "type": "array",
+                                "label": "Priorities",
+                                "items": {
+                                  "type": "string",
+                                  "label": "Priorities record",
+                                  "unit": "identifier",
+                                  "options": [
+                                    "word-reading",
+                                    "participation",
+                                    "weekly-burden"
+                                  ]
+                                }
+                              },
+                              "targets": {
+                                "type": "array",
+                                "label": "Authored aspirations",
+                                "items": {
+                                  "type": "object",
+                                  "label": "Targets record",
+                                  "fields": {
+                                    "outcomeId": {
+                                      "type": "string",
+                                      "label": "Outcome Id",
+                                      "unit": "identifier",
+                                      "options": [
+                                        "word-reading",
+                                        "participation",
+                                        "weekly-burden"
+                                      ]
+                                    },
+                                    "value": {
+                                      "type": "number",
+                                      "label": "Value"
+                                    }
+                                  }
+                                },
+                                "keyFields": [
+                                  "outcomeId"
+                                ]
+                              }
+                            }
+                          },
+                          "sensitivity": {
+                            "type": "array",
+                            "label": "Declared sensitivity scenarios",
+                            "items": {
+                              "type": "object",
+                              "label": "Sensitivity record",
+                              "fields": {
+                                "id": {
+                                  "type": "string",
+                                  "label": "Id",
+                                  "unit": "identifier"
+                                },
+                                "label": {
+                                  "type": "string",
+                                  "label": "Label"
+                                },
+                                "preferences": {
+                                  "type": "object",
+                                  "label": "Preferences",
+                                  "optional": true,
+                                  "fields": {
+                                    "priorities": {
+                                      "type": "array",
+                                      "label": "Priorities",
+                                      "items": {
+                                        "type": "string",
+                                        "label": "Priorities record",
+                                        "unit": "identifier",
+                                        "options": [
+                                          "word-reading",
+                                          "participation",
+                                          "weekly-burden"
+                                        ]
+                                      }
+                                    },
+                                    "targets": {
+                                      "type": "array",
+                                      "label": "Authored aspirations",
+                                      "items": {
+                                        "type": "object",
+                                        "label": "Targets record",
+                                        "fields": {
+                                          "outcomeId": {
+                                            "type": "string",
+                                            "label": "Outcome Id",
+                                            "unit": "identifier",
+                                            "options": [
+                                              "word-reading",
+                                              "participation",
+                                              "weekly-burden"
+                                            ]
+                                          },
+                                          "value": {
+                                            "type": "number",
+                                            "label": "Value"
+                                          }
+                                        }
+                                      },
+                                      "keyFields": [
+                                        "outcomeId"
+                                      ]
+                                    }
+                                  }
+                                },
+                                "estimates": {
+                                  "type": "array",
+                                  "label": "Estimates",
+                                  "optional": true,
+                                  "items": {
+                                    "type": "object",
+                                    "label": "Estimates record",
+                                    "fields": {
+                                      "alternativeId": {
+                                        "type": "string",
+                                        "label": "Alternative Id",
+                                        "unit": "identifier",
+                                        "options": [
+                                          "reading-support",
+                                          "classroom-support",
+                                          "coordinated-support"
+                                        ]
+                                      },
+                                      "outcomeId": {
+                                        "type": "string",
+                                        "label": "Outcome Id",
+                                        "unit": "identifier",
+                                        "options": [
+                                          "word-reading",
+                                          "participation",
+                                          "weekly-burden"
+                                        ]
+                                      },
+                                      "lower": {
+                                        "type": "number",
+                                        "label": "Lower",
+                                        "nullable": true
+                                      },
+                                      "upper": {
+                                        "type": "number",
+                                        "label": "Upper",
+                                        "nullable": true
+                                      },
+                                      "sourceIds": {
+                                        "type": "array",
+                                        "label": "Source Ids",
+                                        "items": {
+                                          "type": "string",
+                                          "label": "Source Ids record",
+                                          "unit": "identifier"
+                                        }
+                                      },
+                                      "rationale": {
+                                        "type": "string",
+                                        "label": "Rationale"
+                                      }
+                                    }
+                                  },
+                                  "keyFields": [
+                                    "alternativeId",
+                                    "outcomeId"
+                                  ]
+                                }
+                              }
+                            },
+                            "keyFields": [
+                              "id"
+                            ]
+                          },
+                          "monitoring": {
+                            "type": "array",
+                            "label": "Proposed progress observations",
+                            "items": {
+                              "type": "object",
+                              "label": "Monitoring record",
+                              "fields": {
+                                "outcomeId": {
+                                  "type": "string",
+                                  "label": "Outcome Id",
+                                  "unit": "identifier",
+                                  "options": [
+                                    "word-reading",
+                                    "participation",
+                                    "weekly-burden"
+                                  ]
+                                },
+                                "measure": {
+                                  "type": "string",
+                                  "label": "Measure"
+                                },
+                                "when": {
+                                  "type": "string",
+                                  "label": "When"
+                                },
+                                "interpretation": {
+                                  "type": "string",
+                                  "label": "Interpretation"
+                                },
+                                "sourceIds": {
+                                  "type": "array",
+                                  "label": "Source Ids",
+                                  "items": {
+                                    "type": "string",
+                                    "label": "Source Ids record",
+                                    "unit": "identifier"
+                                  }
+                                }
+                              }
+                            },
+                            "keyFields": [
+                              "outcomeId",
+                              "measure"
+                            ]
+                          },
+                          "title": {
+                            "type": "string",
+                            "label": "Title"
+                          }
+                        }
+                      },
+                      "groups": [
+                        {
+                          "id": "decision-context",
+                          "label": "Decision context",
+                          "question": "Whose outcomes and which decision does this comparison concern?",
+                          "subtabs": [
+                            {
+                              "id": "scope",
+                              "label": "Question and scope",
+                              "fieldPaths": [
+                                "/scope",
+                                "/title"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "response-estimates",
+                          "label": "Response assumptions",
+                          "question": "What separate outcome ranges should this comparison use?",
+                          "subtabs": [
+                            {
+                              "id": "estimates",
+                              "label": "Outcome estimates",
+                              "fieldPaths": [
+                                "/estimates"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "goals-and-priorities",
+                          "label": "Goals and priorities",
+                          "question": "Which outcomes matter, and what aspirations should guide the choice?",
+                          "subtabs": [
+                            {
+                              "id": "preferences",
+                              "label": "Goals and priorities",
+                              "fieldPaths": [
+                                "/preferences"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "evidence-and-uncertainty",
+                          "label": "Evidence and uncertainty",
+                          "question": "What supplies the estimates and which assumptions should be varied?",
+                          "subtabs": [
+                            {
+                              "id": "sources",
+                              "label": "Sources and applicability",
+                              "fieldPaths": [
+                                "/sources"
+                              ]
+                            },
+                            {
+                              "id": "sensitivity",
+                              "label": "Declared sensitivity scenarios",
+                              "fieldPaths": [
+                                "/sensitivity"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "progress-observations",
+                          "label": "Progress observations",
+                          "question": "What should be observed before reconsidering the choice?",
+                          "subtabs": [
+                            {
+                              "id": "monitoring",
+                              "label": "Monitoring plan",
+                              "fieldPaths": [
+                                "/monitoring"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                "case": {
+                  "id": "fictional-sam-support",
+                  "title": "Fictional support comparison for Sam, age eight",
+                  "scope": "Sam is a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. Lisa, the support coordinator, is helping the child, family and professionals choose his next six-week support block. His teacher sees improved participation while unfamiliar words remain difficult to decode. A single reassuring “working” judgment could renew a plan without addressing that remaining difficulty. The comparison keeps both needs and the child’s and family’s burden visible. Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.",
+                  "sources": [
+                    {
+                      "id": "fictional-response-assumptions",
+                      "label": "Authored fictional response assumptions",
+                      "kind": "fictional-assumption",
+                      "citation": "Teaching fixture in model.mjs; no individual response values are derived from a study.",
+                      "applicabilityStatus": "accepted",
+                      "applicability": "Accepted only as explicit assumptions for this fictional exercise. A real use needs qualified evidence and a documented applicability judgment for the child, support and outcome."
+                    },
+                    {
+                      "id": "trial-context",
+                      "label": "Research context: distinct reading and ADHD outcomes",
+                      "kind": "research",
+                      "citation": "Tamm et al., 2017. Comparing Treatments for Children with ADHD and Word Reading Difficulties: A Randomized Clinical Trial. https://pubmed.ncbi.nlm.nih.gov/28333510/",
+                      "applicabilityStatus": "uncertain",
+                      "applicability": "Context for separating target outcomes, not a source of the fictional ranges. The trial ADHD treatment included medication and parent training; it does not validate this classroom-only package or predict this child’s response."
+                    }
+                  ],
+                  "estimates": [
+                    {
+                      "alternativeId": "reading-support",
+                      "outcomeId": "word-reading",
+                      "lower": 7,
+                      "upper": 9,
+                      "sourceIds": [
+                        "fictional-response-assumptions"
+                      ],
+                      "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+                    },
+                    {
+                      "alternativeId": "reading-support",
+                      "outcomeId": "participation",
+                      "lower": 2,
+                      "upper": 4,
+                      "sourceIds": [
+                        "fictional-response-assumptions"
+                      ],
+                      "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+                    },
+                    {
+                      "alternativeId": "reading-support",
+                      "outcomeId": "weekly-burden",
+                      "lower": 90,
+                      "upper": 120,
+                      "sourceIds": [
+                        "fictional-response-assumptions"
+                      ],
+                      "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+                    },
+                    {
+                      "alternativeId": "classroom-support",
+                      "outcomeId": "word-reading",
+                      "lower": 0,
+                      "upper": 2,
+                      "sourceIds": [
+                        "fictional-response-assumptions"
+                      ],
+                      "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+                    },
+                    {
+                      "alternativeId": "classroom-support",
+                      "outcomeId": "participation",
+                      "lower": 15,
+                      "upper": 20,
+                      "sourceIds": [
+                        "fictional-response-assumptions"
+                      ],
+                      "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+                    },
+                    {
+                      "alternativeId": "classroom-support",
+                      "outcomeId": "weekly-burden",
+                      "lower": 30,
+                      "upper": 45,
+                      "sourceIds": [
+                        "fictional-response-assumptions"
+                      ],
+                      "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+                    },
+                    {
+                      "alternativeId": "coordinated-support",
+                      "outcomeId": "word-reading",
+                      "lower": 4,
+                      "upper": 6,
+                      "sourceIds": [
+                        "fictional-response-assumptions"
+                      ],
+                      "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+                    },
+                    {
+                      "alternativeId": "coordinated-support",
+                      "outcomeId": "participation",
+                      "lower": 10,
+                      "upper": 14,
+                      "sourceIds": [
+                        "fictional-response-assumptions"
+                      ],
+                      "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+                    },
+                    {
+                      "alternativeId": "coordinated-support",
+                      "outcomeId": "weekly-burden",
+                      "lower": 150,
+                      "upper": 180,
+                      "sourceIds": [
+                        "fictional-response-assumptions"
+                      ],
+                      "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+                    }
+                  ],
+                  "preferences": {
+                    "priorities": [
+                      "word-reading",
+                      "participation",
+                      "weekly-burden"
+                    ],
+                    "targets": [
+                      {
+                        "outcomeId": "word-reading",
+                        "value": 4
+                      },
+                      {
+                        "outcomeId": "participation",
+                        "value": 8
+                      }
+                    ]
+                  },
+                  "sensitivity": [
+                    {
+                      "id": "reading-first",
+                      "label": "If reading is the first priority and minimum goals are relaxed",
+                      "preferences": {
+                        "priorities": [
+                          "word-reading",
+                          "participation",
+                          "weekly-burden"
+                        ],
+                        "targets": []
+                      }
+                    },
+                    {
+                      "id": "participation-first",
+                      "label": "If participation is the first priority and minimum goals are relaxed",
+                      "preferences": {
+                        "priorities": [
+                          "participation",
+                          "word-reading",
+                          "weekly-burden"
+                        ],
+                        "targets": []
+                      }
+                    },
+                    {
+                      "id": "burden-limit",
+                      "label": "If additional weekly burden cannot exceed two hours",
+                      "preferences": {
+                        "priorities": [
+                          "word-reading",
+                          "participation",
+                          "weekly-burden"
+                        ],
+                        "targets": [
+                          {
+                            "outcomeId": "word-reading",
+                            "value": 4
+                          },
+                          {
+                            "outcomeId": "participation",
+                            "value": 8
+                          },
+                          {
+                            "outcomeId": "weekly-burden",
+                            "value": 120
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "id": "overlapping-responses",
+                      "label": "If the leading reading ranges overlap and minimum goals are relaxed",
+                      "preferences": {
+                        "priorities": [
+                          "word-reading",
+                          "participation",
+                          "weekly-burden"
+                        ],
+                        "targets": []
+                      },
+                      "estimates": [
+                        {
+                          "alternativeId": "coordinated-support",
+                          "outcomeId": "word-reading",
+                          "lower": 6,
+                          "upper": 10,
+                          "sourceIds": [
+                            "fictional-response-assumptions"
+                          ],
+                          "rationale": "An authored fictional alternative assumption overlaps Targeted word-reading support. Lower priorities cannot settle an uncertain first priority."
+                        }
+                      ]
+                    }
+                  ],
+                  "monitoring": [
+                    {
+                      "outcomeId": "word-reading",
+                      "measure": "Baseline: 6 correct items on the declared 20-item unfamiliar-word probe. Record correct items on comparable probes using the same scoring protocol; a qualified professional determines an appropriate measure.",
+                      "when": "Baseline before support, weekly observations, and a six-week reconsideration point.",
+                      "interpretation": "Reconsider the assumed reading benefit if observed change fails to approach the agreed four-item goal or the measure is not suitable. Improvement in participation cannot substitute. Repeated measurements alone do not establish treatment causality.",
+                      "sourceIds": []
+                    },
+                    {
+                      "outcomeId": "participation",
+                      "measure": "Baseline: engaged in 45% of fixed classroom observation intervals. Record engagement under a declared observation protocol, with lesson and observer context.",
+                      "when": "Baseline before support, weekly observations, and a six-week reconsideration point.",
+                      "interpretation": "Reconsider the assumed participation benefit if change does not approach the agreed eight-percentage-point goal, contexts differ, or observations conflict. Do not infer decoding improvement or a diagnosis from engagement.",
+                      "sourceIds": []
+                    },
+                    {
+                      "outcomeId": "weekly-burden",
+                      "measure": "Baseline: zero additional minutes attributable to the proposed package. Record actual additional child and family practice and coordination time.",
+                      "when": "Record weekly, including incomplete sessions and family feedback; reconsider at six weeks or earlier if burden is unacceptable.",
+                      "interpretation": "Reconsider the package if actual burden exceeds the accepted bound or the child or family finds it unacceptable, even when another outcome improves. These observations do not measure efficacy.",
+                      "sourceIds": []
+                    }
+                  ]
+                }
+              },
+              "presentation": {
+                "schemaVersion": 1,
+                "provider": "native-outcome-comparison",
+                "contract": "outcome-comparison-assessment/1",
+                "views": []
+              },
+              "viewContracts": [],
+              "fields": [],
+              "reports": [
+                "comparison",
+                "estimates",
+                "evidence",
+                "sensitivity",
+                "monitoring",
+                "basis"
+              ],
+              "defaultReport": "comparison",
+              "originWorkspaceId": null,
+              "createdAt": "2026-11-26T00:00:00.000Z",
+              "contentHash": "da5cdb64eb769ac7b34d7b4342f648132af7e3dbe1b6e78ca192f1e6f8df7759"
+            },
+            "sourceProvenance": "supplied",
+            "contentHash": "14370719a6a72ebbdfd2900f9c1f5971bafa7f17414b487a9e97769f2fcef28c"
+          },
+          "packageHash": "14370719a6a72ebbdfd2900f9c1f5971bafa7f17414b487a9e97769f2fcef28c"
+        }
+      ],
+      "initialCase": {
+        "support": {
+          "id": "fictional-sam-support",
+          "title": "Fictional support comparison for Sam, age eight",
+          "scope": "Sam is a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. Lisa, the support coordinator, is helping the child, family and professionals choose his next six-week support block. His teacher sees improved participation while unfamiliar words remain difficult to decode. A single reassuring “working” judgment could renew a plan without addressing that remaining difficulty. The comparison keeps both needs and the child’s and family’s burden visible. Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.",
+          "sources": [
+            {
+              "id": "fictional-response-assumptions",
+              "label": "Authored fictional response assumptions",
+              "kind": "fictional-assumption",
+              "citation": "Teaching fixture in model.mjs; no individual response values are derived from a study.",
+              "applicabilityStatus": "accepted",
+              "applicability": "Accepted only as explicit assumptions for this fictional exercise. A real use needs qualified evidence and a documented applicability judgment for the child, support and outcome."
+            },
+            {
+              "id": "trial-context",
+              "label": "Research context: distinct reading and ADHD outcomes",
+              "kind": "research",
+              "citation": "Tamm et al., 2017. Comparing Treatments for Children with ADHD and Word Reading Difficulties: A Randomized Clinical Trial. https://pubmed.ncbi.nlm.nih.gov/28333510/",
+              "applicabilityStatus": "uncertain",
+              "applicability": "Context for separating target outcomes, not a source of the fictional ranges. The trial ADHD treatment included medication and parent training; it does not validate this classroom-only package or predict this child’s response."
+            }
+          ],
+          "estimates": [
+            {
+              "alternativeId": "reading-support",
+              "outcomeId": "word-reading",
+              "lower": 7,
+              "upper": 9,
+              "sourceIds": [
+                "fictional-response-assumptions"
+              ],
+              "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+            },
+            {
+              "alternativeId": "reading-support",
+              "outcomeId": "participation",
+              "lower": 2,
+              "upper": 4,
+              "sourceIds": [
+                "fictional-response-assumptions"
+              ],
+              "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+            },
+            {
+              "alternativeId": "reading-support",
+              "outcomeId": "weekly-burden",
+              "lower": 90,
+              "upper": 120,
+              "sourceIds": [
+                "fictional-response-assumptions"
+              ],
+              "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+            },
+            {
+              "alternativeId": "classroom-support",
+              "outcomeId": "word-reading",
+              "lower": 0,
+              "upper": 2,
+              "sourceIds": [
+                "fictional-response-assumptions"
+              ],
+              "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+            },
+            {
+              "alternativeId": "classroom-support",
+              "outcomeId": "participation",
+              "lower": 15,
+              "upper": 20,
+              "sourceIds": [
+                "fictional-response-assumptions"
+              ],
+              "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+            },
+            {
+              "alternativeId": "classroom-support",
+              "outcomeId": "weekly-burden",
+              "lower": 30,
+              "upper": 45,
+              "sourceIds": [
+                "fictional-response-assumptions"
+              ],
+              "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+            },
+            {
+              "alternativeId": "coordinated-support",
+              "outcomeId": "word-reading",
+              "lower": 4,
+              "upper": 6,
+              "sourceIds": [
+                "fictional-response-assumptions"
+              ],
+              "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+            },
+            {
+              "alternativeId": "coordinated-support",
+              "outcomeId": "participation",
+              "lower": 10,
+              "upper": 14,
+              "sourceIds": [
+                "fictional-response-assumptions"
+              ],
+              "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+            },
+            {
+              "alternativeId": "coordinated-support",
+              "outcomeId": "weekly-burden",
+              "lower": 150,
+              "upper": 180,
+              "sourceIds": [
+                "fictional-response-assumptions"
+              ],
+              "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+            }
+          ],
+          "preferences": {
+            "priorities": [
+              "word-reading",
+              "participation",
+              "weekly-burden"
+            ],
+            "targets": [
+              {
+                "outcomeId": "word-reading",
+                "value": 4
+              },
+              {
+                "outcomeId": "participation",
+                "value": 8
+              }
+            ]
+          },
+          "sensitivity": [
+            {
+              "id": "reading-first",
+              "label": "If reading is the first priority and minimum goals are relaxed",
+              "preferences": {
+                "priorities": [
+                  "word-reading",
+                  "participation",
+                  "weekly-burden"
+                ],
+                "targets": []
+              }
+            },
+            {
+              "id": "participation-first",
+              "label": "If participation is the first priority and minimum goals are relaxed",
+              "preferences": {
+                "priorities": [
+                  "participation",
+                  "word-reading",
+                  "weekly-burden"
+                ],
+                "targets": []
+              }
+            },
+            {
+              "id": "burden-limit",
+              "label": "If additional weekly burden cannot exceed two hours",
+              "preferences": {
+                "priorities": [
+                  "word-reading",
+                  "participation",
+                  "weekly-burden"
+                ],
+                "targets": [
+                  {
+                    "outcomeId": "word-reading",
+                    "value": 4
+                  },
+                  {
+                    "outcomeId": "participation",
+                    "value": 8
+                  },
+                  {
+                    "outcomeId": "weekly-burden",
+                    "value": 120
+                  }
+                ]
+              }
+            },
+            {
+              "id": "overlapping-responses",
+              "label": "If the leading reading ranges overlap and minimum goals are relaxed",
+              "preferences": {
+                "priorities": [
+                  "word-reading",
+                  "participation",
+                  "weekly-burden"
+                ],
+                "targets": []
+              },
+              "estimates": [
+                {
+                  "alternativeId": "coordinated-support",
+                  "outcomeId": "word-reading",
+                  "lower": 6,
+                  "upper": 10,
+                  "sourceIds": [
+                    "fictional-response-assumptions"
+                  ],
+                  "rationale": "An authored fictional alternative assumption overlaps Targeted word-reading support. Lower priorities cannot settle an uncertain first priority."
+                }
+              ]
+            }
+          ],
+          "monitoring": [
+            {
+              "outcomeId": "word-reading",
+              "measure": "Baseline: 6 correct items on the declared 20-item unfamiliar-word probe. Record correct items on comparable probes using the same scoring protocol; a qualified professional determines an appropriate measure.",
+              "when": "Baseline before support, weekly observations, and a six-week reconsideration point.",
+              "interpretation": "Reconsider the assumed reading benefit if observed change fails to approach the agreed four-item goal or the measure is not suitable. Improvement in participation cannot substitute. Repeated measurements alone do not establish treatment causality.",
+              "sourceIds": []
+            },
+            {
+              "outcomeId": "participation",
+              "measure": "Baseline: engaged in 45% of fixed classroom observation intervals. Record engagement under a declared observation protocol, with lesson and observer context.",
+              "when": "Baseline before support, weekly observations, and a six-week reconsideration point.",
+              "interpretation": "Reconsider the assumed participation benefit if change does not approach the agreed eight-percentage-point goal, contexts differ, or observations conflict. Do not infer decoding improvement or a diagnosis from engagement.",
+              "sourceIds": []
+            },
+            {
+              "outcomeId": "weekly-burden",
+              "measure": "Baseline: zero additional minutes attributable to the proposed package. Record actual additional child and family practice and coordination time.",
+              "when": "Record weekly, including incomplete sessions and family feedback; reconsider at six weeks or earlier if burden is unacceptable.",
+              "interpretation": "Reconsider the package if actual burden exceeds the accepted bound or the child or family finds it unacceptable, even when another outcome improves. These observations do not measure efficacy.",
+              "sourceIds": []
+            }
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "scope",
+          "label": "Scope and assessed needs",
+          "question": "Whose next support block are we choosing, and which assessed needs must remain visible?",
+          "meaning": "The exact child, already assessed needs and comparison horizon. In the fictional case, professionals have assessed dyslexia and ADHD. The calculation does not diagnose either condition. Improvement in one outcome must not erase a remaining need.",
+          "type": "string",
+          "path": "support.scope",
+          "role": "support-coordinator",
+          "required": true
+        },
+        {
+          "id": "sources",
+          "label": "Sources and applicability",
+          "question": "What supports the response assumptions, and are those sources applicable here?",
+          "meaning": "Sources are not interchangeable. Research context does not supply the fictional estimates. An uncertain applicability judgment remains unknown.",
+          "type": "array",
+          "path": "support.sources",
+          "role": "support-coordinator",
+          "required": true
+        },
+        {
+          "id": "estimates",
+          "label": "Separate outcome estimates",
+          "question": "What improvement and burden might each complete plan produce?",
+          "meaning": "Lower and upper authored bounds for every plan and outcome, on the same declared horizon. Null bounds explicitly record unknown estimates; they are not zero.",
+          "type": "array",
+          "path": "support.estimates",
+          "role": "support-coordinator",
+          "required": true
+        },
+        {
+          "id": "preferences",
+          "label": "Goals and priorities",
+          "question": "Which outcome goals and priorities should the comparison use?",
+          "meaning": "The child, family and professionals supply the goals and priority order. Different units are never silently combined into a single benefit score.",
+          "type": "object",
+          "path": "support.preferences",
+          "role": "support-coordinator",
+          "required": true
+        },
+        {
+          "id": "sensitivity",
+          "label": "Alternative assumptions",
+          "question": "Which changes in assumptions or priorities should we inspect?",
+          "meaning": "Explicit counterfactual changes to the same comparison, not inferred probabilities or a forecast of response.",
+          "type": "array",
+          "path": "support.sensitivity",
+          "role": "support-coordinator",
+          "required": true
+        },
+        {
+          "id": "monitoring",
+          "label": "Progress measures",
+          "question": "What would show improvement, and when should the plan be reconsidered?",
+          "meaning": "Separate baselines, measures, observation horizons and reconsideration criteria for reading, participation and burden. Change alone does not establish a causal effect.",
+          "type": "array",
+          "path": "support.monitoring",
+          "role": "support-coordinator",
+          "required": true
+        }
+      ],
+      "steps": [
+        {
+          "id": "comparison",
+          "title": "Compare separate support outcomes",
+          "app": "comparison",
+          "role": "support-coordinator",
+          "dependsOn": [],
+          "requires": [
+            "scope",
+            "sources",
+            "estimates",
+            "preferences",
+            "sensitivity",
+            "monitoring"
+          ],
+          "input": {
+            "id": {
+              "literal": "fictional-sam-support"
+            },
+            "title": {
+              "literal": "Fictional support comparison for Sam, age eight"
+            },
+            "scope": {
+              "ref": "case.support.scope"
+            },
+            "sources": {
+              "ref": "case.support.sources"
+            },
+            "estimates": {
+              "ref": "case.support.estimates"
+            },
+            "preferences": {
+              "ref": "case.support.preferences"
+            },
+            "sensitivity": {
+              "ref": "case.support.sensitivity"
+            },
+            "monitoring": {
+              "ref": "case.support.monitoring"
+            }
+          },
+          "output": {
+            "assessmentStatus": {
+              "ref": "assessment.status"
+            },
+            "recommendation": {
+              "ref": "assessment.recommendation"
+            },
+            "rows": {
+              "op": "map",
+              "args": [
+                {
+                  "ref": "assessment.alternatives"
+                },
+                {
+                  "id": {
+                    "ref": "vars.alternative.id"
+                  },
+                  "label": {
+                    "ref": "vars.alternative.label"
+                  },
+                  "finding": {
+                    "op": "if",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "vars.alternative.targetStatus"
+                          },
+                          "uncertain"
+                        ]
+                      },
+                      "Outcome aspiration remains uncertain",
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "literal": {
+                              "preferred": "Conditionally preferred",
+                              "tied": "Equally preferred under these assumptions",
+                              "outside-targets": "Outside the declared outcome aspirations",
+                              "unresolved": "Not distinguished by the supplied ranges",
+                              "not-preferred": "Less favorable under supplied ranges",
+                              "unavailable": "Incomplete basis"
+                            }
+                          },
+                          {
+                            "ref": "vars.alternative.comparisonStatus"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "preferred": {
+                    "op": "any",
+                    "args": [
+                      {
+                        "ref": "assessment.recommendation.preferredIds"
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "ref": "item"
+                          },
+                          {
+                            "ref": "vars.alternative.id"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "complete": {
+                    "ref": "vars.alternative.complete"
+                  },
+                  "reading": {
+                    "op": "if",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "op": "find",
+                                "args": [
+                                  {
+                                    "ref": "vars.alternative.outcomes"
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "ref": "item.outcomeId"
+                                      },
+                                      "word-reading"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "known"
+                            ]
+                          },
+                          true
+                        ]
+                      },
+                      {
+                        "op": "stringConcat",
+                        "args": [
+                          {
+                            "op": "stringify",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "op": "find",
+                                    "args": [
+                                      {
+                                        "ref": "vars.alternative.outcomes"
+                                      },
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "ref": "item.outcomeId"
+                                          },
+                                          "word-reading"
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  "lower"
+                                ]
+                              }
+                            ]
+                          },
+                          "–",
+                          {
+                            "op": "stringify",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "op": "find",
+                                    "args": [
+                                      {
+                                        "ref": "vars.alternative.outcomes"
+                                      },
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "ref": "item.outcomeId"
+                                          },
+                                          "word-reading"
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  "upper"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "Not established"
+                    ]
+                  },
+                  "participation": {
+                    "op": "if",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "op": "find",
+                                "args": [
+                                  {
+                                    "ref": "vars.alternative.outcomes"
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "ref": "item.outcomeId"
+                                      },
+                                      "participation"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "known"
+                            ]
+                          },
+                          true
+                        ]
+                      },
+                      {
+                        "op": "stringConcat",
+                        "args": [
+                          {
+                            "op": "stringify",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "op": "find",
+                                    "args": [
+                                      {
+                                        "ref": "vars.alternative.outcomes"
+                                      },
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "ref": "item.outcomeId"
+                                          },
+                                          "participation"
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  "lower"
+                                ]
+                              }
+                            ]
+                          },
+                          "–",
+                          {
+                            "op": "stringify",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "op": "find",
+                                    "args": [
+                                      {
+                                        "ref": "vars.alternative.outcomes"
+                                      },
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "ref": "item.outcomeId"
+                                          },
+                                          "participation"
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  "upper"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "Not established"
+                    ]
+                  },
+                  "burden": {
+                    "op": "if",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "op": "find",
+                                "args": [
+                                  {
+                                    "ref": "vars.alternative.outcomes"
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "ref": "item.outcomeId"
+                                      },
+                                      "weekly-burden"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "known"
+                            ]
+                          },
+                          true
+                        ]
+                      },
+                      {
+                        "op": "stringConcat",
+                        "args": [
+                          {
+                            "op": "stringify",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "op": "find",
+                                    "args": [
+                                      {
+                                        "ref": "vars.alternative.outcomes"
+                                      },
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "ref": "item.outcomeId"
+                                          },
+                                          "weekly-burden"
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  "lower"
+                                ]
+                              }
+                            ]
+                          },
+                          "–",
+                          {
+                            "op": "stringify",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "op": "find",
+                                    "args": [
+                                      {
+                                        "ref": "vars.alternative.outcomes"
+                                      },
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "ref": "item.outcomeId"
+                                          },
+                                          "weekly-burden"
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  "upper"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "Not established"
+                    ]
+                  }
+                }
+              ],
+              "as": "alternative"
+            },
+            "nextActions": {
+              "ref": "assessment.nextActions"
+            },
+            "sensitivity": {
+              "ref": "assessment.sensitivity"
+            }
+          },
+          "acceptWhen": {
+            "op": "eq",
+            "args": [
+              {
+                "ref": "assessment.admission.valid"
+              },
+              true
+            ]
+          }
+        }
+      ],
+      "conditions": [
+        {
+          "id": "inputs-supplied",
+          "label": "The required comparison inputs have supplied values",
+          "test": {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "ref": "answers.scope.status"
+                  },
+                  "supplied"
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "ref": "answers.sources.status"
+                  },
+                  "supplied"
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "ref": "answers.estimates.status"
+                  },
+                  "supplied"
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "ref": "answers.preferences.status"
+                  },
+                  "supplied"
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "ref": "answers.sensitivity.status"
+                  },
+                  "supplied"
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "ref": "answers.monitoring.status"
+                  },
+                  "supplied"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "current",
+          "label": "The outcome comparison is current",
+          "test": {
+            "op": "eq",
+            "args": [
+              {
+                "ref": "steps.comparison.status"
+              },
+              "complete"
+            ]
+          }
+        },
+        {
+          "id": "preference",
+          "label": "The supplied assumptions distinguish a conditional preference",
+          "test": {
+            "op": "gt",
+            "args": [
+              {
+                "op": "length",
+                "args": [
+                  {
+                    "op": "get",
+                    "args": [
+                      {
+                        "ref": "steps.comparison.output.recommendation"
+                      },
+                      "preferredIds"
+                    ]
+                  }
+                ]
+              },
+              0
+            ]
+          }
+        },
+        {
+          "id": "candidates",
+          "label": "A supplied plan remains within the stated outcome goals",
+          "test": {
+            "op": "gt",
+            "args": [
+              {
+                "op": "length",
+                "args": [
+                  {
+                    "op": "get",
+                    "args": [
+                      {
+                        "ref": "steps.comparison.output.recommendation"
+                      },
+                      "candidateIds"
+                    ]
+                  }
+                ]
+              },
+              0
+            ]
+          }
+        }
+      ],
+      "brief": {
+        "sections": [
+          {
+            "id": "decision-summary",
+            "title": "Learning-support choice",
+            "value": {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "steps.comparison.status"
+                    },
+                    "complete"
+                  ]
+                },
+                {
+                  "status": {
+                    "op": "if",
+                    "args": [
+                      {
+                        "op": "gt",
+                        "args": [
+                          {
+                            "op": "length",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "ref": "steps.comparison.output.recommendation"
+                                  },
+                                  "preferredIds"
+                                ]
+                              }
+                            ]
+                          },
+                          0
+                        ]
+                      },
+                      "choice",
+                      "unavailable"
+                    ]
+                  },
+                  "heading": {
+                    "op": "get",
+                    "args": [
+                      {
+                        "ref": "steps.comparison.output.recommendation"
+                      },
+                      "explanation"
+                    ]
+                  },
+                  "priorityLabel": "Separate outcome goals and explicit priorities; no combined benefit score.",
+                  "qualification": "These findings follow from supplied assumptions and aspirations. Individual benefit remains to be observed; no diagnosis, treatment efficacy or causal effect is established.",
+                  "rows": {
+                    "ref": "steps.comparison.output.rows"
+                  },
+                  "metrics": []
+                },
+                null
+              ]
+            }
+          },
+          {
+            "id": "outcome-comparison",
+            "title": "Separate outcome comparison",
+            "value": {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "steps.comparison.status"
+                    },
+                    "complete"
+                  ]
+                },
+                {
+                  "ref": "steps.comparison.output.rows"
+                },
+                []
+              ]
+            }
+          },
+          {
+            "id": "decision-basis",
+            "title": "Scope, assumptions and remaining questions",
+            "value": {
+              "scope": {
+                "ref": "case.support.scope"
+              },
+              "assumptions": {
+                "literal": [
+                  "Dyslexia and ADHD have already been professionally assessed in this fictional case; the calculation does not diagnose them or determine clinical suitability.",
+                  "The decision concerns the next six-week support block. Better classroom participation does not by itself establish that the decoding need is sufficiently addressed; decoding improvement does not by itself establish adequate classroom functioning.",
+                  "All alternatives are complete authored support descriptions for this bounded comparison. Classroom support for attention-related difficulties is not a complete clinical ADHD treatment. The range comparison does not prescribe medication, infer clinical efficacy or produce a probability of benefit.",
+                  "Targets and priority order are explicit human judgments. A preferred option is conditional on supplied estimates, applicability and preferences; overlapping ranges can leave the choice unresolved.",
+                  "The six-week horizon and baseline values are fictional teaching inputs. Qualified professionals must choose appropriate measures and reconsideration criteria."
+                ]
+              },
+              "preferences": {
+                "ref": "case.support.preferences"
+              },
+              "sources": {
+                "ref": "case.support.sources"
+              },
+              "unresolvedQuestions": [
+                {
+                  "id": "individual-response",
+                  "label": "Will this child experience the assumed improvements, and is the burden acceptable?"
+                },
+                {
+                  "id": "measurement",
+                  "label": "Are the separate progress measures and reconsideration criteria appropriate for this child?"
+                },
+                {
+                  "id": "source-applicability",
+                  "label": "Do qualified professionals accept the source applicability and response assumptions?"
+                }
+              ]
+            }
+          }
+        ],
+        "actions": [
+          {
+            "id": "supply-inputs",
+            "label": "Supply the comparison inputs",
+            "when": {
+              "op": "not",
+              "args": [
+                {
+                  "ref": "conditions.inputs-supplied"
+                }
+              ]
+            },
+            "value": {
+              "summary": "Record the scope, source applicability, separate outcome assumptions, priorities and measures. Unknown values must remain explicit."
+            }
+          },
+          {
+            "id": "resolve-basis",
+            "label": "Resolve missing estimates or source applicability",
+            "when": {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "steps.comparison.status"
+                },
+                "incomplete"
+              ]
+            },
+            "value": {
+              "summary": "Inspect the outcome estimates and their cited sources. Supply an unknown response range or establish applicability when support is available; no preferred plan can be inferred from an incomplete subset."
+            }
+          },
+          {
+            "id": "inspect-choice",
+            "label": "Inspect the conditional preference and tradeoffs",
+            "when": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "steps.comparison.status"
+                    },
+                    "complete"
+                  ]
+                },
+                {
+                  "op": "gt",
+                  "args": [
+                    {
+                      "op": "length",
+                      "args": [
+                        {
+                          "op": "get",
+                          "args": [
+                            {
+                              "ref": "steps.comparison.output.recommendation"
+                            },
+                            "preferredIds"
+                          ]
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            },
+            "value": {
+              "summary": "Before continuing or changing the next support block, check the separate reading and participation goals and the child’s and family’s burden. A positive finding in one area does not establish that both needs are adequately addressed. The calculation does not choose on behalf of the child, family or professionals."
+            }
+          },
+          {
+            "id": "clarify-choice",
+            "label": "Clarify the unresolved response assumptions or priorities",
+            "when": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "steps.comparison.status"
+                    },
+                    "complete"
+                  ]
+                },
+                {
+                  "op": "gt",
+                  "args": [
+                    {
+                      "op": "length",
+                      "args": [
+                        {
+                          "op": "get",
+                          "args": [
+                            {
+                              "ref": "steps.comparison.output.recommendation"
+                            },
+                            "candidateIds"
+                          ]
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                },
+                {
+                  "op": "not",
+                  "args": [
+                    {
+                      "op": "gt",
+                      "args": [
+                        {
+                          "op": "length",
+                          "args": [
+                            {
+                              "op": "get",
+                              "args": [
+                                {
+                                  "ref": "steps.comparison.output.recommendation"
+                                },
+                                "preferredIds"
+                              ]
+                            }
+                          ]
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "value": {
+              "summary": "Inspect overlapping ranges, unknown estimates or source applicability. A combined score is not invented to force a choice."
+            }
+          },
+          {
+            "id": "reconsider-goals",
+            "label": "Reconsider the alternatives or stated goals",
+            "when": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "steps.comparison.status"
+                    },
+                    "complete"
+                  ]
+                },
+                {
+                  "op": "not",
+                  "args": [
+                    {
+                      "op": "gt",
+                      "args": [
+                        {
+                          "op": "length",
+                          "args": [
+                            {
+                              "op": "get",
+                              "args": [
+                                {
+                                  "ref": "steps.comparison.output.recommendation"
+                                },
+                                "candidateIds"
+                              ]
+                            }
+                          ]
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "value": {
+              "summary": "No supplied plan can meet every declared goal within the accepted response ranges. Discuss whether another complete support plan or a consciously revised goal is appropriate; this is not a clinical exclusion."
+            }
+          },
+          {
+            "id": "plan-observations",
+            "label": "Use separate progress measures to reconsider the plan",
+            "when": {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "steps.comparison.status"
+                },
+                "complete"
+              ]
+            },
+            "value": {
+              "summary": "Agree how to observe reading, classroom participation and burden. Review assumptions when results or acceptability differ; improvement before and after support alone does not establish causality."
+            }
+          }
+        ],
+        "completion": {
+          "op": "eq",
+          "args": [
+            {
+              "ref": "steps.comparison.status"
+            },
+            "complete"
+          ]
+        }
+      },
+      "decisionProcess": {
+        "title": "Choose support while keeping distinct outcomes visible",
+        "description": "The same findings distinguish a conditional preference from an unresolved choice. Actual progress is external evidence for a later comparison.",
+        "entryNodeIds": [
+          "needs"
+        ],
+        "nodes": [
+          {
+            "id": "needs",
+            "kind": "stage",
+            "label": "Record the assessed needs and distinct outcomes",
+            "questionIds": [
+              "scope",
+              "sources",
+              "estimates",
+              "preferences"
+            ]
+          },
+          {
+            "id": "inputs",
+            "kind": "decision",
+            "label": "Are the required comparison inputs supplied?",
+            "conditionId": "inputs-supplied"
+          },
+          {
+            "id": "missing",
+            "kind": "action",
+            "label": "Supply the comparison inputs",
+            "actionId": "supply-inputs"
+          },
+          {
+            "id": "compare",
+            "kind": "stage",
+            "label": "Compare the supplied response ranges and priorities",
+            "stepIds": [
+              "comparison"
+            ]
+          },
+          {
+            "id": "basis-complete",
+            "kind": "decision",
+            "label": "Does the calculation have a complete usable outcome basis?",
+            "conditionId": "current"
+          },
+          {
+            "id": "resolve-basis",
+            "kind": "action",
+            "label": "Resolve missing estimates or source applicability",
+            "actionId": "resolve-basis",
+            "questionIds": [
+              "estimates",
+              "sources"
+            ]
+          },
+          {
+            "id": "goals",
+            "kind": "decision",
+            "label": "Could any supplied plan meet every stated goal?",
+            "conditionId": "candidates"
+          },
+          {
+            "id": "reconsider-goals",
+            "kind": "action",
+            "label": "Reconsider the alternatives or stated goals",
+            "actionId": "reconsider-goals"
+          },
+          {
+            "id": "distinguished",
+            "kind": "decision",
+            "label": "Do these assumptions distinguish a preferred plan?",
+            "conditionId": "preference"
+          },
+          {
+            "id": "inspect",
+            "kind": "action",
+            "label": "Inspect the conditional preference and tradeoffs",
+            "actionId": "inspect-choice"
+          },
+          {
+            "id": "clarify",
+            "kind": "action",
+            "label": "Clarify the unresolved response assumptions or priorities",
+            "actionId": "clarify-choice"
+          },
+          {
+            "id": "observe",
+            "kind": "action",
+            "label": "Use separate progress measures to reconsider the plan",
+            "actionId": "plan-observations",
+            "questionIds": [
+              "monitoring"
+            ]
+          },
+          {
+            "id": "update",
+            "kind": "outcome",
+            "label": "Record changed evidence and reconsider the choice",
+            "questionIds": [
+              "sources",
+              "estimates",
+              "preferences",
+              "monitoring"
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "id": "prepare",
+            "from": "needs",
+            "to": "inputs",
+            "label": "Keep reading, participation and burden separate"
+          },
+          {
+            "id": "inputs-ready",
+            "from": "inputs",
+            "to": "compare",
+            "label": "The required values are supplied",
+            "outcome": "true"
+          },
+          {
+            "id": "inputs-missing",
+            "from": "inputs",
+            "to": "missing",
+            "label": "A required value is unanswered or unknown",
+            "outcome": "false"
+          },
+          {
+            "id": "complete-inputs",
+            "from": "missing",
+            "to": "needs",
+            "label": "Supply the available information",
+            "kind": "reassessment"
+          },
+          {
+            "id": "basis-check",
+            "from": "compare",
+            "to": "basis-complete",
+            "label": "Keep missing estimates and uncertain applicability visible"
+          },
+          {
+            "id": "finding",
+            "from": "basis-complete",
+            "to": "goals",
+            "label": "Use the complete outcome comparison finding",
+            "outcome": "true"
+          },
+          {
+            "id": "goals-supported",
+            "from": "goals",
+            "to": "distinguished",
+            "label": "At least one plan remains within the goals",
+            "outcome": "true"
+          },
+          {
+            "id": "goals-unmet",
+            "from": "goals",
+            "to": "reconsider-goals",
+            "label": "Every supplied plan falls outside a stated goal",
+            "outcome": "false"
+          },
+          {
+            "id": "goals-reassess",
+            "from": "reconsider-goals",
+            "to": "needs",
+            "label": "Discuss another complete plan or explicit goal revision",
+            "kind": "reassessment"
+          },
+          {
+            "id": "goals-measures",
+            "from": "reconsider-goals",
+            "to": "observe",
+            "label": "Inspect what evidence could support the next choice"
+          },
+          {
+            "id": "missing-basis",
+            "from": "basis-complete",
+            "to": "resolve-basis",
+            "label": "The response basis remains incomplete",
+            "outcome": "false"
+          },
+          {
+            "id": "reassess-basis",
+            "from": "resolve-basis",
+            "to": "needs",
+            "label": "Update supported estimates or applicability judgments",
+            "kind": "reassessment"
+          },
+          {
+            "id": "preferred",
+            "from": "distinguished",
+            "to": "inspect",
+            "label": "A conditional preference is distinguished",
+            "outcome": "true"
+          },
+          {
+            "id": "unresolved",
+            "from": "distinguished",
+            "to": "clarify",
+            "label": "The choice remains unresolved",
+            "outcome": "false"
+          },
+          {
+            "id": "measure",
+            "from": "inspect",
+            "to": "observe",
+            "label": "Agree what would count as helping"
+          },
+          {
+            "id": "measure-uncertainty",
+            "from": "clarify",
+            "to": "observe",
+            "label": "Specify observations that could inform the unresolved choice"
+          },
+          {
+            "id": "clarified",
+            "from": "clarify",
+            "to": "needs",
+            "label": "Update only the judgments that can be supported",
+            "kind": "reassessment"
+          },
+          {
+            "id": "actual-progress",
+            "from": "observe",
+            "to": "update",
+            "label": "Collect progress and acceptability evidence externally"
+          },
+          {
+            "id": "reconsider",
+            "from": "update",
+            "to": "compare",
+            "label": "Recalculate with the changed basis",
+            "kind": "reassessment"
+          }
+        ],
+        "actionGroups": [
+          {
+            "id": "support-choice",
+            "label": "Available next actions",
+            "selection": "all-matching",
+            "actionIds": [
+              "supply-inputs",
+              "resolve-basis",
+              "inspect-choice",
+              "clarify-choice",
+              "reconsider-goals",
+              "plan-observations"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "catalog": {
+          "domain": {
+            "id": "learning-support",
+            "label": "Learning support"
+          },
+          "useCase": {
+            "id": "choose-learning-support",
+            "label": "Choose learning support"
+          }
+        },
+        "patternContext": {
+          "primaryStepId": "comparison"
+        },
+        "caseStart": {
+          "starterMeaning": "example",
+          "supportsOwnData": false,
+          "scope": "Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect."
+        },
+        "presentation": {
+          "version": 1,
+          "questions": {
+            "scope": {
+              "type": "string",
+              "label": "Scope"
+            },
+            "sources": {
+              "type": "array",
+              "label": "Sources and applicability",
+              "items": {
+                "type": "object",
+                "label": "Sources record",
+                "fields": {
+                  "id": {
+                    "type": "string",
+                    "label": "Id",
+                    "unit": "identifier"
+                  },
+                  "label": {
+                    "type": "string",
+                    "label": "Label"
+                  },
+                  "kind": {
+                    "type": "string",
+                    "label": "Kind",
+                    "options": [
+                      "fictional-assumption",
+                      "research",
+                      "observation",
+                      "expert-judgment"
+                    ]
+                  },
+                  "citation": {
+                    "type": "string",
+                    "label": "Citation"
+                  },
+                  "applicability": {
+                    "type": "string",
+                    "label": "Applicability"
+                  },
+                  "applicabilityStatus": {
+                    "type": "string",
+                    "label": "Applicability Status",
+                    "options": [
+                      "accepted",
+                      "uncertain",
+                      "not-applicable"
+                    ]
+                  }
+                }
+              },
+              "keyFields": [
+                "id"
+              ]
+            },
+            "estimates": {
+              "type": "array",
+              "label": "Separate outcome estimate ranges",
+              "items": {
+                "type": "object",
+                "label": "Estimates record",
+                "fields": {
+                  "alternativeId": {
+                    "type": "string",
+                    "label": "Alternative Id",
+                    "unit": "identifier",
+                    "options": [
+                      "reading-support",
+                      "classroom-support",
+                      "coordinated-support"
+                    ]
+                  },
+                  "outcomeId": {
+                    "type": "string",
+                    "label": "Outcome Id",
+                    "unit": "identifier",
+                    "options": [
+                      "word-reading",
+                      "participation",
+                      "weekly-burden"
+                    ]
+                  },
+                  "lower": {
+                    "type": "number",
+                    "label": "Lower",
+                    "nullable": true
+                  },
+                  "upper": {
+                    "type": "number",
+                    "label": "Upper",
+                    "nullable": true
+                  },
+                  "sourceIds": {
+                    "type": "array",
+                    "label": "Source Ids",
+                    "items": {
+                      "type": "string",
+                      "label": "Source Ids record",
+                      "unit": "identifier"
+                    }
+                  },
+                  "rationale": {
+                    "type": "string",
+                    "label": "Rationale"
+                  }
+                }
+              },
+              "keyFields": [
+                "alternativeId",
+                "outcomeId"
+              ]
+            },
+            "preferences": {
+              "type": "object",
+              "label": "Preferences",
+              "fields": {
+                "priorities": {
+                  "type": "array",
+                  "label": "Priorities",
+                  "items": {
+                    "type": "string",
+                    "label": "Priorities record",
+                    "unit": "identifier",
+                    "options": [
+                      "word-reading",
+                      "participation",
+                      "weekly-burden"
+                    ]
+                  }
+                },
+                "targets": {
+                  "type": "array",
+                  "label": "Authored aspirations",
+                  "items": {
+                    "type": "object",
+                    "label": "Targets record",
+                    "fields": {
+                      "outcomeId": {
+                        "type": "string",
+                        "label": "Outcome Id",
+                        "unit": "identifier",
+                        "options": [
+                          "word-reading",
+                          "participation",
+                          "weekly-burden"
+                        ]
+                      },
+                      "value": {
+                        "type": "number",
+                        "label": "Value"
+                      }
+                    }
+                  },
+                  "keyFields": [
+                    "outcomeId"
+                  ]
+                }
+              }
+            },
+            "sensitivity": {
+              "type": "array",
+              "label": "Declared sensitivity scenarios",
+              "items": {
+                "type": "object",
+                "label": "Sensitivity record",
+                "fields": {
+                  "id": {
+                    "type": "string",
+                    "label": "Id",
+                    "unit": "identifier"
+                  },
+                  "label": {
+                    "type": "string",
+                    "label": "Label"
+                  },
+                  "preferences": {
+                    "type": "object",
+                    "label": "Preferences",
+                    "optional": true,
+                    "fields": {
+                      "priorities": {
+                        "type": "array",
+                        "label": "Priorities",
+                        "items": {
+                          "type": "string",
+                          "label": "Priorities record",
+                          "unit": "identifier",
+                          "options": [
+                            "word-reading",
+                            "participation",
+                            "weekly-burden"
+                          ]
+                        }
+                      },
+                      "targets": {
+                        "type": "array",
+                        "label": "Authored aspirations",
+                        "items": {
+                          "type": "object",
+                          "label": "Targets record",
+                          "fields": {
+                            "outcomeId": {
+                              "type": "string",
+                              "label": "Outcome Id",
+                              "unit": "identifier",
+                              "options": [
+                                "word-reading",
+                                "participation",
+                                "weekly-burden"
+                              ]
+                            },
+                            "value": {
+                              "type": "number",
+                              "label": "Value"
+                            }
+                          }
+                        },
+                        "keyFields": [
+                          "outcomeId"
+                        ]
+                      }
+                    }
+                  },
+                  "estimates": {
+                    "type": "array",
+                    "label": "Estimates",
+                    "optional": true,
+                    "items": {
+                      "type": "object",
+                      "label": "Estimates record",
+                      "fields": {
+                        "alternativeId": {
+                          "type": "string",
+                          "label": "Alternative Id",
+                          "unit": "identifier",
+                          "options": [
+                            "reading-support",
+                            "classroom-support",
+                            "coordinated-support"
+                          ]
+                        },
+                        "outcomeId": {
+                          "type": "string",
+                          "label": "Outcome Id",
+                          "unit": "identifier",
+                          "options": [
+                            "word-reading",
+                            "participation",
+                            "weekly-burden"
+                          ]
+                        },
+                        "lower": {
+                          "type": "number",
+                          "label": "Lower",
+                          "nullable": true
+                        },
+                        "upper": {
+                          "type": "number",
+                          "label": "Upper",
+                          "nullable": true
+                        },
+                        "sourceIds": {
+                          "type": "array",
+                          "label": "Source Ids",
+                          "items": {
+                            "type": "string",
+                            "label": "Source Ids record",
+                            "unit": "identifier"
+                          }
+                        },
+                        "rationale": {
+                          "type": "string",
+                          "label": "Rationale"
+                        }
+                      }
+                    },
+                    "keyFields": [
+                      "alternativeId",
+                      "outcomeId"
+                    ]
+                  }
+                }
+              },
+              "keyFields": [
+                "id"
+              ]
+            },
+            "monitoring": {
+              "type": "array",
+              "label": "Proposed progress observations",
+              "items": {
+                "type": "object",
+                "label": "Monitoring record",
+                "fields": {
+                  "outcomeId": {
+                    "type": "string",
+                    "label": "Outcome Id",
+                    "unit": "identifier",
+                    "options": [
+                      "word-reading",
+                      "participation",
+                      "weekly-burden"
+                    ]
+                  },
+                  "measure": {
+                    "type": "string",
+                    "label": "Measure"
+                  },
+                  "when": {
+                    "type": "string",
+                    "label": "When"
+                  },
+                  "interpretation": {
+                    "type": "string",
+                    "label": "Interpretation"
+                  },
+                  "sourceIds": {
+                    "type": "array",
+                    "label": "Source Ids",
+                    "items": {
+                      "type": "string",
+                      "label": "Source Ids record",
+                      "unit": "identifier"
+                    }
+                  }
+                }
+              },
+              "keyFields": [
+                "outcomeId",
+                "measure"
+              ]
+            }
+          },
+          "groups": [
+            {
+              "id": "choice",
+              "label": "Support choice",
+              "question": "What improvement matters, and what might the support change?",
+              "subtabs": [
+                {
+                  "id": "needs",
+                  "label": "Needs and goals",
+                  "questionIds": [
+                    "scope",
+                    "preferences"
+                  ]
+                },
+                {
+                  "id": "responses",
+                  "label": "Separate outcomes",
+                  "questionIds": [
+                    "estimates"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "basis",
+              "label": "Basis and progress",
+              "question": "What supports the assumptions and what would change them?",
+              "subtabs": [
+                {
+                  "id": "sources",
+                  "label": "Evidence and applicability",
+                  "questionIds": [
+                    "sources"
+                  ]
+                },
+                {
+                  "id": "changes",
+                  "label": "Test assumptions",
+                  "questionIds": [
+                    "sensitivity"
+                  ]
+                },
+                {
+                  "id": "progress",
+                  "label": "Progress measures",
+                  "questionIds": [
+                    "monitoring"
+                  ]
+                }
+              ]
+            }
+          ],
+          "report": {
+            "title": "Learning-support reports",
+            "supportingReports": {
+              "format": "supporting-reports/1",
+              "reports": [
+                {
+                  "id": "outcomes",
+                  "label": "Expected outcomes",
+                  "question": "What might each support plan improve, and what remains uncertain?",
+                  "template": "records/1",
+                  "source": {
+                    "kind": "report-dataset",
+                    "datasetId": "outcomes:estimates",
+                    "stepIds": [
+                      "comparison"
+                    ]
+                  },
+                  "bindings": {
+                    "columns": [
+                      {
+                        "key": "alternative",
+                        "label": "Support plan"
+                      },
+                      {
+                        "key": "outcome",
+                        "label": "Outcome"
+                      },
+                      {
+                        "key": "range",
+                        "label": "Supplied range"
+                      },
+                      {
+                        "key": "target",
+                        "label": "Stated goal"
+                      },
+                      {
+                        "key": "targetStatus",
+                        "label": "Goal finding"
+                      },
+                      {
+                        "key": "availability",
+                        "label": "Applicability"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": "evidence",
+                  "label": "Evidence and applicability",
+                  "question": "What supports these expectations, and how applicable is it here?",
+                  "template": "records/1",
+                  "source": {
+                    "kind": "report-dataset",
+                    "datasetId": "outcomes:evidence",
+                    "stepIds": [
+                      "comparison"
+                    ]
+                  },
+                  "bindings": {
+                    "columns": [
+                      {
+                        "key": "label",
+                        "label": "Source"
+                      },
+                      {
+                        "key": "kind",
+                        "label": "Kind of basis"
+                      },
+                      {
+                        "key": "citation",
+                        "label": "Citation"
+                      },
+                      {
+                        "key": "applicability",
+                        "label": "Applicability judgment"
+                      },
+                      {
+                        "key": "applicabilityStatus",
+                        "label": "Applicability status"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": "sensitivity",
+                  "label": "Test the choice",
+                  "question": "Which changed assumptions or priorities would change the preferred plan?",
+                  "template": "records/1",
+                  "source": {
+                    "kind": "report-dataset",
+                    "datasetId": "outcomes:sensitivity",
+                    "stepIds": [
+                      "comparison"
+                    ]
+                  },
+                  "bindings": {
+                    "columns": [
+                      {
+                        "key": "label",
+                        "label": "Changed assumption or priority"
+                      },
+                      {
+                        "key": "status",
+                        "label": "Comparison finding"
+                      },
+                      {
+                        "key": "preferred",
+                        "label": "Conditional preference"
+                      },
+                      {
+                        "key": "changed",
+                        "label": "Preference changed"
+                      },
+                      {
+                        "key": "explanation",
+                        "label": "Reason"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": "monitoring",
+                  "label": "Learn from progress",
+                  "question": "What observations would support continuing or changing the plan?",
+                  "template": "records/1",
+                  "source": {
+                    "kind": "report-dataset",
+                    "datasetId": "outcomes:monitoring",
+                    "stepIds": [
+                      "comparison"
+                    ]
+                  },
+                  "bindings": {
+                    "columns": [
+                      {
+                        "key": "outcome",
+                        "label": "Outcome"
+                      },
+                      {
+                        "key": "measure",
+                        "label": "Baseline and measure"
+                      },
+                      {
+                        "key": "when",
+                        "label": "Observation and reconsideration horizon"
+                      },
+                      {
+                        "key": "interpretation",
+                        "label": "Reason to reconsider"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "readableBrief": {
+              "format": "workflow-readable-brief/1",
+              "sectionId": "decision-basis",
+              "sourceStepIds": []
+            },
+            "decisionSummary": {
+              "format": "workflow-decision-summary/1",
+              "title": "Learning-support choice",
+              "question": "Which support plan will help this child—and what improvement would show that it is working?",
+              "sectionId": "decision-summary",
+              "sourceStepIds": [
+                "comparison"
+              ],
+              "sections": [
+                {
+                  "id": "options",
+                  "label": "Options",
+                  "question": "Which support plans meet the stated goals under the supplied assumptions?"
+                },
+                {
+                  "id": "next-actions",
+                  "label": "Next actions",
+                  "question": "What should we clarify or inspect before choosing support?"
+                },
+                {
+                  "id": "assumptions",
+                  "label": "Assumptions",
+                  "question": "Which response, applicability and priority judgments could change this choice?"
+                },
+                {
+                  "id": "questions",
+                  "label": "Questions",
+                  "question": "What remains unknown about benefit and progress?"
+                }
+              ],
+              "comparison": {
+                "title": "Compare separate outcomes",
+                "sectionId": "outcome-comparison",
+                "rowsPath": "",
+                "keyField": "id",
+                "labelField": "label",
+                "columns": [
+                  {
+                    "key": "label",
+                    "label": "Support plan"
+                  },
+                  {
+                    "key": "finding",
+                    "label": "Comparison finding"
+                  },
+                  {
+                    "key": "reading",
+                    "label": "Word-reading change (probe items)"
+                  },
+                  {
+                    "key": "participation",
+                    "label": "Participation change (percentage points)"
+                  },
+                  {
+                    "key": "burden",
+                    "label": "Additional weekly burden (minutes)"
+                  }
+                ]
+              },
+              "actionGroups": [
+                {
+                  "id": "support-choice",
+                  "presentation": "actions"
+                }
+              ],
+              "actionDetails": [
+                {
+                  "actionId": "supply-inputs",
+                  "descriptionPath": "summary"
+                },
+                {
+                  "actionId": "resolve-basis",
+                  "descriptionPath": "summary"
+                },
+                {
+                  "actionId": "inspect-choice",
+                  "descriptionPath": "summary"
+                },
+                {
+                  "actionId": "clarify-choice",
+                  "descriptionPath": "summary"
+                },
+                {
+                  "actionId": "reconsider-goals",
+                  "descriptionPath": "summary"
+                },
+                {
+                  "actionId": "plan-observations",
+                  "descriptionPath": "summary"
+                }
+              ],
+              "links": []
+            }
+          }
+        }
+      },
+      "contentHash": "3e49b671d410297bbf74e24747da32719f4f12a5a0812809606bf4395c9e5502"
+    },
+    "catalog": {
+      "domain": {
+        "id": "learning-support",
+        "label": "Learning support"
+      },
+      "useCase": {
+        "id": "choose-learning-support",
+        "label": "Choose learning support"
+      }
+    },
+    "publishedAt": "2026-11-26T00:00:00.000Z",
+    "contentHash": "01e4f66ffa2ac6dfafafdb1d9536736abae38b8b20f2e737a91571f1d79b0f24"
+  },
+  "mapping": {
+    "format": "decision-lab-case-workbook-mapping/1",
+    "id": "workbook-a3970cc336dbe1b2d176787e",
+    "version": "1.0.0",
+    "title": "Choose a learning-support plan — Excel inputs",
+    "description": "Edit the named worksheets. Other inputs remain in the saved case. Inputs retained outside this workbook: Sources and applicability, Separate outcome estimates, Goals and priorities: Priorities, Goals and priorities: Targets, Alternative assumptions, Progress measures.",
+    "target": {
+      "type": "workflow",
+      "id": "choose-learning-support-plan",
+      "version": "1.1.1",
+      "packageHash": "01e4f66ffa2ac6dfafafdb1d9536736abae38b8b20f2e737a91571f1d79b0f24",
+      "definitionHash": "3e49b671d410297bbf74e24747da32719f4f12a5a0812809606bf4395c9e5502"
+    },
+    "managedPaths": [
+      "/support/scope"
+    ],
+    "sheets": [
+      {
+        "id": "read-me",
+        "name": "Read me",
+        "kind": "reference",
+        "role": "case-worker",
+        "key": [
+          "topic"
+        ],
+        "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+        "columns": [
+          {
+            "id": "topic",
+            "label": "Topic",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "text"
+          },
+          {
+            "id": "instructions",
+            "label": "Instructions",
+            "type": "string",
+            "nullable": false,
+            "blank": "reject",
+            "unit": "text"
+          }
+        ],
+        "referenceData": [
+          {
+            "topic": "Scope",
+            "instructions": "Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect."
+          },
+          {
+            "topic": "Starting values",
+            "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+          },
+          {
+            "topic": "Editing",
+            "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+          },
+          {
+            "topic": "Units and time",
+            "instructions": "All response assumptions refer to the fictional six-week support horizon. Reading uses additional correct items on a declared 20-item probe; participation uses percentage-point change under a declared observation protocol; additional burden is minutes per week. No monetary conversion or probability is inferred. Null response bounds remain unknown. Sources, applicability, goals and priorities require qualified human judgment."
+          },
+          {
+            "topic": "Import",
+            "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+          },
+          {
+            "topic": "Scope and assessed needs",
+            "instructions": "Editable inputs. The exact child, already assessed needs and comparison horizon. In the fictional case, professionals have assessed dyslexia and ADHD. The calculation does not diagnose either condition. Improvement in one outcome must not erase a remaining need."
+          }
+        ]
+      },
+      {
+        "id": "inputs-1",
+        "name": "Scope and assessed needs",
+        "kind": "record",
+        "role": "support-coordinator",
+        "meaning": "The exact child, already assessed needs and comparison horizon. In the fictional case, professionals have assessed dyslexia and ADHD. The calculation does not diagnose either condition. Improvement in one outcome must not erase a remaining need.",
+        "binding": {
+          "path": ""
+        },
+        "columns": [
+          {
+            "id": "support-scope",
+            "label": "Scope",
+            "type": "string",
+            "nullable": false,
+            "blank": "omit",
+            "unit": "value",
+            "path": "/support/scope"
+          }
+        ],
+        "key": []
+      }
+    ],
+    "references": [],
+    "importPolicy": {
+      "mode": "replace-managed-snapshot",
+      "missingSheet": "reject",
+      "unknownSheets": "reject",
+      "unknownColumns": "reject",
+      "formulas": "reject",
+      "coercion": "none",
+      "missingMetadata": "reject"
+    },
+    "contentHash": "2aae6bcb40ce035e6082212902715d29a49ab95050e04a07bcd0daadec5dc0bf"
+  },
+  "starter": {
+    "support": {
+      "id": "fictional-sam-support",
+      "title": "Fictional support comparison for Sam, age eight",
+      "scope": "Sam is a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. Lisa, the support coordinator, is helping the child, family and professionals choose his next six-week support block. His teacher sees improved participation while unfamiliar words remain difficult to decode. A single reassuring “working” judgment could renew a plan without addressing that remaining difficulty. The comparison keeps both needs and the child’s and family’s burden visible. Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.",
+      "sources": [
+        {
+          "id": "fictional-response-assumptions",
+          "label": "Authored fictional response assumptions",
+          "kind": "fictional-assumption",
+          "citation": "Teaching fixture in model.mjs; no individual response values are derived from a study.",
+          "applicabilityStatus": "accepted",
+          "applicability": "Accepted only as explicit assumptions for this fictional exercise. A real use needs qualified evidence and a documented applicability judgment for the child, support and outcome."
+        },
+        {
+          "id": "trial-context",
+          "label": "Research context: distinct reading and ADHD outcomes",
+          "kind": "research",
+          "citation": "Tamm et al., 2017. Comparing Treatments for Children with ADHD and Word Reading Difficulties: A Randomized Clinical Trial. https://pubmed.ncbi.nlm.nih.gov/28333510/",
+          "applicabilityStatus": "uncertain",
+          "applicability": "Context for separating target outcomes, not a source of the fictional ranges. The trial ADHD treatment included medication and parent training; it does not validate this classroom-only package or predict this child’s response."
+        }
+      ],
+      "estimates": [
+        {
+          "alternativeId": "reading-support",
+          "outcomeId": "word-reading",
+          "lower": 7,
+          "upper": 9,
+          "sourceIds": [
+            "fictional-response-assumptions"
+          ],
+          "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+        },
+        {
+          "alternativeId": "reading-support",
+          "outcomeId": "participation",
+          "lower": 2,
+          "upper": 4,
+          "sourceIds": [
+            "fictional-response-assumptions"
+          ],
+          "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+        },
+        {
+          "alternativeId": "reading-support",
+          "outcomeId": "weekly-burden",
+          "lower": 90,
+          "upper": 120,
+          "sourceIds": [
+            "fictional-response-assumptions"
+          ],
+          "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+        },
+        {
+          "alternativeId": "classroom-support",
+          "outcomeId": "word-reading",
+          "lower": 0,
+          "upper": 2,
+          "sourceIds": [
+            "fictional-response-assumptions"
+          ],
+          "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+        },
+        {
+          "alternativeId": "classroom-support",
+          "outcomeId": "participation",
+          "lower": 15,
+          "upper": 20,
+          "sourceIds": [
+            "fictional-response-assumptions"
+          ],
+          "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+        },
+        {
+          "alternativeId": "classroom-support",
+          "outcomeId": "weekly-burden",
+          "lower": 30,
+          "upper": 45,
+          "sourceIds": [
+            "fictional-response-assumptions"
+          ],
+          "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+        },
+        {
+          "alternativeId": "coordinated-support",
+          "outcomeId": "word-reading",
+          "lower": 4,
+          "upper": 6,
+          "sourceIds": [
+            "fictional-response-assumptions"
+          ],
+          "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+        },
+        {
+          "alternativeId": "coordinated-support",
+          "outcomeId": "participation",
+          "lower": 10,
+          "upper": 14,
+          "sourceIds": [
+            "fictional-response-assumptions"
+          ],
+          "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+        },
+        {
+          "alternativeId": "coordinated-support",
+          "outcomeId": "weekly-burden",
+          "lower": 150,
+          "upper": 180,
+          "sourceIds": [
+            "fictional-response-assumptions"
+          ],
+          "rationale": "Authored fictional lower and upper response assumptions for the same declared horizon; neither bound is a probability or a causal finding."
+        }
+      ],
+      "preferences": {
+        "priorities": [
+          "word-reading",
+          "participation",
+          "weekly-burden"
+        ],
+        "targets": [
+          {
+            "outcomeId": "word-reading",
+            "value": 4
+          },
+          {
+            "outcomeId": "participation",
+            "value": 8
+          }
+        ]
+      },
+      "sensitivity": [
+        {
+          "id": "reading-first",
+          "label": "If reading is the first priority and minimum goals are relaxed",
+          "preferences": {
+            "priorities": [
+              "word-reading",
+              "participation",
+              "weekly-burden"
+            ],
+            "targets": []
+          }
+        },
+        {
+          "id": "participation-first",
+          "label": "If participation is the first priority and minimum goals are relaxed",
+          "preferences": {
+            "priorities": [
+              "participation",
+              "word-reading",
+              "weekly-burden"
+            ],
+            "targets": []
+          }
+        },
+        {
+          "id": "burden-limit",
+          "label": "If additional weekly burden cannot exceed two hours",
+          "preferences": {
+            "priorities": [
+              "word-reading",
+              "participation",
+              "weekly-burden"
+            ],
+            "targets": [
+              {
+                "outcomeId": "word-reading",
+                "value": 4
+              },
+              {
+                "outcomeId": "participation",
+                "value": 8
+              },
+              {
+                "outcomeId": "weekly-burden",
+                "value": 120
+              }
+            ]
+          }
+        },
+        {
+          "id": "overlapping-responses",
+          "label": "If the leading reading ranges overlap and minimum goals are relaxed",
+          "preferences": {
+            "priorities": [
+              "word-reading",
+              "participation",
+              "weekly-burden"
+            ],
+            "targets": []
+          },
+          "estimates": [
+            {
+              "alternativeId": "coordinated-support",
+              "outcomeId": "word-reading",
+              "lower": 6,
+              "upper": 10,
+              "sourceIds": [
+                "fictional-response-assumptions"
+              ],
+              "rationale": "An authored fictional alternative assumption overlaps Targeted word-reading support. Lower priorities cannot settle an uncertain first priority."
+            }
+          ]
+        }
+      ],
+      "monitoring": [
+        {
+          "outcomeId": "word-reading",
+          "measure": "Baseline: 6 correct items on the declared 20-item unfamiliar-word probe. Record correct items on comparable probes using the same scoring protocol; a qualified professional determines an appropriate measure.",
+          "when": "Baseline before support, weekly observations, and a six-week reconsideration point.",
+          "interpretation": "Reconsider the assumed reading benefit if observed change fails to approach the agreed four-item goal or the measure is not suitable. Improvement in participation cannot substitute. Repeated measurements alone do not establish treatment causality.",
+          "sourceIds": []
+        },
+        {
+          "outcomeId": "participation",
+          "measure": "Baseline: engaged in 45% of fixed classroom observation intervals. Record engagement under a declared observation protocol, with lesson and observer context.",
+          "when": "Baseline before support, weekly observations, and a six-week reconsideration point.",
+          "interpretation": "Reconsider the assumed participation benefit if change does not approach the agreed eight-percentage-point goal, contexts differ, or observations conflict. Do not infer decoding improvement or a diagnosis from engagement.",
+          "sourceIds": []
+        },
+        {
+          "outcomeId": "weekly-burden",
+          "measure": "Baseline: zero additional minutes attributable to the proposed package. Record actual additional child and family practice and coordination time.",
+          "when": "Record weekly, including incomplete sessions and family feedback; reconsider at six weeks or earlier if burden is unacceptable.",
+          "interpretation": "Reconsider the package if actual burden exceeds the accepted bound or the child or family finds it unacceptable, even when another outcome improves. These observations do not measure efficacy.",
+          "sourceIds": []
+        }
+      ]
+    }
+  },
+  "starterMeaning": "example",
+  "contentHash": "270b6c26d5dec1ea9838da6f30044c72b9f558ffa355870f7f4013ad31775a1c"
+}

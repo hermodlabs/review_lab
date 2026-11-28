@@ -34,6 +34,18 @@
       "mapping": "apps/assess-payment-terms-test/5/inputs.mapping.json"
     },
     {
+      "target": "apps/compare-learning-support-plans/3/app.app.json",
+      "mapping": "apps/compare-learning-support-plans/3/inputs.mapping.json"
+    },
+    {
+      "target": "apps/understand-reading-attention/2/app.app.json",
+      "mapping": "apps/understand-reading-attention/2/inputs.mapping.json"
+    },
+    {
+      "target": "apps/review-evaluation-campaign/1/app.app.json",
+      "mapping": "apps/review-evaluation-campaign/1/inputs.mapping.json"
+    },
+    {
       "target": "workflows/review-first-shipment/1.13.0/workflow.workflow.json",
       "mapping": "workflows/review-first-shipment/1.13.0/inputs.mapping.json"
     },
@@ -58,8 +70,8 @@
       "mapping": "workflows/plan-at-risk-release/1.2.0/inputs.mapping.json"
     },
     {
-      "target": "workflows/choose-next-month-growth/1.3.0/workflow.workflow.json",
-      "mapping": "workflows/choose-next-month-growth/1.3.0/inputs.mapping.json"
+      "target": "workflows/choose-next-month-growth/1.3.1/workflow.workflow.json",
+      "mapping": "workflows/choose-next-month-growth/1.3.1/inputs.mapping.json"
     },
     {
       "target": "workflows/restaurant-staffing-learning/1.0.0/workflow.workflow.json",
@@ -68,6 +80,18 @@
     {
       "target": "workflows/test-ai-sales-report-improvements/1.1.0/workflow.workflow.json",
       "mapping": "workflows/test-ai-sales-report-improvements/1.1.0/inputs.mapping.json"
+    },
+    {
+      "target": "workflows/resolve-current-shipment/1.0.0/workflow.workflow.json",
+      "mapping": "workflows/resolve-current-shipment/1.0.0/inputs.mapping.json"
+    },
+    {
+      "target": "workflows/choose-learning-support-plan/1.1.1/workflow.workflow.json",
+      "mapping": "workflows/choose-learning-support-plan/1.1.1/inputs.mapping.json"
+    },
+    {
+      "target": "workflows/investigate-reading-attention/1.1.0/workflow.workflow.json",
+      "mapping": "workflows/investigate-reading-attention/1.1.0/inputs.mapping.json"
     }
   ]
 }

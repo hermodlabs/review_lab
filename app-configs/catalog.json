@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "kind": "decision-lab-app-catalog",
   "title": "Decision Lab marketplace",
-  "description": "Operational calculations organized into collections and use cases.",
-  "exportedAt": "2026-11-25T18:00:00.000Z",
+  "description": "Decision tools organized into collections and use cases.",
+  "exportedAt": "2026-11-27T12:00:00.000Z",
   "scope": "current-product",
   "apps": [
     {
@@ -492,6 +492,186 @@
         "question": "Could a timely preference test improve the growth choice enough to cover its cost?",
         "supportsOwnData": false
       }
+    },
+    {
+      "id": "compare-learning-support-plans",
+      "version": 3,
+      "name": "Compare learning-support plans",
+      "description": "Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.",
+      "publishedAt": "2026-11-26T00:00:00.000Z",
+      "contentHash": "da5cdb64eb769ac7b34d7b4342f648132af7e3dbe1b6e78ca192f1e6f8df7759",
+      "module": {
+        "id": "learning-support-outcomes",
+        "version": "1.1.0"
+      },
+      "domain": {
+        "id": "learning-support",
+        "label": "Learning support"
+      },
+      "useCase": {
+        "id": "choose-learning-support",
+        "label": "Choose learning support"
+      },
+      "pattern": {
+        "id": "compare-outcomes/1",
+        "label": "Compare outcomes"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "compare-outcomes/1",
+        "definition": {
+          "id": "compare-outcomes",
+          "version": "1.0.0",
+          "evaluator": "bounded-outcome-comparison/1"
+        },
+        "presentationContract": "outcome-comparison-assessment/1"
+      },
+      "package": {
+        "path": "apps/compare-learning-support-plans/3/app.app.json",
+        "bytes": 89040,
+        "sha256": "8e00aa54134395ea75830185952a441c276b941418f5e5d62e5ddbeed5a0860d"
+      },
+      "source": {
+        "path": "apps/compare-learning-support-plans/3/model.yaml",
+        "bytes": 35836,
+        "sha256": "b33133722f3105ead12a857cadbb3e9e280999e98497e305a0ee76e61780e08c"
+      },
+      "workbook": {
+        "path": "apps/compare-learning-support-plans/3/inputs.workbook.json",
+        "bytes": 111163,
+        "sha256": "2202d316c60cfe22646de6d6aed343790262f6f4430e646c5288d84d433a4094"
+      },
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which support plan will help this child—and what improvement would show that it is working?",
+        "scope": "Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.",
+        "supportsOwnData": false
+      }
+    },
+    {
+      "id": "understand-reading-attention",
+      "version": 2,
+      "name": "Understand reading, attention and language findings",
+      "description": "Review a bounded fictional record before turning poor grades into an either-or explanation. Separate what has been professionally recorded from what remains unassessed.",
+      "publishedAt": "2026-11-26T12:00:00.000Z",
+      "contentHash": "45e7de4535a4d16ba2e1f396b5a9b1fa63e933468d24c760d3ec3db1f48ad030",
+      "module": {
+        "id": "reading-attention-evidence",
+        "version": "1.1.0"
+      },
+      "domain": {
+        "id": "learning-support",
+        "label": "Learning support"
+      },
+      "useCase": {
+        "id": "understand-reading-attention",
+        "label": "Understand reading, attention and language concerns"
+      },
+      "pattern": {
+        "id": "evidence-review/1",
+        "label": "Evidence review"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "evidence-review/1",
+        "definition": {
+          "id": "evidence-review",
+          "version": "1.0.0",
+          "evaluator": "finite-relational-evidence/1"
+        },
+        "presentationContract": "evidence-assessment/1"
+      },
+      "package": {
+        "path": "apps/understand-reading-attention/2/app.app.json",
+        "bytes": 199589,
+        "sha256": "cb0a948881a5e046f195c7ee482a11efab6b2c5adb5ec2adccd10a01c8d7ce71"
+      },
+      "source": {
+        "path": "apps/understand-reading-attention/2/model.yaml",
+        "bytes": 83660,
+        "sha256": "bbb32e048739d5511ef8649fab3402c354b4850e3bb1c084364be46a2d912aa0"
+      },
+      "workbook": {
+        "path": "apps/understand-reading-attention/2/inputs.workbook.json",
+        "bytes": 226920,
+        "sha256": "fb4fbb5035adfc0ac2a047c41db83538ce6387c21e4012ea9c6e2a948258ca26"
+      },
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "What do the current assessment records establish about this child’s reading, attention and language difficulties, and what still needs assessment?",
+        "scope": "A fictional record-review example, not a diagnostic instrument. The finite catalogue describes possible professionally recorded reading, attention and language assessment conclusions, including coexistence and uncharacterized concerns. It is not an exhaustive catalogue of causes of poor grades. Only explicitly accepted, current records for the declared child, assessment episode and context constrain those possibilities. Logical agreement does not authenticate a record, establish clinical validity, attribute the cause of grades, prescribe support or estimate diagnostic probabilities.",
+        "supportsOwnData": false
+      }
+    },
+    {
+      "id": "review-evaluation-campaign",
+      "version": 1,
+      "name": "Review a release evaluation campaign",
+      "description": "Compare four authored GPU coordination policies for four sourced vLLM accuracy configurations. Timings are illustrative, unmeasured planning estimates. Inspect omitted work, slot use and deadlines.",
+      "publishedAt": "2026-11-27T12:00:00.000Z",
+      "contentHash": "1e8186829fe8b931876e9f647f61b9c1558dc313484996a115cc8f341defe1b9",
+      "module": {
+        "id": "review-evaluation-campaign",
+        "version": "1.0.0"
+      },
+      "domain": {
+        "id": "software-delivery",
+        "label": "Software delivery"
+      },
+      "useCase": {
+        "id": "evaluation-campaign",
+        "label": "Review an evaluation campaign"
+      },
+      "pattern": {
+        "id": "complete-a-commitment/1",
+        "label": "Complete a commitment"
+      },
+      "requires": {
+        "runtime": "diagnostic-evidence",
+        "modelFormat": "complete-a-commitment/1",
+        "definition": {
+          "id": "complete-a-commitment",
+          "version": "1.0.0",
+          "evaluator": "bounded-static-commitment/1"
+        },
+        "presentationContract": "complete-a-commitment.assessment/1"
+      },
+      "package": {
+        "path": "apps/review-evaluation-campaign/1/app.app.json",
+        "bytes": 193460,
+        "sha256": "49f2183f9adb1e5038f5ae0b64764a293567156fd811725efec26e0948bfdb14"
+      },
+      "source": {
+        "path": "apps/review-evaluation-campaign/1/model.yaml",
+        "bytes": 78310,
+        "sha256": "8e4bd4396a54df31cf3f8558479e649cdee013214b53c33c8dfe817dd373007d"
+      },
+      "workbook": {
+        "path": "apps/review-evaluation-campaign/1/inputs.workbook.json",
+        "bytes": 209339,
+        "sha256": "e7202dd5ad21edd6c537a7f61fe7621dab42a57c2f4dd8a73be5e14d289fbc6f"
+      },
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which proposed arrangements plan every required evaluation within available GPU capacity and the review deadline?",
+        "scope": "Four sourced accuracy configurations and four authored policies. Change the deadline, slot count, timing estimates, compatibility assumption or bookings. Adapt the app for a different required workload. All starting timings are unmeasured estimates.",
+        "supportsOwnData": false
+      }
     }
   ],
   "workflows": [
@@ -887,12 +1067,12 @@
     },
     {
       "id": "choose-next-month-growth",
-      "version": "1.3.0",
+      "version": "1.3.1",
       "name": "Choose next month’s growth commitment",
       "description": "Compare four complete growth commitments against cash after every dated payment and receipt, a required reserve, delivery hours, collection timing and the complete obligation horizon. Show the customer contribution needed to cover committed campaign spending. Optionally compare a nonbinding preference test using explicit probability assumptions and the same complete operating checks.",
-      "publishedAt": "2026-11-23T16:59:01.941Z",
-      "contentHash": "bea17b5881ba2e2c2e61d8b77b72cc805a1b97ea80bcdf18089304fa51cf2e29",
-      "definitionHash": "c3dfc7c34b9eab2d3b6c12923d5181ba95b502659b5ac47c40a4b8a4753b6e4b",
+      "publishedAt": "2026-11-26T17:58:34.000Z",
+      "contentHash": "6d55dac84a466bf7c84c57210f9ee4ffe953d0a58c971f8e1b48a1a6d87da76c",
+      "definitionHash": "9519996c2e5f4c0491c64c814a314341caf1bedeb88df11edd4c8138dac6397b",
       "domain": {
         "id": "business-growth",
         "label": "Business growth"
@@ -939,14 +1119,14 @@
         "supportsOwnData": false
       },
       "package": {
-        "path": "workflows/choose-next-month-growth/1.3.0/workflow.workflow.json",
-        "bytes": 383505,
-        "sha256": "34feff39808a68747b72a22c021d8fd9824870724e628df2bb5619f341ecd238"
+        "path": "workflows/choose-next-month-growth/1.3.1/workflow.workflow.json",
+        "bytes": 384181,
+        "sha256": "a3642adfe2aa870dcb65e9fdd3bb9ee3fe3c8ef85dc1b369b15df4cdea95d456"
       },
       "workbook": {
-        "path": "workflows/choose-next-month-growth/1.3.0/inputs.workbook.json",
-        "bytes": 433548,
-        "sha256": "9cbfe7bcb1843e7eb7017ce95ecfd053f9158052052e8ef84cd9e80523316c3f"
+        "path": "workflows/choose-next-month-growth/1.3.1/inputs.workbook.json",
+        "bytes": 434272,
+        "sha256": "4264626fc24d345392d802c2e3ca06339d4e8f39ad4dc2ad75d8ef8690367038"
       }
     },
     {
@@ -1124,6 +1304,174 @@
         "bytes": 2079815,
         "sha256": "5c1518dcf286efac3a4c48ddd297f8ba3fd297d01c49a1a293ccbbc4c0d3d536"
       }
+    },
+    {
+      "id": "resolve-current-shipment",
+      "version": "1.0.0",
+      "name": "Resolve a shipment exception",
+      "description": "Compare three complete shipment arrangements against the accepted order, capacity, expense, timing, scoped permissions and received carrier confirmation. Keep an earlier confirmation in the source journal; add and explicitly select a separately received replacement before recalculating. A supported arrangement still requires actual reservation and delivery.",
+      "publishedAt": "2026-11-25T20:00:00.000Z",
+      "contentHash": "de844f09f54dc428f62c80952796fda7b32fa6ad8d2a87adc8e18967b38b1a0a",
+      "definitionHash": "0eb676f4e32afd60e242a2ee5bc05fd60e112ddce15027b17af20467d7825a95",
+      "domain": {
+        "id": "order-fulfillment",
+        "label": "Order fulfillment"
+      },
+      "useCase": {
+        "id": "resolve-shipment-exception",
+        "label": "Resolve a shipment exception"
+      },
+      "primaryPattern": {
+        "id": "complete-a-commitment/1",
+        "title": "Complete a commitment",
+        "question": "Can we complete the commitment?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "planning",
+          "name": "Resolve a shipment exception",
+          "appId": "shipment-exception-response",
+          "version": 2,
+          "appContentHash": "7ebb55ae8b9b3ce66680a8182ee9f4027ee7408a2d086f0358d72a6e1c28b2a1",
+          "packageHash": "8a8c44f28190781a4019171506059e797428a6f38f0e9b312d6c33c5f6f3fee4"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Can we protect the complete customer order within the approved spending limit?",
+        "scope": "One fictional changed-order shipment and three supplied complete arrangements. The received-confirmation journal preserves the earlier revision. Adapt the pinned app for other reasoning requirements or operating structures.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/resolve-current-shipment/1.0.0/workflow.workflow.json",
+        "bytes": 307305,
+        "sha256": "1a15b9ada3921b4616a06e7e2c5a406d50e511e8c445c5a67e0cf3f4009491db"
+      },
+      "workbook": {
+        "path": "workflows/resolve-current-shipment/1.0.0/inputs.workbook.json",
+        "bytes": 373083,
+        "sha256": "4a8c546a506575cbe86a885524000ec3139c2eba413f76ea92841f3055883d34"
+      }
+    },
+    {
+      "id": "choose-learning-support-plan",
+      "version": "1.1.1",
+      "name": "Choose a learning-support plan",
+      "description": "Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.",
+      "publishedAt": "2026-11-26T00:00:00.000Z",
+      "contentHash": "01e4f66ffa2ac6dfafafdb1d9536736abae38b8b20f2e737a91571f1d79b0f24",
+      "definitionHash": "3e49b671d410297bbf74e24747da32719f4f12a5a0812809606bf4395c9e5502",
+      "domain": {
+        "id": "learning-support",
+        "label": "Learning support"
+      },
+      "useCase": {
+        "id": "choose-learning-support",
+        "label": "Choose learning support"
+      },
+      "primaryPattern": {
+        "id": "compare-outcomes/1",
+        "title": "Compare outcomes under uncertainty",
+        "question": "Which plan best serves the outcomes we care about?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "comparison",
+          "name": "Compare learning-support plans",
+          "appId": "compare-learning-support-plans",
+          "version": 3,
+          "appContentHash": "da5cdb64eb769ac7b34d7b4342f648132af7e3dbe1b6e78ca192f1e6f8df7759",
+          "packageHash": "14370719a6a72ebbdfd2900f9c1f5971bafa7f17414b487a9e97769f2fcef28c"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "Which support plan will help this child—and what improvement would show that it is working?",
+        "scope": "Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/choose-learning-support-plan/1.1.1/workflow.workflow.json",
+        "bytes": 173161,
+        "sha256": "45e42558a3fdbcf7598ca2e6abca32ed2da2dab9f22550f5dcf445dd0c8d3326"
+      },
+      "workbook": {
+        "path": "workflows/choose-learning-support-plan/1.1.1/inputs.workbook.json",
+        "bytes": 195695,
+        "sha256": "408ed6130c3926d932abc8d514118e1012e680a4a25d97f141d0f451ce2bb07b"
+      }
+    },
+    {
+      "id": "investigate-reading-attention",
+      "version": "1.1.0",
+      "name": "Understand reading, attention and language concerns",
+      "description": "A fictional record-review example, not a diagnostic instrument. The finite catalogue describes possible professionally recorded reading, attention and language assessment conclusions, including coexistence and uncharacterized concerns. It is not an exhaustive catalogue of causes of poor grades. Only explicitly accepted, current records for the declared child, assessment episode and context constrain those possibilities. Logical agreement does not authenticate a record, establish clinical validity, attribute the cause of grades, prescribe support or estimate diagnostic probabilities.",
+      "publishedAt": "2026-11-26T12:00:00.000Z",
+      "contentHash": "a56901d650c90ca2b0cd0e4eb480a3c9ef5a63c5079c23c3a0927a2c4fa49f51",
+      "definitionHash": "1d1244f2193dfefbe658136ffc2d837a1a7923fc6eb8877dfa3097a7c372ebbb",
+      "domain": {
+        "id": "learning-support",
+        "label": "Learning support"
+      },
+      "useCase": {
+        "id": "understand-reading-attention",
+        "label": "Understand reading, attention and language concerns"
+      },
+      "primaryPattern": {
+        "id": "evidence-review/1",
+        "title": "Establish the required answer",
+        "question": "What must the evidence establish?"
+      },
+      "requires": {
+        "workflowFormat": "decision-lab-workflow/1"
+      },
+      "dependencies": [
+        {
+          "id": "evidence",
+          "name": "Understand reading, attention and language findings",
+          "appId": "understand-reading-attention",
+          "version": 2,
+          "appContentHash": "45e7de4535a4d16ba2e1f396b5a9b1fa63e933468d24c760d3ec3db1f48ad030",
+          "packageHash": "f0da71cc3698d51eb0b593abbfab38e212d7b5fde7d9bb7a562883d8acc59dfc"
+        }
+      ],
+      "experience": {
+        "inputModes": [
+          "forms",
+          "yaml",
+          "excel"
+        ],
+        "forms": "all",
+        "question": "What do the current assessment records establish about this child’s reading, attention and language difficulties, and what still needs assessment?",
+        "scope": "A fictional record-review example, not a diagnostic instrument. The finite catalogue describes possible professionally recorded reading, attention and language assessment conclusions, including coexistence and uncharacterized concerns. It is not an exhaustive catalogue of causes of poor grades. Only explicitly accepted, current records for the declared child, assessment episode and context constrain those possibilities. Logical agreement does not authenticate a record, establish clinical validity, attribute the cause of grades, prescribe support or estimate diagnostic probabilities.",
+        "supportsOwnData": false
+      },
+      "package": {
+        "path": "workflows/investigate-reading-attention/1.1.0/workflow.workflow.json",
+        "bytes": 341859,
+        "sha256": "7e349f19907d28ab8bf6ff3e5aed59b1bba95a2bea6471611464fa2aa2b524dc"
+      },
+      "workbook": {
+        "path": "workflows/investigate-reading-attention/1.1.0/inputs.workbook.json",
+        "bytes": 366623,
+        "sha256": "133430aad79ef4dff808820a6cd4f2faa21ffe1facf51fc3a3fd4654e83a65c2"
+      }
     }
   ],
   "collections": [
@@ -1133,15 +1481,15 @@
         "id": "decision-lab",
         "label": "Decision Lab"
       },
-      "version": "1.15.0",
+      "version": "1.16.0",
       "title": "Order fulfillment",
       "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
-      "createdAt": "2026-11-23T17:16:26.670Z",
-      "contentHash": "a345914703f70177e3980f53716fb954ebf9833805f120c0623a062ece411105",
+      "createdAt": "2026-11-25T20:00:00.000Z",
+      "contentHash": "a17d3b05e62ce0d765b29ee53f989cccba4396a553a4489c7182d25aeef88f69",
       "package": {
-        "path": "collections/decision-lab/order-fulfillment/1.15.0/collection.collection.json",
-        "bytes": 2018,
-        "sha256": "865d350702e4b476d99deea9fcde55528689ac7d11045d751940155cbd8448cf"
+        "path": "collections/decision-lab/order-fulfillment/1.16.0/collection.collection.json",
+        "bytes": 2783,
+        "sha256": "2415a17ed77b4bca2adacd9713227c95a0ac0709a34cb6ecf744ae4621ab2486"
       }
     },
     {
@@ -1201,15 +1549,15 @@
         "id": "decision-lab",
         "label": "Decision Lab"
       },
-      "version": "1.2.0",
+      "version": "1.3.0",
       "title": "Software delivery",
       "description": "Bounded operational calculations for software delivery commitments, qualified capacity and explicit release changes.",
-      "createdAt": "2026-11-23T16:59:01.941Z",
-      "contentHash": "58e2149a48574eeb21a27b8f84aee8e785fb51c118b060507951d24044aef537",
+      "createdAt": "2026-11-27T12:00:00.000Z",
+      "contentHash": "f250fec445215a98da200904fdc1901b3e088cbab14fc440e592b4ee83dee201",
       "package": {
-        "path": "collections/decision-lab/software-delivery/1.2.0/collection.collection.json",
-        "bytes": 1778,
-        "sha256": "719ec638ecd507a6e2b9b21ba81a80dc83c58e3d34a338081535e8e0827d1bf3"
+        "path": "collections/decision-lab/software-delivery/1.3.0/collection.collection.json",
+        "bytes": 2520,
+        "sha256": "8e483500e82511d344d763036fb28d0512e8762d21766594060e196cb982448b"
       }
     },
     {
@@ -1218,15 +1566,15 @@
         "id": "decision-lab",
         "label": "Decision Lab"
       },
-      "version": "1.3.0",
+      "version": "1.3.1",
       "title": "Business growth",
       "description": "Compare fundable growth commitments, the performance they require and the value of a bounded payment-terms test.",
-      "createdAt": "2026-11-23T16:59:01.941Z",
-      "contentHash": "f6205d063376f4c9212cf743887a7eec887be9eab3a15c78d8b8b9149bad511c",
+      "createdAt": "2026-11-26T17:58:34.000Z",
+      "contentHash": "010a126dd8dc61238bbe28358e3dbd4c27ea34251544c3c3428e8cfae66b862b",
       "package": {
-        "path": "collections/decision-lab/business-growth/1.3.0/collection.collection.json",
+        "path": "collections/decision-lab/business-growth/1.3.1/collection.collection.json",
         "bytes": 2253,
-        "sha256": "cdb1103c697285cb3719f9da36b91a00eb6508c439bee4ddb8a7518334fc6931"
+        "sha256": "d2f1be0f044a3beea100e2aa9f662bfe11f394f69bd5794af74eba3e967cdb6c"
       }
     },
     {
@@ -1245,11 +1593,28 @@
         "bytes": 1366,
         "sha256": "df8cbaae9632667aa9f16275b9efe3a699d26475f6092f1c28a3e54f4970d5f4"
       }
+    },
+    {
+      "id": "learning-support",
+      "publisher": {
+        "id": "decision-lab",
+        "label": "Decision Lab"
+      },
+      "version": "1.3.0",
+      "title": "Learning support",
+      "description": "Clarify what reading, attention and language assessment records establish, then compare support plans using explicit outcome assumptions. Professional conclusions, classroom observations and the effects of support remain separate questions.",
+      "createdAt": "2026-11-26T12:00:00.000Z",
+      "contentHash": "6603263085e601ead07d02f83350e566b921e2946e7c67822f734359fd21a53a",
+      "package": {
+        "path": "collections/decision-lab/learning-support/1.3.0/collection.collection.json",
+        "bytes": 3360,
+        "sha256": "55752396e2a370bc23505ddd5ac25621fae94d7a190d6d0ef33c44873a746e50"
+      }
     }
   ],
   "historyCatalog": {
     "path": "release-history.catalog.json",
-    "bytes": 146441,
-    "sha256": "7469426117451b68dff95a9097a903ac7d36726af1f77f77dbcf004ad99ed94a"
+    "bytes": 172596,
+    "sha256": "5eb2fe3b026d867458a96a54e77408f8bcc91178fbf50eda72b0f10b726f2a8f"
   }
 }

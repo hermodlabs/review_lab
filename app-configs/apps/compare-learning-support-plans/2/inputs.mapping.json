@@ -1,0 +1,278 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-61e50f0cd6ddbcc1d67501be",
+  "version": "1.0.0",
+  "title": "Compare learning-support plans — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case. Inputs retained outside this workbook: /estimates, /sensitivity, /monitoring.",
+  "target": {
+    "type": "app",
+    "id": "compare-learning-support-plans",
+    "release": 2,
+    "pattern": "compare-outcomes/1",
+    "packageHash": "ec0ede49938f5016071ca7de26cbfee34c3a22a1492f303afe4ed6cfd4a430c8",
+    "moduleHash": "772552223c68e085a3ed454ed2bb04d682e28371844db54e6033f4142c4e22f1"
+  },
+  "managedPaths": [
+    "/sources",
+    "/preferences/priorities",
+    "/preferences/targets",
+    "/scope",
+    "/title"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "All response assumptions refer to the fictional six-week support horizon. Reading uses additional correct items on a declared 20-item probe; participation uses percentage-point change under a declared observation protocol; additional burden is minutes per week. No monetary conversion or probability is inferred. Null response bounds remain unknown. Sources, applicability, goals and priorities require qualified human judgment."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Sources and applicability",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Priorities",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Authored aspirations",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        },
+        {
+          "topic": "Case details",
+          "instructions": "Editable inputs. Supply the declared case inputs. Published rules and other case context are retained."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Sources and applicability",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/sources"
+      },
+      "columns": [
+        {
+          "id": "id",
+          "label": "Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "path": "/id"
+        },
+        {
+          "id": "label",
+          "label": "Label",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/label"
+        },
+        {
+          "id": "kind",
+          "label": "Kind",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/kind",
+          "enum": [
+            "fictional-assumption",
+            "research",
+            "observation",
+            "expert-judgment"
+          ]
+        },
+        {
+          "id": "citation",
+          "label": "Citation",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/citation"
+        },
+        {
+          "id": "applicability",
+          "label": "Applicability",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/applicability"
+        },
+        {
+          "id": "applicabilityStatus",
+          "label": "Applicability Status",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/applicabilityStatus",
+          "enum": [
+            "accepted",
+            "uncertain",
+            "not-applicable"
+          ]
+        }
+      ],
+      "key": [
+        "id"
+      ]
+    },
+    {
+      "id": "inputs-2",
+      "name": "Priorities",
+      "kind": "scalar-list",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/preferences/priorities"
+      },
+      "columns": [
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "enum": [
+            "word-reading",
+            "participation",
+            "weekly-burden"
+          ]
+        }
+      ],
+      "key": [
+        "value"
+      ]
+    },
+    {
+      "id": "inputs-3",
+      "name": "Authored aspirations",
+      "kind": "table",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": "/preferences/targets"
+      },
+      "columns": [
+        {
+          "id": "outcomeId",
+          "label": "Outcome Id",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "identifier",
+          "path": "/outcomeId",
+          "enum": [
+            "word-reading",
+            "participation",
+            "weekly-burden"
+          ]
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "type": "number",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/value"
+        }
+      ],
+      "key": [
+        "outcomeId"
+      ]
+    },
+    {
+      "id": "inputs-4",
+      "name": "Case details",
+      "kind": "record",
+      "role": "case-worker",
+      "meaning": "Supply the declared case inputs. Published rules and other case context are retained.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "scope",
+          "label": "Scope",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/scope"
+        },
+        {
+          "id": "title",
+          "label": "Title",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "value",
+          "path": "/title"
+        }
+      ],
+      "key": []
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "b507eb68d8768f7b5663a97de0bd24649ab9f2db0dff733fc71647553b235f38"
+}

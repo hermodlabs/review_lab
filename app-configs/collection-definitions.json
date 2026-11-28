@@ -8,7 +8,7 @@
           "id": "decision-lab",
           "label": "Decision Lab"
         },
-        "version": "1.15.0",
+        "version": "1.16.0",
         "title": "Order fulfillment",
         "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
         "useCases": [
@@ -21,6 +21,11 @@
             "id": "review-first-shipment",
             "label": "Review a first shipment",
             "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+          },
+          {
+            "id": "resolve-shipment-exception",
+            "label": "Resolve a shipment exception",
+            "description": "Protect an accepted order after it changes: compare capacity, expense and exact received-confirmation scope before the operating reservation."
           }
         ],
         "members": [
@@ -47,11 +52,23 @@
               "bytes": 1122767,
               "sha256": "302b8c287f59494f252cf5f4bbfe47ca97c083e9d7237ba7795ecd60b58a4389"
             }
+          },
+          {
+            "type": "workflow",
+            "id": "resolve-current-shipment",
+            "version": "1.0.0",
+            "packageHash": "de844f09f54dc428f62c80952796fda7b32fa6ad8d2a87adc8e18967b38b1a0a",
+            "useCaseId": "resolve-shipment-exception",
+            "artifact": {
+              "path": "workflows/resolve-current-shipment/1.0.0/workflow.workflow.json",
+              "bytes": 307305,
+              "sha256": "1a15b9ada3921b4616a06e7e2c5a406d50e511e8c445c5a67e0cf3f4009491db"
+            }
           }
         ],
         "format": "decision-lab-collection-definition/1"
       },
-      "createdAt": "2026-11-23T17:16:26.670Z"
+      "createdAt": "2026-11-25T20:00:00.000Z"
     },
     {
       "definition": {
@@ -238,7 +255,7 @@
     {
       "definition": {
         "id": "software-delivery",
-        "version": "1.2.0",
+        "version": "1.3.0",
         "publisher": {
           "id": "decision-lab",
           "label": "Decision Lab"
@@ -250,6 +267,11 @@
             "id": "release-recovery",
             "label": "Recover an at-risk release",
             "description": "Compare four complete release arrangements, retain the original commitment, and expose required scope or date amendments."
+          },
+          {
+            "id": "evaluation-campaign",
+            "label": "Review an evaluation campaign",
+            "description": "Check four sourced vLLM accuracy jobs against workload coverage, exclusive GPU capacity and a review deadline. Durations are explicitly unmeasured estimates."
           }
         ],
         "members": [
@@ -276,16 +298,28 @@
               "bytes": 163583,
               "sha256": "98e5830167fc5e5abb00285516ecfc66be3b5894e5829c5c5fb186f357b87c0d"
             }
+          },
+          {
+            "type": "app",
+            "id": "review-evaluation-campaign",
+            "version": 1,
+            "packageHash": "a15cf99b4f6d8e8858d0c0f98db9c7e9376d7877ee279b30414912392967203e",
+            "useCaseId": "evaluation-campaign",
+            "artifact": {
+              "path": "apps/review-evaluation-campaign/1/app.app.json",
+              "bytes": 193460,
+              "sha256": "49f2183f9adb1e5038f5ae0b64764a293567156fd811725efec26e0948bfdb14"
+            }
           }
         ],
         "format": "decision-lab-collection-definition/1"
       },
-      "createdAt": "2026-11-23T16:59:01.941Z"
+      "createdAt": "2026-11-27T12:00:00.000Z"
     },
     {
       "definition": {
         "id": "business-growth",
-        "version": "1.3.0",
+        "version": "1.3.1",
         "publisher": {
           "id": "decision-lab",
           "label": "Decision Lab"
@@ -303,13 +337,13 @@
           {
             "type": "workflow",
             "id": "choose-next-month-growth",
-            "version": "1.3.0",
-            "packageHash": "bea17b5881ba2e2c2e61d8b77b72cc805a1b97ea80bcdf18089304fa51cf2e29",
+            "version": "1.3.1",
+            "packageHash": "6d55dac84a466bf7c84c57210f9ee4ffe953d0a58c971f8e1b48a1a6d87da76c",
             "useCaseId": "fund-and-deliver-growth",
             "artifact": {
-              "path": "workflows/choose-next-month-growth/1.3.0/workflow.workflow.json",
-              "bytes": 383505,
-              "sha256": "34feff39808a68747b72a22c021d8fd9824870724e628df2bb5619f341ecd238"
+              "path": "workflows/choose-next-month-growth/1.3.1/workflow.workflow.json",
+              "bytes": 384181,
+              "sha256": "a3642adfe2aa870dcb65e9fdd3bb9ee3fe3c8ef85dc1b369b15df4cdea95d456"
             }
           },
           {
@@ -339,7 +373,7 @@
         ],
         "format": "decision-lab-collection-definition/1"
       },
-      "createdAt": "2026-11-23T16:59:01.941Z"
+      "createdAt": "2026-11-26T17:58:34.000Z"
     },
     {
       "definition": {
@@ -375,6 +409,82 @@
         "format": "decision-lab-collection-definition/1"
       },
       "createdAt": "2026-11-25T18:00:00.000Z"
+    },
+    {
+      "definition": {
+        "id": "learning-support",
+        "version": "1.3.0",
+        "publisher": {
+          "id": "decision-lab",
+          "label": "Decision Lab"
+        },
+        "title": "Learning support",
+        "description": "Clarify what reading, attention and language assessment records establish, then compare support plans using explicit outcome assumptions. Professional conclusions, classroom observations and the effects of support remain separate questions.",
+        "useCases": [
+          {
+            "id": "choose-learning-support",
+            "label": "Choose learning support",
+            "description": "Choose support for already assessed dyslexia and ADHD in a fictional teaching case, without mistaking improvement in one area for adequate support across both needs."
+          },
+          {
+            "id": "understand-reading-attention",
+            "label": "Understand reading, attention and language concerns",
+            "description": "Inspect scoped professional reading, attention and language records, including coexisting findings and unresolved questions, in a fictional case. Observations alone do not establish a diagnosis; appropriate follow-up depends on the recorded concerns."
+          }
+        ],
+        "members": [
+          {
+            "type": "workflow",
+            "id": "choose-learning-support-plan",
+            "version": "1.1.1",
+            "packageHash": "01e4f66ffa2ac6dfafafdb1d9536736abae38b8b20f2e737a91571f1d79b0f24",
+            "useCaseId": "choose-learning-support",
+            "artifact": {
+              "path": "workflows/choose-learning-support-plan/1.1.1/workflow.workflow.json",
+              "bytes": 173161,
+              "sha256": "45e42558a3fdbcf7598ca2e6abca32ed2da2dab9f22550f5dcf445dd0c8d3326"
+            }
+          },
+          {
+            "type": "app",
+            "id": "compare-learning-support-plans",
+            "version": 3,
+            "packageHash": "14370719a6a72ebbdfd2900f9c1f5971bafa7f17414b487a9e97769f2fcef28c",
+            "useCaseId": "choose-learning-support",
+            "artifact": {
+              "path": "apps/compare-learning-support-plans/3/app.app.json",
+              "bytes": 89040,
+              "sha256": "8e00aa54134395ea75830185952a441c276b941418f5e5d62e5ddbeed5a0860d"
+            }
+          },
+          {
+            "type": "workflow",
+            "id": "investigate-reading-attention",
+            "version": "1.1.0",
+            "packageHash": "a56901d650c90ca2b0cd0e4eb480a3c9ef5a63c5079c23c3a0927a2c4fa49f51",
+            "useCaseId": "understand-reading-attention",
+            "artifact": {
+              "path": "workflows/investigate-reading-attention/1.1.0/workflow.workflow.json",
+              "bytes": 341859,
+              "sha256": "7e349f19907d28ab8bf6ff3e5aed59b1bba95a2bea6471611464fa2aa2b524dc"
+            }
+          },
+          {
+            "type": "app",
+            "id": "understand-reading-attention",
+            "version": 2,
+            "packageHash": "f0da71cc3698d51eb0b593abbfab38e212d7b5fde7d9bb7a562883d8acc59dfc",
+            "useCaseId": "understand-reading-attention",
+            "artifact": {
+              "path": "apps/understand-reading-attention/2/app.app.json",
+              "bytes": 199589,
+              "sha256": "cb0a948881a5e046f195c7ee482a11efab6b2c5adb5ec2adccd10a01c8d7ce71"
+            }
+          }
+        ],
+        "format": "decision-lab-collection-definition/1"
+      },
+      "createdAt": "2026-11-26T12:00:00.000Z"
     }
   ]
 }

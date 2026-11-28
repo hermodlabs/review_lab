@@ -1,0 +1,49 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "learning-support",
+    "version": "1.1.1",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "title": "Learning support",
+    "description": "Choose the next support block while keeping reading, participation and burden distinct. Inspect the assumptions, evidence applicability and progress that could change the choice.",
+    "useCases": [
+      {
+        "id": "choose-learning-support",
+        "label": "Choose learning support",
+        "description": "Choose support for already assessed dyslexia and ADHD in a fictional teaching case, without mistaking improvement in one area for adequate support across both needs."
+      }
+    ],
+    "members": [
+      {
+        "type": "workflow",
+        "id": "choose-learning-support-plan",
+        "version": "1.1.1",
+        "packageHash": "01e4f66ffa2ac6dfafafdb1d9536736abae38b8b20f2e737a91571f1d79b0f24",
+        "useCaseId": "choose-learning-support",
+        "artifact": {
+          "path": "workflows/choose-learning-support-plan/1.1.1/workflow.workflow.json",
+          "bytes": 173161,
+          "sha256": "45e42558a3fdbcf7598ca2e6abca32ed2da2dab9f22550f5dcf445dd0c8d3326"
+        }
+      },
+      {
+        "type": "app",
+        "id": "compare-learning-support-plans",
+        "version": 3,
+        "packageHash": "14370719a6a72ebbdfd2900f9c1f5971bafa7f17414b487a9e97769f2fcef28c",
+        "useCaseId": "choose-learning-support",
+        "artifact": {
+          "path": "apps/compare-learning-support-plans/3/app.app.json",
+          "bytes": 89040,
+          "sha256": "8e00aa54134395ea75830185952a441c276b941418f5e5d62e5ddbeed5a0860d"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-26T00:00:00.000Z",
+  "contentHash": "794db904fd38608ed758e7731dc7d7f92bb5ea6a1930627cd8868b1ba06180e9"
+}

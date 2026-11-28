@@ -1,0 +1,106 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-38c5dc635cafe36858fd7e69",
+  "version": "1.0.0",
+  "title": "Choose a learning-support plan — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case. Inputs retained outside this workbook: Sources and applicability, Separate outcome estimates, Goals and priorities: Priorities, Goals and priorities: Targets, Alternative assumptions, Progress measures.",
+  "target": {
+    "type": "workflow",
+    "id": "choose-learning-support-plan",
+    "version": "1.1.0",
+    "packageHash": "6a36c3646b905af84f6adc708977db9ddf8301ae4950b8a4ff7b4aa940edd02a",
+    "definitionHash": "59c57229aad2f35fead3c159b4b3062a747fcb73c49441c7ffee633d22d33277"
+  },
+  "managedPaths": [
+    "/support/scope"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "Compare the next six-week support block for a fictional eight-year-old whose dyslexia and ADHD have already been professionally assessed. A positive classroom report can coexist with persistent decoding difficulty; renewing support on one overall success judgment could leave another need insufficiently addressed. Every response range is an authored assumption, not a validated prediction or a confidence interval. The classroom package is support for attention-related difficulties, not a complete clinical ADHD treatment. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "All response assumptions refer to the fictional six-week support horizon. Reading uses additional correct items on a declared 20-item probe; participation uses percentage-point change under a declared observation protocol; additional burden is minutes per week. No monetary conversion or probability is inferred. Null response bounds remain unknown. Sources, applicability, goals and priorities require qualified human judgment."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Scope and assessed needs",
+          "instructions": "Editable inputs. The exact child, already assessed needs and comparison horizon. In the fictional case, professionals have assessed dyslexia and ADHD. The calculation does not diagnose either condition. Improvement in one outcome must not erase a remaining need."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Scope and assessed needs",
+      "kind": "record",
+      "role": "support-coordinator",
+      "meaning": "The exact child, already assessed needs and comparison horizon. In the fictional case, professionals have assessed dyslexia and ADHD. The calculation does not diagnose either condition. Improvement in one outcome must not erase a remaining need.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "support-scope",
+          "label": "Scope",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/support/scope"
+        }
+      ],
+      "key": []
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "e55d8fd0686c93a48d5df1e5f047217de079e09ddace3336dda86ae79ed3f686"
+}

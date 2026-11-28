@@ -1,0 +1,2441 @@
+{
+  "format": "evidence-review/1",
+  "module": {
+    "id": "reading-attention-evidence",
+    "version": "1.0.0",
+    "title": "Understand reading and attention findings",
+    "description": "Review a bounded fictional record before turning poor grades into an either-or explanation. Separate what has been professionally recorded from what remains unassessed.",
+    "question": "What do the current assessment records establish about this child’s reading and attention difficulties, and what still needs assessment?",
+    "boundary": "A fictional record-review example, not a diagnostic instrument. The finite catalogue describes possible professionally recorded reading and attention assessment conclusions, including coexistence and uncharacterized concerns. It is not an exhaustive catalogue of causes of poor grades. Only explicitly accepted, current records for the declared child, assessment episode and context constrain those possibilities. Logical agreement does not authenticate a record, establish clinical validity, attribute the cause of grades, prescribe support or estimate diagnostic probabilities.",
+    "parameters": [],
+    "relations": [
+      {
+        "id": "expectedScope",
+        "source": "basis",
+        "columns": [
+          {
+            "id": "field",
+            "type": "string"
+          },
+          {
+            "id": "value",
+            "type": "string"
+          }
+        ],
+        "key": [
+          "field"
+        ]
+      },
+      {
+        "id": "possibility",
+        "source": "basis",
+        "columns": [
+          {
+            "id": "id",
+            "type": "string"
+          },
+          {
+            "id": "label",
+            "type": "string"
+          },
+          {
+            "id": "reading",
+            "type": "string"
+          },
+          {
+            "id": "attention",
+            "type": "string"
+          }
+        ],
+        "key": [
+          "id"
+        ]
+      },
+      {
+        "id": "assessmentDomain",
+        "source": "basis",
+        "columns": [
+          {
+            "id": "id",
+            "type": "string"
+          },
+          {
+            "id": "label",
+            "type": "string"
+          }
+        ],
+        "key": [
+          "id"
+        ]
+      },
+      {
+        "id": "concern",
+        "source": "evidence",
+        "columns": [
+          {
+            "id": "id",
+            "type": "string"
+          },
+          {
+            "id": "domain",
+            "type": "string"
+          },
+          {
+            "id": "description",
+            "type": "string"
+          },
+          {
+            "id": "source",
+            "type": "string"
+          },
+          {
+            "id": "observedDay",
+            "type": "integer"
+          }
+        ],
+        "key": [
+          "id"
+        ]
+      },
+      {
+        "id": "finding",
+        "source": "evidence",
+        "columns": [
+          {
+            "id": "id",
+            "type": "string"
+          },
+          {
+            "id": "domain",
+            "type": "string",
+            "references": {
+              "relation": "assessmentDomain",
+              "column": "id"
+            }
+          },
+          {
+            "id": "status",
+            "type": "string"
+          },
+          {
+            "id": "professional",
+            "type": "string"
+          },
+          {
+            "id": "source",
+            "type": "string"
+          },
+          {
+            "id": "observedDay",
+            "type": "integer"
+          },
+          {
+            "id": "currentStatus",
+            "type": "string"
+          },
+          {
+            "id": "accepted",
+            "type": "boolean"
+          }
+        ],
+        "key": [
+          "id"
+        ]
+      },
+      {
+        "id": "recordScope",
+        "source": "evidence",
+        "columns": [
+          {
+            "id": "record",
+            "type": "string",
+            "references": {
+              "relation": "finding",
+              "column": "id"
+            }
+          },
+          {
+            "id": "field",
+            "type": "string"
+          },
+          {
+            "id": "value",
+            "type": "string"
+          }
+        ],
+        "key": [
+          "record",
+          "field"
+        ]
+      },
+      {
+        "id": "candidate",
+        "source": "assignment",
+        "columns": [
+          {
+            "id": "id",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "id": "wrongScope",
+        "source": "derived",
+        "columns": [
+          {
+            "id": "record",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "id": "usableFinding",
+        "source": "derived",
+        "columns": [
+          {
+            "id": "record",
+            "type": "string"
+          },
+          {
+            "id": "domain",
+            "type": "string"
+          },
+          {
+            "id": "status",
+            "type": "string"
+          },
+          {
+            "id": "professional",
+            "type": "string"
+          },
+          {
+            "id": "source",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "id": "selectedProfile",
+        "source": "derived",
+        "columns": [
+          {
+            "id": "id",
+            "type": "string"
+          },
+          {
+            "id": "label",
+            "type": "string"
+          },
+          {
+            "id": "reading",
+            "type": "string"
+          },
+          {
+            "id": "attention",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "id": "conclusion",
+        "source": "derived",
+        "columns": [
+          {
+            "id": "domain",
+            "type": "string"
+          },
+          {
+            "id": "status",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "id": "supportedConclusion",
+        "source": "derived",
+        "columns": [
+          {
+            "id": "domain",
+            "type": "string"
+          },
+          {
+            "id": "label",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "id": "assessmentBoundary",
+        "source": "derived",
+        "columns": [
+          {
+            "id": "id",
+            "type": "string"
+          },
+          {
+            "id": "question",
+            "type": "string"
+          },
+          {
+            "id": "status",
+            "type": "string"
+          },
+          {
+            "id": "explanation",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "id": "recordDisposition",
+        "source": "derived",
+        "columns": [
+          {
+            "id": "record",
+            "type": "string"
+          },
+          {
+            "id": "domain",
+            "type": "string"
+          },
+          {
+            "id": "status",
+            "type": "string"
+          },
+          {
+            "id": "currentStatus",
+            "type": "string"
+          },
+          {
+            "id": "disposition",
+            "type": "string"
+          },
+          {
+            "id": "reason",
+            "type": "string"
+          },
+          {
+            "id": "source",
+            "type": "string"
+          },
+          {
+            "id": "professional",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "generation": [
+      {
+        "id": "recorded-conclusion-combinations",
+        "relation": "candidate",
+        "from": {
+          "relation": "possibility",
+          "column": "id"
+        },
+        "min": 1,
+        "max": 1,
+        "label": "One bounded possibility about professionally recorded conclusions"
+      }
+    ],
+    "rules": [
+      {
+        "id": "SCOPE.MISSING.OR.DIFFERENT",
+        "label": "A finding must match every declared child, episode and context field",
+        "head": {
+          "relation": "wrongScope",
+          "args": [
+            "?record"
+          ]
+        },
+        "body": [
+          {
+            "relation": "finding",
+            "args": [
+              "?record",
+              "?domain",
+              "?status",
+              "?professional",
+              "?source",
+              "?observed",
+              "?current",
+              "?accepted"
+            ]
+          },
+          {
+            "relation": "expectedScope",
+            "args": [
+              "?field",
+              "?expected"
+            ]
+          },
+          {
+            "op": "notExists",
+            "atom": {
+              "relation": "recordScope",
+              "args": [
+                "?record",
+                "?field",
+                "?expected"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "FINDING.USABLE",
+        "label": "Only an explicitly accepted, current, in-scope professional record is used",
+        "head": {
+          "relation": "usableFinding",
+          "args": [
+            "?record",
+            "?domain",
+            "?status",
+            "?professional",
+            "?source"
+          ]
+        },
+        "body": [
+          {
+            "relation": "finding",
+            "args": [
+              "?record",
+              "?domain",
+              "?status",
+              "?professional",
+              "?source",
+              "?observed",
+              "current",
+              true
+            ]
+          },
+          {
+            "not": {
+              "relation": "wrongScope",
+              "args": [
+                "?record"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "PROFILE.SELECTED",
+        "label": "Interpret one declared combination of professionally recorded conclusions",
+        "head": {
+          "relation": "selectedProfile",
+          "args": [
+            "?profile",
+            "?label",
+            "?reading",
+            "?attention"
+          ]
+        },
+        "body": [
+          {
+            "relation": "candidate",
+            "args": [
+              "?profile"
+            ]
+          },
+          {
+            "relation": "possibility",
+            "args": [
+              "?profile",
+              "?label",
+              "?reading",
+              "?attention"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "READING.CONCLUSION",
+        "label": "The selected interpretation supplies its reading conclusion",
+        "head": {
+          "relation": "conclusion",
+          "args": [
+            "reading-condition",
+            "?reading"
+          ]
+        },
+        "body": [
+          {
+            "relation": "selectedProfile",
+            "args": [
+              "?profile",
+              "?label",
+              "?reading",
+              "?attention"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ATTENTION.CONCLUSION",
+        "label": "The selected interpretation supplies its attention conclusion",
+        "head": {
+          "relation": "conclusion",
+          "args": [
+            "attention-condition",
+            "?attention"
+          ]
+        },
+        "body": [
+          {
+            "relation": "selectedProfile",
+            "args": [
+              "?profile",
+              "?label",
+              "?reading",
+              "?attention"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUPPORTED.CONCLUSION",
+        "label": "A supported conclusion remains a recorded assessment finding, not a cause attribution",
+        "head": {
+          "relation": "supportedConclusion",
+          "args": [
+            "?domain",
+            "?domainLabel"
+          ]
+        },
+        "body": [
+          {
+            "relation": "conclusion",
+            "args": [
+              "?domain",
+              "supported"
+            ]
+          },
+          {
+            "relation": "assessmentDomain",
+            "args": [
+              "?domain",
+              "?domainLabel"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "BOUNDARY.CAUSE",
+        "label": "A reconciled professional conclusion does not explain the cause of grades",
+        "head": {
+          "relation": "assessmentBoundary",
+          "args": [
+            "cause-of-grades",
+            "What explains the poor grades?",
+            "not-assessed",
+            "This review reconciles recorded conclusions; it does not establish whether either condition caused the grades or is their only explanation."
+          ]
+        },
+        "body": [
+          {
+            "relation": "selectedProfile",
+            "args": [
+              "?profile",
+              "?label",
+              "?reading",
+              "?attention"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "BOUNDARY.OTHER.EXPLANATIONS",
+        "label": "Other explanations stay outside this finite review regardless of the supported conclusions",
+        "head": {
+          "relation": "assessmentBoundary",
+          "args": [
+            "other-explanations",
+            "Have other explanations been assessed or excluded?",
+            "not-assessed",
+            "Other or uncharacterized explanations remain unassessed by this model even when one or both professional conclusions are supported. The catalogue is deliberately nonexhaustive."
+          ]
+        },
+        "body": [
+          {
+            "relation": "selectedProfile",
+            "args": [
+              "?profile",
+              "?label",
+              "?reading",
+              "?attention"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "DISPOSITION.WRONG.SCOPE",
+        "label": "An out-of-scope record does not constrain this case",
+        "head": {
+          "relation": "recordDisposition",
+          "args": [
+            "?record",
+            "?domain",
+            "?status",
+            "?current",
+            "excluded",
+            "The record does not match the declared child, assessment episode or context.",
+            "?source",
+            "?professional"
+          ]
+        },
+        "body": [
+          {
+            "relation": "finding",
+            "args": [
+              "?record",
+              "?domain",
+              "?status",
+              "?professional",
+              "?source",
+              "?observed",
+              "?current",
+              "?accepted"
+            ]
+          },
+          {
+            "relation": "wrongScope",
+            "args": [
+              "?record"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "DISPOSITION.STALE",
+        "label": "A record marked stale is retained but does not constrain the current conclusions",
+        "head": {
+          "relation": "recordDisposition",
+          "args": [
+            "?record",
+            "?domain",
+            "?status",
+            "stale",
+            "excluded",
+            "A human record-applicability judgment marks this record stale; no medical expiry rule is inferred.",
+            "?source",
+            "?professional"
+          ]
+        },
+        "body": [
+          {
+            "relation": "finding",
+            "args": [
+              "?record",
+              "?domain",
+              "?status",
+              "?professional",
+              "?source",
+              "?observed",
+              "stale",
+              "?accepted"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "DISPOSITION.CURRENCY.UNKNOWN",
+        "label": "Unknown record currency remains an unresolved applicability question",
+        "head": {
+          "relation": "recordDisposition",
+          "args": [
+            "?record",
+            "?domain",
+            "?status",
+            "unknown",
+            "excluded",
+            "Whether this record is current has not been established.",
+            "?source",
+            "?professional"
+          ]
+        },
+        "body": [
+          {
+            "relation": "finding",
+            "args": [
+              "?record",
+              "?domain",
+              "?status",
+              "?professional",
+              "?source",
+              "?observed",
+              "unknown",
+              "?accepted"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "DISPOSITION.NOT.ACCEPTED",
+        "label": "An unaccepted interpretation cannot constrain the record comparison",
+        "head": {
+          "relation": "recordDisposition",
+          "args": [
+            "?record",
+            "?domain",
+            "?status",
+            "?current",
+            "excluded",
+            "The interpretation has not been explicitly accepted for this bounded comparison.",
+            "?source",
+            "?professional"
+          ]
+        },
+        "body": [
+          {
+            "relation": "finding",
+            "args": [
+              "?record",
+              "?domain",
+              "?status",
+              "?professional",
+              "?source",
+              "?observed",
+              "?current",
+              false
+            ]
+          }
+        ]
+      },
+      {
+        "id": "DISPOSITION.USED.supported",
+        "label": "Use the recorded conclusion only in its own assessment domain",
+        "head": {
+          "relation": "recordDisposition",
+          "args": [
+            "?record",
+            "?domain",
+            "supported",
+            "current",
+            "used",
+            "Accepted current in-scope professional record constrains only its own assessment domain.",
+            "?source",
+            "?professional"
+          ]
+        },
+        "body": [
+          {
+            "relation": "usableFinding",
+            "args": [
+              "?record",
+              "?domain",
+              "supported",
+              "?professional",
+              "?source"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "DISPOSITION.USED.not-supported",
+        "label": "Use the recorded conclusion only in its own assessment domain",
+        "head": {
+          "relation": "recordDisposition",
+          "args": [
+            "?record",
+            "?domain",
+            "not-supported",
+            "current",
+            "used",
+            "Accepted current in-scope professional record constrains only its own assessment domain.",
+            "?source",
+            "?professional"
+          ]
+        },
+        "body": [
+          {
+            "relation": "usableFinding",
+            "args": [
+              "?record",
+              "?domain",
+              "not-supported",
+              "?professional",
+              "?source"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "DISPOSITION.OPEN.not-assessed",
+        "label": "An unassessed or unknown conclusion is not a negative finding",
+        "head": {
+          "relation": "recordDisposition",
+          "args": [
+            "?record",
+            "?domain",
+            "not-assessed",
+            "current",
+            "context-only",
+            "The record leaves this domain unassessed or unknown; it excludes no possibility.",
+            "?source",
+            "?professional"
+          ]
+        },
+        "body": [
+          {
+            "relation": "usableFinding",
+            "args": [
+              "?record",
+              "?domain",
+              "not-assessed",
+              "?professional",
+              "?source"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "DISPOSITION.OPEN.unknown",
+        "label": "An unassessed or unknown conclusion is not a negative finding",
+        "head": {
+          "relation": "recordDisposition",
+          "args": [
+            "?record",
+            "?domain",
+            "unknown",
+            "current",
+            "context-only",
+            "The record leaves this domain unassessed or unknown; it excludes no possibility.",
+            "?source",
+            "?professional"
+          ]
+        },
+        "body": [
+          {
+            "relation": "usableFinding",
+            "args": [
+              "?record",
+              "?domain",
+              "unknown",
+              "?professional",
+              "?source"
+            ]
+          }
+        ]
+      }
+    ],
+    "constraints": [
+      {
+        "id": "reading-condition.supported",
+        "label": "An accepted reading-condition record stating supported must agree with that domain in the interpretation",
+        "when": [
+          {
+            "relation": "usableFinding",
+            "args": [
+              "?record",
+              "reading-condition",
+              "supported",
+              "?professional",
+              "?source"
+            ]
+          },
+          {
+            "relation": "conclusion",
+            "args": [
+              "reading-condition",
+              "?conclusion"
+            ]
+          }
+        ],
+        "assert": {
+          "op": "eq",
+          "args": [
+            "?conclusion",
+            "supported"
+          ]
+        }
+      },
+      {
+        "id": "reading-condition.not-supported",
+        "label": "An accepted reading-condition record stating not-supported must agree with that domain in the interpretation",
+        "when": [
+          {
+            "relation": "usableFinding",
+            "args": [
+              "?record",
+              "reading-condition",
+              "not-supported",
+              "?professional",
+              "?source"
+            ]
+          },
+          {
+            "relation": "conclusion",
+            "args": [
+              "reading-condition",
+              "?conclusion"
+            ]
+          }
+        ],
+        "assert": {
+          "op": "eq",
+          "args": [
+            "?conclusion",
+            "not-supported"
+          ]
+        }
+      },
+      {
+        "id": "attention-condition.supported",
+        "label": "An accepted attention-condition record stating supported must agree with that domain in the interpretation",
+        "when": [
+          {
+            "relation": "usableFinding",
+            "args": [
+              "?record",
+              "attention-condition",
+              "supported",
+              "?professional",
+              "?source"
+            ]
+          },
+          {
+            "relation": "conclusion",
+            "args": [
+              "attention-condition",
+              "?conclusion"
+            ]
+          }
+        ],
+        "assert": {
+          "op": "eq",
+          "args": [
+            "?conclusion",
+            "supported"
+          ]
+        }
+      },
+      {
+        "id": "attention-condition.not-supported",
+        "label": "An accepted attention-condition record stating not-supported must agree with that domain in the interpretation",
+        "when": [
+          {
+            "relation": "usableFinding",
+            "args": [
+              "?record",
+              "attention-condition",
+              "not-supported",
+              "?professional",
+              "?source"
+            ]
+          },
+          {
+            "relation": "conclusion",
+            "args": [
+              "attention-condition",
+              "?conclusion"
+            ]
+          }
+        ],
+        "assert": {
+          "op": "eq",
+          "args": [
+            "?conclusion",
+            "not-supported"
+          ]
+        }
+      }
+    ],
+    "admission": [
+      {
+        "id": "PROFILE.COUNT",
+        "label": "The authored catalogue contains exactly five bounded possibilities",
+        "when": [
+          {
+            "count": {
+              "relation": "possibility",
+              "args": [
+                "?profile",
+                "?label",
+                "?reading",
+                "?attention"
+              ]
+            },
+            "as": "?count"
+          }
+        ],
+        "assert": {
+          "op": "eq",
+          "args": [
+            "?count",
+            5
+          ]
+        }
+      },
+      {
+        "id": "PROFILE.reading-supported",
+        "label": "The authored possibility catalogue cannot be silently changed by case data",
+        "when": [],
+        "assert": {
+          "op": "exists",
+          "atom": {
+            "relation": "possibility",
+            "args": [
+              "reading-supported",
+              "Reading conclusion supported; attention conclusion not supported",
+              "supported",
+              "not-supported"
+            ]
+          }
+        }
+      },
+      {
+        "id": "PROFILE.attention-supported",
+        "label": "The authored possibility catalogue cannot be silently changed by case data",
+        "when": [],
+        "assert": {
+          "op": "exists",
+          "atom": {
+            "relation": "possibility",
+            "args": [
+              "attention-supported",
+              "Attention conclusion supported; reading conclusion not supported",
+              "not-supported",
+              "supported"
+            ]
+          }
+        }
+      },
+      {
+        "id": "PROFILE.coexisting-findings",
+        "label": "The authored possibility catalogue cannot be silently changed by case data",
+        "when": [],
+        "assert": {
+          "op": "exists",
+          "atom": {
+            "relation": "possibility",
+            "args": [
+              "coexisting-findings",
+              "Reading and attention conclusions both supported",
+              "supported",
+              "supported"
+            ]
+          }
+        }
+      },
+      {
+        "id": "PROFILE.neither-supported",
+        "label": "The authored possibility catalogue cannot be silently changed by case data",
+        "when": [],
+        "assert": {
+          "op": "exists",
+          "atom": {
+            "relation": "possibility",
+            "args": [
+              "neither-supported",
+              "Neither conclusion supported in the two reviewed domains; other explanations remain open",
+              "not-supported",
+              "not-supported"
+            ]
+          }
+        }
+      },
+      {
+        "id": "PROFILE.uncharacterized",
+        "label": "The authored possibility catalogue cannot be silently changed by case data",
+        "when": [],
+        "assert": {
+          "op": "exists",
+          "atom": {
+            "relation": "possibility",
+            "args": [
+              "uncharacterized",
+              "Reading and attention concerns remain uncharacterized in this bounded catalogue",
+              "uncharacterized",
+              "uncharacterized"
+            ]
+          }
+        }
+      },
+      {
+        "id": "DOMAIN.COUNT",
+        "label": "Exactly the two authored assessment domains are reviewed",
+        "when": [
+          {
+            "count": {
+              "relation": "assessmentDomain",
+              "args": [
+                "?domain",
+                "?domainLabel"
+              ]
+            },
+            "as": "?count"
+          }
+        ],
+        "assert": {
+          "op": "eq",
+          "args": [
+            "?count",
+            2
+          ]
+        }
+      },
+      {
+        "id": "DOMAIN.reading-condition",
+        "label": "Assessment domain identity and meaning stay fixed",
+        "when": [],
+        "assert": {
+          "op": "exists",
+          "atom": {
+            "relation": "assessmentDomain",
+            "args": [
+              "reading-condition",
+              "Professionally recorded dyslexia assessment conclusion"
+            ]
+          }
+        }
+      },
+      {
+        "id": "DOMAIN.attention-condition",
+        "label": "Assessment domain identity and meaning stay fixed",
+        "when": [],
+        "assert": {
+          "op": "exists",
+          "atom": {
+            "relation": "assessmentDomain",
+            "args": [
+              "attention-condition",
+              "Professionally recorded ADHD assessment conclusion"
+            ]
+          }
+        }
+      },
+      {
+        "id": "SCOPE.COUNT",
+        "label": "Declare the exact child, assessment episode and context",
+        "when": [
+          {
+            "count": {
+              "relation": "expectedScope",
+              "args": [
+                "?field",
+                "?value"
+              ]
+            },
+            "as": "?count"
+          }
+        ],
+        "assert": {
+          "op": "eq",
+          "args": [
+            "?count",
+            3
+          ]
+        }
+      },
+      {
+        "id": "SCOPE.childId",
+        "label": "Every authored scope dimension needs an explicit value",
+        "when": [],
+        "assert": {
+          "op": "exists",
+          "atom": {
+            "relation": "expectedScope",
+            "args": [
+              "childId",
+              "?value"
+            ]
+          }
+        }
+      },
+      {
+        "id": "SCOPE.assessmentEpisode",
+        "label": "Every authored scope dimension needs an explicit value",
+        "when": [],
+        "assert": {
+          "op": "exists",
+          "atom": {
+            "relation": "expectedScope",
+            "args": [
+              "assessmentEpisode",
+              "?value"
+            ]
+          }
+        }
+      },
+      {
+        "id": "SCOPE.context",
+        "label": "Every authored scope dimension needs an explicit value",
+        "when": [],
+        "assert": {
+          "op": "exists",
+          "atom": {
+            "relation": "expectedScope",
+            "args": [
+              "context",
+              "?value"
+            ]
+          }
+        }
+      },
+      {
+        "id": "SCOPE.VALUE.NONEMPTY",
+        "label": "An empty scope value cannot identify a child, assessment episode or context",
+        "when": [
+          {
+            "relation": "expectedScope",
+            "args": [
+              "?field",
+              "?value"
+            ]
+          }
+        ],
+        "assert": {
+          "op": "ne",
+          "args": [
+            "?value",
+            ""
+          ]
+        }
+      },
+      {
+        "id": "STATUS.KNOWN",
+        "label": "A finding status must be supported, not-supported, not-assessed or unknown",
+        "when": [
+          {
+            "relation": "finding",
+            "args": [
+              "?record",
+              "?domain",
+              "?status",
+              "?professional",
+              "?source",
+              "?observed",
+              "?current",
+              "?accepted"
+            ]
+          },
+          {
+            "op": "ne",
+            "args": [
+              "?status",
+              "supported"
+            ]
+          },
+          {
+            "op": "ne",
+            "args": [
+              "?status",
+              "not-supported"
+            ]
+          },
+          {
+            "op": "ne",
+            "args": [
+              "?status",
+              "not-assessed"
+            ]
+          },
+          {
+            "op": "ne",
+            "args": [
+              "?status",
+              "unknown"
+            ]
+          }
+        ],
+        "assert": {
+          "op": "eq",
+          "args": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "id": "CURRENCY.KNOWN",
+        "label": "Record currency must be current, stale or unknown",
+        "when": [
+          {
+            "relation": "finding",
+            "args": [
+              "?record",
+              "?domain",
+              "?status",
+              "?professional",
+              "?source",
+              "?observed",
+              "?current",
+              "?accepted"
+            ]
+          },
+          {
+            "op": "ne",
+            "args": [
+              "?current",
+              "current"
+            ]
+          },
+          {
+            "op": "ne",
+            "args": [
+              "?current",
+              "stale"
+            ]
+          },
+          {
+            "op": "ne",
+            "args": [
+              "?current",
+              "unknown"
+            ]
+          }
+        ],
+        "assert": {
+          "op": "eq",
+          "args": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "id": "PROFESSIONAL.NAMED",
+        "label": "A submitted finding needs a named professional source; the runtime does not authenticate it",
+        "when": [
+          {
+            "relation": "finding",
+            "args": [
+              "?record",
+              "?domain",
+              "?status",
+              "?professional",
+              "?source",
+              "?observed",
+              "?current",
+              "?accepted"
+            ]
+          }
+        ],
+        "assert": {
+          "op": "ne",
+          "args": [
+            "?professional",
+            ""
+          ]
+        }
+      },
+      {
+        "id": "SOURCE.NAMED",
+        "label": "A submitted finding needs a source reference",
+        "when": [
+          {
+            "relation": "finding",
+            "args": [
+              "?record",
+              "?domain",
+              "?status",
+              "?professional",
+              "?source",
+              "?observed",
+              "?current",
+              "?accepted"
+            ]
+          }
+        ],
+        "assert": {
+          "op": "ne",
+          "args": [
+            "?source",
+            ""
+          ]
+        }
+      },
+      {
+        "id": "OBSERVATION.DAY",
+        "label": "Observation day is a nonnegative fictional provenance value, not an automatic clinical-validity rule",
+        "when": [
+          {
+            "relation": "finding",
+            "args": [
+              "?record",
+              "?domain",
+              "?status",
+              "?professional",
+              "?source",
+              "?observed",
+              "?current",
+              "?accepted"
+            ]
+          }
+        ],
+        "assert": {
+          "op": "gte",
+          "args": [
+            "?observed",
+            0
+          ]
+        }
+      },
+      {
+        "id": "RECORD.ID.UNIQUE",
+        "label": "A concern and a professional finding cannot reuse the same record ID",
+        "when": [
+          {
+            "relation": "concern",
+            "args": [
+              "?record",
+              "?domain",
+              "?description",
+              "?source",
+              "?observed"
+            ]
+          },
+          {
+            "relation": "finding",
+            "args": [
+              "?record",
+              "?findingDomain",
+              "?findingStatus",
+              "?findingProfessional",
+              "?findingSource",
+              "?findingObserved",
+              "?findingCurrent",
+              "?findingAccepted"
+            ]
+          }
+        ],
+        "assert": {
+          "op": "eq",
+          "args": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "id": "SCOPE.RECORD.KNOWN",
+        "label": "A scope row must refer to a submitted professional finding",
+        "when": [
+          {
+            "relation": "recordScope",
+            "args": [
+              "?record",
+              "?field",
+              "?value"
+            ]
+          }
+        ],
+        "assert": {
+          "op": "exists",
+          "atom": {
+            "relation": "finding",
+            "args": [
+              "?record",
+              "?domain",
+              "?status",
+              "?professional",
+              "?source",
+              "?observed",
+              "?current",
+              "?accepted"
+            ]
+          }
+        }
+      }
+    ],
+    "queries": [
+      {
+        "id": "reading-finding",
+        "label": "What do the reading assessment records establish?",
+        "kind": "value",
+        "body": [
+          {
+            "relation": "conclusion",
+            "args": [
+              "reading-condition",
+              "?conclusion"
+            ]
+          }
+        ],
+        "select": [
+          "?conclusion"
+        ],
+        "boundary": "The answer describes consistency of accepted professional records within the fixed catalogue. It is not a newly generated diagnosis or cause attribution."
+      },
+      {
+        "id": "attention-finding",
+        "label": "What do the attention assessment records establish?",
+        "kind": "value",
+        "body": [
+          {
+            "relation": "conclusion",
+            "args": [
+              "attention-condition",
+              "?conclusion"
+            ]
+          }
+        ],
+        "select": [
+          "?conclusion"
+        ],
+        "boundary": "The answer describes consistency of accepted professional records within the fixed catalogue. It is not a newly generated diagnosis or cause attribution."
+      },
+      {
+        "id": "supported-findings",
+        "label": "Which professional assessment findings are supported by the records?",
+        "kind": "set",
+        "body": [
+          {
+            "relation": "supportedConclusion",
+            "args": [
+              "?domain",
+              "?label"
+            ]
+          }
+        ],
+        "select": [
+          "?domain"
+        ],
+        "boundary": "A fictional record-review example, not a diagnostic instrument. The finite catalogue describes possible professionally recorded reading and attention assessment conclusions, including coexistence and uncharacterized concerns. It is not an exhaustive catalogue of causes of poor grades. Only explicitly accepted, current records for the declared child, assessment episode and context constrain those possibilities. Logical agreement does not authenticate a record, establish clinical validity, attribute the cause of grades, prescribe support or estimate diagnostic probabilities."
+      }
+    ],
+    "assumptions": [
+      "All people, records, observations and assessment conclusions in this example are fictional. No scores, diagnostic thresholds or treatment-effect estimates are supplied.",
+      "A poor grade, unfinished work or a reading concern excludes no possibility. A concern is not a professional assessment conclusion.",
+      "A human explicitly determines record acceptance, currency and applicability. The runtime does not authenticate identity, credentials, record accuracy or clinical appropriateness.",
+      "Only a supported or not-supported conclusion in an accepted current in-scope professional record constrains its own assessment domain. Unknown, not-assessed, missing, stale, unaccepted and out-of-scope records cannot become negative findings.",
+      "Reading and attention conclusions may coexist. Neither supported conclusion exhausts possible explanations of school difficulties. The uncharacterized row does not make the catalogue exhaustive.",
+      "No compatible interpretation means these submitted records and fixed rules cannot be reconciled. It does not establish that the child has no difficulty or has no diagnosis.",
+      "No probability, causal attribution, diagnostic validity, clinical prescription or support-plan benefit is inferred from interpretation counts or logical agreement."
+    ],
+    "reports": {
+      "tables": [
+        {
+          "id": "compatible-profile",
+          "label": "This compatible combination of recorded conclusions",
+          "relation": "selectedProfile",
+          "columns": [
+            "id",
+            "label",
+            "reading",
+            "attention"
+          ]
+        },
+        {
+          "id": "record-disposition",
+          "label": "How each submitted professional record was used",
+          "relation": "recordDisposition",
+          "columns": [
+            "record",
+            "domain",
+            "status",
+            "currentStatus",
+            "disposition",
+            "reason",
+            "source",
+            "professional"
+          ]
+        },
+        {
+          "id": "presenting-concerns",
+          "label": "Presenting concerns that do not establish a diagnosis",
+          "relation": "concern",
+          "columns": [
+            "id",
+            "domain",
+            "description",
+            "source",
+            "observedDay"
+          ]
+        },
+        {
+          "id": "professional-findings",
+          "label": "Submitted professional assessment records",
+          "relation": "finding",
+          "columns": [
+            "id",
+            "domain",
+            "status",
+            "professional",
+            "source",
+            "observedDay",
+            "currentStatus",
+            "accepted"
+          ]
+        },
+        {
+          "id": "record-scope",
+          "label": "Child, assessment episode and context recorded for each finding",
+          "relation": "recordScope",
+          "columns": [
+            "record",
+            "field",
+            "value"
+          ]
+        },
+        {
+          "id": "catalogue-boundary",
+          "label": "The fixed and deliberately incomplete possibility catalogue",
+          "relation": "possibility",
+          "columns": [
+            "id",
+            "label",
+            "reading",
+            "attention"
+          ]
+        },
+        {
+          "id": "assessment-boundaries",
+          "label": "Questions this review does not assess",
+          "relation": "assessmentBoundary",
+          "columns": [
+            "question",
+            "status",
+            "explanation"
+          ]
+        }
+      ]
+    },
+    "metadata": {
+      "catalog": {
+        "domain": {
+          "id": "learning-support",
+          "label": "Learning support"
+        },
+        "useCase": {
+          "id": "understand-reading-attention",
+          "label": "Understand reading and attention concerns"
+        }
+      },
+      "caseStart": {
+        "starterMeaning": "example",
+        "supportsOwnData": false,
+        "scope": "A fictional record-review example, not a diagnostic instrument. The finite catalogue describes possible professionally recorded reading and attention assessment conclusions, including coexistence and uncharacterized concerns. It is not an exhaustive catalogue of causes of poor grades. Only explicitly accepted, current records for the declared child, assessment episode and context constrain those possibilities. Logical agreement does not authenticate a record, establish clinical validity, attribute the cause of grades, prescribe support or estimate diagnostic probabilities."
+      },
+      "decisionPresentation": {
+        "format": "decision-presentation/1",
+        "title": "Understand the assessment record",
+        "question": "What do the current assessment records establish about this child’s reading and attention difficulties, and what still needs assessment?",
+        "sections": [
+          {
+            "id": "options",
+            "label": "Options",
+            "question": "Which professionally recorded conclusions remain supported or unresolved?"
+          },
+          {
+            "id": "next-actions",
+            "label": "Next actions",
+            "question": "Which record or assessment question needs attention next?"
+          },
+          {
+            "id": "assumptions",
+            "label": "Assumptions",
+            "question": "Which scope, acceptance and catalogue assumptions govern this record comparison?"
+          },
+          {
+            "id": "questions",
+            "label": "Questions",
+            "question": "What remains unassessed or outside this bounded record review?"
+          }
+        ]
+      },
+      "supportingReports": {
+        "format": "supporting-reports/1",
+        "reports": [
+          {
+            "id": "professional-conclusions",
+            "label": "Recorded conclusions",
+            "question": "What do the accepted current records establish, and what remains unresolved?",
+            "template": "records/1",
+            "source": {
+              "kind": "report-dataset",
+              "datasetId": "findings:recorded-assessment"
+            },
+            "bindings": {
+              "columns": [
+                {
+                  "key": "label",
+                  "label": "Assessment question"
+                },
+                {
+                  "key": "statusLabel",
+                  "label": "Finding"
+                },
+                {
+                  "key": "answerText",
+                  "label": "Recorded conclusion"
+                },
+                {
+                  "key": "businessExplanation",
+                  "label": "Meaning and limits"
+                }
+              ]
+            }
+          },
+          {
+            "id": "professional-records",
+            "label": "Professional records",
+            "question": "Which professional findings were submitted, and how was applicability recorded?",
+            "template": "records/1",
+            "source": {
+              "kind": "report-dataset",
+              "datasetId": "inputs:evidence:finding"
+            },
+            "bindings": {
+              "columns": [
+                {
+                  "key": "id",
+                  "label": "Record"
+                },
+                {
+                  "key": "domain",
+                  "label": "Assessment domain"
+                },
+                {
+                  "key": "status",
+                  "label": "Recorded conclusion"
+                },
+                {
+                  "key": "professional",
+                  "label": "Professional"
+                },
+                {
+                  "key": "source",
+                  "label": "Source"
+                },
+                {
+                  "key": "observedDay",
+                  "label": "Recorded day"
+                },
+                {
+                  "key": "currentStatus",
+                  "label": "Currency judgment"
+                },
+                {
+                  "key": "accepted",
+                  "label": "Accepted for this review"
+                }
+              ]
+            }
+          },
+          {
+            "id": "presenting-concerns",
+            "label": "Presenting concerns",
+            "question": "Which concerns prompted assessment without establishing a condition?",
+            "template": "records/1",
+            "source": {
+              "kind": "report-dataset",
+              "datasetId": "inputs:evidence:concern"
+            },
+            "bindings": {
+              "columns": [
+                {
+                  "key": "id",
+                  "label": "Observation"
+                },
+                {
+                  "key": "domain",
+                  "label": "Area of concern"
+                },
+                {
+                  "key": "description",
+                  "label": "Concern"
+                },
+                {
+                  "key": "source",
+                  "label": "Source"
+                },
+                {
+                  "key": "observedDay",
+                  "label": "Observed day"
+                }
+              ]
+            }
+          },
+          {
+            "id": "professional-record-scope",
+            "label": "Record scope",
+            "question": "Which child, assessment episode and context does each submitted record address?",
+            "template": "records/1",
+            "source": {
+              "kind": "report-dataset",
+              "datasetId": "inputs:evidence:recordScope"
+            },
+            "bindings": {
+              "columns": [
+                {
+                  "key": "record",
+                  "label": "Record"
+                },
+                {
+                  "key": "field",
+                  "label": "Scope field"
+                },
+                {
+                  "key": "value",
+                  "label": "Recorded scope"
+                }
+              ]
+            }
+          },
+          {
+            "id": "bounded-possibilities",
+            "label": "Compatible possibilities",
+            "question": "Which recorded-conclusion interpretations remain compatible with the submitted records?",
+            "template": "records/1",
+            "source": {
+              "kind": "report-dataset",
+              "datasetId": "explanations:matrix"
+            }
+          },
+          {
+            "id": "evaluation-coverage",
+            "label": "Calculation coverage",
+            "question": "Was every possibility in this explicitly limited catalogue checked?",
+            "template": "records/1",
+            "source": {
+              "kind": "report-dataset",
+              "datasetId": "checks:coverage"
+            },
+            "bindings": {
+              "columns": [
+                {
+                  "key": "measure",
+                  "label": "Coverage measure"
+                },
+                {
+                  "key": "value",
+                  "label": "Calculated value"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "inputDesign": {
+        "version": 1,
+        "form": {
+          "type": "object",
+          "label": "Case inputs",
+          "fields": {
+            "scope": {
+              "type": "string",
+              "label": "Scope"
+            },
+            "title": {
+              "type": "string",
+              "label": "Title"
+            },
+            "parameters": {
+              "type": "object",
+              "label": "Parameters",
+              "fields": {}
+            },
+            "basis": {
+              "type": "object",
+              "label": "Basis",
+              "fields": {
+                "expectedScope": {
+                  "type": "array",
+                  "label": "Expected Scope",
+                  "items": {
+                    "type": "object",
+                    "label": "Expected Scope record",
+                    "fields": {
+                      "field": {
+                        "type": "string",
+                        "label": "Field"
+                      },
+                      "value": {
+                        "type": "string",
+                        "label": "Value"
+                      }
+                    }
+                  },
+                  "keyFields": [
+                    "field"
+                  ]
+                },
+                "possibility": {
+                  "type": "array",
+                  "label": "Possibility",
+                  "items": {
+                    "type": "object",
+                    "label": "Possibility record",
+                    "fields": {
+                      "id": {
+                        "type": "string",
+                        "label": "Id"
+                      },
+                      "label": {
+                        "type": "string",
+                        "label": "Label"
+                      },
+                      "reading": {
+                        "type": "string",
+                        "label": "Reading"
+                      },
+                      "attention": {
+                        "type": "string",
+                        "label": "Attention"
+                      }
+                    }
+                  },
+                  "keyFields": [
+                    "id"
+                  ]
+                },
+                "assessmentDomain": {
+                  "type": "array",
+                  "label": "Assessment Domain",
+                  "items": {
+                    "type": "object",
+                    "label": "Assessment Domain record",
+                    "fields": {
+                      "id": {
+                        "type": "string",
+                        "label": "Id"
+                      },
+                      "label": {
+                        "type": "string",
+                        "label": "Label"
+                      }
+                    }
+                  },
+                  "keyFields": [
+                    "id"
+                  ]
+                }
+              }
+            },
+            "evidence": {
+              "type": "object",
+              "label": "Evidence",
+              "fields": {
+                "concern": {
+                  "type": "array",
+                  "label": "Concern",
+                  "items": {
+                    "type": "object",
+                    "label": "Concern record",
+                    "fields": {
+                      "id": {
+                        "type": "string",
+                        "label": "Id"
+                      },
+                      "domain": {
+                        "type": "string",
+                        "label": "Domain"
+                      },
+                      "description": {
+                        "type": "string",
+                        "label": "Description"
+                      },
+                      "source": {
+                        "type": "string",
+                        "label": "Source"
+                      },
+                      "observedDay": {
+                        "type": "number",
+                        "label": "Observed Day",
+                        "integer": true
+                      }
+                    }
+                  },
+                  "keyFields": [
+                    "id"
+                  ]
+                },
+                "finding": {
+                  "type": "array",
+                  "label": "Finding",
+                  "items": {
+                    "type": "object",
+                    "label": "Finding record",
+                    "fields": {
+                      "id": {
+                        "type": "string",
+                        "label": "Id"
+                      },
+                      "domain": {
+                        "type": "string",
+                        "label": "Domain"
+                      },
+                      "status": {
+                        "type": "string",
+                        "label": "Status"
+                      },
+                      "professional": {
+                        "type": "string",
+                        "label": "Professional"
+                      },
+                      "source": {
+                        "type": "string",
+                        "label": "Source"
+                      },
+                      "observedDay": {
+                        "type": "number",
+                        "label": "Observed Day",
+                        "integer": true
+                      },
+                      "currentStatus": {
+                        "type": "string",
+                        "label": "Current Status"
+                      },
+                      "accepted": {
+                        "type": "boolean",
+                        "label": "Accepted"
+                      }
+                    }
+                  },
+                  "keyFields": [
+                    "id"
+                  ]
+                },
+                "recordScope": {
+                  "type": "array",
+                  "label": "Record Scope",
+                  "items": {
+                    "type": "object",
+                    "label": "Record Scope record",
+                    "fields": {
+                      "record": {
+                        "type": "string",
+                        "label": "Record"
+                      },
+                      "field": {
+                        "type": "string",
+                        "label": "Field"
+                      },
+                      "value": {
+                        "type": "string",
+                        "label": "Value"
+                      }
+                    }
+                  },
+                  "keyFields": [
+                    "record",
+                    "field"
+                  ]
+                }
+              }
+            },
+            "queryIds": {
+              "type": "array",
+              "label": "Query Ids",
+              "items": {
+                "type": "string",
+                "label": "Query Ids record",
+                "options": [
+                  "reading-finding",
+                  "attention-finding",
+                  "supported-findings"
+                ]
+              }
+            }
+          }
+        },
+        "groups": [
+          {
+            "id": "question-and-scope",
+            "label": "Question and scope",
+            "question": "Whose records should the assessment question concern?",
+            "subtabs": [
+              {
+                "id": "scope",
+                "label": "Question and limits",
+                "fieldPaths": [
+                  "/scope"
+                ]
+              },
+              {
+                "id": "episode",
+                "label": "Child and episode",
+                "fieldPaths": [
+                  "/basis/expectedScope"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "submitted-records",
+            "label": "Submitted records",
+            "question": "Which observations and professional records are actually available?",
+            "subtabs": [
+              {
+                "id": "concerns",
+                "label": "Presenting concerns",
+                "fieldPaths": [
+                  "/evidence/concern"
+                ]
+              },
+              {
+                "id": "findings",
+                "label": "Professional findings",
+                "fieldPaths": [
+                  "/evidence/finding"
+                ]
+              },
+              {
+                "id": "record-scopes",
+                "label": "Record scope",
+                "fieldPaths": [
+                  "/evidence/recordScope"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "presentation": {
+      "description": "A fictional record-review example, not a diagnostic instrument. The finite catalogue describes possible professionally recorded reading and attention assessment conclusions, including coexistence and uncharacterized concerns. It is not an exhaustive catalogue of causes of poor grades. Only explicitly accepted, current records for the declared child, assessment episode and context constrain those possibilities. Logical agreement does not authenticate a record, establish clinical validity, attribute the cause of grades, prescribe support or estimate diagnostic probabilities.",
+      "question": "What do the current assessment records establish about this child’s reading and attention difficulties, and what still needs assessment?",
+      "labels": {
+        "scenario": "Compatible recorded-conclusion profile",
+        "scenarios": "Compatible recorded-conclusion profiles",
+        "assignment": "Recorded-conclusion profile",
+        "answer": "Model-relative record finding",
+        "examples": "Compatible record interpretations"
+      },
+      "entities": [
+        {
+          "id": "assessment-domain",
+          "relation": "assessmentDomain",
+          "key": "id",
+          "label": "label"
+        },
+        {
+          "id": "profile",
+          "relation": "possibility",
+          "key": "id",
+          "label": "label"
+        }
+      ],
+      "columns": [
+        {
+          "relation": "selectedProfile",
+          "column": "id",
+          "entity": "profile",
+          "label": "Compatible recorded-conclusion profile"
+        },
+        {
+          "relation": "selectedProfile",
+          "column": "reading",
+          "values": {
+            "supported": "Supported",
+            "not-supported": "Not supported",
+            "not-assessed": "Not assessed in this submitted record",
+            "unknown": "The submitted record’s conclusion is unknown",
+            "uncharacterized": "Uncharacterized in the bounded possibility catalogue"
+          }
+        },
+        {
+          "relation": "selectedProfile",
+          "column": "attention",
+          "values": {
+            "supported": "Supported",
+            "not-supported": "Not supported",
+            "not-assessed": "Not assessed in this submitted record",
+            "unknown": "The submitted record’s conclusion is unknown",
+            "uncharacterized": "Uncharacterized in the bounded possibility catalogue"
+          }
+        },
+        {
+          "relation": "possibility",
+          "column": "reading",
+          "values": {
+            "supported": "Supported",
+            "not-supported": "Not supported",
+            "not-assessed": "Not assessed in this submitted record",
+            "unknown": "The submitted record’s conclusion is unknown",
+            "uncharacterized": "Uncharacterized in the bounded possibility catalogue"
+          }
+        },
+        {
+          "relation": "possibility",
+          "column": "attention",
+          "values": {
+            "supported": "Supported",
+            "not-supported": "Not supported",
+            "not-assessed": "Not assessed in this submitted record",
+            "unknown": "The submitted record’s conclusion is unknown",
+            "uncharacterized": "Uncharacterized in the bounded possibility catalogue"
+          }
+        },
+        {
+          "relation": "finding",
+          "column": "domain",
+          "entity": "assessment-domain"
+        },
+        {
+          "relation": "recordDisposition",
+          "column": "domain",
+          "entity": "assessment-domain"
+        },
+        {
+          "relation": "conclusion",
+          "column": "domain",
+          "entity": "assessment-domain"
+        },
+        {
+          "relation": "supportedConclusion",
+          "column": "domain",
+          "entity": "assessment-domain"
+        },
+        {
+          "relation": "finding",
+          "column": "status",
+          "values": {
+            "supported": "Supported",
+            "not-supported": "Not supported",
+            "not-assessed": "Not assessed in this submitted record",
+            "unknown": "The submitted record’s conclusion is unknown",
+            "uncharacterized": "Uncharacterized in the bounded possibility catalogue"
+          }
+        },
+        {
+          "relation": "recordDisposition",
+          "column": "status",
+          "values": {
+            "supported": "Supported",
+            "not-supported": "Not supported",
+            "not-assessed": "Not assessed in this submitted record",
+            "unknown": "The submitted record’s conclusion is unknown",
+            "uncharacterized": "Uncharacterized in the bounded possibility catalogue"
+          }
+        },
+        {
+          "relation": "conclusion",
+          "column": "status",
+          "values": {
+            "supported": "Supported",
+            "not-supported": "Not supported",
+            "not-assessed": "Not assessed in this submitted record",
+            "unknown": "The submitted record’s conclusion is unknown",
+            "uncharacterized": "Uncharacterized in the bounded possibility catalogue"
+          }
+        },
+        {
+          "relation": "assessmentBoundary",
+          "column": "status",
+          "values": {
+            "not-assessed": "Not assessed by this review"
+          }
+        }
+      ],
+      "queries": [
+        {
+          "id": "reading-finding",
+          "answers": {
+            "established": "The accepted current records agree on this bounded conclusion: {{answer}}.",
+            "underdetermined": "The submitted records leave this assessment conclusion unresolved.",
+            "inconsistent": "The accepted current records cannot be reconciled within the declared catalogue.",
+            "incomplete": "The calculation did not finish; no assessment conclusion is established.",
+            "invalid": "The submitted record or fixed catalogue is outside this example’s declared contract."
+          },
+          "explanations": {
+            "established": "Every compatible interpretation agrees. This follows from the recorded professional conclusions, not from a diagnosis performed by the app.",
+            "underdetermined": "More than one recorded-conclusion interpretation remains compatible. Missing or unknown records are not negative findings.",
+            "inconsistent": "Inspect conflicting accepted records, their scope and the fixed catalogue before drawing a conclusion. An empty set does not establish absence of a condition.",
+            "incomplete": "The bounded check was interrupted or limited. Discovered agreement is insufficient to establish an answer."
+          }
+        },
+        {
+          "id": "attention-finding",
+          "answers": {
+            "established": "The accepted current records agree on this bounded conclusion: {{answer}}.",
+            "underdetermined": "The submitted records leave this assessment conclusion unresolved.",
+            "inconsistent": "The accepted current records cannot be reconciled within the declared catalogue.",
+            "incomplete": "The calculation did not finish; no assessment conclusion is established.",
+            "invalid": "The submitted record or fixed catalogue is outside this example’s declared contract."
+          },
+          "explanations": {
+            "established": "Every compatible interpretation agrees. This follows from the recorded professional conclusions, not from a diagnosis performed by the app.",
+            "underdetermined": "More than one recorded-conclusion interpretation remains compatible. Missing or unknown records are not negative findings.",
+            "inconsistent": "Inspect conflicting accepted records, their scope and the fixed catalogue before drawing a conclusion. An empty set does not establish absence of a condition.",
+            "incomplete": "The bounded check was interrupted or limited. Discovered agreement is insufficient to establish an answer."
+          }
+        },
+        {
+          "id": "supported-findings",
+          "entity": "assessment-domain",
+          "answers": {
+            "established": "The accepted current records agree on this bounded conclusion: {{answer}}.",
+            "underdetermined": "The submitted records leave this assessment conclusion unresolved.",
+            "inconsistent": "The accepted current records cannot be reconciled within the declared catalogue.",
+            "incomplete": "The calculation did not finish; no assessment conclusion is established.",
+            "invalid": "The submitted record or fixed catalogue is outside this example’s declared contract."
+          },
+          "explanations": {
+            "established": "Every compatible interpretation agrees. This follows from the recorded professional conclusions, not from a diagnosis performed by the app.",
+            "underdetermined": "More than one recorded-conclusion interpretation remains compatible. Missing or unknown records are not negative findings.",
+            "inconsistent": "Inspect conflicting accepted records, their scope and the fixed catalogue before drawing a conclusion. An empty set does not establish absence of a condition.",
+            "incomplete": "The bounded check was interrupted or limited. Discovered agreement is insufficient to establish an answer."
+          }
+        }
+      ],
+      "findingGroups": [
+        {
+          "id": "recorded-assessment",
+          "title": "Reading and attention assessment records",
+          "question": "What do the current assessment records establish about this child’s reading and attention difficulties, and what still needs assessment?",
+          "queryIds": [
+            "reading-finding",
+            "attention-finding",
+            "supported-findings"
+          ],
+          "description": "These questions concern recorded professional conclusions. They do not identify the cause of poor grades or diagnose a child."
+        }
+      ],
+      "tableGroups": [
+        {
+          "id": "record-use",
+          "title": "Records and applicability",
+          "tableIds": [
+            "record-disposition",
+            "professional-findings",
+            "record-scope"
+          ]
+        },
+        {
+          "id": "concerns",
+          "title": "Presenting concerns",
+          "tableIds": [
+            "presenting-concerns",
+            "assessment-boundaries"
+          ]
+        },
+        {
+          "id": "bounded-possibilities",
+          "title": "Bounded recorded-conclusion interpretations",
+          "tableIds": [
+            "compatible-profile",
+            "catalogue-boundary"
+          ]
+        }
+      ],
+      "explanationGroups": [
+        {
+          "id": "compatible-conclusions",
+          "title": "Compatible conclusions",
+          "question": "What does this interpretation say about each professional assessment conclusion?",
+          "items": [
+            {
+              "kind": "table",
+              "id": "compatible-profile"
+            }
+          ]
+        },
+        {
+          "id": "record-use",
+          "title": "Records and scope",
+          "question": "Which records were used, excluded or retained without constraining a conclusion?",
+          "items": [
+            {
+              "kind": "table",
+              "id": "record-disposition"
+            }
+          ]
+        },
+        {
+          "id": "presenting-concerns",
+          "title": "Concerns and boundaries",
+          "question": "What prompted assessment, and what possibilities does this finite review leave outside its scope?",
+          "items": [
+            {
+              "kind": "table",
+              "id": "presenting-concerns"
+            },
+            {
+              "kind": "table",
+              "id": "assessment-boundaries"
+            },
+            {
+              "kind": "table",
+              "id": "catalogue-boundary"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "case": {
+    "id": "fictional-sam-reading-attention",
+    "title": "Fictional reading and attention assessment records for Sam, age eight",
+    "scope": "Sam is a fictional eight-year-old with poor grades and reported classroom difficulties. Lisa coordinates a review of what the current professional assessment records establish. Neither dyslexia nor ADHD is assumed in the opening case. Grades are a reason to investigate, not a diagnostic test. Both conditions, neither condition and explanations outside this limited catalogue remain possible. No clinical recommendation or individual diagnosis is generated.",
+    "parameters": {},
+    "basis": {
+      "expectedScope": [
+        {
+          "field": "childId",
+          "value": "FICTIONAL-SAM-8"
+        },
+        {
+          "field": "assessmentEpisode",
+          "value": "fictional-learning-assessment-1"
+        },
+        {
+          "field": "context",
+          "value": "school-learning"
+        }
+      ],
+      "possibility": [
+        {
+          "id": "reading-supported",
+          "label": "Reading conclusion supported; attention conclusion not supported",
+          "reading": "supported",
+          "attention": "not-supported"
+        },
+        {
+          "id": "attention-supported",
+          "label": "Attention conclusion supported; reading conclusion not supported",
+          "reading": "not-supported",
+          "attention": "supported"
+        },
+        {
+          "id": "coexisting-findings",
+          "label": "Reading and attention conclusions both supported",
+          "reading": "supported",
+          "attention": "supported"
+        },
+        {
+          "id": "neither-supported",
+          "label": "Neither conclusion supported in the two reviewed domains; other explanations remain open",
+          "reading": "not-supported",
+          "attention": "not-supported"
+        },
+        {
+          "id": "uncharacterized",
+          "label": "Reading and attention concerns remain uncharacterized in this bounded catalogue",
+          "reading": "uncharacterized",
+          "attention": "uncharacterized"
+        }
+      ],
+      "assessmentDomain": [
+        {
+          "id": "reading-condition",
+          "label": "Professionally recorded dyslexia assessment conclusion"
+        },
+        {
+          "id": "attention-condition",
+          "label": "Professionally recorded ADHD assessment conclusion"
+        }
+      ]
+    },
+    "evidence": {
+      "concern": [
+        {
+          "id": "CONCERN-GRADES",
+          "domain": "school-performance",
+          "description": "Fictional school records show poor grades. A teacher reports unfinished work and difficulty with unfamiliar words; these observations alone do not identify a condition or cause.",
+          "source": "Fictional teacher and school record supplied for this teaching case",
+          "observedDay": 1
+        }
+      ],
+      "finding": [],
+      "recordScope": []
+    },
+    "queryIds": [
+      "reading-finding",
+      "attention-finding",
+      "supported-findings"
+    ]
+  }
+}

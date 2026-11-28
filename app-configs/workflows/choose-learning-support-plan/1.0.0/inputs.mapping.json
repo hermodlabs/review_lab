@@ -1,0 +1,106 @@
+{
+  "format": "decision-lab-case-workbook-mapping/1",
+  "id": "workbook-1f7ddee86af825d4fd6013da",
+  "version": "1.0.0",
+  "title": "Choose a learning-support plan — Excel inputs",
+  "description": "Edit the named worksheets. Other inputs remain in the saved case. Inputs retained outside this workbook: Sources and applicability, Separate outcome estimates, Goals and priorities: Priorities, Goals and priorities: Targets, Alternative assumptions, Progress measures.",
+  "target": {
+    "type": "workflow",
+    "id": "choose-learning-support-plan",
+    "version": "1.0.0",
+    "packageHash": "385ef4355279345a833256d024eea828c07f3f09de75006e132d9355f6265dd4",
+    "definitionHash": "3b126abda69007de15d5621ff5fed25f9aaad5d7b1abbdfcabf831b8bd01941d"
+  },
+  "managedPaths": [
+    "/support/scope"
+  ],
+  "sheets": [
+    {
+      "id": "read-me",
+      "name": "Read me",
+      "kind": "reference",
+      "role": "case-worker",
+      "key": [
+        "topic"
+      ],
+      "meaning": "Instructions and sheet map. This sheet is read-only and must remain in the workbook.",
+      "columns": [
+        {
+          "id": "topic",
+          "label": "Topic",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        },
+        {
+          "id": "instructions",
+          "label": "Instructions",
+          "type": "string",
+          "nullable": false,
+          "blank": "reject",
+          "unit": "text"
+        }
+      ],
+      "referenceData": [
+        {
+          "topic": "Scope",
+          "instructions": "A fictional comparison for an eight-year-old with professionally identified word-reading and classroom-participation needs. Every response range is an authored assumption, not a validated prediction or a confidence interval. Separate progress measures inform reconsideration; before-and-after change alone does not establish a causal effect."
+        },
+        {
+          "topic": "Starting values",
+          "instructions": "Prefilled values are fictional examples. Changing part of the workbook can leave example inputs in the case."
+        },
+        {
+          "topic": "Editing",
+          "instructions": "Edit the named input sheets. Keep worksheet names, column headers and record identifiers. Do not add formulas. Other case inputs remain unchanged."
+        },
+        {
+          "topic": "Units and time",
+          "instructions": "All response assumptions refer to the fictional six-week support horizon. Reading uses additional correct items on a declared 20-item probe; participation uses percentage-point change under a declared observation protocol; additional burden is minutes per week. No monetary conversion or probability is inferred. Null response bounds remain unknown. Sources, applicability, goals and priorities require qualified human judgment."
+        },
+        {
+          "topic": "Import",
+          "instructions": "Upload this workbook, inspect the changes and diagnostics, then apply. Importing does not calculate results or establish operating permission."
+        },
+        {
+          "topic": "Scope and assessed needs",
+          "instructions": "Editable inputs. The exact child and comparison context. Needs are identified by qualified people; the calculation does not diagnose them."
+        }
+      ]
+    },
+    {
+      "id": "inputs-1",
+      "name": "Scope and assessed needs",
+      "kind": "record",
+      "role": "support-coordinator",
+      "meaning": "The exact child and comparison context. Needs are identified by qualified people; the calculation does not diagnose them.",
+      "binding": {
+        "path": ""
+      },
+      "columns": [
+        {
+          "id": "support-scope",
+          "label": "Scope",
+          "type": "string",
+          "nullable": false,
+          "blank": "omit",
+          "unit": "value",
+          "path": "/support/scope"
+        }
+      ],
+      "key": []
+    }
+  ],
+  "references": [],
+  "importPolicy": {
+    "mode": "replace-managed-snapshot",
+    "missingSheet": "reject",
+    "unknownSheets": "reject",
+    "unknownColumns": "reject",
+    "formulas": "reject",
+    "coercion": "none",
+    "missingMetadata": "reject"
+  },
+  "contentHash": "f1535872b3b2548442afebf37357b1b5665ad25e535dffca1a80b34ee00d8d4f"
+}

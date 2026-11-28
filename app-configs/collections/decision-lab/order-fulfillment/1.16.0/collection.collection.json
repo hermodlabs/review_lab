@@ -1,0 +1,71 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "order-fulfillment",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "version": "1.16.0",
+    "title": "Order fulfillment",
+    "description": "Order fulfillment: operational calculations from supplied scenario inputs, with standalone solvers and composed workflows.",
+    "useCases": [
+      {
+        "id": "complete-first-shipment",
+        "label": "Complete the first shipment",
+        "description": "Compare complete shipment plans that must meet every mandatory obligation across the declared readiness and travel scenarios."
+      },
+      {
+        "id": "review-first-shipment",
+        "label": "Review a first shipment",
+        "description": "Can we meet this delivery commitment, and what should we verify before committing money?"
+      },
+      {
+        "id": "resolve-shipment-exception",
+        "label": "Resolve a shipment exception",
+        "description": "Protect an accepted order after it changes: compare capacity, expense and exact received-confirmation scope before the operating reservation."
+      }
+    ],
+    "members": [
+      {
+        "type": "app",
+        "id": "complete-first-shipment",
+        "version": 6,
+        "packageHash": "e4f0a1d1c4b438bf21f87b69f7f1e9b3f6113e2913c0274fac6e249ce124d9ae",
+        "useCaseId": "complete-first-shipment",
+        "artifact": {
+          "path": "apps/complete-first-shipment/6/app.app.json",
+          "bytes": 161925,
+          "sha256": "5d1fbda7f778eecd32fffa23ca9aaf62b27ae38e5fddbe5afe4d59d788e8cf98"
+        }
+      },
+      {
+        "type": "workflow",
+        "id": "review-first-shipment",
+        "version": "1.13.0",
+        "packageHash": "987022485a17e03d3f8a40e03d05ab82a79cb9352fc44f3eaac757429fd05f8e",
+        "useCaseId": "review-first-shipment",
+        "artifact": {
+          "path": "workflows/review-first-shipment/1.13.0/workflow.workflow.json",
+          "bytes": 1122767,
+          "sha256": "302b8c287f59494f252cf5f4bbfe47ca97c083e9d7237ba7795ecd60b58a4389"
+        }
+      },
+      {
+        "type": "workflow",
+        "id": "resolve-current-shipment",
+        "version": "1.0.0",
+        "packageHash": "de844f09f54dc428f62c80952796fda7b32fa6ad8d2a87adc8e18967b38b1a0a",
+        "useCaseId": "resolve-shipment-exception",
+        "artifact": {
+          "path": "workflows/resolve-current-shipment/1.0.0/workflow.workflow.json",
+          "bytes": 307305,
+          "sha256": "1a15b9ada3921b4616a06e7e2c5a406d50e511e8c445c5a67e0cf3f4009491db"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-25T20:00:00.000Z",
+  "contentHash": "a17d3b05e62ce0d765b29ee53f989cccba4396a553a4489c7182d25aeef88f69"
+}

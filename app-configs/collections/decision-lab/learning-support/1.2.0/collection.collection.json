@@ -1,0 +1,78 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "learning-support",
+    "version": "1.2.0",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "title": "Learning support",
+    "description": "Clarify what reading and attention assessment records establish, then compare support plans using explicit outcome assumptions. Professional conclusions, classroom observations and the effects of support remain separate questions.",
+    "useCases": [
+      {
+        "id": "choose-learning-support",
+        "label": "Choose learning support",
+        "description": "Choose support for already assessed dyslexia and ADHD in a fictional teaching case, without mistaking improvement in one area for adequate support across both needs."
+      },
+      {
+        "id": "understand-reading-attention",
+        "label": "Understand reading and attention concerns",
+        "description": "Inspect scoped professional records and unresolved assessment questions in a fictional case. Observations alone do not establish a diagnosis, and recorded conclusions do not predict which support will help."
+      }
+    ],
+    "members": [
+      {
+        "type": "workflow",
+        "id": "choose-learning-support-plan",
+        "version": "1.1.1",
+        "packageHash": "01e4f66ffa2ac6dfafafdb1d9536736abae38b8b20f2e737a91571f1d79b0f24",
+        "useCaseId": "choose-learning-support",
+        "artifact": {
+          "path": "workflows/choose-learning-support-plan/1.1.1/workflow.workflow.json",
+          "bytes": 173161,
+          "sha256": "45e42558a3fdbcf7598ca2e6abca32ed2da2dab9f22550f5dcf445dd0c8d3326"
+        }
+      },
+      {
+        "type": "app",
+        "id": "compare-learning-support-plans",
+        "version": 3,
+        "packageHash": "14370719a6a72ebbdfd2900f9c1f5971bafa7f17414b487a9e97769f2fcef28c",
+        "useCaseId": "choose-learning-support",
+        "artifact": {
+          "path": "apps/compare-learning-support-plans/3/app.app.json",
+          "bytes": 89040,
+          "sha256": "8e00aa54134395ea75830185952a441c276b941418f5e5d62e5ddbeed5a0860d"
+        }
+      },
+      {
+        "type": "workflow",
+        "id": "investigate-reading-attention",
+        "version": "1.0.0",
+        "packageHash": "ab29529e10c7fc9ae0264db18dd6bb13cebaff66487a1e7672797be03af8bbfe",
+        "useCaseId": "understand-reading-attention",
+        "artifact": {
+          "path": "workflows/investigate-reading-attention/1.0.0/workflow.workflow.json",
+          "bytes": 283750,
+          "sha256": "a558c8887d1eb10204c64178badac74647f1b7691fa10978a2350e4d64db3774"
+        }
+      },
+      {
+        "type": "app",
+        "id": "understand-reading-attention",
+        "version": 1,
+        "packageHash": "70f0b543dda3bbc26023d8797a4253d6e39495fcd27e4a1df13b90bd0ec39475",
+        "useCaseId": "understand-reading-attention",
+        "artifact": {
+          "path": "apps/understand-reading-attention/1/app.app.json",
+          "bytes": 174812,
+          "sha256": "b43a539d44027f523c1682e62f176a540a702a7cebb93a5faeb7ca1c0c3e16e2"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-26T01:00:00.000Z",
+  "contentHash": "a88d1a8e8aaa0656b4ae5e8b5c83ce975e2eeefcbbf87d7e97df0bc25d65f282"
+}

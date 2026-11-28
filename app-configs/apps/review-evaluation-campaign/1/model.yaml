@@ -1,0 +1,2661 @@
+{
+  "format": "complete-a-commitment/1",
+  "module": {
+    "id": "review-evaluation-campaign",
+    "version": "1.0.0",
+    "template": {
+      "id": "complete-a-commitment",
+      "version": 1
+    },
+    "title": "Review a release evaluation campaign",
+    "description": "Compare four authored GPU coordination policies for four sourced vLLM accuracy configurations. Timings are illustrative, unmeasured planning estimates. Inspect omitted work, slot use and deadlines.",
+    "question": "Which proposed arrangements plan every required evaluation within available GPU capacity and the review deadline?",
+    "units": {
+      "time": "minute",
+      "timeOrigin": "Elapsed minutes from the declared campaign start",
+      "money": "USD cent",
+      "count": "resource"
+    },
+    "assumptions": [
+      "Illustrative planning estimates; no GPU evaluations or timing measurements performed.",
+      "Four selected accuracy configurations are pinned at vLLM commit 944ec109da42f696cab16d67a977cf4f26e6d263; this is not the complete vLLM release suite or an official four-run requirement.",
+      "Job identities are fixed by this release. Each named configuration is a distinct required output. Changing the workload or job definition requires adapting the app.",
+      "Compatibility is a hypothetical supplied premise, not a finding from tensor-parallel size one. Validate GPU memory, quantization support, architecture and software before operational use.",
+      "The upstream configuration commit is pinned; its model names do not pin model-weight revisions. An operational execution must additionally record resolved weight revisions, environment and harness versions.",
+      "Policy changes are assumed authorized. The cap-two policy is an authored counterfactual error; no such incident or AI behavior is attributed to vLLM.",
+      "Full-queue uses a fixed round-robin assignment. With unequal durations it need not be the fastest schedule. These are four declared policies, not a search of every possible schedule.",
+      "Inputs are ready at time zero. Enter durations including any setup and teardown to be reserved. Qualifying successful execution is assumed; scheduling does not execute tests or establish their scores, safety, or release approval.",
+      "Real motivation: https://vllm-project.github.io/2026/07/16/keeping-vllm-production-quality.html. Source configurations and the complete pinned manifest are retained in module metadata and the accompanying sample.",
+      "Qwen2.5 1.5B: Qwen/Qwen2.5-1.5B-Instruct; gsm8k; 1319 examples; 5-shot; https://github.com/vllm-project/vllm/blob/944ec109da42f696cab16d67a977cf4f26e6d263/.buildkite/lm-eval-harness/configs/Qwen2.5-1.5B-Instruct.yaml",
+      "Qwen2 1.5B FP8W8: nm-testing/Qwen2-1.5B-Instruct-FP8W8; gsm8k; 1000 examples; 5-shot; https://github.com/vllm-project/vllm/blob/944ec109da42f696cab16d67a977cf4f26e6d263/.buildkite/lm-eval-harness/configs/Qwen2-1.5B-Instruct-FP8W8.yaml",
+      "Qwen2 1.5B INT8: neuralmagic/Qwen2-1.5B-Instruct-quantized.w8a8; gsm8k; 1000 examples; 5-shot; https://github.com/vllm-project/vllm/blob/944ec109da42f696cab16d67a977cf4f26e6d263/.buildkite/lm-eval-harness/configs/Qwen2-1.5B-Instruct-INT8-compressed-tensors.yaml",
+      "Minitron 4B FP8: vllm/Minitron-4B-Base-FP8; gsm8k; 1000 examples; 5-shot; https://github.com/vllm-project/vllm/blob/944ec109da42f696cab16d67a977cf4f26e6d263/.buildkite/lm-eval-harness/configs/Minitron-4B-Base-FP8.yaml"
+    ],
+    "inputs": {
+      "parameters": {
+        "deadlineMinutes": {
+          "type": "integer",
+          "unit": "time",
+          "minimum": 1,
+          "maximum": 10080
+        },
+        "slotCount": {
+          "type": "integer",
+          "unit": "count",
+          "minimum": 0,
+          "enum": [
+            1,
+            2,
+            4
+          ]
+        },
+        "compatibleGpuAssumed": {
+          "type": "boolean"
+        },
+        "job1Minutes": {
+          "type": "integer",
+          "unit": "time",
+          "minimum": 1,
+          "maximum": 1440
+        },
+        "job2Minutes": {
+          "type": "integer",
+          "unit": "time",
+          "minimum": 1,
+          "maximum": 1440
+        },
+        "job3Minutes": {
+          "type": "integer",
+          "unit": "time",
+          "minimum": 1,
+          "maximum": 1440
+        },
+        "job4Minutes": {
+          "type": "integer",
+          "unit": "time",
+          "minimum": 1,
+          "maximum": 1440
+        }
+      },
+      "tables": {
+        "_resources": {
+          "key": [
+            "id"
+          ],
+          "columns": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "gpu-1",
+                "gpu-2",
+                "gpu-3",
+                "gpu-4"
+              ]
+            },
+            "capacity": {
+              "type": "integer",
+              "unit": "count",
+              "minimum": 0,
+              "enum": [
+                1
+              ]
+            }
+          }
+        },
+        "_scenario": {
+          "key": [
+            "id"
+          ],
+          "columns": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "declared-estimates"
+              ]
+            }
+          }
+        },
+        "bookings": {
+          "key": [
+            "id"
+          ],
+          "columns": {
+            "id": {
+              "type": "string"
+            },
+            "resource": {
+              "type": "string",
+              "enum": [
+                "gpu-1",
+                "gpu-2",
+                "gpu-3",
+                "gpu-4"
+              ]
+            },
+            "start": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 0,
+              "maximum": 1440
+            },
+            "end": {
+              "type": "integer",
+              "unit": "time",
+              "minimum": 1,
+              "maximum": 1440
+            },
+            "amount": {
+              "type": "integer",
+              "unit": "count",
+              "minimum": 0,
+              "enum": [
+                1
+              ]
+            }
+          }
+        }
+      }
+    },
+    "choices": [
+      {
+        "id": "policy",
+        "domain": {
+          "values": [
+            "cap-two",
+            "full-queue",
+            "two-at-a-time",
+            "serial"
+          ]
+        }
+      }
+    ],
+    "scenarioDomain": {
+      "table": "_scenario"
+    },
+    "lookupCoverage": [
+      {
+        "table": "_resources",
+        "keys": {
+          "id": {
+            "domain": {
+              "values": [
+                "gpu-1",
+                "gpu-2",
+                "gpu-3",
+                "gpu-4"
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "derived": [
+      {
+        "id": "concurrency",
+        "type": "integer",
+        "unit": "count",
+        "expr": {
+          "op": "if",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "choice.policy"
+                },
+                {
+                  "literal": "serial"
+                }
+              ]
+            },
+            {
+              "literal": 1
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "choice.policy"
+                    },
+                    {
+                      "literal": "two-at-a-time"
+                    }
+                  ]
+                },
+                {
+                  "op": "if",
+                  "args": [
+                    {
+                      "op": "gt",
+                      "args": [
+                        {
+                          "ref": "parameter.slotCount"
+                        },
+                        {
+                          "literal": 2
+                        }
+                      ]
+                    },
+                    {
+                      "literal": 2
+                    },
+                    {
+                      "ref": "parameter.slotCount"
+                    }
+                  ]
+                },
+                {
+                  "ref": "parameter.slotCount"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "scheduled-eval-qwen25",
+        "type": "boolean",
+        "expr": {
+          "literal": true
+        }
+      },
+      {
+        "id": "slot-eval-qwen25",
+        "type": "integer",
+        "unit": "count",
+        "expr": {
+          "op": "if",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.concurrency"
+                },
+                {
+                  "literal": 1
+                }
+              ]
+            },
+            {
+              "literal": 1
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.concurrency"
+                    },
+                    {
+                      "literal": 2
+                    }
+                  ]
+                },
+                {
+                  "literal": 1
+                },
+                {
+                  "literal": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "scheduled-eval-qwen2-fp8",
+        "type": "boolean",
+        "expr": {
+          "literal": true
+        }
+      },
+      {
+        "id": "slot-eval-qwen2-fp8",
+        "type": "integer",
+        "unit": "count",
+        "expr": {
+          "op": "if",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.concurrency"
+                },
+                {
+                  "literal": 1
+                }
+              ]
+            },
+            {
+              "literal": 1
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.concurrency"
+                    },
+                    {
+                      "literal": 2
+                    }
+                  ]
+                },
+                {
+                  "literal": 2
+                },
+                {
+                  "literal": 2
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "scheduled-eval-qwen2-int8",
+        "type": "boolean",
+        "expr": {
+          "op": "not",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "choice.policy"
+                },
+                {
+                  "literal": "cap-two"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "slot-eval-qwen2-int8",
+        "type": "integer",
+        "unit": "count",
+        "expr": {
+          "op": "if",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.concurrency"
+                },
+                {
+                  "literal": 1
+                }
+              ]
+            },
+            {
+              "literal": 1
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.concurrency"
+                    },
+                    {
+                      "literal": 2
+                    }
+                  ]
+                },
+                {
+                  "literal": 1
+                },
+                {
+                  "literal": 3
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "scheduled-eval-minitron",
+        "type": "boolean",
+        "expr": {
+          "op": "not",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "choice.policy"
+                },
+                {
+                  "literal": "cap-two"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "slot-eval-minitron",
+        "type": "integer",
+        "unit": "count",
+        "expr": {
+          "op": "if",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.concurrency"
+                },
+                {
+                  "literal": 1
+                }
+              ]
+            },
+            {
+              "literal": 1
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.concurrency"
+                    },
+                    {
+                      "literal": 2
+                    }
+                  ]
+                },
+                {
+                  "literal": 2
+                },
+                {
+                  "literal": 4
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "scheduledOutputs",
+        "type": "integer",
+        "unit": "count",
+        "expr": {
+          "op": "add",
+          "args": [
+            {
+              "op": "if",
+              "args": [
+                {
+                  "ref": "derived.scheduled-eval-qwen25"
+                },
+                {
+                  "literal": 1
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "ref": "derived.scheduled-eval-qwen2-fp8"
+                },
+                {
+                  "literal": 1
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "ref": "derived.scheduled-eval-qwen2-int8"
+                },
+                {
+                  "literal": 1
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "ref": "derived.scheduled-eval-minitron"
+                },
+                {
+                  "literal": 1
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "missingOutputs",
+        "type": "integer",
+        "unit": "count",
+        "expr": {
+          "op": "sub",
+          "args": [
+            {
+              "literal": 4
+            },
+            {
+              "ref": "derived.scheduledOutputs"
+            }
+          ]
+        }
+      },
+      {
+        "id": "scheduledFinish",
+        "type": "integer",
+        "unit": "time",
+        "expr": {
+          "op": "if",
+          "args": [
+            {
+              "op": "gte",
+              "args": [
+                {
+                  "op": "if",
+                  "args": [
+                    {
+                      "op": "gte",
+                      "args": [
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "op": "gte",
+                              "args": [
+                                {
+                                  "op": "if",
+                                  "args": [
+                                    {
+                                      "ref": "derived.scheduled-eval-qwen25"
+                                    },
+                                    {
+                                      "ref": "activity.eval-qwen25.end"
+                                    },
+                                    {
+                                      "literal": 0
+                                    }
+                                  ]
+                                },
+                                {
+                                  "op": "if",
+                                  "args": [
+                                    {
+                                      "ref": "derived.scheduled-eval-qwen2-fp8"
+                                    },
+                                    {
+                                      "ref": "activity.eval-qwen2-fp8.end"
+                                    },
+                                    {
+                                      "literal": 0
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "if",
+                              "args": [
+                                {
+                                  "ref": "derived.scheduled-eval-qwen25"
+                                },
+                                {
+                                  "ref": "activity.eval-qwen25.end"
+                                },
+                                {
+                                  "literal": 0
+                                }
+                              ]
+                            },
+                            {
+                              "op": "if",
+                              "args": [
+                                {
+                                  "ref": "derived.scheduled-eval-qwen2-fp8"
+                                },
+                                {
+                                  "ref": "activity.eval-qwen2-fp8.end"
+                                },
+                                {
+                                  "literal": 0
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "ref": "derived.scheduled-eval-qwen2-int8"
+                            },
+                            {
+                              "ref": "activity.eval-qwen2-int8.end"
+                            },
+                            {
+                              "literal": 0
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "gte",
+                          "args": [
+                            {
+                              "op": "if",
+                              "args": [
+                                {
+                                  "ref": "derived.scheduled-eval-qwen25"
+                                },
+                                {
+                                  "ref": "activity.eval-qwen25.end"
+                                },
+                                {
+                                  "literal": 0
+                                }
+                              ]
+                            },
+                            {
+                              "op": "if",
+                              "args": [
+                                {
+                                  "ref": "derived.scheduled-eval-qwen2-fp8"
+                                },
+                                {
+                                  "ref": "activity.eval-qwen2-fp8.end"
+                                },
+                                {
+                                  "literal": 0
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "ref": "derived.scheduled-eval-qwen25"
+                            },
+                            {
+                              "ref": "activity.eval-qwen25.end"
+                            },
+                            {
+                              "literal": 0
+                            }
+                          ]
+                        },
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "ref": "derived.scheduled-eval-qwen2-fp8"
+                            },
+                            {
+                              "ref": "activity.eval-qwen2-fp8.end"
+                            },
+                            {
+                              "literal": 0
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "ref": "derived.scheduled-eval-qwen2-int8"
+                        },
+                        {
+                          "ref": "activity.eval-qwen2-int8.end"
+                        },
+                        {
+                          "literal": 0
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "if",
+                  "args": [
+                    {
+                      "ref": "derived.scheduled-eval-minitron"
+                    },
+                    {
+                      "ref": "activity.eval-minitron.end"
+                    },
+                    {
+                      "literal": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "op": "gte",
+                  "args": [
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "gte",
+                          "args": [
+                            {
+                              "op": "if",
+                              "args": [
+                                {
+                                  "ref": "derived.scheduled-eval-qwen25"
+                                },
+                                {
+                                  "ref": "activity.eval-qwen25.end"
+                                },
+                                {
+                                  "literal": 0
+                                }
+                              ]
+                            },
+                            {
+                              "op": "if",
+                              "args": [
+                                {
+                                  "ref": "derived.scheduled-eval-qwen2-fp8"
+                                },
+                                {
+                                  "ref": "activity.eval-qwen2-fp8.end"
+                                },
+                                {
+                                  "literal": 0
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "ref": "derived.scheduled-eval-qwen25"
+                            },
+                            {
+                              "ref": "activity.eval-qwen25.end"
+                            },
+                            {
+                              "literal": 0
+                            }
+                          ]
+                        },
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "ref": "derived.scheduled-eval-qwen2-fp8"
+                            },
+                            {
+                              "ref": "activity.eval-qwen2-fp8.end"
+                            },
+                            {
+                              "literal": 0
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "ref": "derived.scheduled-eval-qwen2-int8"
+                        },
+                        {
+                          "ref": "activity.eval-qwen2-int8.end"
+                        },
+                        {
+                          "literal": 0
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "if",
+                  "args": [
+                    {
+                      "op": "gte",
+                      "args": [
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "ref": "derived.scheduled-eval-qwen25"
+                            },
+                            {
+                              "ref": "activity.eval-qwen25.end"
+                            },
+                            {
+                              "literal": 0
+                            }
+                          ]
+                        },
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "ref": "derived.scheduled-eval-qwen2-fp8"
+                            },
+                            {
+                              "ref": "activity.eval-qwen2-fp8.end"
+                            },
+                            {
+                              "literal": 0
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "ref": "derived.scheduled-eval-qwen25"
+                        },
+                        {
+                          "ref": "activity.eval-qwen25.end"
+                        },
+                        {
+                          "literal": 0
+                        }
+                      ]
+                    },
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "ref": "derived.scheduled-eval-qwen2-fp8"
+                        },
+                        {
+                          "ref": "activity.eval-qwen2-fp8.end"
+                        },
+                        {
+                          "literal": 0
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "if",
+                  "args": [
+                    {
+                      "ref": "derived.scheduled-eval-qwen2-int8"
+                    },
+                    {
+                      "ref": "activity.eval-qwen2-int8.end"
+                    },
+                    {
+                      "literal": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "ref": "derived.scheduled-eval-minitron"
+                },
+                {
+                  "ref": "activity.eval-minitron.end"
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "campaignStatus",
+        "type": "string",
+        "expr": {
+          "op": "if",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.missingOutputs"
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            },
+            {
+              "literal": "All required outputs scheduled"
+            },
+            {
+              "literal": "Incomplete: jobs 3 and 4 unscheduled"
+            }
+          ]
+        }
+      }
+    ],
+    "activities": [
+      {
+        "id": "eval-qwen25",
+        "enabled": {
+          "ref": "derived.scheduled-eval-qwen25"
+        },
+        "actor": {
+          "op": "if",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.slot-eval-qwen25"
+                },
+                {
+                  "literal": 1
+                }
+              ]
+            },
+            {
+              "literal": "gpu-1"
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.slot-eval-qwen25"
+                    },
+                    {
+                      "literal": 2
+                    }
+                  ]
+                },
+                {
+                  "literal": "gpu-2"
+                },
+                {
+                  "op": "if",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "ref": "derived.slot-eval-qwen25"
+                        },
+                        {
+                          "literal": 3
+                        }
+                      ]
+                    },
+                    {
+                      "literal": "gpu-3"
+                    },
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "derived.slot-eval-qwen25"
+                            },
+                            {
+                              "literal": 4
+                            }
+                          ]
+                        },
+                        {
+                          "literal": "gpu-4"
+                        },
+                        {
+                          "literal": "gpu-1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "start": {
+          "literal": 0
+        },
+        "duration": {
+          "ref": "parameter.job1Minutes"
+        },
+        "resources": [
+          {
+            "resource": {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.slot-eval-qwen25"
+                    },
+                    {
+                      "literal": 1
+                    }
+                  ]
+                },
+                {
+                  "literal": "gpu-1"
+                },
+                {
+                  "op": "if",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "ref": "derived.slot-eval-qwen25"
+                        },
+                        {
+                          "literal": 2
+                        }
+                      ]
+                    },
+                    {
+                      "literal": "gpu-2"
+                    },
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "derived.slot-eval-qwen25"
+                            },
+                            {
+                              "literal": 3
+                            }
+                          ]
+                        },
+                        {
+                          "literal": "gpu-3"
+                        },
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "ref": "derived.slot-eval-qwen25"
+                                },
+                                {
+                                  "literal": 4
+                                }
+                              ]
+                            },
+                            {
+                              "literal": "gpu-4"
+                            },
+                            {
+                              "literal": "gpu-1"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "amount": {
+              "literal": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "eval-qwen2-fp8",
+        "enabled": {
+          "ref": "derived.scheduled-eval-qwen2-fp8"
+        },
+        "actor": {
+          "op": "if",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.slot-eval-qwen2-fp8"
+                },
+                {
+                  "literal": 1
+                }
+              ]
+            },
+            {
+              "literal": "gpu-1"
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.slot-eval-qwen2-fp8"
+                    },
+                    {
+                      "literal": 2
+                    }
+                  ]
+                },
+                {
+                  "literal": "gpu-2"
+                },
+                {
+                  "op": "if",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "ref": "derived.slot-eval-qwen2-fp8"
+                        },
+                        {
+                          "literal": 3
+                        }
+                      ]
+                    },
+                    {
+                      "literal": "gpu-3"
+                    },
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "derived.slot-eval-qwen2-fp8"
+                            },
+                            {
+                              "literal": 4
+                            }
+                          ]
+                        },
+                        {
+                          "literal": "gpu-4"
+                        },
+                        {
+                          "literal": "gpu-1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "start": {
+          "op": "if",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.concurrency"
+                },
+                {
+                  "literal": 1
+                }
+              ]
+            },
+            {
+              "ref": "activity.eval-qwen25.end"
+            },
+            {
+              "literal": 0
+            }
+          ]
+        },
+        "duration": {
+          "ref": "parameter.job2Minutes"
+        },
+        "resources": [
+          {
+            "resource": {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.slot-eval-qwen2-fp8"
+                    },
+                    {
+                      "literal": 1
+                    }
+                  ]
+                },
+                {
+                  "literal": "gpu-1"
+                },
+                {
+                  "op": "if",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "ref": "derived.slot-eval-qwen2-fp8"
+                        },
+                        {
+                          "literal": 2
+                        }
+                      ]
+                    },
+                    {
+                      "literal": "gpu-2"
+                    },
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "derived.slot-eval-qwen2-fp8"
+                            },
+                            {
+                              "literal": 3
+                            }
+                          ]
+                        },
+                        {
+                          "literal": "gpu-3"
+                        },
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "ref": "derived.slot-eval-qwen2-fp8"
+                                },
+                                {
+                                  "literal": 4
+                                }
+                              ]
+                            },
+                            {
+                              "literal": "gpu-4"
+                            },
+                            {
+                              "literal": "gpu-1"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "amount": {
+              "literal": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "eval-qwen2-int8",
+        "enabled": {
+          "ref": "derived.scheduled-eval-qwen2-int8"
+        },
+        "actor": {
+          "op": "if",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.slot-eval-qwen2-int8"
+                },
+                {
+                  "literal": 1
+                }
+              ]
+            },
+            {
+              "literal": "gpu-1"
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.slot-eval-qwen2-int8"
+                    },
+                    {
+                      "literal": 2
+                    }
+                  ]
+                },
+                {
+                  "literal": "gpu-2"
+                },
+                {
+                  "op": "if",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "ref": "derived.slot-eval-qwen2-int8"
+                        },
+                        {
+                          "literal": 3
+                        }
+                      ]
+                    },
+                    {
+                      "literal": "gpu-3"
+                    },
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "derived.slot-eval-qwen2-int8"
+                            },
+                            {
+                              "literal": 4
+                            }
+                          ]
+                        },
+                        {
+                          "literal": "gpu-4"
+                        },
+                        {
+                          "literal": "gpu-1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "start": {
+          "op": "if",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.concurrency"
+                },
+                {
+                  "literal": 1
+                }
+              ]
+            },
+            {
+              "ref": "activity.eval-qwen2-fp8.end"
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.concurrency"
+                    },
+                    {
+                      "literal": 2
+                    }
+                  ]
+                },
+                {
+                  "ref": "activity.eval-qwen25.end"
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            }
+          ]
+        },
+        "duration": {
+          "ref": "parameter.job3Minutes"
+        },
+        "resources": [
+          {
+            "resource": {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.slot-eval-qwen2-int8"
+                    },
+                    {
+                      "literal": 1
+                    }
+                  ]
+                },
+                {
+                  "literal": "gpu-1"
+                },
+                {
+                  "op": "if",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "ref": "derived.slot-eval-qwen2-int8"
+                        },
+                        {
+                          "literal": 2
+                        }
+                      ]
+                    },
+                    {
+                      "literal": "gpu-2"
+                    },
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "derived.slot-eval-qwen2-int8"
+                            },
+                            {
+                              "literal": 3
+                            }
+                          ]
+                        },
+                        {
+                          "literal": "gpu-3"
+                        },
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "ref": "derived.slot-eval-qwen2-int8"
+                                },
+                                {
+                                  "literal": 4
+                                }
+                              ]
+                            },
+                            {
+                              "literal": "gpu-4"
+                            },
+                            {
+                              "literal": "gpu-1"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "amount": {
+              "literal": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "eval-minitron",
+        "enabled": {
+          "ref": "derived.scheduled-eval-minitron"
+        },
+        "actor": {
+          "op": "if",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.slot-eval-minitron"
+                },
+                {
+                  "literal": 1
+                }
+              ]
+            },
+            {
+              "literal": "gpu-1"
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.slot-eval-minitron"
+                    },
+                    {
+                      "literal": 2
+                    }
+                  ]
+                },
+                {
+                  "literal": "gpu-2"
+                },
+                {
+                  "op": "if",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "ref": "derived.slot-eval-minitron"
+                        },
+                        {
+                          "literal": 3
+                        }
+                      ]
+                    },
+                    {
+                      "literal": "gpu-3"
+                    },
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "derived.slot-eval-minitron"
+                            },
+                            {
+                              "literal": 4
+                            }
+                          ]
+                        },
+                        {
+                          "literal": "gpu-4"
+                        },
+                        {
+                          "literal": "gpu-1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "start": {
+          "op": "if",
+          "args": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "ref": "derived.concurrency"
+                },
+                {
+                  "literal": 1
+                }
+              ]
+            },
+            {
+              "ref": "activity.eval-qwen2-int8.end"
+            },
+            {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.concurrency"
+                    },
+                    {
+                      "literal": 2
+                    }
+                  ]
+                },
+                {
+                  "ref": "activity.eval-qwen2-fp8.end"
+                },
+                {
+                  "literal": 0
+                }
+              ]
+            }
+          ]
+        },
+        "duration": {
+          "ref": "parameter.job4Minutes"
+        },
+        "resources": [
+          {
+            "resource": {
+              "op": "if",
+              "args": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "ref": "derived.slot-eval-minitron"
+                    },
+                    {
+                      "literal": 1
+                    }
+                  ]
+                },
+                {
+                  "literal": "gpu-1"
+                },
+                {
+                  "op": "if",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "ref": "derived.slot-eval-minitron"
+                        },
+                        {
+                          "literal": 2
+                        }
+                      ]
+                    },
+                    {
+                      "literal": "gpu-2"
+                    },
+                    {
+                      "op": "if",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "ref": "derived.slot-eval-minitron"
+                            },
+                            {
+                              "literal": 3
+                            }
+                          ]
+                        },
+                        {
+                          "literal": "gpu-3"
+                        },
+                        {
+                          "op": "if",
+                          "args": [
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "ref": "derived.slot-eval-minitron"
+                                },
+                                {
+                                  "literal": 4
+                                }
+                              ]
+                            },
+                            {
+                              "literal": "gpu-4"
+                            },
+                            {
+                              "literal": "gpu-1"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "amount": {
+              "literal": 1
+            }
+          }
+        ]
+      }
+    ],
+    "resources": {
+      "definitions": {
+        "table": "_resources",
+        "idColumn": "id",
+        "capacityColumn": "capacity"
+      },
+      "bookings": {
+        "table": "bookings",
+        "resourceColumn": "resource",
+        "startColumn": "start",
+        "endColumn": "end",
+        "amountColumn": "amount"
+      }
+    },
+    "requirements": [
+      {
+        "id": "R1",
+        "label": "Plan every required output",
+        "meaning": "Each of the four fixed model/configuration identities has a real assignment. Repetition cannot replace a missing identity.",
+        "waivable": false
+      },
+      {
+        "id": "R2",
+        "label": "Respect compatible GPU capacity",
+        "meaning": "Use only the declared number of compatible exclusive GPU slots; no overlapping assignments or existing bookings on a slot.",
+        "waivable": false
+      },
+      {
+        "id": "R3",
+        "label": "Finish every output by review",
+        "meaning": "All four required outputs have assignments finishing by the declared deadline. Finishing only an admitted subset does not pass.",
+        "waivable": false
+      }
+    ],
+    "constraints": [
+      {
+        "id": "coverage-eval-qwen25",
+        "requirement": "R1",
+        "kind": "predicate",
+        "predicate": {
+          "ref": "derived.scheduled-eval-qwen25"
+        }
+      },
+      {
+        "id": "slot-eval-qwen25",
+        "requirement": "R2",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "not",
+              "args": [
+                {
+                  "ref": "derived.scheduled-eval-qwen25"
+                }
+              ]
+            },
+            {
+              "op": "lte",
+              "args": [
+                {
+                  "ref": "derived.slot-eval-qwen25"
+                },
+                {
+                  "ref": "parameter.slotCount"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "deadline-eval-qwen25",
+        "requirement": "R3",
+        "kind": "predicate",
+        "predicate": {
+          "op": "if",
+          "args": [
+            {
+              "ref": "derived.scheduled-eval-qwen25"
+            },
+            {
+              "op": "lte",
+              "args": [
+                {
+                  "ref": "activity.eval-qwen25.end"
+                },
+                {
+                  "ref": "parameter.deadlineMinutes"
+                }
+              ]
+            },
+            {
+              "literal": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "coverage-eval-qwen2-fp8",
+        "requirement": "R1",
+        "kind": "predicate",
+        "predicate": {
+          "ref": "derived.scheduled-eval-qwen2-fp8"
+        }
+      },
+      {
+        "id": "slot-eval-qwen2-fp8",
+        "requirement": "R2",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "not",
+              "args": [
+                {
+                  "ref": "derived.scheduled-eval-qwen2-fp8"
+                }
+              ]
+            },
+            {
+              "op": "lte",
+              "args": [
+                {
+                  "ref": "derived.slot-eval-qwen2-fp8"
+                },
+                {
+                  "ref": "parameter.slotCount"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "deadline-eval-qwen2-fp8",
+        "requirement": "R3",
+        "kind": "predicate",
+        "predicate": {
+          "op": "if",
+          "args": [
+            {
+              "ref": "derived.scheduled-eval-qwen2-fp8"
+            },
+            {
+              "op": "lte",
+              "args": [
+                {
+                  "ref": "activity.eval-qwen2-fp8.end"
+                },
+                {
+                  "ref": "parameter.deadlineMinutes"
+                }
+              ]
+            },
+            {
+              "literal": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "coverage-eval-qwen2-int8",
+        "requirement": "R1",
+        "kind": "predicate",
+        "predicate": {
+          "ref": "derived.scheduled-eval-qwen2-int8"
+        }
+      },
+      {
+        "id": "slot-eval-qwen2-int8",
+        "requirement": "R2",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "not",
+              "args": [
+                {
+                  "ref": "derived.scheduled-eval-qwen2-int8"
+                }
+              ]
+            },
+            {
+              "op": "lte",
+              "args": [
+                {
+                  "ref": "derived.slot-eval-qwen2-int8"
+                },
+                {
+                  "ref": "parameter.slotCount"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "deadline-eval-qwen2-int8",
+        "requirement": "R3",
+        "kind": "predicate",
+        "predicate": {
+          "op": "if",
+          "args": [
+            {
+              "ref": "derived.scheduled-eval-qwen2-int8"
+            },
+            {
+              "op": "lte",
+              "args": [
+                {
+                  "ref": "activity.eval-qwen2-int8.end"
+                },
+                {
+                  "ref": "parameter.deadlineMinutes"
+                }
+              ]
+            },
+            {
+              "literal": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "coverage-eval-minitron",
+        "requirement": "R1",
+        "kind": "predicate",
+        "predicate": {
+          "ref": "derived.scheduled-eval-minitron"
+        }
+      },
+      {
+        "id": "slot-eval-minitron",
+        "requirement": "R2",
+        "kind": "predicate",
+        "predicate": {
+          "op": "or",
+          "args": [
+            {
+              "op": "not",
+              "args": [
+                {
+                  "ref": "derived.scheduled-eval-minitron"
+                }
+              ]
+            },
+            {
+              "op": "lte",
+              "args": [
+                {
+                  "ref": "derived.slot-eval-minitron"
+                },
+                {
+                  "ref": "parameter.slotCount"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "deadline-eval-minitron",
+        "requirement": "R3",
+        "kind": "predicate",
+        "predicate": {
+          "op": "if",
+          "args": [
+            {
+              "ref": "derived.scheduled-eval-minitron"
+            },
+            {
+              "op": "lte",
+              "args": [
+                {
+                  "ref": "activity.eval-minitron.end"
+                },
+                {
+                  "ref": "parameter.deadlineMinutes"
+                }
+              ]
+            },
+            {
+              "literal": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "compatible-slots",
+        "requirement": "R2",
+        "kind": "predicate",
+        "predicate": {
+          "ref": "parameter.compatibleGpuAssumed"
+        }
+      },
+      {
+        "id": "exclusive-gpu-capacity",
+        "requirement": "R2",
+        "kind": "resource-capacity"
+      },
+      {
+        "id": "capacity-gpu-1",
+        "requirement": "R2",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_resources",
+              "where": {
+                "id": {
+                  "literal": "gpu-1"
+                }
+              },
+              "column": "capacity"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "capacity-gpu-2",
+        "requirement": "R2",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_resources",
+              "where": {
+                "id": {
+                  "literal": "gpu-2"
+                }
+              },
+              "column": "capacity"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "capacity-gpu-3",
+        "requirement": "R2",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_resources",
+              "where": {
+                "id": {
+                  "literal": "gpu-3"
+                }
+              },
+              "column": "capacity"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "capacity-gpu-4",
+        "requirement": "R2",
+        "kind": "predicate",
+        "predicate": {
+          "op": "eq",
+          "args": [
+            {
+              "op": "lookup",
+              "table": "_resources",
+              "where": {
+                "id": {
+                  "literal": "gpu-4"
+                }
+              },
+              "column": "capacity"
+            },
+            {
+              "literal": 1
+            }
+          ]
+        }
+      }
+    ],
+    "finance": {
+      "mode": "expense",
+      "charges": [],
+      "holds": []
+    },
+    "preference": {
+      "mode": "feasibility-only"
+    },
+    "labels": {
+      "plan": "Evaluation arrangement",
+      "actor": "GPU slot",
+      "scenario": "Declared planning estimates",
+      "choice.policy": "Coordination policy",
+      "view.schedule.title": "Planned GPU evaluation assignments",
+      "view.schedule.question": "Which evaluations receive assignments, on which GPU slots, and when?",
+      "choice.policy.cap-two": "O1 · Admit only two; omit jobs 3–4",
+      "choice.policy.full-queue": "O2 · Queue all; use available slots",
+      "choice.policy.two-at-a-time": "O3 · Queue all; at most two slots",
+      "choice.policy.serial": "O4 · Queue all; one slot",
+      "resource.gpu-1": "Exclusive GPU slot 1",
+      "resource.gpu-2": "Exclusive GPU slot 2",
+      "resource.gpu-3": "Exclusive GPU slot 3",
+      "resource.gpu-4": "Exclusive GPU slot 4",
+      "activity.eval-qwen25": "Qwen2.5 1.5B · GSM8K",
+      "activity.eval-qwen2-fp8": "Qwen2 1.5B FP8W8 · GSM8K",
+      "activity.eval-qwen2-int8": "Qwen2 1.5B INT8 · GSM8K",
+      "activity.eval-minitron": "Minitron 4B FP8 · GSM8K",
+      "constraint.coverage-eval-qwen25": "Assign required output Qwen2.5 1.5B / GSM8K (1319 examples, 5-shot); omitted work remains unscheduled",
+      "constraint.slot-eval-qwen25": "Use an available slot for Qwen2.5 1.5B",
+      "constraint.deadline-eval-qwen25": "Plan required output Qwen2.5 1.5B / GSM8K to finish by the deadline; an omitted output fails this check",
+      "constraint.coverage-eval-qwen2-fp8": "Assign required output Qwen2 1.5B FP8W8 / GSM8K (1000 examples, 5-shot); omitted work remains unscheduled",
+      "constraint.slot-eval-qwen2-fp8": "Use an available slot for Qwen2 1.5B FP8W8",
+      "constraint.deadline-eval-qwen2-fp8": "Plan required output Qwen2 1.5B FP8W8 / GSM8K to finish by the deadline; an omitted output fails this check",
+      "constraint.coverage-eval-qwen2-int8": "Assign required output Qwen2 1.5B INT8 / GSM8K (1000 examples, 5-shot); omitted work remains unscheduled",
+      "constraint.slot-eval-qwen2-int8": "Use an available slot for Qwen2 1.5B INT8",
+      "constraint.deadline-eval-qwen2-int8": "Plan required output Qwen2 1.5B INT8 / GSM8K to finish by the deadline; an omitted output fails this check",
+      "constraint.coverage-eval-minitron": "Assign required output Minitron 4B FP8 / GSM8K (1000 examples, 5-shot); omitted work remains unscheduled",
+      "constraint.slot-eval-minitron": "Use an available slot for Minitron 4B FP8",
+      "constraint.deadline-eval-minitron": "Plan required output Minitron 4B FP8 / GSM8K to finish by the deadline; an omitted output fails this check",
+      "constraint.compatible-slots": "Compatibility of the selected jobs with the declared GPU pool is an explicit supplied assumption",
+      "constraint.exclusive-gpu-capacity": "No overlapping evaluations or bookings on an exclusive GPU slot",
+      "constraint.capacity-gpu-1": "Retain exclusive capacity for gpu-1",
+      "constraint.capacity-gpu-2": "Retain exclusive capacity for gpu-2",
+      "constraint.capacity-gpu-3": "Retain exclusive capacity for gpu-3",
+      "constraint.capacity-gpu-4": "Retain exclusive capacity for gpu-4"
+    },
+    "metadata": {
+      "campaignManifest": {
+        "format": "evaluation-campaign-sources/1",
+        "repository": "vllm-project/vllm",
+        "revision": "944ec109da42f696cab16d67a977cf4f26e6d263",
+        "retrievedOn": "2026-11-27",
+        "license": "Apache-2.0",
+        "motivation": {
+          "url": "https://vllm-project.github.io/2026/07/16/keeping-vllm-production-quality.html",
+          "publishedOn": "2026-07-16",
+          "meaning": "The maintainers' release-validation experience motivates coverage review; this example does not reconstruct an incident."
+        },
+        "scope": "Four selected public accuracy configurations. This is an authored campaign, not vLLM's complete test suite or an official four-job requirement.",
+        "timingBasis": "Illustrative planning estimates; no GPU evaluations or timing measurements performed.",
+        "policyBasis": "Four authored counterfactual policies; no claim vLLM or an AI used the erroneous cap.",
+        "jobs": [
+          {
+            "id": "eval-qwen25",
+            "short": "Qwen2.5 1.5B",
+            "model": "Qwen/Qwen2.5-1.5B-Instruct",
+            "file": "Qwen2.5-1.5B-Instruct.yaml",
+            "limit": 1319,
+            "task": "gsm8k",
+            "fewshot": 5,
+            "tensorParallelSize": 1,
+            "upstreamBlob": "54579a63a9b864ac08937c88d3a189a01282f5ad",
+            "url": "https://github.com/vllm-project/vllm/blob/944ec109da42f696cab16d67a977cf4f26e6d263/.buildkite/lm-eval-harness/configs/Qwen2.5-1.5B-Instruct.yaml"
+          },
+          {
+            "id": "eval-qwen2-fp8",
+            "short": "Qwen2 1.5B FP8W8",
+            "model": "nm-testing/Qwen2-1.5B-Instruct-FP8W8",
+            "file": "Qwen2-1.5B-Instruct-FP8W8.yaml",
+            "limit": 1000,
+            "task": "gsm8k",
+            "fewshot": 5,
+            "tensorParallelSize": 1,
+            "upstreamBlob": "426e8ff698733ce8e2c92c07946a10b9edb35188",
+            "url": "https://github.com/vllm-project/vllm/blob/944ec109da42f696cab16d67a977cf4f26e6d263/.buildkite/lm-eval-harness/configs/Qwen2-1.5B-Instruct-FP8W8.yaml"
+          },
+          {
+            "id": "eval-qwen2-int8",
+            "short": "Qwen2 1.5B INT8",
+            "model": "neuralmagic/Qwen2-1.5B-Instruct-quantized.w8a8",
+            "file": "Qwen2-1.5B-Instruct-INT8-compressed-tensors.yaml",
+            "limit": 1000,
+            "task": "gsm8k",
+            "fewshot": 5,
+            "tensorParallelSize": 1,
+            "upstreamBlob": "8d57e9dabd56683b77077537fcd894b04b0a186f",
+            "url": "https://github.com/vllm-project/vllm/blob/944ec109da42f696cab16d67a977cf4f26e6d263/.buildkite/lm-eval-harness/configs/Qwen2-1.5B-Instruct-INT8-compressed-tensors.yaml"
+          },
+          {
+            "id": "eval-minitron",
+            "short": "Minitron 4B FP8",
+            "model": "vllm/Minitron-4B-Base-FP8",
+            "file": "Minitron-4B-Base-FP8.yaml",
+            "limit": 1000,
+            "task": "gsm8k",
+            "fewshot": 5,
+            "tensorParallelSize": 1,
+            "upstreamBlob": "c74ef00cdaa81ab2557c70ab30ff8d45f70dd85d",
+            "url": "https://github.com/vllm-project/vllm/blob/944ec109da42f696cab16d67a977cf4f26e6d263/.buildkite/lm-eval-harness/configs/Minitron-4B-Base-FP8.yaml"
+          }
+        ]
+      },
+      "caseStart": {
+        "starterMeaning": "example",
+        "supportsOwnData": false,
+        "scope": "Four sourced accuracy configurations and four authored policies. Change the deadline, slot count, timing estimates, compatibility assumption or bookings. Adapt the app for a different required workload. All starting timings are unmeasured estimates."
+      },
+      "catalog": {
+        "domain": {
+          "id": "software-delivery",
+          "label": "Software delivery"
+        },
+        "useCase": {
+          "id": "evaluation-campaign",
+          "label": "Review an evaluation campaign"
+        }
+      },
+      "decisionPresentation": {
+        "format": "decision-presentation/1",
+        "title": "Review a release evaluation campaign",
+        "question": "Which policies can plan every required output by review?",
+        "priorityLabel": "Compare feasibility without ranking",
+        "columns": [
+          {
+            "id": "plan",
+            "label": "Coordination policy"
+          },
+          {
+            "id": "status",
+            "label": "Planning fit"
+          },
+          {
+            "id": "scheduled",
+            "source": {
+              "kind": "derived",
+              "id": "scheduledOutputs"
+            },
+            "label": "Outputs assigned (of 4)"
+          },
+          {
+            "id": "finish",
+            "source": {
+              "kind": "derived",
+              "id": "scheduledFinish"
+            },
+            "label": "Assigned subset finishes (minute)"
+          },
+          {
+            "id": "missing",
+            "source": {
+              "kind": "derived",
+              "id": "missingOutputs"
+            },
+            "label": "Required outputs missing"
+          },
+          {
+            "id": "blockers",
+            "label": "Unmet requirements"
+          }
+        ],
+        "charts": [
+          {
+            "viewId": "commitment:schedule",
+            "defaultRepresentation": "timeline"
+          }
+        ]
+      },
+      "supportingReports": {
+        "format": "supporting-reports/1",
+        "reports": [
+          {
+            "id": "complete-options",
+            "label": "Policy comparison",
+            "question": "Which declared policies meet the complete campaign requirements?",
+            "template": "comparison/1",
+            "source": {
+              "kind": "report-dataset",
+              "datasetId": "commitment:comparison"
+            },
+            "bindings": {
+              "columns": [
+                {
+                  "key": "plan",
+                  "label": "Evaluation arrangement"
+                },
+                {
+                  "key": "status",
+                  "label": "Operating fit"
+                },
+                {
+                  "key": "blockers",
+                  "label": "Unmet checks",
+                  "format": "number"
+                }
+              ]
+            }
+          },
+          {
+            "id": "work-and-timing",
+            "label": "Work and timing",
+            "question": "When is each selected evaluation assigned, and which policies omit it?",
+            "template": "timeline/1",
+            "source": {
+              "kind": "commitment-schedules"
+            },
+            "representations": [
+              "table",
+              "timeline"
+            ],
+            "defaultRepresentation": "timeline",
+            "bindings": {
+              "timeline": {
+                "extent": "activities",
+                "label": "Planned GPU evaluation assignments"
+              }
+            }
+          },
+          {
+            "id": "requirements",
+            "label": "Requirements",
+            "question": "Which mandatory requirements must every complete option meet?",
+            "template": "records/1",
+            "source": {
+              "kind": "report-dataset",
+              "datasetId": "commitment:requirements"
+            },
+            "bindings": {
+              "columns": [
+                {
+                  "key": "requirement",
+                  "label": "Requirement"
+                },
+                {
+                  "key": "meaning",
+                  "label": "Operating meaning"
+                },
+                {
+                  "key": "coverage",
+                  "label": "Complete plans passing in every situation",
+                  "format": "number"
+                },
+                {
+                  "key": "waivable",
+                  "label": "Can be waived",
+                  "format": "boolean"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "inputDesign": {
+        "version": 1,
+        "form": {
+          "type": "object",
+          "label": "Case inputs",
+          "fields": {
+            "parameters": {
+              "type": "object",
+              "label": "Parameters",
+              "fields": {
+                "deadlineMinutes": {
+                  "type": "number",
+                  "label": "Review deadline (elapsed minutes)",
+                  "integer": true,
+                  "unit": "minute",
+                  "minimum": 1,
+                  "maximum": 10080
+                },
+                "slotCount": {
+                  "type": "number",
+                  "label": "Available exclusive GPU slots",
+                  "integer": true,
+                  "unit": "resource",
+                  "minimum": 0,
+                  "options": [
+                    1,
+                    2,
+                    4
+                  ]
+                },
+                "compatibleGpuAssumed": {
+                  "type": "boolean",
+                  "label": "Assume this GPU pool is compatible with every selected job (unverified)"
+                },
+                "job1Minutes": {
+                  "type": "number",
+                  "label": "Qwen2.5 1.5B: unmeasured planning duration (minutes)",
+                  "integer": true,
+                  "unit": "minute",
+                  "minimum": 1,
+                  "maximum": 1440
+                },
+                "job2Minutes": {
+                  "type": "number",
+                  "label": "Qwen2 1.5B FP8W8: unmeasured planning duration (minutes)",
+                  "integer": true,
+                  "unit": "minute",
+                  "minimum": 1,
+                  "maximum": 1440
+                },
+                "job3Minutes": {
+                  "type": "number",
+                  "label": "Qwen2 1.5B INT8: unmeasured planning duration (minutes)",
+                  "integer": true,
+                  "unit": "minute",
+                  "minimum": 1,
+                  "maximum": 1440
+                },
+                "job4Minutes": {
+                  "type": "number",
+                  "label": "Minitron 4B FP8: unmeasured planning duration (minutes)",
+                  "integer": true,
+                  "unit": "minute",
+                  "minimum": 1,
+                  "maximum": 1440
+                }
+              }
+            },
+            "tables": {
+              "type": "object",
+              "label": "Tables",
+              "fields": {
+                "bookings": {
+                  "type": "array",
+                  "label": "Bookings",
+                  "items": {
+                    "type": "object",
+                    "label": "Bookings record",
+                    "fields": {
+                      "id": {
+                        "type": "string",
+                        "label": "Id"
+                      },
+                      "resource": {
+                        "type": "string",
+                        "label": "Resource",
+                        "options": [
+                          "gpu-1",
+                          "gpu-2",
+                          "gpu-3",
+                          "gpu-4"
+                        ]
+                      },
+                      "start": {
+                        "type": "number",
+                        "label": "Start",
+                        "integer": true,
+                        "unit": "minute",
+                        "minimum": 0,
+                        "maximum": 1440
+                      },
+                      "end": {
+                        "type": "number",
+                        "label": "End",
+                        "integer": true,
+                        "unit": "minute",
+                        "minimum": 1,
+                        "maximum": 1440
+                      },
+                      "amount": {
+                        "type": "number",
+                        "label": "Amount",
+                        "integer": true,
+                        "unit": "resource",
+                        "minimum": 0,
+                        "options": [
+                          1
+                        ]
+                      }
+                    }
+                  },
+                  "keyFields": [
+                    "id"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "groups": [
+          {
+            "id": "campaign",
+            "label": "Campaign and estimates",
+            "question": "Which review window, GPU assumptions and unmeasured duration estimates apply?",
+            "subtabs": [
+              {
+                "id": "limits",
+                "label": "Review window and estimates",
+                "fieldPaths": [
+                  "/parameters"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "occupied-slots",
+            "label": "Existing bookings",
+            "question": "Which intervals are already reserved on these slots?",
+            "subtabs": [
+              {
+                "id": "bookings",
+                "label": "Existing bookings",
+                "fieldPaths": [
+                  "/tables/bookings"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "case": {
+    "id": "four-sourced-accuracy-jobs",
+    "parameters": {
+      "deadlineMinutes": 60,
+      "slotCount": 4,
+      "compatibleGpuAssumed": true,
+      "job1Minutes": 60,
+      "job2Minutes": 60,
+      "job3Minutes": 60,
+      "job4Minutes": 60
+    },
+    "tables": {
+      "_resources": [
+        {
+          "id": "gpu-1",
+          "capacity": 1
+        },
+        {
+          "id": "gpu-2",
+          "capacity": 1
+        },
+        {
+          "id": "gpu-3",
+          "capacity": 1
+        },
+        {
+          "id": "gpu-4",
+          "capacity": 1
+        }
+      ],
+      "_scenario": [
+        {
+          "id": "declared-estimates"
+        }
+      ],
+      "bookings": []
+    },
+    "provenance": [
+      {
+        "id": "vllm-configurations",
+        "description": "Public accuracy configurations pinned at vLLM 944ec109da42f696cab16d67a977cf4f26e6d263."
+      },
+      {
+        "id": "planning-assumptions",
+        "description": "Illustrative planning estimates; no GPU evaluations or timing measurements performed. Compatibility and exclusive availability are hypothetical supplied premises. Policies are authored counterfactuals."
+      }
+    ]
+  }
+}

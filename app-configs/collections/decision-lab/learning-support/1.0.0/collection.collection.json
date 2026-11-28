@@ -1,0 +1,49 @@
+{
+  "format": "decision-lab-collection/1",
+  "definition": {
+    "id": "learning-support",
+    "version": "1.0.0",
+    "publisher": {
+      "id": "decision-lab",
+      "label": "Decision Lab"
+    },
+    "title": "Learning support",
+    "description": "Compare support plans across separate outcomes, inspect evidence applicability and make explicit how priorities and progress could change the choice.",
+    "useCases": [
+      {
+        "id": "choose-learning-support",
+        "label": "Choose learning support",
+        "description": "Choose support for identified needs while keeping reading, participation and burden distinct."
+      }
+    ],
+    "members": [
+      {
+        "type": "workflow",
+        "id": "choose-learning-support-plan",
+        "version": "1.0.0",
+        "packageHash": "385ef4355279345a833256d024eea828c07f3f09de75006e132d9355f6265dd4",
+        "useCaseId": "choose-learning-support",
+        "artifact": {
+          "path": "workflows/choose-learning-support-plan/1.0.0/workflow.workflow.json",
+          "bytes": 166036,
+          "sha256": "3a78f29be5a7107fb39b937ceb467793cb81ff9b7eff6c103cd3c9243a03ebb2"
+        }
+      },
+      {
+        "type": "app",
+        "id": "compare-learning-support-plans",
+        "version": 1,
+        "packageHash": "e1a0b03b9e211c044e2312a582c06ccca71c8e77fd284e373d10e3e497f413fa",
+        "useCaseId": "choose-learning-support",
+        "artifact": {
+          "path": "apps/compare-learning-support-plans/1/app.app.json",
+          "bytes": 84083,
+          "sha256": "9f58bb21a822cb9e6214608614511bc76e4a679cbf381904022cf25a9fc44c86"
+        }
+      }
+    ],
+    "format": "decision-lab-collection-definition/1"
+  },
+  "createdAt": "2026-11-25T22:00:00.000Z",
+  "contentHash": "85834196efbc25276d5345c33863d0afc8a538b1e4641e821e7cb40595249961"
+}
